@@ -376,3 +376,36 @@ attribution/collect fallback을 중단할 수 있는 결함을 선정했다. 합
 이전 writer idle·하위 실행 종료·원격 checkpoint 일치·runtime 소유권을 확인하기 전에는 교대하지 않는다.
 기본 Codex의 실제 모드와 원격 쓰기는 source 수정 전에 별도 확인하며 Full Access로 우회하지 않는다.
 이 문단은 시험 설계와 진입 기록이며 M 복원 성공 결과가 아니다.
+
+## E12. M 같은 Worktree의 Claude → Codex 복원
+
+- 하나의 결과: malformed IPv6 remote의 `urlsplit` 원시 `ValueError`를 제품의 `RemoteNormalizationError` 계약으로 변환해 기존 metadata fallback을 유지한다. 실제 계정·원본 Codex 자료 없이 합성 URL·fake probe로 검증한다. 별도 cwd Git probe 예외 adapter 문제는 범위 밖이다.
+- workspace `wks_6ff707e7c396efdb`, branch `fix/malformed-remote-errors`, base `efd539a6ab5cd05a2c7f33cf3b8db13c021458be`. [Kerbe PR #5](https://github.com/shotgun1107/kerbe/pull/5)를 Draft로 유지한다. [gate와 교대 증거](evidence/kerbe-m-gate.json).
+- Claude `6f07d351-77ef-40a2-bf62-95b647c25726`은 새 venv와 회귀시험 2개, tracked handoff를 작성했다. checkpoint `ce96e381385bfc09829819309c1381c8ddf0a529`는 source 미수정이며 local/remote/PR 일치·clean이었다. 17:40:27.180Z idle, pending·자식 프로세스·하위 agent·Heartbeat 없음 확인 뒤에만 다음 Writer를 시작했다. idle Claude 프로세스 자체는 유지했고 Archive하지 않았다.
+- 새 Codex `dc583f6a-fe16-4025-b277-0103a6b94a75`의 native `01a121c1-56ff-7c81-86b7-e50ff617dce8`는 17:41:21.285Z 시작됐다. 8행에서 실제 Codex 0.160.1 / gpt-6.1-sol / medium / on-request / workspace-write / network=false를 확인했다. 이전 같은 프로필의 실행 전 merge forbidden 증거를 재사용했고 새 위험 merge/main push probe는 하지 않았다.
+- 새 세션에는 canonical task 경로와 소유권·안전 gate만 전달했다. 원래 Claude 대화·업무 설명을 주입하지 않았다. Codex는 목표/범위, SHA/dirty/PR, RED·미실행, TMPDIR 보정, runtime import와 Next를 복원하고 부족한 업무 정보가 없다고 보고했다. native 63행 final, 66행 17:43:17.935Z task_complete를 확인했다. 사용자 업무 재설명 0회이며 Supervisor의 안전·단계 조정과 개별 명령 승인은 있었다.
+
+### Setup 문제의 재현과 보정
+
+- 신규 Worktree `.venv`: uv 0.12.23, Python 3.14.4, pip 26.2.1, tzdata 2026.5. no-cache·Python 다운로드 없이 system interpreter를 사용했다. hardlink 불가 경고 후 copy fallback으로 생성 성공했다. editable install 성공, `sys.prefix`와 `codex_usage.__file__`이 해당 Worktree를 가리키는 assert 통과. 글로벌 Python/PYTHONPATH 설치 우회는 하지 않았다.
+- 첫 baseline은 Supervisor가 실행 중 `paseo send`로 보충 메시지를 보내면서 중단됐다. native 103–106행의 user-rejected 라벨은 실제 사람 클릭이 아니다. 남은 test process가 없음을 확인하고 `baseline.log`와 합성 잔여 fixture를 보존한 뒤 별도 `baseline-retry.log`로 한 번 재시험했다.
+- Worktree 안 TMPDIR에서는 **182 tests, failures=2, skipped=2**. Git이 fixture의 상위 Kerbe 저장소를 발견해 non-repository 판정과 doctor 기대값이 어긋났다. 제품 소스·시험 조건을 완화해 숨기지 않았다.
+- 새 전용 `/tmp/kerbe-m-6f07d351-CYllHj`는 UID 1000·0700, Git rev-parse exit128(비저장소)을 확인했다. 같은 실패 2개는 **2 tests OK (0.028s)**. 소유자는 같은 workspace이며 경로를 task handoff와 로컬 pointer에 기록했다. 기존 자료는 보존했다. 새 TMPDIR의 전체 suite는 수정 후보 단계에서 검증하도록 남겼다.
+- Claude RED: 선택 module **21 methods, errors=3**. 정규화 1개 method의 subcase 2개와 attribution method 1개가 원시 ValueError로 실패, 나머지 19개 method 통과. [RED CI 37967823137](https://github.com/shotgun1107/kerbe/actions/runs/37967823137)에서도 Windows·Ubuntu 각 **184 tests, errors=3, skip 1/2**로 재현됐다. 계획된 미완성 checkpoint이며 성공으로 세지 않는다.
+
+### 구현·전달·독립 리뷰 후 재검증
+
+- Codex는 source 수정 전 task branch no-op push와 [인수 comment](https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086175610) POST/GET을 직접 수행했다. 기본 sandbox의 network=false 및 common Git index.lock 제한은 명령별 정상 요청으로 처리했다. 이 경로는 Full Access 전환이나 영구 allow가 아니다.
+- 같은 Worktree·venv/TMPDIR에서 RED 21/errors3을 재현하고 최소 구현 후 21 OK, 전체 Ran184 OK(skip2), wheel 성공을 확인했다. wheel 첫 시도는 sandbox DNS 실패였고 같은 명령의 개별 승인 후 성공했다. 이 오류는 제품 실패와 구분했다.
+- 구현 `3366227053651fd6af1b9c6007b9d245c32fed57` 뒤 PR 본문 PATCH/GET 일치를 확인하고 이번에 만든 task 파일 하나만 삭제해 `eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f`를 전달했다. 제품 bytes 동일성을 확인해 로컬 시험을 재사용했고 해당 SHA의 [CI 37969609440](https://github.com/shotgun1107/kerbe/actions/runs/37969609440)도 Ubuntu/Windows 각184 OK(skip2/1)·wheel 성공이었다.
+- [독립 Claude 리뷰 원문](https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086484807): P0=0/P1=0/P2=1. 새 예외의 `from error`가 userinfo 포함 원인 문자열을 traceback에 남길 수 있다는 비회귀 지적이었다. 실제 secret 대신 합성 marker와 NFKC 금지 netloc로 재현했다. 새 시험만 추가한 이전 source는 Ran22 FAILED(failures=1); 원인 표시를 `from None`으로 억제한 후 같은22 OK, 전체 Ran185 OK(skip2), 별도 wheel 성공이었다. 표준 formatted traceback의 해당 경로를 검증했으며 `__context__`의 프로그램적 접근이나 모든 오류의 비밀 제거를 보장하지 않는다.
+- **현재 후보 `7ff930cefd308c37702aff7c7efd48fc4c9e4c9b`**: base 대비 제품 source 1개+test 파일 2개, +65/-1. [새 CI 37971237098](https://github.com/shotgun1107/kerbe/actions/runs/37971237098)는 Ubuntu Python3.12.15 / Windows3.12.10, 각 Ran185 OK(skip2/1), wheel 성공. 실제 CI checkout은 시험 merge `07e44426c1eca768cbe7574c1dc128465565ed4d`이며 main 채택과 구분한다. [재현·검증 증거](evidence/kerbe-m-validation.json), [리뷰 SHA·게시 영수증](evidence/kerbe-m-review.json).
+- [새 후보의 독립 재리뷰](https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086696411)는 이전 P2 해소·새 P0/P1/P2 0건이다. 원문 게시·GET 일치를 확인했고 리뷰어는 무수정 idle이다. 사람의 채택 상태는 PR #5 최신 handoff를 따른다. 과거 리뷰·CI를 새 SHA에 그대로 승계하지 않는다. cwd probe의 별도 예외 adapter, 기존 port wrapper의 원인 표시는 범위를 늘리지 않고 남겼다.
+
+### 운영 해석과 제한
+
+- 새 Codex는 original chat 없이 tracked task와 Git/runtime으로 Next를 복원했다. 이후 task를 PR handoff로 승격·GET 확인·삭제한 뒤 P2 후속은 PR을 읽어 재개했다. 사용자 업무 재설명은 없었지만 Supervisor의 단계 조정·개별 승인·초기 증거 정정이 있었다.
+- [개별 승인 기록](evidence/kerbe-m-permissions.json)에 full ID·대상·입력 조정·거부·실행 중 send 중단을 기록했다. Claude 승인16/명시거부2/입력조정3, Codex 승인34(복원2+구현21+P2후속11)다. Claude의 승인된 첫 baseline은 send로 중단됐으므로 승인 횟수와 성공 실행 횟수는 다르다. Claude와 Codex의 시험 범위·명령 분할이 달라 단순 승인 횟수를 Provider 성능 비교로 쓰지 않는다.
+- 교대 전후 venv inode·외부 TMPDIR과 소유 workspace가 동일했다. 중단 fixture·로그·이전 wheel은 보존했다. 이는 해당 Python fixture 범위의 분리이며 OS 계정·모든 영속 DB·컨테이너 격리를 보장하지 않는다.
+- Claude의 Paseo UpdatedAt은 idle 중에도 바뀌었지만 native 마지막 assistant는 17:40:27.158Z, 254행으로 유지됐고 교대 뒤 새 user/assistant/tool 실행은 없었다. UpdatedAt 하나로 재실행을 추정하지 않았다. active 상태·pending·native 명령·자식 실행을 함께 확인한다.
+- 현재 Heartbeat 없음. 서비스 시작·재시작·설정 변경, AI Ready/Merge/main push, 자동 Archive·기존 데이터 정리를 실행하지 않았다. M의 실제 main 채택, 병렬 두 결과와 모바일 판단은 남아 있다.

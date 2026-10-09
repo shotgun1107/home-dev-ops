@@ -1,0 +1,37 @@
+{
+  "reviews": [
+    {
+      "head": "eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f",
+      "reviewer": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+      "provider": "Claude Opus5.5",
+      "nativeLine": 323,
+      "nativeTimestamp": "2026-10-09T18:02:01.024Z",
+      "rawSha256": "ef2dbddab68d49560581c997253ae2d41afbd45dada316e66ddcbb1d8b13ee06",
+      "url": "https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086484807",
+      "getBodyMatches": true,
+      "counts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 1
+      },
+      "result": "non-regression chain-message exposure recommendation; requires synthetic reproduction; not yet fixed"
+    },
+    {
+      "head": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+      "deltaFrom": "eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f",
+      "reviewer": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+      "provider": "Claude Opus5.5",
+      "nativeLine": 336,
+      "nativeTimestamp": "2026-10-09T18:15:21.741Z",
+      "rawSha256": "a0ae7c1e512c08b82f1668a2c68d7d5bda66dea46aae5570013b29699185fa1f",
+      "url": "https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086696411",
+      "getBodyMatches": true,
+      "counts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 0
+      },
+      "result": "previous P2 resolved; no new findings; static only; original cwd adapter remains out of scope"
+    }
+  ]
+}

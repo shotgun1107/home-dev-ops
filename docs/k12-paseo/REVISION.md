@@ -30,6 +30,10 @@ v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. o
 | 19장 결과 재사용 | SHA·실효 모드·실행 주체·시간·대상 조건이 맞는 기존 증거를 재사용한다 | Python 후속 실측·현재 import 검사·CI와 기존 review 대조 |
 | 6·7장 프로필 확인 | 현재 UI mode·과거 persistence metadata와 실제 호출 당시 native mode를 구분한다. task에 적용할 버전·deny·project/local override·hook을 확인한다 | S의 Work·C는 동일 조합의 과거 보호/쓰기 증거와 새 native 세션을 대조. Auto 쓰기나 Full Access 보호 증거로 확대하지 않음 |
 | 7장 일상 승인 | 이미 허용된 task의 pending 명령을 Supervisor가 검토할 때는 full agent/request ID 하나씩 응답하고 주체·범위·입력 조정을 기록한다 | S에서 개별 승인 9건·범위 밖 거부 1건. `permit allow` ID 생략/`--all`과 첫 일치 선택을 하는 짧은 prefix 모두 금지. 영구 규칙 변경·무인 승인·사람 클릭 성공과 구분 |
+| 8·13장 runtime | Git 탐색을 검사하는 fixture의 TMPDIR은 저장소 밖의 작업 전용 경로로 둔다. owner·권한·Git 비저장소 판정을 확인하고 handoff에 기록한다 | M에서 Worktree 내부 TMPDIR은 기존 2개 시험 실패, 새 0700 외부 TMPDIR에서는 같은 2개 통과. venv는 Worktree 안에 유지. 기존 임시 자료 삭제나 전역 환경 변경은 필요 없음 |
+| 13장 진행 중 통신 | 실행 중 `paseo send`를 무중단 메시지 큐로 간주하지 않는다. 변경 지시가 필요하면 명령 종료 여부와 취소 영향을 확인한다 | M baseline 중 Supervisor의 보충 메시지가 tool 실행을 중단시킴. native의 user-rejected 표기만으로 실제 사람이 거부했다고 기록하지 않음. 기존 로그·잔여 fixture 보존과 실행 종료 확인 후 재시험 |
+| 13장 Provider 교대 | 이전 Writer의 idle/pending·native 종료·자식 실행·commit/push·runtime 소유를 확인한 뒤 새 세션은 정본+Git/runtime으로 복원한다. task를 PR로 승격할 때는 저장 GET 확인 후 해당 task만 삭제한다 | M의 Claude→fresh Codex 같은 Worktree 실측 통과. 사용자 업무 재설명 0회지만 Supervisor 개입은 별도로 존재. UpdatedAt 하나로 실행 종료/재개를 판정하지 않음 |
+| 10장 리뷰 후 변경 | 비회귀 지적도 현재 범위에서 안전하게 재현·개선할 수 있으면 합성 자료로 검증한다. source가 바뀌면 새 SHA의 검사와 delta 리뷰를 받는다 | M P2의 합성 traceback RED→최소 수정→22/185 시험·wheel·새 CI→독립 재리뷰. 기존 cwd probe adapter까지 임의 확장하지 않음 |
 
 연결 문제는 운영 daemon 구현 실패로 다루기보다 진단과 실행 경계의 문제로 다루는 편이 맞다.
 기존 host 경로는 동작하므로 재시작/인증 완화가 필요하지 않다.
@@ -41,7 +45,7 @@ private ops 보호 API403은 반대로 로컬 구현 수정만으로 해결되�
 | 항목 | 문제·대안 | 채택 전 조건 |
 |---|---|---|
 | Claude Auto | 읽기 전용 조회도 거부된 기록, merge 차단 결정 주체 불명확. Auto를 항상 무인 실행 가능하다고 표현하지 않는다 | 사람이 사용할 모드/지침 loading을 확인하고 지정 무해한 호출에 실제 거부 주체를 확보. deny 변경 없이 기록 부족부터 해결 |
-| Codex 기본 실행 | 기본 workspace-write의 편집/차단 증거는 있으나 현 Full Access 원격 쓰기를 기본 모드 통과로 승계할 수 없음 | 기본 경로를 채택할 때 branch push/PR의 필요한 명령별 승인·네트워크 조건 확인. broad gh/shell allow를 넣지 않음 |
+| Codex 기본 실행 | M에서 새 on-request/workspace-write의 편집·commit·task branch push·PR 쓰기를 확인했다. network=false와 공용 Git 디렉터리 제한으로 개별 승인이 필요함 | 해당 task 경로의 통과이며 무인 실행/모든 repo의 권한 보장은 아님. broad gh/shell allow나 Full Access 전환을 기본 해결책으로 넣지 않음 |
 | ops 서버 보호 | private 유지+현재 계정 기능으로는 보호 API 사용 불가 | Pro 등 보호 기능 확보, 또는 private 유지와 보호 공백의 명시적 위험 수용을 사람 결정. public 전환은 자동 제안 채택하지 않음 |
 | ops CI | CI PR #2에서 21개 성공했으나 PR #1/main의 성공이 아님 | CI PR base는 PR #1 작업 branch다. 사람이 통합 순서를 선택하고 새 통합 SHA에서 CI를 확인. 이번 로컬 30개로 대신하지 않음 |
 | guard 배포 | 검증 후보가 있어도 ops에는 미설치 | 공통 Git 영향·기존 hook/LFS 연결 검토 후 사람이 설치하고 task 경로에서 재검증 |
@@ -71,7 +75,7 @@ token 교체, 기존 hook 덮어쓰기는 어느 선택에도 자동 포함되�
 후보 결과는 **Kerbe의 `.env.local` 등 환경 파일 제외 누락 보완**으로 좁힌다.
 이미 발견한 누락을 수정하는 작은 결과이며 신규 기능 설계나 실제 개인 데이터가 필요 없다.
 [Kerbe Issue #3](https://github.com/shotgun1107/kerbe/issues/3)의 승인된 S를 별도 전용 Worktree에서
-실행했고 [Draft PR #4](https://github.com/shotgun1107/kerbe/pull/4)로 검증·리뷰까지 전달했다.
+실행했고 [PR #4](https://github.com/shotgun1107/kerbe/pull/4)로 검증·리뷰까지 전달했다.
 bootstrap PR #2는 별개이며 main에 아직 합쳐지지 않았다.
 
 - Acceptance: 임시 파일명에 대한 `git check-ignore --no-index`로 `.env`, `.env.local`,
@@ -95,11 +99,11 @@ K12 fetch·전체 tree 일치·실제 main 필수 CI를 확인해 S 완주를 �
 기존 tracked 파일·강제 add·이미 무시된 부모 디렉터리를 바꾸지 않으며 비밀값 검사 기능도 아니다.
 서버 보호가 다른 repo인 ops에서 미지원이라는 이유나 사용하지 않을 DB가 미검증이라는 이유를 추가 관문으로 만들지 않는다.
 
-## P1에 사용할 시험 설계 — 아직 실행 결과가 아님
+## P1 추가 시험과 진입 조건
 
 P0 미확인은 영향을 받는 기능/Provider 경로만 제한한다. 다만 S/M/병렬 선행 관계는 바꾸지 않는다.
 P1 성공 정의를 문서 작성/정적 review로 낮춰 통과시키지 않는다.
-S는 E11까지 실측 완료이며, 아래 M 이후 항목은 실행 결과가 추가되기 전까지 설계로 구분한다.
+S는 E11, M의 복원·구현·검증·독립 리뷰·Draft 전달은 E12에서 실측했다. M의 사람 채택·main 확인은 남아 있으며 병렬·모바일은 미실행이다.
 
 1. **진입:** 사용할 writer의 권한/merge 차단, source 쓰기·branch push/PR 경로,
    실제 setup/check/import 경계, repo 보호/guard, 수동 merge·정리 정책을 확인한다.

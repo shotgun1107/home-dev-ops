@@ -29,6 +29,15 @@ agent와 request는 **full ID만** 사용한다. CLI는 request prefix의 첫 �
 denied 동작의 wrapper/API 우회, merge/Ready/main push 승인, rules/mode/영구 allow 변경은 포함하지 않는다.
 S의 실제 범위 통제와 승인 내역은 [E10](EVIDENCE.md#e10-kerbe-p1-s--실제-writer-경로)을 따른다.
 
+M의 Codex 기본 경로에서는 network=false의 DNS/연결 실패와 linked Worktree의 공용 Git
+index.lock 쓰기 제한을 확인했다. 이미 허용된 task의 정확한 조회·branch push·stage·commit·
+PR 쓰기·build 명령만 on-request로 검토한다. 정상 개별 승인은 설정 변경이나 Full Access 전환과 구분한다.
+금지 명령의 거부를 네트워크 오류로 바꿔 해석하거나 같은 명령을 wrapper로 우회하지 않는다.
+
+실행 중 `paseo send`는 현재 명령을 중단시킬 수 있다. 중단됐다면 native의 user-rejected
+라벨만으로 사람이 거부했다고 기록하지 말고 실제 발신자·명령·완료 여부를 대조한다.
+남은 프로세스와 부작용을 먼저 확인하고 로그/잔여 fixture를 보존한 뒤 필요한 시험만 재개한다.
+
 ## 2. Heartbeat
 
 - 같은 Supervisor/목표의 기존 Heartbeat를 먼저 확인한다. 0.10.3의 일반 `schedule inspect`는 agent-target을 제외함을 확인했다. 일반 ls/logs도 Heartbeat 부재 판단 근거로 사용하지 않는다.
@@ -122,6 +131,12 @@ base 수신 중 workflow 충돌 시 pre-merge HEAD/base/충돌 경로 기록 후
 `ensurepip` 문제는 PR #2의 후속 운영자 실측으로 해소됐고 이번에도 import 경로를 확인했다.
 재발 시 shared Python/PYTHONPATH/sudo로 검사 성공을 꾸미지 않는다.
 설치 실패와 코드 테스트 실패를 분리한다. 관련 파일/경로/Python 버전이 바뀌면 import assertion부터 다시 확인한다.
+
+M에서 Git fixture의 TMPDIR을 Worktree 안에 두면 상위 저장소를 발견해 기존 2개 시험이 실패했다.
+저장소 밖에 새 작업 전용 임시 디렉터리를 만들고 0700·소유 UID·Git 비저장소 판정을 확인한다.
+이 경로와 workspace 소유권을 handoff에 남기고 두 번째 Writer도 같은 venv/TMPDIR을 재사용한다.
+검사 실패를 없애려고 테스트 기대값이나 Git 전역 설정을 바꾸지 않는다. 기존 임시 경로와
+중단 fixture는 보존한다. 이 보정에서 동일 실패 2개 재시험은 OK, 이후 전체 suite는 Ran 184, OK(skipped=2)였다.
 
 Kerbe의 실제 init/status/collect/sync는 이 미션에서 실행하지 않았다.
 다음 runtime 시험은 별도 config/state DB/ledger/source fixture/in-memory secret store 등

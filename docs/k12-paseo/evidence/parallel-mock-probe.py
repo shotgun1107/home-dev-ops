@@ -18,6 +18,7 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 import uuid
 
 
@@ -125,6 +126,8 @@ def worker(root, seconds=120):
             return 78
         if decision["decision"] != "allow":
             return 79
+        if time.monotonic() >= deadline:
+            return 77
         # The request contains an exact local operation. It is never eval'd;
         # the only executable result path is this task's fixed result.json.
         write_new(root / "result.json", expected(task))
@@ -274,6 +277,14 @@ class ContractTests(unittest.TestCase):
         self.assertFalse((self.root / "result.json").exists())
         self.assertEqual(git(self.root, "rev-parse", "HEAD"), base)
         self.assertFalse(git(self.root, "status", "--porcelain"))
+
+    def test_expired_gate_rejects_even_ready_decision(self):
+        base = git(self.root, "rev-parse", "HEAD")
+        write_new(self.root / ".runtime/decision.json", self.decision)
+        with patch(__name__ + ".request", return_value=self.req):
+            self.assertEqual(worker(self.root, seconds=0), 77)
+        self.assertFalse((self.root / "result.json").exists())
+        self.assertEqual(git(self.root, "rev-parse", "HEAD"), base)
 
     def test_denied_worker_does_not_write_or_commit_result(self):
         base = git(self.root, "rev-parse", "HEAD")

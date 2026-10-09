@@ -122,4 +122,7 @@ per-root flock은 같은 task 중복만 거부한다. launch를 동시에 두 �
 [c98b27a… 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089315397)은 Critical/High/Medium0, Low1, Info2다.
 Low1에 따라 관찰한2 writer와 전역 상한 강제를 구분했다. 전역 lock/daemon·권한 정책을 새로 설치하지 않는다.
 Info의 만료 gate 의미와 신뢰된 mock 결정 채널 한계는 유지했다. reviewer는 실험을 실행하지 않았다.
-추가 source/cwd 격리와15개·최종 round 증거는 후속 고정 SHA 검토 대상으로 넘긴다.
+추가 source/cwd 격리와15개·최종 round 증거는 `03ed878bbd8c1ff9dffa89900b797f8398bc1a2e`의
+[독립 delta 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089359221)에서 검토됐다. Low1 해소·새 Low 이상0·Info1이다.
+Info의 test 이름 `immutable`은 사본 byte 일치/commit 확인을 뜻하며 기술적 불변/readonly를 보장하지 않는다.
+최종 변경은 문서·리뷰 영수증뿐이고 probe bytes는 최종15개·세 번째 round·이 delta 검토와 같다.

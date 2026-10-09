@@ -16,5 +16,19 @@
     "Low": 1,
     "Info": 2
   },
-  "reviewerTestsExecuted": false
+  "reviewerTestsExecuted": false,
+  "delta": {
+    "reviewedSha": "03ed878bbd8c1ff9dffa89900b797f8398bc1a2e",
+    "nativeLine": 647,
+    "nativeTimestamp": "2026-10-09T21:12:32.461Z",
+    "originalSha256": "9588030a9d1a1a5a41ea1c62e37c7f5a0f8a57429acc813048f1f0d04dc775c4",
+    "commentId": 6089359221,
+    "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089359221",
+    "getVerified": true,
+    "priorLowResolved": true,
+    "newLowOrHigher": 0,
+    "newInfo": 1,
+    "reviewerTestsExecuted": false,
+    "infoDisposition": "Naming limitation documented; source bytes intentionally unchanged."
+  }
 }

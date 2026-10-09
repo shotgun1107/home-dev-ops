@@ -518,3 +518,8 @@ B 대기 중 A 완료, 각 local commit·clean·두 child 회수까지 확인했
 [초기 독립 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089315397)의 Low1은 관찰한2 writer를
 전역 상한 강제로 읽을 수 있다는 표현이었다. 같은 task flock과 이번 두 개 launch 관찰만
 검증했다고 고쳤으며 전역 상한 자동 강제는 미검증이다. 실제4 writer 반례는 실행하지 않았다.
+
+03ed878… [독립 delta](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089359221)에서 Low1 해소·새 Low 이상0을 확인했다.
+Info의 immutable 명칭은 기술적 readonly/불변 보장이 아님을 명시했다. 최종 probe bytes는
+ec7e809…의15개·최종 두 결과 실측과 이 리뷰 SHA에서 같으며 추가 반복 시험은 하지 않았다.
+[리뷰 영수증](evidence/parallel-review.json).

@@ -19,6 +19,7 @@ v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. o
 
 | 원문 관련 항목 | 변경 내용 | 근거와 적용 한계 |
 |---|---|---|
+| 15·19장 CI 증거 | 실제 base ref·head·merge 부모·checkout SHA와 suite inventory/실행 수를 함께 기록한다. source/tests byte 동일할 때만 로컬 증거를 재사용한다 | OPS_CI 과거21→시작97→후보115개. 일부 suite만 남은 성공을 차단했다. Node47은 K12 별도 증거. 정확한 통합 bundle은 격리 검증했으나 실제 hosted 최신 run과 사람 채택은 대기. [검증](OPS_CI.md) |
 | 13·16장 중단 복구 | handoff의 원격 SHA·Writer/native/하위 실행 종료·runtime 소유권·부작용 결과를 각각 대조한다. PID 전후 stamp 변화를 미확정으로 판정한다 | P0_RECOVERY Python38·설치 PID Node9 격리 시험. 원자적 발행 전후 새 child 종료 실측. 오프라인 판정은 lease/실행 허가가 아니며 controller에 연결하지 않음. [범위](FAILURE_RECOVERY.md) |
 | 7·16장 권한/복구 | daemon 연결 오류에서 sandbox와 host 가시성을 먼저 대조한다. CLI stopped 하나로 start/restart하지 않는다 | E1 실제 namespace 차이·host 연결·진단 도구 9개 회귀. sandbox 접근 개방은 아님 |
 | 13·18장 자동 재개 | 생성/주기 실행/idle 재개/종료 결과 저장/삭제를 각각 기록한다. agent-target 조회를 일반 schedule 조회와 구분한다. 자기 run이 끝난 뒤 삭제한다 | CLI filtering·자기 삭제 충돌 격리 재현, 정리 도구 9개 시험 통과. E9의 실제 idle 1회 재개와 이후 succeeded·정상 삭제·게시 GET 영수증까지 확인 |
@@ -68,7 +69,7 @@ updatedPermissions는 Supervisor의 일상 승인 대상에서 제외하고 사�
 | Claude Auto | 읽기 전용 조회도 거부된 기록, merge 차단 결정 주체 불명확. Auto를 항상 무인 실행 가능하다고 표현하지 않는다 | 사람이 사용할 모드/지침 loading을 확인하고 지정 무해한 호출에 실제 거부 주체를 확보. deny 변경 없이 기록 부족부터 해결 |
 | Codex 기본 실행 | M에서 새 on-request/workspace-write의 편집·commit·task branch push·PR 쓰기를 확인했다. network=false와 공용 Git 디렉터리 제한으로 개별 승인이 필요함 | 해당 task 경로의 통과이며 무인 실행/모든 repo의 권한 보장은 아님. broad gh/shell allow나 Full Access 전환을 기본 해결책으로 넣지 않음 |
 | ops 서버 보호 | private 유지+현재 계정 기능으로는 보호 API 사용 불가 | Pro 등 보호 기능 확보, 또는 private 유지와 보호 공백의 명시적 위험 수용을 사람 결정. public 전환은 자동 제안 채택하지 않음 |
-| ops CI | CI PR #2에서 21개 성공했으나 PR #1/main의 성공이 아님 | CI PR base는 PR #1 작업 branch다. 사람이 통합 순서를 선택하고 새 통합 SHA에서 CI를 확인. 이번 로컬 30개로 대신하지 않음 |
+| ops CI | PR #2의 과거21개 green과 stale merge ref는 현재 PR #1 검증이 아님 | [정확한 후보](proposals/README.md)의 로컬115개 통과·Node47 재사용. 보호 정책과 workflow 경로를 사람이 선택한 뒤 일반 task push 및 새 실제 CI 확인. Ready/main 채택은 별도이며 자동 변경하지 않음 |
 | guard 배포 | 검증 후보가 있어도 ops에는 미설치 | 공통 Git 영향·기존 hook/LFS 연결 검토 후 사람이 설치하고 task 경로에서 재검증 |
 | Kerbe setup | .venv 수동 경로는 실측, base의 자동 setup은 없음 | 경량 Python repo에서 수동 on-demand 유지 또는 최소 dev-setup/paseo.json 도입을 선택. 후자를 도입하면 별도 chore PR 검증·사람 merge 후 새 Worktree에서 시험 |
 | A/B 조건 | 기존 실험은 승인 모드/거부 하네스가 달라 능력 비교 불가 | 동일 작업/기준 SHA/권한 조건/종료 조건으로 별도 설계. P1 독립 결과 병렬 시험과 구분 |

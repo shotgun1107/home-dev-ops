@@ -467,3 +467,22 @@ a2311a7… [독립 delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pul
 Info의 publication 오류 의미는 반영 뒤 응답 유실 시험을 추가하고 불확정으로 유지했다.
 
 cba377e… [독립 delta 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088668023)에서 Low2 해소·새 Low 이상0, Info1(로그 구분)을 확인했다. 기존 preflight9개만 provenance header/footer로 다시 실행해9개 OK와 source 동일을 보존했다. unique Python38/Node9 판정은 그대로이며 reviewer는 테스트를 실행하지 않았다. 최종 source/tests는 이 리뷰 SHA와 동일하다. [리뷰 영수증](evidence/recovery-review.json).
+
+## E16 OPS_CI 최신 suite와 원격 CI 대조
+
+기준 `44a8fa593310d11d5d4d2de045e4f3ac54926555`의 clean/local/remote/PR Draft를 대조했다.
+PR #2의 과거 run37941584724는21개이며 `.base.sha`와 merge ref 부모는 여전히73afc54…였다.
+최신base 포함 assertion 실패는 초기 가정 오류로 보존하고 시험 성공으로 세지 않았다.
+같은 격리 clone에서 최신 ops를 local merge해 기존97개를 실측했다. Python3.14.4의 빈 suite는
+exit5로 실패했고, 두 파일 존재+합성1개만 남긴 축소 suite는 exit0이었다.
+
+manifest·실제 수집 수·skip/오류·source byte 검사를 추가했다. 고정 source ad3acae…와 workflow를
+통합한5d7d1e1…에서 실제 job 명령으로 **115개/0skip/성공**, 실행 전후 byte 동일을 확인했다.
+별도 task-owned clone에서2472-byte bundle을 import해 같은SHA·PR2 조상·workflow만 차이를 확인했다.
+Node38+9는 설치 소스/harness/patch hash를 대조해 재사용했고 hosted Python 수에 합치지 않았다.
+[CI 대조](OPS_CI.md), [사람 적용 후보](proposals/README.md), [선별 영수증](evidence/ops-ci-validation.json).
+
+remote workflow push·Actions 최신 실행·Ready/Merge/main push·보호 변경은 하지 않았다.
+로컬 실패 회귀는 후보 명령 검증의 증거이며 hosted CI 성공이나 저장소의 기술적 권한 차단 보장은 아니다.
+
+독립 고정 SHA [원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088962998)은 Critical/High/Medium0·Low1·Info2다. Low1의 누락된 후속 문서를 정확한 candidate/부모/tree/bundle과 사람 절차로 보완했다. source/tests/workflow 변경은 없다. [리뷰 영수증](evidence/ops-ci-review.json).

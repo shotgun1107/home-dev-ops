@@ -11,6 +11,10 @@
 동일 조건 보정과 장기·만료·crash 상태 복원 **Node38개 격리 시험 통과**.
 실제24시간·daemon crash는 미실행. [수명·동시성 감사](HEARTBEAT.md).
 
+야간 **OPS_CI**: 과거 CI21개와 현재 Python97개의 차이를 대조했다. 격리 통합 후보는
+새 inventory 검사18개를 포함해 **115개 OK(skip0)**. Node47개는 hash 일치 증거를 재사용했다.
+원격 CI는 보호 공백으로 보류하고 정확한 후보 bundle·사람 적용 절차를 제공한다. [CI 대조](OPS_CI.md).
+
 ## 기준
 
 - [v2.4 원문](source/K12_Paseo_v2.4.md)과 [AGENTS 초안](source/K12_AGENTS_draft.md)은 입력과 byte 동일. 원문 참조 `K12_Paseo_Review_History.md`는 입력에 없어 미확인.
@@ -41,7 +45,7 @@
 | P0-R1 | Python setup·import 격리 | 확인 범위 통과 | PR #2 운영자 실측 182 tests OK, skipped 2·wheel. 이번에는 기존 .venv/source 경로 재확인, clean 유지. [E4](EVIDENCE.md#e4-runtime) |
 | P0-R2 | 새 Worktree setup·runtime 분리 | M의 Python fixture 범위 통과 | 신규 .venv 설치·import assert, 외부 task TMPDIR 0700/owner/비저장소, 같은 runtime 교대 재사용. 내부 TMPDIR 실패 2개→보정 후 2개 OK, 최종 수정 후 Ran185 OK(skip2)·wheel. 실제 계정/장부/DB/volume 격리와 자동 setup은 미검증. [E12](EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원) |
 | P0-V1 | 고정 SHA 리뷰·대리 게시 복구 | 통과 | S의 Codex 리뷰와 M 7ff930c…의 독립 Claude delta 리뷰·원문 대리 게시·GET 일치. M의 P2 1건 재현·수정 후 새 P0/P1/P2 0건. 직접 게시 권한과 기술적 readonly는 미확인. [E12](EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원) |
-| P0-C1 | 이 ops PR의 필요한 CI | 별도 PR 통과 / 현재 후보 미확인 | CI PR #2의 f069ac3…에서 Python 3.12.15·21개 통과. PR #1을 base로 한 Draft이며 main 미반영. PR #1 HEAD의 checks 및 로컬 30개 회귀의 CI 성공으로 승계하지 않음. Kerbe PR #4 CI와도 별개. [CI 관계](proposals/README.md) |
+| P0-C1 | 이 ops PR의 필요한 CI | 격리 최신 후보 통과 / 원격 갱신·채택 대기 | 과거 PR #2 f069ac3… CI21개. 최신 통합 후보 Python115개 로컬 OK(skip0), Node47개는 별도 재사용. stale base/merge ref와 축소 suite 성공을 재현·개선했다. 보호 공백 때문에 원격 workflow는 보류, exact bundle·사람 절차 전달. 실제 hosted 최신 run/main 필수 검사는 미확인. [E16](EVIDENCE.md#e16-ops_ci-최신-suite와-원격-ci-대조) |
 | P0-V2 | PR 본문 갱신 | 개선 후 통과 | gh 2.46.0 projectCards 오류→동일 PR REST PATCH→GET 일치. 인증/권한 변경 없음 |
 | P0-S1 | 기존 서비스 보호 | 기존 관찰 재사용·미조작 | 관찰 당시 rootless Docker, system docker/socket disabled·inactive, Minecraft 4개 healthy·Paseo active. 이번 M에서 재시작/삭제/초기화·설정 조작 없음. 과거 관찰로 현재 전체 데이터 무결성을 보장하지 않음 |
 | P0-S2 | Direct 무인증 요청 거부 | 통과 | Public WSS에 인증정보 없이 hello→password_required / 4401. [실측](evidence/direct-no-auth.json) |

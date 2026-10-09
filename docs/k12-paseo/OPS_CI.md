@@ -58,4 +58,42 @@ base가 진전됐다고 과거 green을 승계하지 않는다. 새 candidate/he
 권한은 [workflow permissions 문서](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#permissions)의
 명시적 `contents: read`를 유지한다.
 
-정확한 통합 후보 SHA, 고정 SHA 리뷰, 전달 artifact와 사람 절차는 격리 실행 이후 아래에 기록한다.
+## 고정 후보의 실측과 전달
+
+| 구분 | 정확한 값·판정 |
+|---|---|
+| ops source | `ad3acae8d0f420c9deab7567d3d100881dbc68b0` |
+| 통합 candidate | `5d7d1e1177c5a1991582bee7113d239dda01fe83` |
+| candidate 부모 | `acce8c92e43d8ba527118cd6291768db1d0d5767` + `ad3acae8d0f420c9deab7567d3d100881dbc68b0` |
+| workflow blob | `bd24fba430a97ea5dee3c29fb1370eea970fb131` |
+| 동일 scripts tree | `4ccdd57afb52c6efbe37a69b0fc9b051338b51dd` |
+| 동일 tests tree | `9e5794abc0d09f229f249a7333fb0b15209b5f98` |
+| 동일 docs tree (source commit 기준) | `472c1252089b5f560b8266e1fc79ef5fe1c6d039` |
+| 실행 | `timeout 120s python -I -B scripts/run_ops_ci.py`, local Python 3.14.4, 115 passed / 0 skip / 0 error |
+| run ID | `2eacb78e-520b-4c03-8fff-74aeb44b8308` |
+| 시각 | `2026-10-09T20:40:48.766067+00:00` → `2026-10-09T20:40:50.464805+00:00` |
+| 전후 | scripts/tests hash 동일, candidate clean, 실제 hosted CI 미실행 |
+
+source와 candidate의 전체 tree 차이는 workflow 하나다. [선별 영수증](evidence/ops-ci-validation.json)에
+115개 case ID·파일 hash·stdout/stderr hash·이전97개·실패 가정·PR/API·보호 조회를 보존했다.
+Node38+9는 기록된 설치 소스/harness/patch hash 전부 일치로 재사용했다. 새 실행 횟수로 세지 않는다.
+
+[전달 bundle과 사람이 적용할 정확한 절차](proposals/README.md)는 source와 candidate를 모두 보존한다.
+2472-byte bundle을 별도 task-owned clone에 import해 candidate full SHA를 복원했다.
+f069ac3…가 candidate의 조상이므로 원격 상태가 그대로라면 force 없는 task branch push가 가능하다.
+후속 보고 commit은 문서/증거만 바뀌며 이 표의 source/tests 실행 근거를 승계한다.
+source가 진전되거나 remote PR #2가 움직이면 해당 동등성부터 다시 확인한다.
+
+## 독립 리뷰와 남은 결정
+
+기존 Claude Opus 5.5 Plan reviewer가 위 두 full SHA를 읽기 전용으로 검토했다.
+[원문 대리 게시·GET 확인](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088962998) 결과는 Critical/High/Medium0, Low1, Info2다.
+Low1은 초기 source commit의 빈 후속 증거 문단이었고 위 정확한 SHA·tree·bundle·절차로 보완했다.
+Info의 patch trailing space는 unified diff가 빈 context 행을 나타내는 형식이다.
+`git apply --check --reverse`로 실제 후보와 patch의 대응을 확인했고 context space를 제거하지 않았다.
+다른 Info는 manifest 동시 변경의 리뷰 책임과 hosted 환경 미검증으로, 그대로 한계에 기록한다.
+reviewer는 시험을 실행하지 않았으며 Plan mode의 기술적 readonly를 보증하지 않는다.
+
+**이번 safe fallback 산출물:** 최신 suite 대조·실패 주입·개선·고정 후보 검증·복원 가능한 제안.
+**미완료:** 보호 공백에 대한 사람 결정, 원격 CI branch 적용, 실제 새 hosted run, 필수 검사/main 채택.
+AI Ready/Merge/main push·권한/보호 변경·Kerbe 수정은 하지 않았다. P0 전체 또는 P1 전체의 완료 선언이 아니다.

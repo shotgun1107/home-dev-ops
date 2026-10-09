@@ -1,31 +1,64 @@
-# CI 적용 제안 — 별도 Draft PR 실행 확인
+# CI 적용 제안 — OPS_CI 갱신 후보
 
-v2.4 15/18장에 따라 workflow는 일반 agent 작업 branch의 .github/workflows에 commit하지 않았다.
-[patch](home-dev-ops-ci.patch)는 현재 후보의 두 unittest 파일을 검사하는 작은 제안이다.
-기준 Git HEAD는 `2873a57a804c96225b774bc1c9f86dae87628db3`이며 이후 변경은 이 PR에서 확인한다.
+2026-10-10 KST. [OPS_CI 실제 대조·시험](../OPS_CI.md)을 먼저 읽는다.
+[PR #2](https://github.com/shotgun1107/home-dev-ops/pull/2)는 여전히 open/Draft,
+`f069ac35b0553f69f0a485784df0bc4f11341f1b`이며 실제 hosted CI는 과거 **21개** 성공뿐이다.
+이전 30개는 당시의 로컬 기록이다. 이번 시작 suite는 Python **97개**, 개선 후 **115개**이며
+K12 설치본에 의존하는 Node **47개**는 별도 증거 재사용이다.
 
-- 최초 제출 당시에는 patch 형식/YAML 검사만 완료했다. 이후 사람 허용에 따른 별도 [CI PR #2](https://github.com/shotgun1107/home-dev-ops/pull/2)가 생성됐다.
-- Python 3.12 / GitHub-hosted Ubuntu / 5분 상한 / contents:read / checkout credential 보존 끔.
-- unittest 두 파일의 존재를 검사해 테스트 없는 branch에서 0개 검사로 성공하는 것을 막는다.
-- K12 자체 호스트·운영 서비스·비밀정보를 사용하지 않으며 배포/merge/외부 게시 작업이 없다.
-- actions/checkout v7과 actions/setup-python v6의 full SHA는 2026-10-09 GitHub refs GET으로 확인했다.
-  [checkout](https://github.com/actions/checkout), [setup-python](https://github.com/actions/setup-python)의 공식 사용법을 대조했다.
+원본 [home-dev-ops-ci.patch](home-dev-ops-ci.patch)는 기준
+`2873a57a804c96225b774bc1c9f86dae87628db3`의 최초 제안으로 보존한다.
+당시 두 파일 존재 검사로 충분하다는 설명은 폐기한다. 두 파일이 존재해도 실행 시험이 하나로
+축소되면 성공할 수 있음을 재현했다. Python 3.14.4의 0개 실행 자체는 exit 5로 실패했다.
 
-2026-10-09 조회한 관계:
+## 전달 후보
 
-| 대상 | base | head / 실행 결과 |
-|---|---|---|
-| 운영 PR #1 | main `bf50f2bdb44e4d71fc29b31dcb0629719a345a95` | 재개 시 `73afc54ba6ba046ad5f527c08d77fd3a20ce2a58`, checks 없음 |
-| CI PR #2 | PR #1의 `docs/k12-paseo-autopilot`, 당시 `73afc54…` | `f069ac35b0553f69f0a485784df0bc4f11341f1b`, 추가 파일은 workflow 하나 |
-| CI run 37941584724 | 위 PR #2 기준 | CPython 3.12.15, 21 tests OK, success |
+- ops source/manifest/tests: `ad3acae8d0f420c9deab7567d3d100881dbc68b0`.
+- 통합 후보: `5d7d1e1177c5a1991582bee7113d239dda01fe83`.
+  격리 clone의 local merge이며 GitHub PR merge가 아니다. 기존 PR #2 f069ac3…가 조상이다.
+  source SHA와의 전체 tree 차이는 `.github/workflows/ops-check.yml` 하나다.
+- [갱신 patch](home-dev-ops-ci-refresh.patch): 기존 PR #2 workflow blob `0846430…` 기준.
+  patch만 적용해도 source/manifest가 따라오는 것은 아니다. 최신 source 통합이 선행 조건이다.
+  빈 context 행의 한 칸은 unified diff 형식이므로 trailing whitespace 정리로 제거하지 않는다.
+  실제 candidate에서 `git apply --check --reverse` 성공을 확인했다.
+- [정확한 commit bundle](ops-ci-candidate.bundle): SHA-256
+  `0066ff185ffb808ab472ea928065b8b27600810ce278ed461694afaff4f62ce6`, 2472 bytes.
+  head ref는 `refs/heads/ci/ops-ci-isolated`; candidate full SHA를 보존한다.
+  prerequisite는 f069ac3…, 73afc54…, ad3acae…, 44a8fa5…의 full object다.
+  기존 PR #1/#2 branch를 fetch하면 이력을 얻을 수 있다.
+- 별도 task-owned clone에서 bundle verify/import 후 동일 candidate SHA,
+  PR #2의 ancestor 관계, source/tests byte 일치를 확인했다. 원격 workflow push는 하지 않았다.
+- 실제 workflow의 명령을 local Python 3.14.4에서 **115개 OK, skip 0**으로 확인했다.
+  K12 임시 `bin/python`은 `/usr/bin/python3`의 task-owned symlink이며 전역 설치/설정 변경이 아니다.
+  YAML parse·pin/permission 검사를 했지만 actionlint와 GitHub-hosted 실행은 미실행이다.
 
-[실제 로그·workflow hash](../evidence/issue-3-resume.json)는 제안 patch와 byte 일치함을 확인한다.
-PR #1 작업 branch가 진행하면 기존 CI run 당시 base와 달라진다. API `.base.sha`가 과거 값을
-반환할 수도 있으므로 실제 branch ref도 조회한다. 이전 run이 새 통합 상태를 검증했다고 쓰지 않는다.
-cleanup 도구의 최초 7개·리뷰 반영 후 9개 추가 시험까지 포함한 30개는 로컬 통과이며, 위 CI에는 21개만 포함됐다.
+## 사람이 선택한 뒤 적용할 순서
 
-두 PR은 Draft/open이다. main에는 workflow가 없고 `ops-check`가 main의 필수 검사로 설정된 증거도 없다.
-사람은 CI PR을 최신 PR #1 base와 대조하고 새 통합 SHA에서 CI를 확인한 뒤 task branch에 채택할지,
-운영 PR 채택 뒤 CI PR의 base를 main으로 다시 정할지 결정한다. 어느 경로든 base 변경 후 새 CI가 필요하다.
-CI PR 통합·Ready·main 반영은 사람이 수행한다. agent는 workflow나 보호 설정을 변경하지 않았다.
-패치 전문과 원문 대리 게시 기록도 PR #1에 보존한다.
+보호/guard 미확인과 v2.4 workflow 사람 경로 때문에 이번에는 제안으로 전달한다.
+위험 수용·보호 확보 여부, CI 통합 순서, Ready/main 채택은 서로 별도의 사람 결정이다.
+아래는 **기존 CI task branch를 갱신하는 선택지**이며 main push/merge 또는 Ready 전환 명령이 아니다.
+
+1. PR #1 최신 handoff의 source/tests와 위 고정 후보·독립 리뷰를 대조한다. 별도 검토용 clone에서
+   현재 PR #1과 `ci/k12-ops-check`를 fetch한다. 원격 PR #2 head가 아직 위 f069ac3…인지 확인한다.
+   달라졌다면 중단하고 새 이력을 재대조한다. force/reset으로 맞추지 않는다.
+2. bundle SHA-256과 prerequisite를 검증한다. 비어 있는 새 local review ref로 import한다.
+   `git bundle verify docs/k12-paseo/proposals/ops-ci-candidate.bundle`
+   이후 `git fetch docs/k12-paseo/proposals/ops-ci-candidate.bundle refs/heads/ci/ops-ci-isolated:refs/heads/review/ops-ci-5d7d1e1`.
+   같은 local ref가 이미 있으면 재사용을 추정하지 말고 그 SHA부터 대조한다.
+3. `git rev-parse review/ops-ci-5d7d1e1`이 위 full candidate와 일치하는지,
+   `git merge-base --is-ancestor f069ac35b0553f69f0a485784df0bc4f11341f1b review/ops-ci-5d7d1e1`이 0인지 확인한다.
+   `git show review/ops-ci-5d7d1e1:.github/workflows/ops-check.yml`과 helper/manifest를 검토한다.
+4. 사람이 위 경로를 채택한 뒤 **일반 task branch push**만 수행한다:
+   `git push origin 5d7d1e1177c5a1991582bee7113d239dda01fe83:refs/heads/ci/k12-ops-check`.
+   거부/원격 이동은 새 검토 조건이다. 인증 확대·force로 우회하지 않는다. PR #2 Draft를 유지한다.
+5. 새 `pull_request` run의 head, 실제 base ref, merge 부모와 checkout SHA, manifest/hash,
+   115 executed / 0 skipped / pass를 확인한다. 과거 run이나 candidate 로컬 성공으로 대신하지 않는다.
+   최종 PR #1 보고 commit은 candidate 이후일 수 있으므로 GitHub 합성 merge SHA가 candidate와
+   다를 수 있다. 그 차이가 문서/증거뿐인지 확인한다. base 변경 후에도 새 run이 필요하다.
+6. 필요한 검사가 통과한 뒤 PR #2→ops task 통합 또는 PR #1 채택 후 CI base 변경 중 하나를
+   사람이 선택한다. agent는 어느 PR도 Ready/merge하지 않고 main 필수 검사도 설정하지 않는다.
+
+`pull_request` merge ref 동작과 권한 근거는 [OPS_CI](../OPS_CI.md#원격-적용-판단)에 링크했다.
+main에는 현재 workflow/필수 CI가 없으며 이 제안 자체로 P0-C1이 완전히 통과한 것은 아니다.
+
+독립 고정 SHA [리뷰 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088962998)과 [보완 내역](../OPS_CI.md#독립-리뷰와-남은-결정)을 함께 검토한다.

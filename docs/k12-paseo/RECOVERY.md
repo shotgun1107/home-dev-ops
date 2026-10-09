@@ -189,3 +189,16 @@ Compose 스택·migration·volume 보존/restore/teardown 시험은 미실행이
 Git lock은 실제 Git 프로세스와 소유권 확인 전 삭제하지 않는다.
 기존 미커밋/ignored/영속 데이터를 지우지 않고, 최초 파괴적 복구는 폐기 가능 자원에서
 별도 보존·복원 검증을 거친다. 이번 미션에서는 정리/Archive를 실행하지 않았다.
+
+## 7. CI 실행과 현재 후보가 어긋날 때
+
+PR API base만 믿지 말고 실제 branch ref, PR merge ref 부모, Actions run head/checkout SHA를 대조한다.
+OPS_CI에서 merge ref 자체도 과거73afc54…를 가리킨 사실을 확인했다. stale ref를 최신이라고
+가정한 검사를 멈추고 task-owned clone의 local 통합 후보로 별도 실측했다. 운영 repo reset/force나
+서비스 조작은 필요하지 않았다. [정확한 후보와 사람 적용 순서](proposals/README.md).
+
+manifest 개수/파일/버전이 맞지 않으면 검사를 생략하거나 숫자를 성공시키기 위해 낮추지 않는다.
+의도된 suite 변경인지 검토하고 source+manifest를 같은 후보로 고친 뒤 다시 실행한다.
+Node K12 시험을 hosted Python 검사에 합산하지 않는다. bundle prerequisite 또는 원격 HEAD가
+변했다면 새 base에서 다시 대조하고 새 후보·새 CI 결과를 남긴다. 이 작업은 기존 CI PR2를
+원격 갱신하지 않았으므로 서버 측 rollback은 없다. 새 task-owned fixture들은 보존했다.

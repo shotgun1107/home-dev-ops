@@ -1,0 +1,21 @@
+{
+  "reviewer": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+  "provider": "claude",
+  "model": "claude-opus-5-5",
+  "sourceSha": "ad3acae8d0f420c9deab7567d3d100881dbc68b0",
+  "candidateSha": "5d7d1e1177c5a1991582bee7113d239dda01fe83",
+  "nativeLine": 576,
+  "nativeTimestamp": "2026-10-09T20:42:50.085Z",
+  "originalSha256": "3acb77377756e4c05b882e49954447a257edef146249da10a2af9d78f2616e78",
+  "commentId": 6088962998,
+  "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088962998",
+  "getVerified": true,
+  "findings": {
+    "Critical": 0,
+    "High": 0,
+    "Medium": 0,
+    "Low": 1,
+    "Info": 2
+  },
+  "reviewerTestsExecuted": false
+}

@@ -20,7 +20,7 @@ v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. o
 | 원문 관련 항목 | 변경 내용 | 근거와 적용 한계 |
 |---|---|---|
 | 7·16장 권한/복구 | daemon 연결 오류에서 sandbox와 host 가시성을 먼저 대조한다. CLI stopped 하나로 start/restart하지 않는다 | E1 실제 namespace 차이·host 연결·진단 도구 9개 회귀. sandbox 접근 개방은 아님 |
-| 13·18장 자동 재개 | 생성/주기 실행/idle 재개/종료 결과 저장/삭제를 각각 기록한다. agent-target 조회를 일반 schedule 조회와 구분한다. 자기 run이 끝난 뒤 삭제한다 | CLI filtering 확인. 해당 Heartbeat run 중 삭제 오류 및 완료 후 삭제를 격리 재현. 1회·소유권·시간 제한을 둔 정리 도구 9개 시험 통과. idle 자동 복원·실제 지연 정리는 아직 미확인 |
+| 13·18장 자동 재개 | 생성/주기 실행/idle 재개/종료 결과 저장/삭제를 각각 기록한다. agent-target 조회를 일반 schedule 조회와 구분한다. 자기 run이 끝난 뒤 삭제한다 | CLI filtering 확인. 해당 Heartbeat run 중 삭제 오류 및 완료 후 삭제를 격리 재현, 정리 도구 9개 시험 통과. E9에서 같은 agent의 실제 idle 재개 1회 통과. run 종료·실제 삭제는 후속 영수증으로 별도 확인 |
 | 9장 보호 확인 | classic branch protection과 Rulesets/effective rules를 각각 확인한다. 보호 기능 미지원은 repo별 정책 결함으로 기록한다 | Kerbe classic404+effective active, private ops403 실측 |
 | 9장 local guard | 설치 여부·실효 경로와 guard 로직 통과를 분리한다. 기존 Kerbe 후보를 hash와 격리 시험으로 검토한다 | 12개 guard 시험 통과. ops 설치·LFS chaining·서버 강제 차단 검증은 별도 |
 | 9·13장 PR 복구 | gh pr edit의 projectCards 호환성 오류에는 승인된 동일 본문 REST PATCH와 GET 확인을 허용된 복구 경로로 둔다 | 같은 오류 재현 및 현재 PR 갱신 성공. 권한 거부 우회가 아님 |

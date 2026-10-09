@@ -18,7 +18,7 @@
 | ID | 항목·성공 기준 | 판정 | 증거·제한 |
 |---|---|---|---|
 | P0-H1 | 기존 daemon 연결 원인 식별·안전한 생성 | 통과(호스트 경로) | PID namespace로 기본 탐색 실패 재현, 기존 host PID에 연결·Heartbeat 생성. sandbox 연결 자체는 해결하지 않음. [E1](EVIDENCE.md#e1-heartbeat) |
-| P0-H2 | 자동 재개·중복 방지·만료·정리 | 부분 검증 | 22:20 tick의 active-run 거부 확인. 실행 중 자기 삭제의 결과 저장 오류를 격리 재현, 완료 후 삭제 개선 확인. idle 재개·실제 완료 후 정리는 다음 1회 시험 대상. [E8](EVIDENCE.md#e8-issue-3-재개와-heartbeat-정리) |
+| P0-H2 | 자동 재개·중복 방지·만료·정리 | idle 재개 1회 통과 / 전체 수명 부분 검증 | 427d614c가 23:48에 같은 Astra Max/native session을 idle에서 자동 재개. 앞선 active-run 거부와 구분. 현재 scheduled run 종료·삭제는 종료 후 helper 영수증 대기. [E9](EVIDENCE.md#e9-실제-idle-자동-재개-1회) |
 | P0-A1 | Codex 기본 모드·merge 실행 전 차단 | 과거 gh pr merge 형태 통과 / 현 Full Access 미통과 | 과거 Paseo on-request/workspace-write의 forbidden 거부. 현재 Full Access를 대체 증거로 쓰지 않음. [E2](EVIDENCE.md#e2-provider) |
 | P0-A2 | Claude Auto·merge deny 실제 적용 | 부분 검증 | gh pr merge 형태의 실행 전 거부 확인, deny rule인지 classifier인지 미확인. 정상 조회 거부 사례도 있어 writer 승인 안정성은 보류 |
 | P0-A3 | source 편집·commit·branch push·Draft PR | 경로별 통과 | 과거 Claude PR #2, 현재 Codex Full Access PR #1. Codex 기본 모드 원격 쓰기까지 동일 판정하지 않음 |
@@ -49,7 +49,7 @@ P0 미확인 경로를 제외한 문서 검토·격리 시험은 계속할 수 �
 
 ## 개선과 남은 결정
 
-- **적용·검증:** 읽기 전용 연결 진단, 이 Worktree의 env/runtime ignore, REST PR 본문 복구 경로. Issue #3에서 완료 후 Heartbeat 정리 보조 명령을 추가하고 독립 리뷰를 반영해 회귀 30개 통과. 실제 idle 재개·정리는 별도 판정한다.
+- **적용·검증:** 읽기 전용 연결 진단, 이 Worktree의 env/runtime ignore, REST PR 본문 복구 경로. Issue #3에서 완료 후 Heartbeat 정리 보조 명령을 추가하고 독립 리뷰를 반영해 회귀 30개 통과. 같은 agent의 실제 idle 자동 재개 1회도 확인했다. 현재 run 종료·삭제 완료는 PR의 후속 영수증으로 별도 판정한다.
 - **검증된 설치 후보:** scripts/k12-pre-push. 기존 Kerbe hook과 byte 동일. ops 설치·Git 공통 설정 변경은 사람이 해야 한다.
 - **정책 검토:** ops 보호 기능 확보 또는 private 유지 시 보호 공백 수용 여부, 기본 writer 경로, Kerbe bootstrap·S 채택, CI PR #2의 사람이 수행할 통합 순서와 새 후보 검증.
 - **아직 주장하지 않는 것:** 전체 P0/P1 완료, Full Access에서 merge 기술적 차단 보장, 모바일 판단 성공, runtime 전체 백업·격리, 자동 복구/정리 보장.

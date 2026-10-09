@@ -223,3 +223,34 @@ Medium 2건(정리/재개 판정 분리, 보조 프로세스 분리 실행)과 L
 S 후보 표 일치, 과거 삭제 경위, Paseo home 선택)을 반영했다. receipt의 `runOutcome`은
 no-run/failed-run/succeeded-one-run 등을 구분한다. 성공 run 하나여도 실제 idle 전환·자동 알림·동일 세션의
 증거 대조 전에는 idle 재개 통과가 아니다(`idleResumeVerifiedByReceipt:false`).
+
+## E9 실제 idle 자동 재개 1회
+
+Heartbeat `427d614c`, run `f398d566-5e92-447c-9020-f5edd6c3024d`가 같은 Supervisor를
+**idle에서 실제로 자동 재개했다.** [선별한 관찰 증거](evidence/heartbeat-idle-entry.json)는 다음 순서를 확인한다.
+
+| 시각 (2026-10-09 UTC, KST=+9시간) | 실제 관찰 |
+|---|---|
+| 14:45:37.682 | 같은 agent 대상 생성, maxRuns=1, nextRunAt=14:48, expiresAt=15:00:37.676 |
+| 14:46:53.539 | 기존 native 턴 task_complete (JSONL 937행) |
+| 14:46:53.938748 | 분리된 관찰 명령이 agent idle / run 0 / 같은 native session / Astra Max를 읽음 |
+| 14:48:00.662 | 등록된 schedule run 시작 |
+| 14:48:00.674 | 같은 native session의 새 task_started (939행) |
+| 14:48:00.702 | 해당 schedule ID/run ID/고유 marker의 자동 알림 수신 (941행) |
+
+Supervisor·workspace·native session·Worktree가 그대로이며 수동 send/새 agent로 재개하지 않았다.
+재개 후 model/thinking/mode는 `gpt-6-astra`/`max`/`full-access`, pending permissions는 없다.
+helper PID 718949는 이전 턴 종료 뒤에도 살아 있고 새 process session 및 지정 wrapper 명령이 일치한다.
+전체 세션·prompt·credential은 복사하지 않고 위 식별자·이벤트·시각만 보존했다.
+
+이것은 기존 host/Full Access 조건의 **idle 자동 진입 1회 통과**다. 22:20 active-run 거부 시험과 구분한다.
+daemon 재시작·sandbox·승인 정책 변경 뒤의 복원까지 보장하지 않는다.
+현재 scheduled run의 상태는 아직 running, endedAt은 null이다. run의 agentId도 `finishRun` 전이라 null이며
+실제 target/agent/native session과 별도로 기록했다. 이 단계에서 succeeded 또는 삭제 완료라고 쓰지 않는다.
+
+현재 턴을 종료한 뒤 이미 시작한 helper가 completed를 확인해 CLI로 삭제하고
+`.runtime/427d614c-cleanup.json` 및 [PR #1](https://github.com/shotgun1107/home-dev-ops/pull/1)에 영수증을 남긴다.
+실행 중 자기 삭제는 하지 않는다. 삭제·게시가 실패하면 성공으로 추정하지 않고 같은 PR에 ID·만료·남은 행동을 유지한다.
+
+코드/시험 6개 hash가 기존 30개 회귀 실측과 모두 일치해 테스트를 재실행하지 않았다.
+이 관찰 기록만으로 Provider 권한 보호·S/M·병렬·모바일 시험을 통과시키지 않는다.

@@ -1,9 +1,16 @@
 {
   "host": {
+    "observedAt": "2026-10-09T13:29:25.938433+00:00",
+    "cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+    "command": [
+      "python3",
+      "-B",
+      "scripts/paseo_preflight.py"
+    ],
     "exit": 0,
     "data": {
       "verdict": "reachable",
-      "local_daemon_report": "running",
+      "cli_local_daemon_raw": "running",
       "connection_verified": true,
       "recorded_pid": 2316,
       "recorded_pid_visible": true,
@@ -13,10 +20,20 @@
     }
   },
   "codexSandbox": {
+    "observedAt": "2026-10-09T13:29:25.938433+00:00",
+    "cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+    "command": [
+      "codex",
+      "sandbox",
+      "--",
+      "python3",
+      "-B",
+      "scripts/paseo_preflight.py"
+    ],
     "exit": 2,
     "data": {
       "verdict": "recorded-pid-not-visible",
-      "local_daemon_report": "stopped",
+      "cli_local_daemon_raw": "stopped",
       "connection_verified": false,
       "recorded_pid": 2316,
       "recorded_pid_visible": false,

@@ -1,0 +1,25 @@
+Observed UTC: 2026-10-09T13:29:25.938433+00:00
+Parent HEAD before review fixes: 2873a57a804c96225b774bc1c9f86dae87628db3
+Working-tree changes: Claude review fixes; script/test SHA-256 below identify tested bytes
+Versions: {"python": "Python 3.14.4", "git": "git version 2.53.0"}
+SHA-256: {"scripts/k12-pre-push": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc", "scripts/paseo_preflight.py": "4a0ef503a9f432fc612c95a869a05ad54360a0ebe9e8d274e2c5421abcaec7e0", "tests/test_paseo_preflight.py": "59a186bfd96fbfa12da78b758b438f4263267de5feb7fc90d88deef7474ab8ae", "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9"}
+Command: python3 -B -m unittest discover -s tests -p test_pre_push.py -v
+K12_GUARD_UNDER_TEST=/home/shotgun1107/workspace/kerbe/.git/hooks/pre-push
+Exit: 0
+test_branch_deletion_blocked (test_pre_push.PrePushGuardTests.test_branch_deletion_blocked) ... ok
+test_divergence_blocked (test_pre_push.PrePushGuardTests.test_divergence_blocked) ... ok
+test_empty_input (test_pre_push.PrePushGuardTests.test_empty_input) ... ok
+test_fast_forward_allowed (test_pre_push.PrePushGuardTests.test_fast_forward_allowed) ... ok
+test_main_creation_blocked (test_pre_push.PrePushGuardTests.test_main_creation_blocked) ... ok
+test_main_fast_forward_blocked (test_pre_push.PrePushGuardTests.test_main_fast_forward_blocked) ... ok
+test_mixed_refs_preserve_failure (test_pre_push.PrePushGuardTests.test_mixed_refs_preserve_failure) ... ok
+test_new_topic_allowed (test_pre_push.PrePushGuardTests.test_new_topic_allowed) ... ok
+test_rewind_blocked (test_pre_push.PrePushGuardTests.test_rewind_blocked) ... ok
+test_tags_outside_branch_policy (test_pre_push.PrePushGuardTests.test_tags_outside_branch_policy) ... ok
+test_unchanged_allowed (test_pre_push.PrePushGuardTests.test_unchanged_allowed) ... ok
+test_unknown_remote_object_blocked (test_pre_push.PrePushGuardTests.test_unknown_remote_object_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.049s
+
+OK

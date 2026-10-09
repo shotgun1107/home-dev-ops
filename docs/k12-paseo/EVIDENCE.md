@@ -1,7 +1,7 @@
 # 실측 근거와 결함 재현
 
 2026-10-09 KST 수집. 원문/세션 전문·인증값은 저장하지 않는다. 판정은 실행 범위에 한정한다.
-[실제 상태 JSON](evidence/live-snapshot.json), [18개 회귀 결과](evidence/regression.txt).
+[실제 상태 JSON](evidence/live-snapshot.json), [21개 회귀 결과](evidence/regression.txt), [기존 hook 직접 시험](evidence/existing-guard.txt). 실행 시각·Python/Git 버전·시험한 파일 hash를 출력에 보존했다.
 
 ## E1 Heartbeat
 
@@ -25,7 +25,8 @@ credential·CLI raw stderr 출력, start/restart/fallback 연결이 없다. 보�
 | 호스트 | running/reachable | reachable, exit 0 |
 | Codex sandbox | stopped/not_probed | recorded-pid-not-visible, exit 2, 승인된 host 대조 안내 |
 
-[실제 출력](evidence/paseo-preflight.json). 6개 회귀는 namespace 불일치, stale PID, 연결 미확인,
+작업 cwd는 이 ops Worktree다. host 명령은 `python3 -B scripts/paseo_preflight.py`, sandbox 명령은 `codex sandbox -- python3 -B scripts/paseo_preflight.py`다.
+[실제 출력](evidence/paseo-preflight.json). CLI 원문 판정은 `cli_local_daemon_raw`로 명시하고 전체 판정은 verdict/connection_verified를 따른다. CLI 부재·timeout·실행 오류·비정상 종료·잘못된 출력을 구분한다. 9개 회귀는 namespace 불일치, stale PID, 연결 미확인,
 정상 연결, 비밀 출력 차단, 잘못된 메타데이터/timeout을 검사한다. sandbox 접근 자체를 여는 변경은 없다.
 
 ### 생성·수명
@@ -115,7 +116,7 @@ base/head 모두 paseo.json/dev-setup 없음. uv.lock/frozen 설치 경로가 �
 
 user paseo/docker active, system docker.service/docker.socket disabled, Docker securityOptions rootless,
 Minecraft/geyser/viaproxy/backup 4개 healthy. docker/lxd 그룹 없음. 서비스·volume·prune 조작은 하지 않았다.
-관찰 시점 상태이며 내부 데이터 무결성 전체 검사는 아니다.
+[추가 관찰 증거](evidence/additional-observations.json)에 credential mode·system units·groups·Docker securityOptions를 저장했다. PID 2041(node)이 2316(Paseo supervisor)의 부모이고 2365(daemon)가 그 자식임을 ps로 확인했다. unit MainPID와 daemon PID가 다른 이유가 이 process chain이다. 관찰 시점 상태이며 내부 데이터 무결성 전체 검사는 아니다.
 
 Public Direct 추가 시험: /ws에 Authorization/cookie/hello auth 없이 한 번 연결,
 protocolVersion 1·hello_rejection capability 전송→hello.rejected/password_required, close 4401.
@@ -158,3 +159,10 @@ CL-P0:179는 과거 git lfs track/ls-files/env 진단 중 hook/config/.git/lfs �
 전체 git diff --check는 21개 공백 경고를 낸다. 원문을 변조하지 않고 신규 파일 검사를 분리했다.
 흔한 token/private-key 패턴 검사는 통과했지만 모든 비밀 탐지의 보장은 아니다.
 자료가 없는 모바일 판단·실제 Provider writer 교대·main 채택·파괴적 복구는 미실행으로 남긴다.
+
+## E7 이번 독립 리뷰와 CI 공백
+
+Claude reviewer b8e68af1은 고정 SHA `2873a57a804c96225b774bc1c9f86dae87628db3`를 읽기 전용으로 검토했다.
+[원문 대리 게시](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6081867053)는 GitHub GET으로 원문 일치를 확인했다.
+Medium 1건(Full Access 예외/보호 공백 명시), Low 8건을 반영했다. Plan 파일 쓰기 없이 종료·idle을 확인하고 writer가 수정했다.
+현 후보에는 GitHub checks가 없어 통과로 기록하지 않는다. [CI 제안](proposals/README.md)은 workflow patch로 보존하고 사람 적용 후 실행을 기다린다.

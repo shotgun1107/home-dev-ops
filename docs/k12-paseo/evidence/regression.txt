@@ -1,9 +1,17 @@
+Observed UTC: 2026-10-09T13:29:25.938433+00:00
+Parent HEAD before review fixes: 2873a57a804c96225b774bc1c9f86dae87628db3
+Working-tree changes: Claude review fixes; script/test SHA-256 below identify tested bytes
+Versions: {"python": "Python 3.14.4", "git": "git version 2.53.0"}
+SHA-256: {"scripts/k12-pre-push": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc", "scripts/paseo_preflight.py": "4a0ef503a9f432fc612c95a869a05ad54360a0ebe9e8d274e2c5421abcaec7e0", "tests/test_paseo_preflight.py": "59a186bfd96fbfa12da78b758b438f4263267de5feb7fc90d88deef7474ab8ae", "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9"}
 Command: python3 -B -m unittest discover -s tests -v
 Exit: 0
+test_bad_cli_output_is_not_reachable (test_paseo_preflight.PreflightTests.test_bad_cli_output_is_not_reachable) ... ok
 test_cli_failure_and_secret_output_are_not_echoed (test_paseo_preflight.PreflightTests.test_cli_failure_and_secret_output_are_not_echoed) ... ok
 test_malformed_metadata_and_timeout_remain_unconfirmed (test_paseo_preflight.PreflightTests.test_malformed_metadata_and_timeout_remain_unconfirmed) ... ok
+test_missing_cli_is_distinct (test_paseo_preflight.PreflightTests.test_missing_cli_is_distinct) ... ok
 test_namespace_invisible_pid_does_not_claim_stopped_or_running (test_paseo_preflight.PreflightTests.test_namespace_invisible_pid_does_not_claim_stopped_or_running) ... ok
 test_only_successful_connection_is_pass (test_paseo_preflight.PreflightTests.test_only_successful_connection_is_pass) ... ok
+test_process_execution_error_is_distinct (test_paseo_preflight.PreflightTests.test_process_execution_error_is_distinct) ... ok
 test_stale_pid_is_inconclusive_too (test_paseo_preflight.PreflightTests.test_stale_pid_is_inconclusive_too) ... ok
 test_visible_process_without_probe_is_not_success (test_paseo_preflight.PreflightTests.test_visible_process_without_probe_is_not_success) ... ok
 test_branch_deletion_blocked (test_pre_push.PrePushGuardTests.test_branch_deletion_blocked) ... ok
@@ -20,6 +28,6 @@ test_unchanged_allowed (test_pre_push.PrePushGuardTests.test_unchanged_allowed) 
 test_unknown_remote_object_blocked (test_pre_push.PrePushGuardTests.test_unknown_remote_object_blocked) ... ok
 
 ----------------------------------------------------------------------
-Ran 18 tests in 0.053s
+Ran 21 tests in 0.052s
 
 OK

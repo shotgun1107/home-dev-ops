@@ -17,6 +17,8 @@ class PreflightTests(unittest.TestCase):
         result = preflight.assess({"localDaemon": "stopped", "connectedDaemon": "not_probed"}, 2316, False)
         self.assertEqual(result["verdict"], "recorded-pid-not-visible")
         self.assertFalse(result["connection_verified"])
+        self.assertEqual(result["cli_local_daemon_raw"], "stopped")
+        self.assertNotIn("local_daemon_report", result)
 
     def test_stale_pid_is_inconclusive_too(self):
         result = preflight.assess({}, 99999999, False)
@@ -40,6 +42,7 @@ class PreflightTests(unittest.TestCase):
                 result = preflight.diagnose(root)
             self.assertNotIn("DO-NOT-EMIT", json.dumps(result))
             self.assertFalse(result["connection_verified"])
+            self.assertEqual(result["cli_result"], "nonzero-exit")
             self.assertEqual(run.call_args.args[0], ["paseo", "--home", folder, "status", "--json"])
 
     def test_malformed_metadata_and_timeout_remain_unconfirmed(self):
@@ -50,6 +53,30 @@ class PreflightTests(unittest.TestCase):
                 result = preflight.diagnose(root)
             self.assertEqual(result["verdict"], "unconfirmed")
             self.assertIsNone(result["recorded_pid"])
+            self.assertEqual(result["cli_result"], "timeout")
+
+    def test_missing_cli_is_distinct(self):
+        with tempfile.TemporaryDirectory(prefix="k12-preflight-") as folder:
+            with patch.object(preflight.subprocess, "run", side_effect=FileNotFoundError):
+                result = preflight.diagnose(Path(folder))
+            self.assertEqual(result["cli_result"], "unavailable")
+            self.assertFalse(result["connection_verified"])
+
+    def test_bad_cli_output_is_not_reachable(self):
+        for output in ("not json", "[]"):
+            with self.subTest(output=output), tempfile.TemporaryDirectory(prefix="k12-preflight-") as folder:
+                fake = subprocess.CompletedProcess([], 0, output, "")
+                with patch.object(preflight.subprocess, "run", return_value=fake):
+                    result = preflight.diagnose(Path(folder))
+                self.assertEqual(result["cli_result"], "invalid-output")
+                self.assertFalse(result["connection_verified"])
+
+    def test_process_execution_error_is_distinct(self):
+        with tempfile.TemporaryDirectory(prefix="k12-preflight-") as folder:
+            with patch.object(preflight.subprocess, "run", side_effect=PermissionError):
+                result = preflight.diagnose(Path(folder))
+            self.assertEqual(result["cli_result"], "execution-error")
+            self.assertFalse(result["connection_verified"])
 
 
 if __name__ == "__main__":

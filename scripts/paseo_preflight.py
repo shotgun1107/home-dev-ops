@@ -22,7 +22,7 @@ def assess(status, recorded_pid, pid_visible):
         verdict = "unconfirmed"
     return {
         "verdict": verdict,
-        "local_daemon_report": reported if reported in ("running", "stopped") else "unknown",
+        "cli_local_daemon_raw": reported if reported in ("running", "stopped") else "unknown",
         "connection_verified": reachable,
         "recorded_pid": recorded_pid,
         "recorded_pid_visible": pid_visible,
@@ -43,20 +43,29 @@ def diagnose(paseo_home):
         pass
     pid_visible = recorded_pid is not None and Path("/proc", str(recorded_pid)).is_dir()
     status = {}
-    cli_result = "unavailable"
+    cli_result = "failed"
     try:
         result = subprocess.run(
             ["paseo", "--home", str(paseo_home), "status", "--json"],
             text=True, capture_output=True, timeout=15,
         )
-        parsed = json.loads(result.stdout)
-        if result.returncode == 0 and isinstance(parsed, dict):
-            status = parsed
-            cli_result = "ok"
+        if result.returncode != 0:
+            cli_result = "nonzero-exit"
         else:
-            cli_result = "failed"
-    except (OSError, ValueError, subprocess.TimeoutExpired):
-        cli_result = "failed"
+            parsed = json.loads(result.stdout)
+            if isinstance(parsed, dict):
+                status = parsed
+                cli_result = "ok"
+            else:
+                cli_result = "invalid-output"
+    except FileNotFoundError:
+        cli_result = "unavailable"
+    except subprocess.TimeoutExpired:
+        cli_result = "timeout"
+    except OSError:
+        cli_result = "execution-error"
+    except ValueError:
+        cli_result = "invalid-output"
     return {**assess(status, recorded_pid, pid_visible),
             "pid_metadata": metadata_state, "cli_result": cli_result}
 

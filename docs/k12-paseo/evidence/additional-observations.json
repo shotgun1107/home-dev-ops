@@ -1,0 +1,25 @@
+{
+  "observedAt": "2026-10-09T13:29:25.938433+00:00",
+  "credentialFileModes": {
+    "~/.paseo/config.json": "0o600",
+    "~/.paseo/local-credential": "0o600",
+    "~/.paseo/daemon-keypair.json": "0o600",
+    "~/.config/gh/hosts.yml": "0o600"
+  },
+  "rootfulDocker": {
+    "exit": 1,
+    "stdout": "disabled\ndisabled"
+  },
+  "rootlessSecurityOptions": {
+    "exit": 0,
+    "stdout": "[\"name=seccomp,profile=builtin\",\"name=rootless\",\"name=cgroupns\"]"
+  },
+  "groups": {
+    "exit": 0,
+    "stdout": "shotgun1107 adm cdrom sudo dip plugdev users"
+  },
+  "paseoProcessChain": {
+    "exit": 0,
+    "stdout": "PID    PPID COMMAND\n   2041    1962 node\n   2316    2041 Paseo Superviso\n   2365    2316 Paseo Daemon"
+  }
+}

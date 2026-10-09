@@ -12,14 +12,14 @@
 소유권·범위·종료 조건을 확인한 경우에만 허용된다. 새 Supervisor나 중복 작업 공간을 만들지 않는다.
 
 Full Access는 이번 사용자의 명시적 선택에 따른 실행 조건이다.
-v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다.
+v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. ops는 서버 보호 불가·hook 미설치이며 Full Access의 Provider 차단 미검증이다. 현재 보고·격리 개선 경로는 사용자가 선택한 예외로서 운영 규칙 준수에 의존하며 P0-A 미통과로 남긴다. AI merge 활성화 승인은 아니다.
 권한·인증·Ruleset·공통 Git hook 설정은 agent가 임의 변경하지 않는다.
 
 ## 검증을 마친 수정안
 
 | 원문 관련 항목 | 변경 내용 | 근거와 적용 한계 |
 |---|---|---|
-| 7·16장 권한/복구 | daemon 연결 오류에서 sandbox와 host 가시성을 먼저 대조한다. CLI stopped 하나로 start/restart하지 않는다 | E1 실제 namespace 차이·host 연결·진단 도구 6개 회귀. sandbox 접근 개방은 아님 |
+| 7·16장 권한/복구 | daemon 연결 오류에서 sandbox와 host 가시성을 먼저 대조한다. CLI stopped 하나로 start/restart하지 않는다 | E1 실제 namespace 차이·host 연결·진단 도구 9개 회귀. sandbox 접근 개방은 아님 |
 | 13·18장 자동 재개 | Heartbeat 생성/실제 주기 실행/idle 재개/삭제를 구분해 기록한다. agent-target 조회를 일반 schedule 조회와 구분한다 | 0.10.3 CLI filtering 원인 확인·생성/삭제 성공. idle 자동 복원은 미확인 |
 | 9장 보호 확인 | classic branch protection과 Rulesets/effective rules를 각각 확인한다. 보호 기능 미지원은 repo별 정책 결함으로 기록한다 | Kerbe classic404+effective active, private ops403 실측 |
 | 9장 local guard | 설치 여부·실효 경로와 guard 로직 통과를 분리한다. 기존 Kerbe 후보를 hash와 격리 시험으로 검토한다 | 12개 guard 시험 통과. ops 설치·LFS chaining·서버 강제 차단 검증은 별도 |
@@ -41,6 +41,7 @@ private ops 보호 API403은 반대로 로컬 구현 수정만으로 해결되�
 | Claude Auto | 읽기 전용 조회도 거부된 기록, merge 차단 결정 주체 불명확. Auto를 항상 무인 실행 가능하다고 표현하지 않는다 | 사람이 사용할 모드/지침 loading을 확인하고 지정 무해한 호출에 실제 거부 주체를 확보. deny 변경 없이 기록 부족부터 해결 |
 | Codex 기본 실행 | 기본 workspace-write의 편집/차단 증거는 있으나 현 Full Access 원격 쓰기를 기본 모드 통과로 승계할 수 없음 | 기본 경로를 채택할 때 branch push/PR의 필요한 명령별 승인·네트워크 조건 확인. broad gh/shell allow를 넣지 않음 |
 | ops 서버 보호 | private 유지+현재 계정 기능으로는 보호 API 사용 불가 | Pro 등 보호 기능 확보, 또는 private 유지와 보호 공백의 명시적 위험 수용을 사람 결정. public 전환은 자동 제안 채택하지 않음 |
+| ops CI | 코드가 포함된 이 PR의 check-runs가 비어 있음 | 준비한 workflow patch를 사람이 별도 branch/PR로 적용하고 실제 CI 성공을 후보 SHA에 연결. 로컬 21개 통과로 대신하지 않음 |
 | guard 배포 | 검증 후보가 있어도 ops에는 미설치 | 공통 Git 영향·기존 hook/LFS 연결 검토 후 사람이 설치하고 task 경로에서 재검증 |
 | Kerbe setup | .venv 수동 경로는 실측, base의 자동 setup은 없음 | 경량 Python repo에서 수동 on-demand 유지 또는 최소 dev-setup/paseo.json 도입을 선택. 후자를 도입하면 별도 chore PR 검증·사람 merge 후 새 Worktree에서 시험 |
 | A/B 조건 | 기존 실험은 승인 모드/거부 하네스가 달라 능력 비교 불가 | 동일 작업/기준 SHA/권한 조건/종료 조건으로 별도 설계. P1 독립 결과 병렬 시험과 구분 |

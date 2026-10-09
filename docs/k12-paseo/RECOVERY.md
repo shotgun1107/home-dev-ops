@@ -21,7 +21,7 @@ Plan이라는 이름도 파일시스템 read-only 보장으로 사용하지 않�
 
 ## 2. Heartbeat
 
-- 같은 Supervisor/목표의 기존 Heartbeat를 먼저 확인한다. 일반 `schedule ls/inspect`는 0.10.3에서 agent-target Heartbeat를 숨긴다.
+- 같은 Supervisor/목표의 기존 Heartbeat를 먼저 확인한다. 0.10.3의 일반 `schedule inspect`는 agent-target을 제외함을 확인했다. 일반 ls/logs도 Heartbeat 부재 판단 근거로 사용하지 않는다.
 - 현재 agent의 schedule 파일에서 id/cadence/target/expiry/maxRuns/runs만 읽거나 해당 버전의 검증된 Heartbeat 조회 경로를 사용한다. 파일 직접 편집 금지.
 - 허용된 연결 경로에서만 생성한다. 이 미션은 20분, Asia/Seoul, 24시간, 72회 상한을 사용했다.
 - 생성 응답과 저장된 target이 현재 agent인지 확인한다. 실행 기록이 없으면 자동 재개 검증 완료로 쓰지 않는다.
@@ -47,7 +47,7 @@ gh api --method GET repos/shotgun1107/home-dev-ops/pulls/1 \
   --jq '{body,draft,head:.head.sha}'
 ```
 
-파일에는 실제 줄바꿈을 유지한다. PATCH 전/후 대상 repo/번호/HEAD를 확인한다.
+위 `/tmp/k12-pilot-pr-body.md`는 이번 실행에서 사용한 파일 예시다. 새 작업에서는 `mktemp`로 별도 파일을 만들고 소유권·내용을 확인한다. 파일에는 실제 줄바꿈을 유지한다. PATCH 전/후 대상 repo/번호/HEAD를 확인한다.
 실패가 권한 정책의 거부라면 이 경로를 우회 수단으로 사용하지 않는다.
 현재 사례는 GraphQL 호환성 오류이며 기존 자격증명으로 PATCH/GET이 성공했다.
 전역 gh 업그레이드는 이 복구의 필요 조건이 아니다.

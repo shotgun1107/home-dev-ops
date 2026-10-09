@@ -537,4 +537,6 @@ Node47·수동 mock15는 hash 일치로 재사용했다. 기존115개 bundle을 
 [반례·harness 실패·읽기 한계·미확인](INDEPENDENT_REVIEW.md),
 [case ID·SHA·hash·시각·review 게시 영수증](evidence/independent-review.json),
 [최신 사람 적용 제안](proposals/README.md)을 함께 본다. 초기 reviewer는 과거 문맥을 재사용했고
-전체 source를 새로 읽거나 시험을 실행하지 않았다. 후속 리뷰 결과는 PR handoff와 같은 증거에 기록한다.
+전체 source를 새로 읽거나 시험을 실행하지 않았다. 후속에는6개 script 전체를 새로 읽었고,
+최종 [773a87b… delta](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089778176)는 새 Low 이상0·Info1이다.
+Info의 Heartbeat-aware 조회 선행 조건을 문서에 명시했다. reviewer의 시험 실행은0이다.

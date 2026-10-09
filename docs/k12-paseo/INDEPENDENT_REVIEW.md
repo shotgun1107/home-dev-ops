@@ -78,7 +78,11 @@ receipt는 승인·작업 성공·idle 자동 재개의 증명이 아니며 기�
 
 [선별 증거](evidence/independent-review.json)에 full SHA,125개 case ID·hash·실행 시각,
 전후 반례, 초기 harness 실패, reviewer 원문 hash·게시 영수증과 재사용 조건을 보존한다.
-후속 고정 SHA 재리뷰 결과는 이 기록과 PR handoff에 추가한다. 그 전에는 재리뷰 통과를 주장하지 않는다.
+최종 고정 SHA `773a87bbb576f57194c42025183f35316a1b477b`의 [delta 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089778176)은
+기존 Low를 명시적 보존 정책으로 해소, 새 Critical/High/Medium/Low0·Info1이다. Info의 조회 경로는
+RECOVERY에서 agent-target 포함 검증이 선행돼야 하며 미확인이면 보존/차단하도록 명확히 했다.
+그 후속은 리뷰 게시 영수증·판정·조회 설명뿐이며 source/tests/bundle bytes는 검증·리뷰 SHA와 같다.
+최종 문서 delta를 다시 독립 리뷰했다고 주장하지 않는다.
 
 ## 남은 경계와 사람 결정
 

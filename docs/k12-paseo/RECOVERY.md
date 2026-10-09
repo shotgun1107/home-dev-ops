@@ -123,11 +123,16 @@ REVIEW_INDEPENDENT 보강 후보는 schedule의 leaf symlink/FIFO를 거부하�
 
 `schedule-too-large`는 정상 prompt/agent output으로도 발생한다.64KiB를 넘는 record의 자동 삭제는
 지원하지 않으며 원본은 보존한다. schedule JSON을 잘라내거나 cap·caller 환경을 바꾸어 재시도하지 않는다.
-기존 선별 영수증과 정상 daemon 조회에서 전체 prompt/output을 출력하지 않고 schedule/run/full agent ID,
+기존 선별 영수증과 **agent-target Heartbeat를 포함한다고 별도 검증된 정상 조회 경로**에서
+전체 prompt/output을 출력하지 않고 schedule/run/full agent ID,
 maxRuns=1·completed 및 실제 native/하위 실행 종료를 대조한다. 그 근거를 확보한 **같은 agent의 승인된
 후속 턴**에서만 정상 `paseo heartbeat delete <정확한 ID> --json` 경로를 검토하고 응답·record 부재를 확인한다.
 자료를 안전하게 확인할 수 없으면 삭제하지 않고 ID·관찰 크기·마지막 시각·미확인 사유를 남긴다.
 이번 검증은70,000-byte 합성 output의 보존/오류 구분뿐이며 실제 대용량 record 삭제는 미실행이다.
+앞서 확인한 일반 `schedule inspect/ls/logs`의 필터 경로로 Heartbeat 부재를 추정하지 않는다.
+이번에는 대용량 record를 안전하게 선별 조회하는 새 경로를 검증하지 않았다.64KiB helper를
+다시 호출하거나 파일 전체를 출력하는 대안도 아니다. 필요한 조회 증거가 없으면 record를 유지하고
+안전한 조회·삭제 방법의 사람 검토를 대기한다. completed만으로 native/하위 실행 종료를 추정하지 않는다.
 
 ## 3. Git·PR
 

@@ -37,7 +37,7 @@
 
 | ID | 항목·성공 기준 | 판정 | 증거·제한 |
 |---|---|---|---|
-| P0-V3 | 최신 ops 독립 리뷰·반례 검증 | 전체 source 재리뷰·보정/125개 통과 / 최종 delta 대기 | 운영상 readonly 별도 Claude. CI 완료 전 exit0·FIFO·receipt 자료형을 합성 재현·보정. 실제 서비스/보호/hosted 검증으로 확대하지 않음. [E18](EVIDENCE.md#e18-review_independent-고정-sha-독립-검토) |
+| P0-V3 | 최신 ops 독립 리뷰·반례 검증 | 독립 전체 source/최종 delta 통과(정적)·125개 격리 통과 | 운영상 readonly 별도 Claude. CI 완료 전 exit0·FIFO·receipt 자료형을 합성 재현·보정. 실제 서비스/보호/hosted 검증으로 확대하지 않음. [E18](EVIDENCE.md#e18-review_independent-고정-sha-독립-검토) |
 | P0-F1 | handoff 중단·PID 가시성·job 재대조 | 격리 통과 / 실운영 자동 복구 미적용 | Python 신규29+기존 preflight9·설치 PID Node9. 원자적 발행 전후 child 종료, dirty/SHA/소유권/실행/부작용 공백 차단. offline 판정은 lease/실행 승인이 아님. [E15](EVIDENCE.md#e15-p0_recovery-야간-실패-주입) |
 | P0-H1 | 기존 daemon 연결 원인 식별·안전한 생성 | 통과(호스트 경로) | PID namespace로 기본 탐색 실패 재현, 기존 host PID에 연결·Heartbeat 생성. sandbox 연결 자체는 해결하지 않음. [E1](EVIDENCE.md#e1-heartbeat) |
 | P0-H2 | 자동 재개·중복 방지·만료·정리 | 실제1회 수명 통과 / 장기·만료 격리 검증 / 실24h 미실행 | 427d614c의 실제 idle→succeeded→삭제 영수증 재사용. expiry는 실행 강제 종료가 아니고 failed도maxRuns를 소모함. 설치본 stale tick 결함은 H3에 분리. [E9](EVIDENCE.md#e9-실제-idle-자동-재개-1회), [E14](EVIDENCE.md#e14-p0_heartbeat-야간-격리-검증) |

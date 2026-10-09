@@ -45,6 +45,9 @@ verify/import·같은 full SHA 복원을 확인했다. prerequisite는 f069ac3�
 `c0d2cd0d7d1f38bc8746cacd6baed9fbc8435a2e`에 보존했다. 최신 후보는 대용량 record의
 오류 구분·보존 subcase를 추가한 뒤 같은125개를 다시 통과했다. 자동 대용량 삭제를 지원한 변경은 아니다.
 
+최종 source/전달 후보의 [고정 SHA 독립 delta](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089778176)는 새 Low 이상0이다.
+이 결과는 정적 리뷰이며 최신 hosted run이나 운영 보호 통과가 아니다.
+
 ## 과거 OPS_CI 기록 — 115개 후보 보존
 
 아래5d7d1e1… bundle과 당시 절차는 재현/역사 확인용이다. 현재 최신 적용 후보로 선택하지 않는다.

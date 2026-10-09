@@ -507,3 +507,14 @@ Python mock writer2개만 띄웠다. 실제 Paseo/Provider 세션은 만들지 �
 기존 Python115 source/tests는 OPS_CI hash와 동일해 재사용했으며 새14개와 hosted 성공으로 합산하지 않았다.
 이 수동 probe는 기존 CI manifest 밖의 독립 실험이며 CI gate를 바꾸지 않았다.
 M main 선행·정식 P1 진입은 그대로 남는다. Kerbe·서비스·설정·권한·원격 CI branch·main은 건드리지 않았다.
+
+후속 source/cwd 점검: 앞선 task의 데이터는 독립이었지만 공통 고정 harness와 기본 cwd 상속에
+의존했다. 별도 source 사본 계약 시험15개 중1개 실패를 확인하고 각 Git에 worker.py를 저장,
+child cwd도 task로 지정했다. ec7e809…에서15개 OK 뒤 세 번째 새 pair를 실행했다.
+최종 실제 PID cwd·reported source·사본 hash/inode 일치, 겹침 하한20.800057초,
+B 대기 중 A 완료, 각 local commit·clean·두 child 회수까지 확인했다.
+수동 mock 결정은 전체2+2+2=6건이며 round별 지연은 비교 성능 지표가 아니다.
+
+[초기 독립 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089315397)의 Low1은 관찰한2 writer를
+전역 상한 강제로 읽을 수 있다는 표현이었다. 같은 task flock과 이번 두 개 launch 관찰만
+검증했다고 고쳤으며 전역 상한 자동 강제는 미검증이다. 실제4 writer 반례는 실행하지 않았다.

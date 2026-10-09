@@ -1,13 +1,13 @@
 {
   "taskId": "P1_PARALLEL_ISOLATED",
   "baseSha": "646ffd91d5eab7213f14a079415d53d327374a4b",
-  "implementationSha": "135c10c81b87628a8d781ffcb0083eb8806fabe2",
+  "implementationSha": "ec7e809f37a587621384338b04ddbc7eaa80ddf7",
   "formalP1Parallel": "blocked: saved M main-adoption prerequisite unconfirmed; no Kerbe access",
   "realPaseoProviderRun": false,
   "contract": {
-    "runId": "566a0bb0-c999-40ff-81f2-396eba2d10de",
-    "startedAt": "2026-10-09T21:01:27.485204+00:00",
-    "endedAt": "2026-10-09T21:01:27.796394+00:00",
+    "runId": "3edb473d-5eaf-4646-a8fd-11be017e7c7d",
+    "startedAt": "2026-10-09T21:08:21.267545+00:00",
+    "endedAt": "2026-10-09T21:08:21.599597+00:00",
     "command": [
       "python3",
       "-I",
@@ -16,13 +16,13 @@
       "--self-test"
     ],
     "python": "Python 3.14.4",
-    "probeSha256": "c75ce08a6b8d8bf73f7a3a2f4c76eef4879c3ac4546611b402a5ed2c43263d67",
-    "tests": 14,
-    "passed": 14,
+    "probeSha256": "2d85a6ecc329700795daaa9d6b3072be5f0c7e899c68d0de55db6acd16471dd5",
+    "tests": 15,
+    "passed": 15,
     "failed": 0,
     "skipped": 0,
     "exit": 0,
-    "logSha256": "fbfe3fe370374f9c00b978c7860b6201164baf438c44f1819282e0e5f15a1b4a",
+    "logSha256": "b0181f4b6ae9c7f38c7e9f0d4b891d952f6ceb822c942074a23b195616521572",
     "cases": [
       "test_denied_worker_does_not_write_or_commit_result",
       "test_deny_is_valid_but_not_allow",
@@ -35,6 +35,7 @@
       "test_no_implicit_actor_or_decision",
       "test_publication_refuses_to_replace_existing_decision",
       "test_separate_roots_have_separate_locks_and_git_dirs",
+      "test_task_has_its_own_immutable_worker_source",
       "test_task_path_and_branch_must_match",
       "test_unknown_task_is_not_executed",
       "test_worker_without_decision_times_out_without_result"
@@ -294,7 +295,10 @@
         "taskContextQuestions": 0,
         "globalRulesChanged": 0,
         "successfulExtraWriterAcquisitions": 0,
-        "rejectedContenderProcesses": 1
+        "rejectedContenderProcesses": 1,
+        "globalWriterCapEnforced": false,
+        "globalWriterCapTested": false,
+        "countScope": "observed in this one launch; launches were sequential; same-task lease rejection only"
       }
     },
     {
@@ -596,18 +600,344 @@
         "taskContextQuestions": 0,
         "globalRulesChanged": 0,
         "successfulExtraWriterAcquisitions": 0,
-        "rejectedContenderProcesses": 1
+        "rejectedContenderProcesses": 1,
+        "globalWriterCapEnforced": false,
+        "globalWriterCapTested": false,
+        "countScope": "observed in this one launch; launches were sequential; same-task lease rejection only"
+      }
+    },
+    {
+      "round": "source-isolated",
+      "implementationSha": "ec7e809f37a587621384338b04ddbc7eaa80ddf7",
+      "launch": {
+        "root": "/tmp/k12-parallel-mock-1hdbs2ow",
+        "roots": [
+          "/tmp/k12-parallel-mock-1hdbs2ow/counts",
+          "/tmp/k12-parallel-mock-1hdbs2ow/unique-names"
+        ],
+        "startedAt": "2026-10-09T21:08:30.042362+00:00",
+        "probeSha256": "2d85a6ecc329700795daaa9d6b3072be5f0c7e899c68d0de55db6acd16471dd5",
+        "deadlineSeconds": 120,
+        "pids": [
+          904415,
+          904416
+        ]
+      },
+      "parent": {
+        "endedAt": "2026-10-09T21:09:07.652575+00:00",
+        "exitCodes": [
+          0,
+          0
+        ],
+        "allOwnedChildrenReaped": true
+      },
+      "observations": {
+        "bothPending": {
+          "observedAt": "2026-10-09T21:08:42.874324+00:00",
+          "monotonic": 220112.281090743,
+          "activeOwnedWriters": 2,
+          "tasks": [
+            {
+              "task": {
+                "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+                "writerId": "1b313e8a-7ee8-44de-81df-214541269ce5",
+                "kind": "counts",
+                "input": [
+                  "ok",
+                  "failed",
+                  "ok",
+                  "waiting"
+                ],
+                "root": "/tmp/k12-parallel-mock-1hdbs2ow/counts",
+                "branch": "mock/counts"
+              },
+              "request": {
+                "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+                "writerId": "1b313e8a-7ee8-44de-81df-214541269ce5",
+                "requestId": "permission-df17b6ed-6b13-4471-9a9c-9c2d6e5cb9a2",
+                "operation": {
+                  "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+                  "kind": "write-result-and-local-commit",
+                  "root": "/tmp/k12-parallel-mock-1hdbs2ow/counts",
+                  "output": "result.json",
+                  "resultHash": "97e854a134aef160cff77e06972672be24e6025cdc3fbd8caadd5eade7e96aac"
+                },
+                "operationHash": "6ddc6b6313bb792f07c0d7c6a329ff4304f221b525e9af5d90290ae8dfa8a9d4",
+                "createdAt": "2026-10-09T21:08:30.094684+00:00",
+                "createdMonotonic": 220099.501431685
+              },
+              "started": {
+                "pid": 904415,
+                "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+                "writerId": "1b313e8a-7ee8-44de-81df-214541269ce5",
+                "state": "waiting-mock-decision",
+                "startedAt": "2026-10-09T21:08:30.094697+00:00",
+                "monotonic": 220099.501436374,
+                "cwd": "/tmp/k12-parallel-mock-1hdbs2ow/counts",
+                "workerSource": "/tmp/k12-parallel-mock-1hdbs2ow/counts/worker.py"
+              },
+              "actualOwnedPidCwd": "/tmp/k12-parallel-mock-1hdbs2ow/counts",
+              "head": "17f2d87986ab7ae0fa8c0dfa90be84fe070972a8",
+              "gitDirInode": 49406,
+              "runtimeInode": 49404,
+              "sourceInode": 49422
+            },
+            {
+              "task": {
+                "taskId": "mock-b1f6d737-1a31-4618-9013-a65b7d13e80e",
+                "writerId": "8d05b6ae-da8d-4342-ba65-14092b7610fd",
+                "kind": "unique-names",
+                "input": [
+                  "beta",
+                  "alpha",
+                  "alpha"
+                ],
+                "root": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names",
+                "branch": "mock/unique-names"
+              },
+              "request": {
+                "taskId": "mock-b1f6d737-1a31-4618-9013-a65b7d13e80e",
+                "writerId": "8d05b6ae-da8d-4342-ba65-14092b7610fd",
+                "requestId": "permission-fe2dcf22-ad62-40a5-8b32-e2985f591e98",
+                "operation": {
+                  "taskId": "mock-b1f6d737-1a31-4618-9013-a65b7d13e80e",
+                  "kind": "write-result-and-local-commit",
+                  "root": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names",
+                  "output": "result.json",
+                  "resultHash": "b0bf75e6646cbdfeec6709c5daddc1353a8e368101a91a751d2c0d188e9815c1"
+                },
+                "operationHash": "431e77e2b787f782353e3831845d8a7917be8361ffd5feb6ced29f2da77224e8",
+                "createdAt": "2026-10-09T21:08:30.092789+00:00",
+                "createdMonotonic": 220099.499538286
+              },
+              "started": {
+                "pid": 904416,
+                "taskId": "mock-b1f6d737-1a31-4618-9013-a65b7d13e80e",
+                "writerId": "8d05b6ae-da8d-4342-ba65-14092b7610fd",
+                "state": "waiting-mock-decision",
+                "startedAt": "2026-10-09T21:08:30.092804+00:00",
+                "monotonic": 220099.499542894,
+                "cwd": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names",
+                "workerSource": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names/worker.py"
+              },
+              "actualOwnedPidCwd": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names",
+              "head": "2c0fd777a7915c0794bb80edb86cfaf135bbd5ff",
+              "gitDirInode": 49451,
+              "runtimeInode": 49449,
+              "sourceInode": 49467
+            }
+          ],
+          "duplicateAttempt": {
+            "exit": 75,
+            "stdout": "{\"state\": \"writer-busy\", \"exit\": 75}"
+          }
+        },
+        "aWhileBPending": {
+          "observedAt": "2026-10-09T21:08:58.699522+00:00",
+          "monotonic": 220128.106273168,
+          "aCompleted": {
+            "state": "completed",
+            "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+            "writerId": "1b313e8a-7ee8-44de-81df-214541269ce5",
+            "head": "362c9674711699e00debf75fb1e6d192f98c5afe",
+            "resultHash": "97e854a134aef160cff77e06972672be24e6025cdc3fbd8caadd5eade7e96aac",
+            "clean": true,
+            "endedAt": "2026-10-09T21:08:50.894745+00:00",
+            "monotonic": 220120.301493715,
+            "requestId": "permission-df17b6ed-6b13-4471-9a9c-9c2d6e5cb9a2"
+          },
+          "bStillPending": true,
+          "bStillAlive": true,
+          "bActualCwd": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names",
+          "bHeadUnchanged": "2c0fd777a7915c0794bb80edb86cfaf135bbd5ff",
+          "bResultExists": false
+        }
+      },
+      "tasks": [
+        {
+          "task": {
+            "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+            "writerId": "1b313e8a-7ee8-44de-81df-214541269ce5",
+            "kind": "counts",
+            "input": [
+              "ok",
+              "failed",
+              "ok",
+              "waiting"
+            ],
+            "root": "/tmp/k12-parallel-mock-1hdbs2ow/counts",
+            "branch": "mock/counts"
+          },
+          "request": {
+            "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+            "writerId": "1b313e8a-7ee8-44de-81df-214541269ce5",
+            "requestId": "permission-df17b6ed-6b13-4471-9a9c-9c2d6e5cb9a2",
+            "operation": {
+              "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+              "kind": "write-result-and-local-commit",
+              "root": "/tmp/k12-parallel-mock-1hdbs2ow/counts",
+              "output": "result.json",
+              "resultHash": "97e854a134aef160cff77e06972672be24e6025cdc3fbd8caadd5eade7e96aac"
+            },
+            "operationHash": "6ddc6b6313bb792f07c0d7c6a329ff4304f221b525e9af5d90290ae8dfa8a9d4",
+            "createdAt": "2026-10-09T21:08:30.094684+00:00",
+            "createdMonotonic": 220099.501431685
+          },
+          "decision": {
+            "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+            "writerId": "1b313e8a-7ee8-44de-81df-214541269ce5",
+            "requestId": "permission-df17b6ed-6b13-4471-9a9c-9c2d6e5cb9a2",
+            "operationHash": "6ddc6b6313bb792f07c0d7c6a329ff4304f221b525e9af5d90290ae8dfa8a9d4",
+            "decision": "allow",
+            "actor": "supervisor",
+            "reviewedAt": "2026-10-09T21:08:50.863283+00:00"
+          },
+          "started": {
+            "pid": 904415,
+            "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+            "writerId": "1b313e8a-7ee8-44de-81df-214541269ce5",
+            "state": "waiting-mock-decision",
+            "startedAt": "2026-10-09T21:08:30.094697+00:00",
+            "monotonic": 220099.501436374,
+            "cwd": "/tmp/k12-parallel-mock-1hdbs2ow/counts",
+            "workerSource": "/tmp/k12-parallel-mock-1hdbs2ow/counts/worker.py"
+          },
+          "completed": {
+            "state": "completed",
+            "taskId": "mock-b9acdcb4-b725-4188-970f-5ab272a14f22",
+            "writerId": "1b313e8a-7ee8-44de-81df-214541269ce5",
+            "head": "362c9674711699e00debf75fb1e6d192f98c5afe",
+            "resultHash": "97e854a134aef160cff77e06972672be24e6025cdc3fbd8caadd5eade7e96aac",
+            "clean": true,
+            "endedAt": "2026-10-09T21:08:50.894745+00:00",
+            "monotonic": 220120.301493715,
+            "requestId": "permission-df17b6ed-6b13-4471-9a9c-9c2d6e5cb9a2"
+          },
+          "result": {
+            "failed": 1,
+            "ok": 2,
+            "waiting": 1
+          },
+          "headParent": "17f2d87986ab7ae0fa8c0dfa90be84fe070972a8",
+          "tree": "f040e6ab28d2981a4a04a629c5b63c06ff097db3",
+          "gitCommonDir": "/tmp/k12-parallel-mock-1hdbs2ow/counts/.git",
+          "trackedFiles": [
+            ".gitignore",
+            "result.json",
+            "task.json",
+            "worker.py"
+          ],
+          "clean": true,
+          "remoteCount": 0,
+          "requestToReviewSeconds": 20.768599,
+          "workerSourceSha256": "2d85a6ecc329700795daaa9d6b3072be5f0c7e899c68d0de55db6acd16471dd5",
+          "workerLogSha256": "02150cd0d32b1a739c41b6ec23efe3690715cdbe763c381420d5d54365f9ab21"
+        },
+        {
+          "task": {
+            "taskId": "mock-b1f6d737-1a31-4618-9013-a65b7d13e80e",
+            "writerId": "8d05b6ae-da8d-4342-ba65-14092b7610fd",
+            "kind": "unique-names",
+            "input": [
+              "beta",
+              "alpha",
+              "alpha"
+            ],
+            "root": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names",
+            "branch": "mock/unique-names"
+          },
+          "request": {
+            "taskId": "mock-b1f6d737-1a31-4618-9013-a65b7d13e80e",
+            "writerId": "8d05b6ae-da8d-4342-ba65-14092b7610fd",
+            "requestId": "permission-fe2dcf22-ad62-40a5-8b32-e2985f591e98",
+            "operation": {
+              "taskId": "mock-b1f6d737-1a31-4618-9013-a65b7d13e80e",
+              "kind": "write-result-and-local-commit",
+              "root": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names",
+              "output": "result.json",
+              "resultHash": "b0bf75e6646cbdfeec6709c5daddc1353a8e368101a91a751d2c0d188e9815c1"
+            },
+            "operationHash": "431e77e2b787f782353e3831845d8a7917be8361ffd5feb6ced29f2da77224e8",
+            "createdAt": "2026-10-09T21:08:30.092789+00:00",
+            "createdMonotonic": 220099.499538286
+          },
+          "decision": {
+            "taskId": "mock-b1f6d737-1a31-4618-9013-a65b7d13e80e",
+            "writerId": "8d05b6ae-da8d-4342-ba65-14092b7610fd",
+            "requestId": "permission-fe2dcf22-ad62-40a5-8b32-e2985f591e98",
+            "operationHash": "431e77e2b787f782353e3831845d8a7917be8361ffd5feb6ced29f2da77224e8",
+            "decision": "allow",
+            "actor": "supervisor",
+            "reviewedAt": "2026-10-09T21:09:07.557128+00:00"
+          },
+          "started": {
+            "pid": 904416,
+            "taskId": "mock-b1f6d737-1a31-4618-9013-a65b7d13e80e",
+            "writerId": "8d05b6ae-da8d-4342-ba65-14092b7610fd",
+            "state": "waiting-mock-decision",
+            "startedAt": "2026-10-09T21:08:30.092804+00:00",
+            "monotonic": 220099.499542894,
+            "cwd": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names",
+            "workerSource": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names/worker.py"
+          },
+          "completed": {
+            "state": "completed",
+            "taskId": "mock-b1f6d737-1a31-4618-9013-a65b7d13e80e",
+            "writerId": "8d05b6ae-da8d-4342-ba65-14092b7610fd",
+            "head": "6bc663e16b09d313fa1cc5720783aaef3aa94efe",
+            "resultHash": "b0bf75e6646cbdfeec6709c5daddc1353a8e368101a91a751d2c0d188e9815c1",
+            "clean": true,
+            "endedAt": "2026-10-09T21:09:07.611591+00:00",
+            "monotonic": 220137.018338559,
+            "requestId": "permission-fe2dcf22-ad62-40a5-8b32-e2985f591e98"
+          },
+          "result": [
+            "alpha",
+            "beta"
+          ],
+          "headParent": "2c0fd777a7915c0794bb80edb86cfaf135bbd5ff",
+          "tree": "925e1aeb5076d28a7dc36e77a2dcb454d8667e1d",
+          "gitCommonDir": "/tmp/k12-parallel-mock-1hdbs2ow/unique-names/.git",
+          "trackedFiles": [
+            ".gitignore",
+            "result.json",
+            "task.json",
+            "worker.py"
+          ],
+          "clean": true,
+          "remoteCount": 0,
+          "requestToReviewSeconds": 37.464339,
+          "workerSourceSha256": "2d85a6ecc329700795daaa9d6b3072be5f0c7e899c68d0de55db6acd16471dd5",
+          "workerLogSha256": "aa0fc4c5be63b76cc581a4fcf633a33d06684f22d7db76f9290dfd080d62bf3b"
+        }
+      ],
+      "leaseOverlapLowerBoundSeconds": 20.800057,
+      "counts": {
+        "maxOwnedWriters": 2,
+        "maxPendingMockRequests": 2,
+        "manualMockDecisions": 2,
+        "mockAllows": 2,
+        "actualProviderPermissionRequests": null,
+        "actualProviderPermissionMeasured": false,
+        "taskContextQuestions": 0,
+        "globalRulesChanged": 0,
+        "successfulExtraWriterAcquisitions": 0,
+        "rejectedContenderProcesses": 1,
+        "globalWriterCapEnforced": false,
+        "globalWriterCapTested": false,
+        "countScope": "observed in this one launch; launches were sequential; same-task lease rejection only"
       }
     }
   ],
   "burdenSummary": {
     "initialManualDecisions": 2,
     "fixedManualDecisions": 2,
-    "totalManualMockDecisions": 4,
-    "repeatReason": "harness expiry implementation correction, not a real Provider policy failure",
+    "totalManualMockDecisions": 6,
+    "repeatReason": "expiry implementation correction, then explicit worker source/cwd separation; neither is evidence of a real Provider policy failure",
     "serialComparableBaseline": false,
     "providerBurdenComparison": "unmeasured",
-    "latenciesIncludeIntentionalHoldingAndSupervisorToolTime": true
+    "latenciesIncludeIntentionalHoldingAndSupervisorToolTime": true,
+    "sourceIsolatedManualDecisions": 2
   },
   "existingSuiteReuse": {
     "evidence": "ops-ci-validation.json",
@@ -616,5 +946,57 @@
     "rerun": false,
     "manualProbeNotInHostedCi": true,
     "ciManifestUnchanged": true
+  },
+  "contractBeforeSourceIsolation": {
+    "runId": "566a0bb0-c999-40ff-81f2-396eba2d10de",
+    "startedAt": "2026-10-09T21:01:27.485204+00:00",
+    "endedAt": "2026-10-09T21:01:27.796394+00:00",
+    "command": [
+      "python3",
+      "-I",
+      "-B",
+      "docs/k12-paseo/evidence/parallel-mock-probe.py",
+      "--self-test"
+    ],
+    "python": "Python 3.14.4",
+    "probeSha256": "c75ce08a6b8d8bf73f7a3a2f4c76eef4879c3ac4546611b402a5ed2c43263d67",
+    "tests": 14,
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "exit": 0,
+    "logSha256": "fbfe3fe370374f9c00b978c7860b6201164baf438c44f1819282e0e5f15a1b4a",
+    "cases": [
+      "test_denied_worker_does_not_write_or_commit_result",
+      "test_deny_is_valid_but_not_allow",
+      "test_duplicate_request_generation_has_distinct_ids",
+      "test_duplicate_writer_excluded_and_lock_released",
+      "test_each_foreign_identity_rejected",
+      "test_exact_request_is_bound",
+      "test_expired_gate_rejects_even_ready_decision",
+      "test_missing_unknown_and_persistent_fields_rejected",
+      "test_no_implicit_actor_or_decision",
+      "test_publication_refuses_to_replace_existing_decision",
+      "test_separate_roots_have_separate_locks_and_git_dirs",
+      "test_task_path_and_branch_must_match",
+      "test_unknown_task_is_not_executed",
+      "test_worker_without_decision_times_out_without_result"
+    ],
+    "probeUnchanged": true
+  },
+  "sourceIsolationRed": {
+    "oldImplementationSha": "135c10c81b87628a8d781ffcb0083eb8806fabe2",
+    "probeWithNewTestSha256": "6dfc02c2a71558542732b83a732c15f82534010f9db43446ff1fd8263213572d",
+    "exit": 1,
+    "tests": 15,
+    "failures": 1,
+    "logSha256": "b07e896f60984e31c84f002126de1afffd0899dd8c94dd5a3125acb72e9d86e3",
+    "reason": "Each task did not yet own a committed worker source; old launcher also inherited cwd by source inspection, not a recorded runtime cwd observation."
+  },
+  "globalWriterPolicy": {
+    "observedLaunchesSequential": true,
+    "supervisorDidNotEditOpsDuringTwoWriterIntervals": true,
+    "productionGlobalCapImplemented": false,
+    "reviewCounterexample": "two simultaneous launches would exceed2; source-only reasoning, not executed to avoid violating task cap"
   }
 }

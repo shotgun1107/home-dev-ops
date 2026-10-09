@@ -17,7 +17,7 @@
 
 야간 **P1_PARALLEL_ISOLATED**: 별도 Git/runtime의 Python mock writer2개를 실제 동시 실행했다.
 중복 writer 차단·한 작업의 승인 대기 중 다른 작업 완료를 확인했고, mock 만료 결함은 보정 후
-계약14개와 동일 조건의 두 결과로 재검증했다. **실제 Provider 부담·정식 P1 병렬은 미검증/미진입**. [범위](PARALLEL_ISOLATED.md).
+계약15개와 각 source/cwd까지 분리한 두 결과로 재검증했다. **실제 Provider 부담·정식 P1 병렬은 미검증/미진입**. [범위](PARALLEL_ISOLATED.md).
 
 ## 기준
 

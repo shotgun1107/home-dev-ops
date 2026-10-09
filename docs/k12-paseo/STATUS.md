@@ -30,7 +30,7 @@
 | P0-V1 | 고정 SHA 리뷰·대리 게시 복구 | 통과 | Codex→Claude writer 대리 게시 2건·GET 확인. reviewer 직접 게시 권한은 미확인. [E5](EVIDENCE.md#e5-review) |
 | P0-C1 | 이 PR의 필요한 CI | 사람 적용 대기 | 현재 GitHub check-runs=[]; [workflow patch](proposals/home-dev-ops-ci.patch) 준비·형식 검사만 완료. 실제 CI 미실행 |
 | P0-V2 | PR 본문 갱신 | 개선 후 통과 | gh 2.46.0 projectCards 오류→동일 PR REST PATCH→GET 일치. 인증/권한 변경 없음 |
-| P0-S1 | 기존 서비스 보호 | 현재 상태 확인 | rootless Docker, system docker/socket disabled, Minecraft 4개 healthy·Paseo active. 재시작/삭제/초기화 없음 |
+| P0-S1 | 기존 서비스 보호 | 현재 상태 확인 | rootless Docker, system docker/socket disabled·inactive, Minecraft 4개 healthy·Paseo active. 재시작/삭제/초기화 없음 |
 | P0-S2 | Direct 무인증 요청 거부 | 통과 | Public WSS에 인증정보 없이 hello→password_required / 4401. [실측](evidence/direct-no-auth.json) |
 | P0-S3 | 비밀정보·자동 Archive | 부분 검증 | 주요 credential 파일 0600, raw 값 미출력. autoArchiveAfterMerge 설정 없음·설치 코드 기본 false. runtime/UI의 별도 override까지 보장하지 않음 |
 

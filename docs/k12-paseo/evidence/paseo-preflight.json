@@ -1,6 +1,5 @@
 {
   "host": {
-    "observedAt": "2026-10-09T13:29:25.938433+00:00",
     "cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
     "command": [
       "python3",
@@ -17,10 +16,10 @@
       "next_step": "none",
       "pid_metadata": "present",
       "cli_result": "ok"
-    }
+    },
+    "batchStartedAt": "2026-10-09T13:29:25.938433+00:00"
   },
   "codexSandbox": {
-    "observedAt": "2026-10-09T13:29:25.938433+00:00",
     "cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
     "command": [
       "codex",
@@ -40,6 +39,7 @@
       "next_step": "compare with an authorized host-side status check; do not start/restart",
       "pid_metadata": "present",
       "cli_result": "ok"
-    }
+    },
+    "batchStartedAt": "2026-10-09T13:29:25.938433+00:00"
   }
 }

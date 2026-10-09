@@ -1,17 +1,17 @@
 # 실측 근거와 결함 재현
 
 2026-10-09 KST 수집. 원문/세션 전문·인증값은 저장하지 않는다. 판정은 실행 범위에 한정한다.
-[실제 상태 JSON](evidence/live-snapshot.json), [21개 회귀 결과](evidence/regression.txt), [기존 hook 직접 시험](evidence/existing-guard.txt). 실행 시각·Python/Git 버전·시험한 파일 hash를 출력에 보존했다.
+[실제 상태 JSON](evidence/live-snapshot.json), [21개 회귀 결과](evidence/regression.txt), [기존 hook 직접 시험](evidence/existing-guard.txt). 일괄 수집 시작 시각·Python/Git 버전·시험한 파일 hash를 출력에 보존했다.
 
 ## E1 Heartbeat
 
 ### 조건과 원인
 
-- Paseo 0.10.3, Codex 0.160.1. 같은 ~/.paseo, 기존 PID 2316/worker 2365, loopback 6767.
+- Paseo 0.10.3, Codex 0.160.1. 같은 ~/.paseo, loopback 6767. `paseo.pid`의 lock 소유자는 supervisor PID 2316이고, daemon worker는 PID 2365다. preflight의 recorded_pid는 supervisor를 뜻한다.
 - 최초 sandbox와 재개 전 `paseo status --json`: pid null / localDaemon stopped / connectedDaemon not_probed. Heartbeat 생성은 DAEMON_NOT_RUNNING.
 - 승인된 host 실행: running/reachable. 데몬은 10/07부터 실행 중이며 새로 시작하지 않았다.
 - 재현: `codex sandbox -- paseo status --json`. Codex 0.160.1은 `sandbox -- <command>` 문법이다. 잘못 시도한 `sandbox linux --help`는 execvp linux 실패, 상태 변경 없음.
-- sandbox 안 PID는 2, daemon PID 2316은 /proc에 없음. host에서는 존재. PID/network namespace inode가 각각 다르다. 현재 CLI 보조 재현이며 이전 Paseo 실측과 구분한다.
+- sandbox 안 PID는 2, 기록된 supervisor PID 2316은 /proc에 없음. host에서는 존재. PID/network namespace inode가 각각 다르다. 현재 CLI 보조 재현이며 이전 Paseo 실측과 구분한다.
 - 설치 파일 `@getpaseo/server/dist/src/server/daemon-instance.js:29–31`은 isPidLockOwnerRunning=false면 null 반환. `pid-lock.js:33–41`은 process.kill(pid,0) 실패가 EPERM이 아니면 false다. 격리된 PID 공간의 결과를 호스트 daemon 중지로 해석하는 진단 결함이다.
 - 네트워크 namespace도 달라 --host 문자열만 바꾸면 해결된다고 주장하지 않는다. 임의 재시작은 금지했다.
 
@@ -114,7 +114,7 @@ base/head 모두 paseo.json/dev-setup 없음. uv.lock/frozen 설치 경로가 �
 실제 Kerbe init/status는 계정·원본 Codex 홈·Credential Manager에 닿을 수 있어 실행하지 않았다.
 임시 config 하나로 runtime 전체가 격리됐다고 판정하지 않는다.
 
-user paseo/docker active, system docker.service/docker.socket disabled, Docker securityOptions rootless,
+user paseo/docker active, system docker.service/docker.socket disabled·inactive, Docker securityOptions rootless,
 Minecraft/geyser/viaproxy/backup 4개 healthy. docker/lxd 그룹 없음. 서비스·volume·prune 조작은 하지 않았다.
 [추가 관찰 증거](evidence/additional-observations.json)에 credential mode·system units·groups·Docker securityOptions를 저장했다. PID 2041(node)이 2316(Paseo supervisor)의 부모이고 2365(daemon)가 그 자식임을 ps로 확인했다. unit MainPID와 daemon PID가 다른 이유가 이 process chain이다. 관찰 시점 상태이며 내부 데이터 무결성 전체 검사는 아니다.
 
@@ -166,3 +166,5 @@ Claude reviewer b8e68af1은 고정 SHA `2873a57a804c96225b774bc1c9f86dae87628db3
 [원문 대리 게시](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6081867053)는 GitHub GET으로 원문 일치를 확인했다.
 Medium 1건(Full Access 예외/보호 공백 명시), Low 8건을 반영했다. Plan 파일 쓰기 없이 종료·idle을 확인하고 writer가 수정했다.
 현 후보에는 GitHub checks가 없어 통과로 기록하지 않는다. [CI 제안](proposals/README.md)은 workflow patch로 보존하고 사람 적용 후 실행을 기다린다.
+
+최초 리뷰 지적 반영 후 Claude의 fd8f1f28abf8dab17d3a926f3dfd394e0fc54d6c 재리뷰에서 Medium 이상 없음. 남은 Low 2건은 supervisor/worker 용어와 batch 시각 표기로 수정했다. 최종 후보 리뷰의 원문·SHA는 PR에 보존한다. 코드와 테스트 bytes는 이 재리뷰 이후 변경하지 않았다.

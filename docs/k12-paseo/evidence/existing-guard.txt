@@ -1,4 +1,4 @@
-Observed UTC: 2026-10-09T13:29:25.938433+00:00
+Batch started UTC: 2026-10-09T13:29:25.938433+00:00
 Parent HEAD before review fixes: 2873a57a804c96225b774bc1c9f86dae87628db3
 Working-tree changes: Claude review fixes; script/test SHA-256 below identify tested bytes
 Versions: {"python": "Python 3.14.4", "git": "git version 2.53.0"}

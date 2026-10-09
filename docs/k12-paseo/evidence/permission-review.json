@@ -19,5 +19,33 @@
   },
   "commentUrl": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6087938960",
   "postedBodyGetVerified": true,
-  "scope": "fixed Git objects and selected installed sources; native observations/tests/official documentation not independently reproduced"
+  "scope": "fixed Git objects and selected installed sources; native observations/tests/official documentation not independently reproduced",
+  "delta": {
+    "reviewedSha": "7edc8b9c6e2cc694cd104ffe97abcaa96638f835",
+    "resolved": {
+      "low": 4,
+      "info": 3
+    },
+    "newFindings": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "info": 2
+    },
+    "originalTextSha256": "01355d795fd50fd26a98747dc9d78333ee109b1c5c07390e3eee26c9837f265a",
+    "native": {
+      "line": 416,
+      "timestamp": "2026-10-09T19:38:34.282Z",
+      "nativePath": "~/.claude/projects/-home-shotgun1107--paseo-worktrees-20iw348x-docs-k12-paseo-autopilot/6d620830-1287-4da7-81ed-3a563f55847a.jsonl"
+    },
+    "commentUrl": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6087990623",
+    "postedBodyGetVerified": true,
+    "limits": [
+      "top-level ledger reviewer text is curator-verified, not authenticated by the tool",
+      "2000-depth no-traceback test does not prove a RecursionError on every Python; writer separately injected one afterward"
+    ],
+    "reviewerStatus": "idle",
+    "pendingPermissions": 0
+  }
 }

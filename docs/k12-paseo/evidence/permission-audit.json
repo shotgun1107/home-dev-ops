@@ -469,6 +469,6 @@
     "kerbeEdits": 0,
     "settingsChanges": 0,
     "serviceOperations": 0,
-    "credentialStoreAccess": 0
+    "directCredentialStoreInspection": 0
   }
 }

@@ -425,3 +425,8 @@ E13 독립 리뷰 후속: 초기 후보 bbe9f7f9adb82a74c6ef672ba37b4b45dc2a740f
 새 반례38개를 적용해20 assertion/subtest failure를 재현했다. actor 모순·혼합 ledger·
 명시 조정 marker·JSON 깊이 처리와 문서 범위를 보강한 후 전체68개 OK(skip0).
 S/M 확인된 조정6건에만 bool marker를 보충했고 응답59/3·조정3/3은 변하지 않았다.
+
+최종 delta 독립 리뷰:7edc8b9…의 Low4/Info3 해결, 새 Low 이상0·Info2.
+최상위 ledger actor 설명은 검토자 책임이다. 2000-depth 테스트가 이전 코드에서도 OK였으므로
+RecursionError 재현으로 세지 않는다. 별도 합성 오류 주입의 exit2·고정 오류·무노출을
+[회귀 영수증](evidence/permission-regression.json)에 기록했다. [리뷰 원문 영수증](evidence/permission-review.json).

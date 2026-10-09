@@ -60,7 +60,7 @@ network/subprocess/provider/config 쓰기 없이 지정한 선별 JSON을 읽어
 - 입력 조정은 허용의 부분집합이다. 허용 후 error/interrupted는 명시 deny가 아니다.
 - full UUID agent/request ID를 요구한다. prefix·ID 생략·--all을 식별자로 받지 않는다.
 - 출처 없는 human/auto-review 주장은 unknown, permission-rule/forbidden은 provider layer까지만 분류한다.
-- 필드 whitelist, 2 MiB/10,000 events 한도, 잘못된 입력의 무노출 오류 출력을 사용한다.
+- 필드 whitelist, 2 MiB/10,000 events 한도, 잘못된 JSON/schema의 무노출 오류 출력을 사용한다.
 - 없는 항목은 미관찰이다. unknown을 0회 개입이나 통과로 바꾸지 않는다.
 
 독립 리뷰 후 보강: provider-rule/forbidden에 human 등 모순된 actor를 붙이면 거부한다.
@@ -100,3 +100,10 @@ updatedPermissions는 정책 변경을 동반할 수 있으므로 일반 명령 
 Auto-review 무인 안정성, 특정 Claude deny 매칭 ID, Full Access 차단, ops 보호/guard/CI 통합은
 미확인 또는 사람 결정으로 남는다. Kerbe 회사 측 미동기화 변경은 조사·수정·fetch하지 않았다.
 Kerbe PR #2/#5 채택도 이 작업 밖이다.
+
+최종 delta 리뷰는7edc8b9c6e2cc694cd104ffe97abcaa96638f835의 Low4/Info3 해소, 새 Low 이상0으로
+종료했다. [원문·주체·GET 검증](evidence/permission-review.json). 새 Info2건은 다음처럼 구분한다.
+최상위 reviewer 설명과 --actor의 일치는 검토자가 확인하며 도구가 인증하지 않는다.
+Python3.14.4의2000-depth 시험은 이전 코드에서도 OK여서 RecursionError 재현으로 세지 않는다.
+별도 작업 전용 fixture와 json.loads 오류 주입으로 해당 catch의 exit2·고정 오류·무노출을
+확인했다. 이 추가 확인은68개 unittest에 합산하지 않는다. 코드/시험 bytes는 리뷰 SHA와 같다.

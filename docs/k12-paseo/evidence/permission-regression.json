@@ -19,7 +19,7 @@
     "tests/test_permission_audit.py": "28aed72bed6db7ea3cebb7f8ef91c821442b14b04492058df106fe42b7d05a8d",
     "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9"
   },
-  "review": "Initial fixed-SHA independent review produced Low4/Info3; synthetic counterexamples reproduced and fixed. Final delta review follows on PR1.",
+  "review": "Independent fixed-SHA delta review at7edc8b9c6e2cc694cd104ffe97abcaa96638f835 closed Low4/Info3; no new Low-or-higher, two informational limitations preserved.",
   "beforeReviewFix": {
     "scriptSha": "bbe9f7f9adb82a74c6ef672ba37b4b45dc2a740f",
     "testCount": 38,
@@ -32,5 +32,16 @@
     "skipped": 0,
     "result": "OK",
     "logSha256": "b985447ae0f543de29b2a6f060a18b9f8523890baebb9abe567e52f84b25ff53"
+  },
+  "recursionFaultInjection": {
+    "sourceSha": "7edc8b9c6e2cc694cd104ffe97abcaa96638f835",
+    "method": "task-owned temporary [] JSON; patch module json.loads to raise RecursionError(SYNTHETIC_SECRET); invoke main with valid events argv; capture stdout/stderr",
+    "expectedAndObserved": {
+      "exitCode": 2,
+      "stdout": "",
+      "stderr": "{\"status\":\"invalid-evidence\"}\n"
+    },
+    "countsAsUnitMethod": false,
+    "reason": "2000-depth test passed both before and after on Python3.14.4; it did not reproduce RecursionError. Separate injection explicitly exercises fixed catch."
   }
 }

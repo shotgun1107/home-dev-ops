@@ -107,3 +107,8 @@ Kerbe PR #2/#5 채택도 이 작업 밖이다.
 Python3.14.4의2000-depth 시험은 이전 코드에서도 OK여서 RecursionError 재현으로 세지 않는다.
 별도 작업 전용 fixture와 json.loads 오류 주입으로 해당 catch의 exit2·고정 오류·무노출을
 확인했다. 이 추가 확인은68개 unittest에 합산하지 않는다. 코드/시험 bytes는 리뷰 SHA와 같다.
+
+후속 [REVIEW_INDEPENDENT](INDEPENDENT_REVIEW.md)에서 입력 FIFO 대기를 재현했다.
+기존2MiB read 상한은 open(FIFO)의 대기를 제한하지 않았다. leaf NONBLOCK/NOFOLLOW·regular file
+검사를 추가해 permission suite는39개가 됐다. 기존38개/62건의 집계 결과는 당시 증거로 보존하며
+새 경계는 입력 파일 열기뿐이다. actor 인증·승인·프로필 변경 기능은 추가하지 않았다.

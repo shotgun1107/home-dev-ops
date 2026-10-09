@@ -1,0 +1,457 @@
+{
+  "taskId": "REVIEW_INDEPENDENT",
+  "observedAt": "2026-10-09T21:32:27.104961+00:00",
+  "baseline": {
+    "baseSha": "81e1547da5f7d6579471ad1f8f4c8b5fa3269c4e",
+    "priorTestedSource": "ad3acae8d0f420c9deab7567d3d100881dbc68b0",
+    "files": {
+      "scripts/k12-pre-push": {
+        "sha256": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+        "sameAsTested": true
+      },
+      "scripts/paseo_heartbeat_cleanup.py": {
+        "sha256": "6974f196c9a3cb6af537583818c73bd0a4f2097051dc22c90994778e4758ef6e",
+        "sameAsTested": true
+      },
+      "scripts/paseo_permission_audit.py": {
+        "sha256": "eab828e729afdac61a53194ae01f0b5e2effa111c4a37d717dad430408c6f371",
+        "sameAsTested": true
+      },
+      "scripts/paseo_preflight.py": {
+        "sha256": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+        "sameAsTested": true
+      },
+      "scripts/paseo_recovery_audit.py": {
+        "sha256": "e422ae84c290f683bb99e45a0fc0fb0d8fa4a871fed89b2ce2c132b7ff29028f",
+        "sameAsTested": true
+      },
+      "scripts/run_ops_ci.py": {
+        "sha256": "cc45b74ba1e505e89dba1ff15114c6651c62c4fb8bee21e0e89a829f57ecfcb1",
+        "sameAsTested": true
+      },
+      "tests/ci-manifest.json": {
+        "sha256": "73840cf2ff5cb66b77b74f4ab6dbca23325d62f48e2c27cfd43a37bd106ef50a",
+        "sameAsTested": true
+      },
+      "tests/test_heartbeat_cleanup.py": {
+        "sha256": "65309defdcf7f5e1591e5618d68d26135b8fe579cfd3dce62298601c5f5848b7",
+        "sameAsTested": true
+      },
+      "tests/test_heartbeat_lifecycle.mjs": {
+        "sha256": "8fa8ec7c399b74a9a18bab2ce3b132d7c2a466127ce1fa7525e6ce3887e55622",
+        "sameAsTested": true
+      },
+      "tests/test_ops_ci.py": {
+        "sha256": "d6257c9e61805a279bcf98171739b84b4ab0893834a646afda0c3e12f347a453",
+        "sameAsTested": true
+      },
+      "tests/test_paseo_preflight.py": {
+        "sha256": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5",
+        "sameAsTested": true
+      },
+      "tests/test_permission_audit.py": {
+        "sha256": "28aed72bed6db7ea3cebb7f8ef91c821442b14b04492058df106fe42b7d05a8d",
+        "sameAsTested": true
+      },
+      "tests/test_pre_push.py": {
+        "sha256": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9",
+        "sameAsTested": true
+      },
+      "tests/test_recovery.py": {
+        "sha256": "32bc303377efb1ac4633969c8ef541804aae9bdc3e921ca9bbdf17f229fd321a",
+        "sameAsTested": true
+      },
+      "tests/test_recovery_pid.mjs": {
+        "sha256": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03",
+        "sameAsTested": true
+      },
+      "docs/k12-paseo/evidence/parallel-mock-probe.py": {
+        "sha256": "2d85a6ecc329700795daaa9d6b3072be5f0c7e899c68d0de55db6acd16471dd5"
+      },
+      "docs/k12-paseo/proposals/paseo-heartbeat-schedule.patch": {
+        "sha256": "12ee2e3efb6e778a5c2642b23d1406888950afa00b5c101a1a80529055178ce0"
+      }
+    },
+    "unchangedFromPriorTestedSource": true,
+    "canonicalUnchanged": true
+  },
+  "initialReview": {
+    "reviewedSha": "81e1547da5f7d6579471ad1f8f4c8b5fa3269c4e",
+    "reviewer": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+    "provider": "claude",
+    "model": "claude-opus-5-5",
+    "mode": "plan",
+    "nativeLine": 682,
+    "nativeTimestamp": "2026-10-09T21:22:47.884Z",
+    "originalSha256": "5ed381139cb58246380b3173649b9d5746ae8250658c2d178f55d12c213bc675",
+    "commentId": 6089553741,
+    "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089553741",
+    "getVerified": true,
+    "findings": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 0,
+      "Low": 1,
+      "Info": 3
+    },
+    "rootCorrectionsPublished": true,
+    "reviewerTestsExecuted": false
+  },
+  "initialReviewLimitations": [
+    "Reused earlier semantic reads; no fresh blind session",
+    "No tests or live system checks by reviewer",
+    "Plan is read-only by policy, not technical enforcement",
+    "Incorrect initial regular-file and all-network-effects-in-docs statements corrected by root evidence; hash table is SHA-256 prefix, not Git blob ID"
+  ],
+  "rootReproductionBefore": {
+    "sourceSha": "81e1547da5f7d6579471ad1f8f4c8b5fa3269c4e",
+    "file": "scripts/paseo_heartbeat_cleanup.py",
+    "sourceSha256": "6974f196c9a3cb6af537583818c73bd0a4f2097051dc22c90994778e4758ef6e",
+    "observedAt": "2026-10-09T21:22:03.030920+00:00",
+    "root": "/tmp/k12-independent-review-hbdjl9vp",
+    "scope": "only synthetic files and injected delete runner; no real Paseo command",
+    "results": [
+      {
+        "case": "schedule-fifo",
+        "timedOut": true,
+        "outerBoundSeconds": 2,
+        "ownedChildKilledAndReaped": true
+      },
+      {
+        "case": "boolean-maxruns",
+        "deleteCalls": 1,
+        "accepted": true,
+        "syntheticCanaryEmitted": false
+      },
+      {
+        "case": "nested-selected-fields",
+        "deleteCalls": 1,
+        "accepted": true,
+        "syntheticCanaryEmitted": true
+      }
+    ]
+  },
+  "ciReproductionBefore": {
+    "sourceSha": "81e1547da5f7d6579471ad1f8f4c8b5fa3269c4e",
+    "observedAt": "2026-10-09T21:24:30.301702+00:00",
+    "root": "/tmp/k12-review-ci-before-mh37cs_v",
+    "case": "test-calls-os-_exit-zero",
+    "exit": 0,
+    "phases": [
+      "start"
+    ],
+    "falseGreenReproduced": true
+  },
+  "permissionReproductionBefore": {
+    "case": "permission-fifo",
+    "timedOut": true,
+    "outerBoundSeconds": 2,
+    "ownedChildKilledAndReaped": true
+  },
+  "pairedRegression": {
+    "observedAt": "2026-10-09T21:29:48.250430+00:00",
+    "beforeSha": "81e1547da5f7d6579471ad1f8f4c8b5fa3269c4e",
+    "root": "/tmp/k12-review-paired-dqimlyyq",
+    "caseIds": [
+      "test_heartbeat_cleanup.HeartbeatCleanupTests.test_schedule_file_inputs_fail_closed_without_cli",
+      "test_heartbeat_cleanup.HeartbeatCleanupTests.test_boolean_maxruns_rejected",
+      "test_heartbeat_cleanup.HeartbeatCleanupTests.test_untyped_receipt_fields_never_echo_or_delete",
+      "test_heartbeat_cleanup.HeartbeatCleanupTests.test_duplicate_schedule_keys_rejected",
+      "test_heartbeat_cleanup.HeartbeatCleanupTests.test_unexpected_acknowledgement_depth_and_size_preserves_evidence",
+      "test_heartbeat_cleanup.HeartbeatCleanupTests.test_caller_id_requires_full_uuid",
+      "test_permission_audit.LedgerAndCliTests.test_nonregular_evidence_is_rejected_without_follow_or_hang",
+      "test_ops_ci.OpsCiTests.test_abrupt_zero_exit_in_test_is_not_pass",
+      "test_ops_ci.OpsCiTests.test_abrupt_zero_exit_during_import_is_not_pass",
+      "test_ops_ci.OpsCiTests.test_normal_system_exit_is_accounted_as_error"
+    ],
+    "runs": [
+      {
+        "tests": 10,
+        "failures": 17,
+        "errors": 2,
+        "skipped": 0,
+        "variant": "before",
+        "exit": 1,
+        "stderrSha256": "e8c97d25f39df678eb3e5b92ced30c029e02ea81d4f562dd66f65050d2525114"
+      },
+      {
+        "tests": 10,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "variant": "after",
+        "exit": 0,
+        "stderrSha256": "afdddc42d50948d507daa8bf277be79cc6bda806f29adb23efcaf52cf6933475"
+      }
+    ],
+    "newCases": 10,
+    "scope": "synthetic fixtures; bounded owned child processes; cleanup CLI replaced by task-owned fake",
+    "harnessCorrection": {
+      "earlierRoot": "/tmp/k12-review-paired-1je8xax_",
+      "outerTimeoutSeconds": 45,
+      "reason": "expected FIFO timeout skipped fixture unlink; later fixture writer blocked on same FIFO",
+      "correction": "per-case finally removes only newly created fixture path even when old-code assertion fails",
+      "productDefect": false
+    },
+    "parserExpectationCorrection": {
+      "priorAfter": {
+        "tests": 10,
+        "failures": 2,
+        "errors": 0
+      },
+      "reason": "CPython 3.14 parsed 2000-deep JSON; value was rejected by schema instead of decoder",
+      "change": "assert fixed failure class and no delete/raw output for both decoder and schema rejection; product code unchanged"
+    }
+  },
+  "candidate": {
+    "sourceSha": "0c91fd95b4e6c3f87a7c8b4a25887d2d157879c3",
+    "candidateSha": "a14365297170fbc79eae167a686ca311abee50b2",
+    "candidateParents": [
+      "5d7d1e1177c5a1991582bee7113d239dda01fe83",
+      "0c91fd95b4e6c3f87a7c8b4a25887d2d157879c3"
+    ],
+    "root": "/tmp/k12-review-ci-cprod51n",
+    "clone": "/tmp/k12-review-ci-cprod51n/repo",
+    "observedAt": "2026-10-09T21:31:06.045663+00:00",
+    "command": "timeout 120s python -I -B scripts/run_ops_ci.py",
+    "exit": 0,
+    "stdoutSha256": "dce1bb4c2563f6ea828691f499fa4cbeb328215bd20c7d2e6381cccb0a0c3930",
+    "stderrSha256": "4dc844f689520d5becc1319f84e99f1c4051a6b6886969ba61773eeef7ef32fe",
+    "run": [
+      {
+        "cases": [
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_boolean_maxruns_rejected",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_caller_id_requires_full_uuid",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_cli_failure_is_redacted_and_does_not_claim_deletion",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_duplicate_schedule_keys_rejected",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_expired_without_run_is_cleaned_but_not_a_resume_pass",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_failed_run_is_preserved_as_failed_in_receipt",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_recurring_mission_is_not_a_cleanup_target",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_running_timeout_does_not_delete",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_schedule_file_inputs_fail_closed_without_cli",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_success_acknowledgement_does_not_replace_absence_check",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_unexpected_acknowledgement_depth_and_size_preserves_evidence",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_unknown_delete_response_preserves_finished_run_evidence",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_untyped_receipt_fields_never_echo_or_delete",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_waits_until_run_has_finished",
+          "test_heartbeat_cleanup.HeartbeatCleanupTests.test_wrong_owner_is_rejected_before_delete",
+          "test_ops_ci.OpsCiTests.test_abrupt_zero_exit_during_import_is_not_pass",
+          "test_ops_ci.OpsCiTests.test_abrupt_zero_exit_in_test_is_not_pass",
+          "test_ops_ci.OpsCiTests.test_assertion_failure_is_not_pass",
+          "test_ops_ci.OpsCiTests.test_complete_run_has_matching_provenance",
+          "test_ops_ci.OpsCiTests.test_duplicate_load_tests_is_rejected",
+          "test_ops_ci.OpsCiTests.test_empty_suite_rejected",
+          "test_ops_ci.OpsCiTests.test_expected_failure_is_not_pass",
+          "test_ops_ci.OpsCiTests.test_external_guard_override_rejected_without_echo",
+          "test_ops_ci.OpsCiTests.test_import_error_rejected",
+          "test_ops_ci.OpsCiTests.test_k12_only_is_explicitly_unexecuted",
+          "test_ops_ci.OpsCiTests.test_manifest_count_types_fail_closed",
+          "test_ops_ci.OpsCiTests.test_missing_file_rejected",
+          "test_ops_ci.OpsCiTests.test_normal_system_exit_is_accounted_as_error",
+          "test_ops_ci.OpsCiTests.test_partial_suite_rejected",
+          "test_ops_ci.OpsCiTests.test_skipped_is_not_pass",
+          "test_ops_ci.OpsCiTests.test_source_mutation_invalidates_result",
+          "test_ops_ci.OpsCiTests.test_test_error_is_not_pass",
+          "test_ops_ci.OpsCiTests.test_unexpected_success_is_not_pass",
+          "test_ops_ci.OpsCiTests.test_unknown_node_file_rejected",
+          "test_ops_ci.OpsCiTests.test_unlisted_test_rejected",
+          "test_ops_ci.OpsCiTests.test_version_mismatch_rejected",
+          "test_paseo_preflight.PreflightTests.test_bad_cli_output_is_not_reachable",
+          "test_paseo_preflight.PreflightTests.test_cli_failure_and_secret_output_are_not_echoed",
+          "test_paseo_preflight.PreflightTests.test_malformed_metadata_and_timeout_remain_unconfirmed",
+          "test_paseo_preflight.PreflightTests.test_missing_cli_is_distinct",
+          "test_paseo_preflight.PreflightTests.test_namespace_invisible_pid_does_not_claim_stopped_or_running",
+          "test_paseo_preflight.PreflightTests.test_only_successful_connection_is_pass",
+          "test_paseo_preflight.PreflightTests.test_process_execution_error_is_distinct",
+          "test_paseo_preflight.PreflightTests.test_stale_pid_is_inconclusive_too",
+          "test_paseo_preflight.PreflightTests.test_visible_process_without_probe_is_not_success",
+          "test_permission_audit.AttributionTests.test_actor_without_citation_stays_unknown",
+          "test_permission_audit.AttributionTests.test_adjustment_is_subset_of_allow_count",
+          "test_permission_audit.AttributionTests.test_approval_does_not_imply_execution",
+          "test_permission_audit.AttributionTests.test_approval_followed_by_supervisor_interruption",
+          "test_permission_audit.AttributionTests.test_auto_mode_bypass_label_does_not_identify_classifier",
+          "test_permission_audit.AttributionTests.test_conflicting_actor_is_not_silently_chosen",
+          "test_permission_audit.AttributionTests.test_conflicting_event_id_fails_closed",
+          "test_permission_audit.AttributionTests.test_conflicting_response_fails_closed",
+          "test_permission_audit.AttributionTests.test_correlated_supervisor_response",
+          "test_permission_audit.AttributionTests.test_denial_cannot_be_input_adjustment",
+          "test_permission_audit.AttributionTests.test_empty_input_does_not_claim_zero_human_interventions",
+          "test_permission_audit.AttributionTests.test_error_after_allow_is_not_permission_denial",
+          "test_permission_audit.AttributionTests.test_exact_duplicate_and_replayed_response_count_once",
+          "test_permission_audit.AttributionTests.test_explicit_human_and_auto_review_need_their_own_receipts",
+          "test_permission_audit.AttributionTests.test_full_ids_required",
+          "test_permission_audit.AttributionTests.test_mixed_event_fields_rejected",
+          "test_permission_audit.AttributionTests.test_permission_rule_only_proves_provider_layer",
+          "test_permission_audit.AttributionTests.test_provider_layer_and_daemon_response_are_distinct",
+          "test_permission_audit.AttributionTests.test_provider_rule_cannot_be_overridden_by_actor_claim",
+          "test_permission_audit.AttributionTests.test_raw_fields_rejected",
+          "test_permission_audit.AttributionTests.test_response_and_native_denial_are_separate_observations",
+          "test_permission_audit.AttributionTests.test_same_request_id_on_different_agents_is_not_deduplicated",
+          "test_permission_audit.AttributionTests.test_user_rejected_does_not_mean_human",
+          "test_permission_audit.LedgerAndCliTests.test_adjustment_requires_boolean_and_detail",
+          "test_permission_audit.LedgerAndCliTests.test_adjustment_text_without_boolean_marker_is_ambiguous",
+          "test_permission_audit.LedgerAndCliTests.test_cli_bad_input_never_echoes_raw_content",
+          "test_permission_audit.LedgerAndCliTests.test_cli_size_bound",
+          "test_permission_audit.LedgerAndCliTests.test_cli_valid_and_deterministic",
+          "test_permission_audit.LedgerAndCliTests.test_deep_json_uses_fixed_error_without_traceback",
+          "test_permission_audit.LedgerAndCliTests.test_mixed_actor_ledger_is_never_silently_overridden",
+          "test_permission_audit.LedgerAndCliTests.test_nonregular_evidence_is_rejected_without_follow_or_hang",
+          "test_permission_audit.LedgerAndCliTests.test_old_ledger_schema_and_raw_input_omission",
+          "test_permission_audit.LedgerAndCliTests.test_per_request_agent_and_id_schema",
+          "test_permission_audit.LedgerAndCliTests.test_unknown_result_cannot_be_counted_by_substring",
+          "test_permission_audit.RoutingTests.test_auto_review_is_route_not_decision",
+          "test_permission_audit.RoutingTests.test_missing_reviewer_or_ui_mode_not_enough",
+          "test_permission_audit.RoutingTests.test_never_has_no_interactive_review_even_with_auto_reviewer",
+          "test_permission_audit.RoutingTests.test_unvalidated_policy_or_sandbox_not_guessed",
+          "test_permission_audit.RoutingTests.test_user_channel_is_not_human_attribution",
+          "test_pre_push.PrePushGuardTests.test_branch_deletion_blocked",
+          "test_pre_push.PrePushGuardTests.test_divergence_blocked",
+          "test_pre_push.PrePushGuardTests.test_empty_input",
+          "test_pre_push.PrePushGuardTests.test_fast_forward_allowed",
+          "test_pre_push.PrePushGuardTests.test_main_creation_blocked",
+          "test_pre_push.PrePushGuardTests.test_main_fast_forward_blocked",
+          "test_pre_push.PrePushGuardTests.test_mixed_refs_preserve_failure",
+          "test_pre_push.PrePushGuardTests.test_new_topic_allowed",
+          "test_pre_push.PrePushGuardTests.test_rewind_blocked",
+          "test_pre_push.PrePushGuardTests.test_tags_outside_branch_policy",
+          "test_pre_push.PrePushGuardTests.test_unchanged_allowed",
+          "test_pre_push.PrePushGuardTests.test_unknown_remote_object_blocked",
+          "test_recovery.PreflightRecoveryTests.test_auth_failures_not_retried_or_echoed",
+          "test_recovery.PreflightRecoveryTests.test_changed_identity_during_probe_no_longer_claims_stable_connection",
+          "test_recovery.PreflightRecoveryTests.test_disappearing_metadata_during_probe_is_unconfirmed",
+          "test_recovery.PreflightRecoveryTests.test_metadata_symlink_fifo_and_size_are_rejected_without_hang",
+          "test_recovery.PreflightRecoveryTests.test_oversized_cli_output_not_accepted",
+          "test_recovery.PreflightRecoveryTests.test_parser_recursion_fault_returns_fixed_inconclusive_result",
+          "test_recovery.PreflightRecoveryTests.test_stale_or_namespace_hidden_pid_cannot_be_distinguished",
+          "test_recovery.PreflightRecoveryTests.test_visible_reused_pid_does_not_prove_daemon_identity",
+          "test_recovery.RecoveryTests.test_abrupt_owned_child_exit_before_and_after_atomic_replace",
+          "test_recovery.RecoveryTests.test_all_identity_fields_must_match_including_epoch",
+          "test_recovery.RecoveryTests.test_atomic_publication_errors_preserve_readable_destination",
+          "test_recovery.RecoveryTests.test_cli_partial_oversized_duplicate_and_special_files_no_secret_output",
+          "test_recovery.RecoveryTests.test_complete_handoff_reviewable_without_grant",
+          "test_recovery.RecoveryTests.test_completed_has_distinct_cli_exit_from_reviewable_and_blocked",
+          "test_recovery.RecoveryTests.test_directory_sync_error_after_replace_is_uncertain_not_rollback",
+          "test_recovery.RecoveryTests.test_dirty_state_not_discarded",
+          "test_recovery.RecoveryTests.test_each_revision_must_match_not_only_local_head",
+          "test_recovery.RecoveryTests.test_effect_without_receipt_is_reconciled_by_fresh_process",
+          "test_recovery.RecoveryTests.test_failed_receipt_is_not_side_effect_rollback",
+          "test_recovery.RecoveryTests.test_foreign_or_old_receipt_rejected",
+          "test_recovery.RecoveryTests.test_interrupted_writer_quiescence_checks_are_independent",
+          "test_recovery.RecoveryTests.test_invalid_types_missing_fields_and_extra_keys_fail_closed",
+          "test_recovery.RecoveryTests.test_main_is_never_reviewable",
+          "test_recovery.RecoveryTests.test_remote_push_ack_loss_recovered_by_actual_local_bare_ref",
+          "test_recovery.RecoveryTests.test_replace_effect_then_lost_return_remains_uncertain",
+          "test_recovery.RecoveryTests.test_stale_future_and_boundary_observations",
+          "test_recovery.RecoveryTests.test_success_receipt_requires_effect_confirmation",
+          "test_recovery.RecoveryTests.test_unknown_effects_after_lost_completion_never_retries",
+          "test_recovery.RecoveryTests.test_unknown_runtime_owner_does_not_transfer"
+        ],
+        "checkoutSha": "a14365297170fbc79eae167a686ca311abee50b2",
+        "expected": 125,
+        "filesSha256": {
+          "scripts/k12-pre-push": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+          "scripts/paseo_heartbeat_cleanup.py": "5c8fec183fa380693b933dc2f840ee3f135cb215529238531f7a06fbd363acf9",
+          "scripts/paseo_permission_audit.py": "f760a2b1c1897802fc765a60b35605171b98607219ebebb5c0091ded6f0dd576",
+          "scripts/paseo_preflight.py": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+          "scripts/paseo_recovery_audit.py": "e422ae84c290f683bb99e45a0fc0fb0d8fa4a871fed89b2ce2c132b7ff29028f",
+          "scripts/run_ops_ci.py": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+          "tests/ci-manifest.json": "db189894b88cfc1ba356b18b49297d4416b2b140943e5416156dc1efbe6bd4f6",
+          "tests/test_heartbeat_cleanup.py": "4f1ed5f1ce992c13d1fc42d9be3499b99304fafc5c9b36845d6e2f01cb407827",
+          "tests/test_heartbeat_lifecycle.mjs": "8fa8ec7c399b74a9a18bab2ce3b132d7c2a466127ce1fa7525e6ce3887e55622",
+          "tests/test_ops_ci.py": "51de76430cef371abe9d5d905f907bacbc3959bce8c896ef55068b4c1784b1e6",
+          "tests/test_paseo_preflight.py": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5",
+          "tests/test_permission_audit.py": "b163594df908ba3c16806410aa9d1ca4e1fc4bf5f2d2aa66a88e4ceadd88c973",
+          "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9",
+          "tests/test_recovery.py": "32bc303377efb1ac4633969c8ef541804aae9bdc3e921ca9bbdf17f229fd321a",
+          "tests/test_recovery_pid.mjs": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03"
+        },
+        "k12OnlyNotRun": [
+          "test_heartbeat_lifecycle.mjs",
+          "test_recovery_pid.mjs"
+        ],
+        "phase": "start",
+        "python": "3.14.4",
+        "runId": "9fa1c691-e717-45ac-8336-ef2d0911478e",
+        "runnerSha256": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+        "startedAt": "2026-10-09T21:31:01.948302+00:00"
+      },
+      {
+        "endedAt": "2026-10-09T21:31:05.961559+00:00",
+        "errors": 0,
+        "expected": 125,
+        "expectedFailures": 0,
+        "failures": 0,
+        "filesUnchanged": true,
+        "passed": true,
+        "phase": "finish",
+        "runId": "9fa1c691-e717-45ac-8336-ef2d0911478e",
+        "skipped": 0,
+        "testsRun": 125,
+        "unexpectedSuccesses": 0
+      }
+    ],
+    "cleanAfter": true,
+    "sourceTreeDifference": [
+      ".github/workflows/ops-check.yml"
+    ],
+    "priorCandidate": "5d7d1e1177c5a1991582bee7113d239dda01fe83",
+    "workflowUnchanged": true,
+    "bundle": {
+      "path": "docs/k12-paseo/proposals/ops-ci-reviewed-candidate.bundle",
+      "sha256": "6fae355a696f37c305524a6a5672123705587492e996eb49dabcd55877a4a272",
+      "bytes": 2874,
+      "headRef": "refs/heads/ci/ops-ci-independent-review"
+    },
+    "githubHostedExecuted": false,
+    "delivery": {
+      "clone": "/tmp/k12-review-ci-cprod51n/delivery-check",
+      "bundleVerifyExit": 0,
+      "importedSha": "a14365297170fbc79eae167a686ca311abee50b2",
+      "pr2Ancestor": true,
+      "sourceTreeDifference": [
+        ".github/workflows/ops-check.yml"
+      ],
+      "prerequisites": [
+        "-f069ac35b0553f69f0a485784df0bc4f11341f1b ci: add pinned K12 operations regression workflow",
+        "-73afc54ba6ba046ad5f527c08d77fd3a20ce2a58 docs: 재리뷰에 따라 PID 용어와 증거 수집 시각을 명확화",
+        "-ad3acae8d0f420c9deab7567d3d100881dbc68b0 Add explicit synthetic CI inventory and refresh proposal",
+        "-44a8fa593310d11d5d4d2de045e4f3ac54926555 Record recovery review and distinguish test run provenance",
+        "-0c91fd95b4e6c3f87a7c8b4a25887d2d157879c3 fix(ops): require CI completion and validate audit file inputs"
+      ]
+    }
+  },
+  "nodeEvidenceReuse": [
+    {
+      "name": "heartbeat",
+      "tests": 38,
+      "installedSourceHashMatches": {
+        "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/service.js": true,
+        "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/store.js": true,
+        "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/cron.js": true
+      },
+      "rerun": false
+    },
+    {
+      "name": "pid",
+      "tests": 9,
+      "installedSourceHashMatches": {
+        "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/pid-lock.js": true,
+        "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/daemon-instance.js": true
+      },
+      "rerun": false
+    }
+  ],
+  "mock15EvidenceReused": {
+    "sourceSha256": "2d85a6ecc329700795daaa9d6b3072be5f0c7e899c68d0de55db6acd16471dd5",
+    "sourceUnchanged": true,
+    "rerun": false
+  },
+  "limits": [
+    "No live schedule delete or service/config change",
+    "Completion receipt is not authentication against malicious tests",
+    "Cleanup file observation and delete RPC are not atomic compare-and-delete",
+    "File checks reject leaf symlinks/FIFOs; trusted parent path required; not an OS confinement boundary",
+    "CLI capture size check happens after subprocess capture; not a streaming memory limit",
+    "Hosted CI and operations adoption pending; formal P1 parallel gate unchanged"
+  ]
+}

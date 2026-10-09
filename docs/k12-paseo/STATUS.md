@@ -3,6 +3,10 @@
 2026-10-10 KST. **P0 부분 검증, P1 S 완주 확인, M 교대·구현·검증·독립 리뷰·Draft 전달 완료. M의 사람 채택과 실제 main 확인은 대기 중이며 미션 전체 완료가 아니다.**
 최신 후보 SHA·writer 상태·Next·Heartbeat 상태는 [Draft PR #1](https://github.com/shotgun1107/home-dev-ops/pull/1)의 handoff를 따른다.
 
+야간 **REVIEW_INDEPENDENT**: 별도 Claude 정적 리뷰의 CI 조기 exit0 결함과 Supervisor가 재현한
+파일 입력/receipt 검증 결함을 보정했다. 새 회귀10개 전후 대조, 최신 격리 CI 후보 **125개 OK(skip0)**.
+초기 리뷰의 잘못된 설명·실제 읽기 한계도 기록했다. [고정 후보·후속 리뷰](INDEPENDENT_REVIEW.md).
+
 야간 **P0_PERMISSIONS 감사**: 설치 승인 라우팅과 기존 S/M 기록 대조, 집계 결함 수정,
 독립 리뷰 반례 재현·보강 후 신규 합성38개+기존30개=68개 통과. [권한 감사](PERMISSIONS.md).
 새 실환경 권한 시험·설정 변경은 없으며 Auto-review의 실제 결정은 미확인이다.
@@ -33,6 +37,7 @@
 
 | ID | 항목·성공 기준 | 판정 | 증거·제한 |
 |---|---|---|---|
+| P0-V3 | 최신 ops 독립 리뷰·반례 검증 | 초기 리뷰·보정/125개 통과 / 후속 리뷰 기록 대기 | 운영상 readonly 별도 Claude. CI 완료 전 exit0·FIFO·receipt 자료형을 합성 재현·보정. 실제 서비스/보호/hosted 검증으로 확대하지 않음. [E18](EVIDENCE.md#e18-review_independent-고정-sha-독립-검토) |
 | P0-F1 | handoff 중단·PID 가시성·job 재대조 | 격리 통과 / 실운영 자동 복구 미적용 | Python 신규29+기존 preflight9·설치 PID Node9. 원자적 발행 전후 child 종료, dirty/SHA/소유권/실행/부작용 공백 차단. offline 판정은 lease/실행 승인이 아님. [E15](EVIDENCE.md#e15-p0_recovery-야간-실패-주입) |
 | P0-H1 | 기존 daemon 연결 원인 식별·안전한 생성 | 통과(호스트 경로) | PID namespace로 기본 탐색 실패 재현, 기존 host PID에 연결·Heartbeat 생성. sandbox 연결 자체는 해결하지 않음. [E1](EVIDENCE.md#e1-heartbeat) |
 | P0-H2 | 자동 재개·중복 방지·만료·정리 | 실제1회 수명 통과 / 장기·만료 격리 검증 / 실24h 미실행 | 427d614c의 실제 idle→succeeded→삭제 영수증 재사용. expiry는 실행 강제 종료가 아니고 failed도maxRuns를 소모함. 설치본 stale tick 결함은 H3에 분리. [E9](EVIDENCE.md#e9-실제-idle-자동-재개-1회), [E14](EVIDENCE.md#e14-p0_heartbeat-야간-격리-검증) |
@@ -49,7 +54,7 @@
 | P0-R1 | Python setup·import 격리 | 확인 범위 통과 | PR #2 운영자 실측 182 tests OK, skipped 2·wheel. 이번에는 기존 .venv/source 경로 재확인, clean 유지. [E4](EVIDENCE.md#e4-runtime) |
 | P0-R2 | 새 Worktree setup·runtime 분리 | M의 Python fixture 범위 통과 | 신규 .venv 설치·import assert, 외부 task TMPDIR 0700/owner/비저장소, 같은 runtime 교대 재사용. 내부 TMPDIR 실패 2개→보정 후 2개 OK, 최종 수정 후 Ran185 OK(skip2)·wheel. 실제 계정/장부/DB/volume 격리와 자동 setup은 미검증. [E12](EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원) |
 | P0-V1 | 고정 SHA 리뷰·대리 게시 복구 | 통과 | S의 Codex 리뷰와 M 7ff930c…의 독립 Claude delta 리뷰·원문 대리 게시·GET 일치. M의 P2 1건 재현·수정 후 새 P0/P1/P2 0건. 직접 게시 권한과 기술적 readonly는 미확인. [E12](EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원) |
-| P0-C1 | 이 ops PR의 필요한 CI | 격리 최신 후보 통과 / 원격 갱신·채택 대기 | 과거 PR #2 f069ac3… CI21개. 최신 통합 후보 Python115개 로컬 OK(skip0), Node47개는 별도 재사용. stale base/merge ref와 축소 suite 성공을 재현·개선했다. 보호 공백 때문에 원격 workflow는 보류, exact bundle·사람 절차 전달. 실제 hosted 최신 run/main 필수 검사는 미확인. [E16](EVIDENCE.md#e16-ops_ci-최신-suite와-원격-ci-대조) |
+| P0-C1 | 이 ops PR의 필요한 CI | 격리 최신 후보 통과 / 원격 갱신·채택 대기 | 과거 PR #2 f069ac3… CI21개. OPS_CI 후보115개 이후 REVIEW_INDEPENDENT의 완료 영수증·입력 보강 후보125개 OK(skip0). Node47개는 별도 재사용. 새 exact bundle 제공, 원격 workflow는 보류. 실제 hosted 최신 run/main 필수 검사는 미확인. [E18](INDEPENDENT_REVIEW.md) |
 | P0-V2 | PR 본문 갱신 | 개선 후 통과 | gh 2.46.0 projectCards 오류→동일 PR REST PATCH→GET 일치. 인증/권한 변경 없음 |
 | P0-S1 | 기존 서비스 보호 | 기존 관찰 재사용·미조작 | 관찰 당시 rootless Docker, system docker/socket disabled·inactive, Minecraft 4개 healthy·Paseo active. 이번 M에서 재시작/삭제/초기화·설정 조작 없음. 과거 관찰로 현재 전체 데이터 무결성을 보장하지 않음 |
 | P0-S2 | Direct 무인증 요청 거부 | 통과 | Public WSS에 인증정보 없이 hello→password_required / 4401. [실측](evidence/direct-no-auth.json) |

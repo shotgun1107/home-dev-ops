@@ -19,6 +19,9 @@ v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. o
 
 | 원문 관련 항목 | 변경 내용 | 근거와 적용 한계 |
 |---|---|---|
+| 10장 독립 검토 | 원문·full SHA·읽은/생략한 범위·과거 문맥 재사용·도구 제한을 함께 기록한다. 리뷰의 사실 오류도 실행 증거로 정정하고 다시 검토한다 | 초기 리뷰의 regular-file/원격 효과 설명을 합성 반례와 코드로 정정. 별도 reviewer와 writer 역할을 유지하며 Plan을 기술적 readonly로 보지 않음. [E18](INDEPENDENT_REVIEW.md) |
+| 15·19장 CI 종료 | exit0 외에 같은 runId의 완료 집계·개수·skip/실패0·bytes 유지를 parent가 확인한다 | child의 import/시험 중 os._exit(0) 반례를 차단, 최신 격리 후보125개 OK. 악의적 fixture/receipt 위조를 막는 보안 경계는 아님. 원격 CI 채택은 별도 |
+| 13·16장 감사 입력 | cleanup·permission 입력의 FIFO/symlink를 따라가지 않고 크기·자료형·출력 필드를 제한한다 | 새 회귀10개와 전체125개 격리 검증. 실제 삭제 없음. caller 환경 신뢰와 read→delete의 비원자적 한계는 유지 |
 | 4·19장 동시 작업 관찰 | 승인 대기 writer도 상한에 포함하고, source·Git/common dir·runtime과 요청 ID를 분리해 기록한다. 한 작업의 대기가 독립 작업의 완료를 막는지 관찰한다 | 두 Python mock writer·15개 계약 회귀로 격리 검증. 전역 상한 자동 강제는 미검증이며 이번 실행은 운영상2개를 지켰다. 실제 Paseo dispatch/Provider 부담·정식 P1 결과가 아니므로 M main 선행과 기존 진입 조건은 유지한다. [E17](PARALLEL_ISOLATED.md) |
 | 15·19장 CI 증거 | 실제 base ref·head·merge 부모·checkout SHA와 suite inventory/실행 수를 함께 기록한다. source/tests byte 동일할 때만 로컬 증거를 재사용한다 | OPS_CI 과거21→시작97→후보115개. 일부 suite만 남은 성공을 차단했다. Node47은 K12 별도 증거. 정확한 통합 bundle은 격리 검증했으나 실제 hosted 최신 run과 사람 채택은 대기. [검증](OPS_CI.md) |
 | 13·16장 중단 복구 | handoff의 원격 SHA·Writer/native/하위 실행 종료·runtime 소유권·부작용 결과를 각각 대조한다. PID 전후 stamp 변화를 미확정으로 판정한다 | P0_RECOVERY Python38·설치 PID Node9 격리 시험. 원자적 발행 전후 새 child 종료 실측. 오프라인 판정은 lease/실행 허가가 아니며 controller에 연결하지 않음. [범위](FAILURE_RECOVERY.md) |

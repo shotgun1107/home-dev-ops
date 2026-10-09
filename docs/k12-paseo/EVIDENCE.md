@@ -523,3 +523,18 @@ B 대기 중 A 완료, 각 local commit·clean·두 child 회수까지 확인했
 Info의 immutable 명칭은 기술적 readonly/불변 보장이 아님을 명시했다. 최종 probe bytes는
 ec7e809…의15개·최종 두 결과 실측과 이 리뷰 SHA에서 같으며 추가 반복 시험은 하지 않았다.
 [리뷰 영수증](evidence/parallel-review.json).
+
+## E18 REVIEW_INDEPENDENT 고정 SHA 독립 검토
+
+기준 `81e1547da5f7d6579471ad1f8f4c8b5fa3269c4e`를 별도 Claude reviewer가 정적 검토했다.
+[초기 원문·정정·GET 확인](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089553741).
+새 Low의 CI `_exit(0)` false-green과 Supervisor의 FIFO/receipt 자료형 반례를 합성 환경에서 재현했다.
+고정 source `0c91fd95b4e6c3f87a7c8b4a25887d2d157879c3`, CI 후보
+`a14365297170fbc79eae167a686ca311abee50b2`에서 **125개 OK(skip0)**. 새10개는 전후 대조했고
+Node47·수동 mock15는 hash 일치로 재사용했다. 기존115개 bundle을 보존하고 새2874-byte bundle을
+별도 clone에서 복원했다. 원격 CI/실제 Schedule/서비스/권한 변경은 없다.
+
+[반례·harness 실패·읽기 한계·미확인](INDEPENDENT_REVIEW.md),
+[case ID·SHA·hash·시각·review 게시 영수증](evidence/independent-review.json),
+[최신 사람 적용 제안](proposals/README.md)을 함께 본다. 초기 reviewer는 과거 문맥을 재사용했고
+전체 source를 새로 읽거나 시험을 실행하지 않았다. 후속 리뷰 결과는 PR handoff와 같은 증거에 기록한다.

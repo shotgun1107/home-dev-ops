@@ -116,6 +116,11 @@ succeeded-one-run도 native idle 전환·자동 알림·동일 agent/session 확
 소유권 불일치·상한 불일치·완료 대기 timeout은 삭제 단계 전이므로 `preDeleteReceipt:null`이며 삭제를 시도하지 않는다.
 timeout이면 완료/삭제를 추정하지 않고 남은 ID·expiry·오류를 기록한다. raw CLI stderr나 prompt는 게시하지 않는다.
 
+REVIEW_INDEPENDENT 보강 후보는 schedule의 leaf symlink/FIFO를 거부하고64KiB 상한·중복 key·
+정수 maxRuns·full caller UUID·선택 출력 필드 자료형을 검사한다. 오류는 삭제 전에 고정 문자열로 남긴다.
+이는 신뢰한 상위 home 경로나 caller 환경의 인증을 대체하지 않는다. 조회→delete RPC는 원자적이지 않으므로
+동시 record 변경을 막는 서버 CAS/lock을 검증했다고 하지 않는다. 새15개 cleanup 검사는 모두 fake CLI/주입 함수였다.
+
 ## 3. Git·PR
 
 시작/재개 시 `git status --short --branch`, `git rev-parse HEAD`, `git log`,
@@ -202,6 +207,11 @@ manifest 개수/파일/버전이 맞지 않으면 검사를 생략하거나 숫�
 Node K12 시험을 hosted Python 검사에 합산하지 않는다. bundle prerequisite 또는 원격 HEAD가
 변했다면 새 base에서 다시 대조하고 새 후보·새 CI 결과를 남긴다. 이 작업은 기존 CI PR2를
 원격 갱신하지 않았으므로 서버 측 rollback은 없다. 새 task-owned fixture들은 보존했다.
+
+REVIEW_INDEPENDENT 이후 기본 CI 명령은 child exit0뿐 아니라 parent의 완료 영수증 확인까지
+성공해야 한다. `completion-unconfirmed` 또는 `child-unavailable-or-timeout`은 통과가 아니다.
+내부 child 옵션으로 parent를 생략하지 않는다. child110초/외부120초이며 악의적 코드 격리나
+모든 자손 종료 증명은 아니다. 최신125개 후보·과거115개 후보를 [전달 절차](proposals/README.md)에서 구분한다.
 
 ## 8. 독립 mock 작업의 대기·종료
 

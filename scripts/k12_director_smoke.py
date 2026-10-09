@@ -12,6 +12,9 @@ import sys
 import time
 
 ASTRA = "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd"
+# Workspace was created by the first failed smoke before the invalid Codex mode
+# was rejected. Reuse it; do not create another workspace to recover.
+PILOT_WORKSPACE = "wks_547e4dc9c21a5743"
 ROOT = Path.home() / ".paseo-director-pilot"
 WORK = ROOT / "workspace"
 STATE = ROOT / "state.json"
@@ -102,6 +105,10 @@ def main():
             "currentTask": "read-only Director lifecycle and Heartbeat smoke"
         })
         state = state_data()
+        if state.get("workspaceId") not in (None, PILOT_WORKSPACE):
+            raise RuntimeError("Pilot workspace state mismatch; stop for review")
+        state["workspaceId"] = PILOT_WORKSPACE
+        save_json(STATE, state)
         director_id = state.get("directorId")
         if director_id:
             director = inspect(director_id)
@@ -123,7 +130,7 @@ def main():
                 "agent", "run", "--background", "--title",
                 "K12 Director | bounded pilot", "--provider",
                 "codex/gpt-6-astra", "--thinking", "max",
-                "--mode", "plan", "--new-workspace", "local",
+                "--mode", "auto", "--workspace", PILOT_WORKSPACE,
                 "--cwd", str(WORK), "--label", "k12_role=director_pilot",
                 prompt, timeout=40
             )
@@ -144,6 +151,15 @@ def main():
             raise RuntimeError("Director cwd differs from isolated pilot directory")
         if director.get("Model") != "gpt-6-astra":
             raise RuntimeError("Unexpected Director model")
+        if director.get("Mode") != "auto":
+            raise RuntimeError("Director mode must be Codex auto/on-request")
+        # Codex auto is workspace-write, NOT technically read-only.
+        # This pilot is only instruction-restricted inside an isolated workspace.
+        report["limitations"] = [
+            "Codex auto is on-request/workspace-write, not technical read-only",
+            "No Director-to-Astra delegation performed",
+            "Existing workspace reused after original rejected agent creation"
+        ]
         report["phases"]["directorIsolation"] = "PASS"
 
         if director.get("Status") != "idle":
@@ -231,6 +247,7 @@ def main():
         print("\n=== K12 DIRECTOR SMOKE ===")
         print("RESULT:", report["verdict"])
         print("DIRECTOR:", report.get("directorId", "not-created"))
+        print("WORKSPACE:", PILOT_WORKSPACE, "(reused)")
         print("ASTRA:", ASTRA[:8], "(never messaged)")
         print("HEARTBEAT:", report.get("heartbeatId", "not-created"))
         print("PHASES:", json.dumps(report["phases"], ensure_ascii=False))

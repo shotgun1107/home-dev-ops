@@ -3,6 +3,19 @@
 2026-10-10 KST. **P0 부분 검증, P1 S 완주 확인, M 교대·구현·검증·독립 리뷰·Draft 전달 완료. M의 사람 채택과 실제 main 확인은 대기 중이며 미션 전체 완료가 아니다.**
 최신 후보 SHA·writer 상태·Next·Heartbeat 상태는 [Draft PR #1](https://github.com/shotgun1107/home-dev-ops/pull/1)의 handoff를 따른다.
 
+**DOCS_RECONCILE 대조 시점: 2026-10-10 06:54 KST부터 시작한 순차 GET.** 아래 최신 표와
+[E19](EVIDENCE.md#e19-docs_reconcile-현황과-증거-대조)를 먼저 본다. 이후 E1~E18과 야간 task 요약의
+숫자·설정·서비스 상태는 각 기록 당시의 관찰이다. 최신 source/tests는 byte 동일하여 재실행하지 않았다.
+
+| 대상 | 확인한 SHA와 상태 |
+|---|---|
+| 이번 대조 기준 ops 보고 HEAD | `7b321124a79d1413c62dfb0ee398d784b6fb0568`, local/origin/PR #1 일치·clean·open/Draft. 최종 문서 HEAD는 PR handoff에 별도 기록 |
+| 검증한 구현 source | `1edd2ef4702031dd6fe2d59adc01e4504c5c57db` |
+| 최신 격리 CI 전달 후보 | `80455437960f3db0cbec5f1f3df0392ad47def3c`, Python3.14.4 **125 executed / skip0 / failure0 / error0**. cleanup15·permission39·recovery29·preflight9·guard12·CI21. Node38+9와 mock15는 별도 재사용 |
+| ops 원격 CI | PR #1 기준 HEAD의 check-runs0·status contexts0. combined `pending`은 실행 대기 증거가 아님. PR #2는 `f069ac35b0553f69f0a485784df0bc4f11341f1b` open/Draft, 유일한 Actions run37941584724의 **과거21개** 성공. 최신125개 hosted 미실행 |
+| Kerbe S / main | PR #4 merged, 실제 main `efd539a6ab5cd05a2c7f33cf3b8db13c021458be` 유지. K12 fetch/tree 일치 실측은 E11을 재사용 |
+| Kerbe M | PR #5 `7ff930cefd308c37702aff7c7efd48fc4c9e4c9b` open/Draft·2 check success, main 미반영. 회사 로컬 미동기화 변경은 조회·검증하지 않았으며 이 후보의 근거를 확장하지 않음 |
+
 야간 **REVIEW_INDEPENDENT**: 별도 Claude 정적 리뷰의 CI 조기 exit0 결함과 Supervisor가 재현한
 파일 입력/receipt 검증 결함을 보정했다. 새 회귀10개 전후 대조, 최신 격리 CI 후보 **125개 OK(skip0)**.
 초기 리뷰의 잘못된 설명·실제 읽기 한계도 기록했다. [고정 후보·후속 리뷰](INDEPENDENT_REVIEW.md).
@@ -15,9 +28,9 @@
 동일 조건 보정과 장기·만료·crash 상태 복원 **Node38개 격리 시험 통과**.
 실제24시간·daemon crash는 미실행. [수명·동시성 감사](HEARTBEAT.md).
 
-야간 **OPS_CI**: 과거 CI21개와 현재 Python97개의 차이를 대조했다. 격리 통합 후보는
-새 inventory 검사18개를 포함해 **115개 OK(skip0)**. Node47개는 hash 일치 증거를 재사용했다.
-원격 CI는 보호 공백으로 보류하고 정확한 후보 bundle·사람 적용 절차를 제공한다. [CI 대조](OPS_CI.md).
+야간 **OPS_CI 당시**: 과거 CI21개와 시작 Python97개의 차이를 대조했다. 당시 격리 후보는
+새 inventory 검사18개를 포함해 **115개 OK(skip0)**. 이후 REVIEW_INDEPENDENT의 최신 후보는 위125개다.
+원격 CI는 보호 공백과 workflow 사람 적용 경로 때문에 보류했다. [과거 CI 대조](OPS_CI.md)·[최신 bundle](proposals/README.md).
 
 야간 **P1_PARALLEL_ISOLATED**: 별도 Git/runtime의 Python mock writer2개를 실제 동시 실행했다.
 중복 writer 차단·한 작업의 승인 대기 중 다른 작업 완료를 확인했고, mock 만료 결함은 보정 후
@@ -26,7 +39,7 @@
 ## 기준
 
 - [v2.4 원문](source/K12_Paseo_v2.4.md)과 [AGENTS 초안](source/K12_AGENTS_draft.md)은 입력과 byte 동일. 원문 참조 `K12_Paseo_Review_History.md`는 입력에 없어 미확인.
-- 기존 `docs/k12-paseo-autopilot` Worktree 재사용. 시작 HEAD `bf50f2bdb44e4d71fc29b31dcb0629719a345a95`, 재개 때 clean·open PR 없음 확인.
+- 기존 `docs/k12-paseo-autopilot` Worktree 재사용. 최초 미션 시작 HEAD `bf50f2bdb44e4d71fc29b31dcb0629719a345a95`, 재개 때 clean·open PR 없음 확인.
 - 기존 Supervisor `c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd`가 ops의 유일한 writer다. S는 허용된 별도 Kerbe Worktree의 Claude Writer가 담당했다. 최대 동시 writer는 2명, Worktree별 1명이며 조사·리뷰는 수정 금지였다. S Writer/reviewer와 M의 Claude→Codex Writer/독립 reviewer 모두 종료·idle을 확인했다.
 - 사용자가 이번 Supervisor를 Full Access로 전환했다. 기본 승인 경로 검증과 분리하며, agent가 권한 설정을 변경한 것은 아니다.
 - [Issue #3](https://github.com/shotgun1107/home-dev-ops/issues/3) 재개: `73afc54ba6ba046ad5f527c08d77fd3a20ce2a58`에서 local/PR HEAD 일치·clean 확인. 실제 Supervisor는 `gpt-6-astra` / `max`, 같은 workspace이며 이전 Heartbeat 파일은 없다. [재개 시점 조회](evidence/issue-3-resume.json)
@@ -51,10 +64,10 @@
 | P0-G2 | home-dev-ops 서버 측 보호 | 차단 | private repo 보호 API 403: Pro/public 필요. 공개 전환·구독 변경은 사람 결정. [E3](EVIDENCE.md#e3-git) |
 | P0-G3 | pre-push 사고 방지 | Kerbe 로직 통과 / ops 설치 대기 | 실제 Kerbe hook·동일 후보 각각 12개 격리 시험. ops 활성 hook 없음. 설치/공통 Git 설정 변경 미실행 |
 | P0-W1 | Worktree·writer 소유권 | 현재 미션 통과 / 과거 결함 | ops 기존 workspace 유지, S 단일 writer, M의 같은 wks_6ff707e7c396efdb에서 Claude 종료·Git/runtime 확인 뒤 fresh Codex 인수. 과거 A/B dirty worktree와 중복 registry 보존 |
-| P0-R1 | Python setup·import 격리 | 확인 범위 통과 | PR #2 운영자 실측 182 tests OK, skipped 2·wheel. 이번에는 기존 .venv/source 경로 재확인, clean 유지. [E4](EVIDENCE.md#e4-runtime) |
+| P0-R1 | Python setup·import 격리 | 확인 범위 통과 | Kerbe PR #2 운영자 실측 182 tests OK, skipped 2·wheel. E4에서 기존 .venv/source 경로 재확인, clean 유지. [E4](EVIDENCE.md#e4-runtime) |
 | P0-R2 | 새 Worktree setup·runtime 분리 | M의 Python fixture 범위 통과 | 신규 .venv 설치·import assert, 외부 task TMPDIR 0700/owner/비저장소, 같은 runtime 교대 재사용. 내부 TMPDIR 실패 2개→보정 후 2개 OK, 최종 수정 후 Ran185 OK(skip2)·wheel. 실제 계정/장부/DB/volume 격리와 자동 setup은 미검증. [E12](EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원) |
 | P0-V1 | 고정 SHA 리뷰·대리 게시 복구 | 통과 | S의 Codex 리뷰와 M 7ff930c…의 독립 Claude delta 리뷰·원문 대리 게시·GET 일치. M의 P2 1건 재현·수정 후 새 P0/P1/P2 0건. 직접 게시 권한과 기술적 readonly는 미확인. [E12](EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원) |
-| P0-C1 | 이 ops PR의 필요한 CI | 격리 최신 후보 통과 / 원격 갱신·채택 대기 | 과거 PR #2 f069ac3… CI21개. OPS_CI 후보115개 이후 REVIEW_INDEPENDENT의 완료 영수증·입력 보강 후보125개 OK(skip0). Node47개는 별도 재사용. 새 exact bundle 제공, 원격 workflow는 보류. 실제 hosted 최신 run/main 필수 검사는 미확인. [E18](INDEPENDENT_REVIEW.md) |
+| P0-C1 | 이 ops PR의 필요한 CI | 격리 최신 후보 통과 / 원격 갱신·채택 대기 | 과거 PR #2 f069ac3… CI21개. OPS_CI 후보115개 이후 REVIEW_INDEPENDENT의 완료 영수증·입력 보강 후보125개 OK(skip0). Node47개는 별도 재사용. 새 exact bundle 제공, 원격 workflow는 보류. 실제 hosted 최신 run/main 필수 검사는 미확인. [독립 검증](INDEPENDENT_REVIEW.md) |
 | P0-V2 | PR 본문 갱신 | 개선 후 통과 | gh 2.46.0 projectCards 오류→동일 PR REST PATCH→GET 일치. 인증/권한 변경 없음 |
 | P0-S1 | 기존 서비스 보호 | 기존 관찰 재사용·미조작 | 관찰 당시 rootless Docker, system docker/socket disabled·inactive, Minecraft 4개 healthy·Paseo active. 이번 M에서 재시작/삭제/초기화·설정 조작 없음. 과거 관찰로 현재 전체 데이터 무결성을 보장하지 않음 |
 | P0-S2 | Direct 무인증 요청 거부 | 통과 | Public WSS에 인증정보 없이 hello→password_required / 4401. [실측](evidence/direct-no-auth.json) |
@@ -72,15 +85,30 @@ M도 같은 전용 Worktree에서 Claude→Codex 순차 교대, 구현·검증·
 |---|---|---|
 | 선행 | 사용할 Provider 승인/차단·branch push/PR·작업에 필요한 setup 경로 확정 | S는 Work·C의 동일 프로필과 ignore-only 쓰기 경로를 대조했다. M은 새 Work·C/Build·X의 native·task 원격 쓰기·신규 venv/import·fixture TMPDIR을 실제 확인한 뒤 진입했다. [범위별 조건](REVISION.md#p1-s-첫-후보와-범위별-진입-조건) |
 | S | 한 writer의 요청→검증→리뷰→사람 merge→main 확인 | **완주 확인.** PR #4 후보 f0f73a8…가 사람에 의해 squash merge됨. 실제 main `efd539a6ab5cd05a2c7f33cf3b8db13c021458be`와 K12 origin/main·후보의 전체 tree 일치, main 필수 CI 2개 성공. 기존 42개·리뷰·제품 CI 증거 재사용. [E11](EVIDENCE.md#e11-s-main-반영과-m-진입) |
-| M | 종료 확인·handoff·Git/runtime 대조만으로 반대 Provider가 Next 실행 | **교대·개발·전달 통과 / 사람 채택 대기.** Claude 종료·push/runtime 확인 후 새 Codex가 기록만으로 복원. 최종 `7ff930cefd308c37702aff7c7efd48fc4c9e4c9b`, 로컬 선택22 OK·전체 Ran185 OK(skip2)·wheel, 새 Windows/Ubuntu CI 각185 OK(skip1/2), 독립 P2 해결·새 P0/P1/P2 0. [PR #5](https://github.com/shotgun1107/kerbe/pull/5)를 사람이 Ready/merge한 뒤 main 대조 필요 |
+| M | 종료 확인·handoff·Git/runtime 대조만으로 반대 Provider가 Next 실행 | **교대·개발·전달 통과 / 사람 채택 대기.** Claude 종료·push/runtime 확인 후 새 Codex가 기록만으로 복원. 검증 후보 `7ff930cefd308c37702aff7c7efd48fc4c9e4c9b`, 로컬 선택22 OK·전체 Ran185 OK(skip2)·wheel, Windows/Ubuntu CI 각185 OK(skip1/2), 독립 P2 해결·새 P0/P1/P2 0. 회사 로컬 미동기화 변경을 사람이 먼저 대조한 뒤 [PR #5](https://github.com/shotgun1107/kerbe/pull/5)의 채택 여부를 결정. SHA가 달라지면 해당 변경을 새로 검증·리뷰하고 main 반영을 확인해야 함 |
 | 병렬 | S/M 후 독립 결과 2개 완주·개입 부담 비교 | 정식 미진입. M main 선행은 그대로이며 실제 Provider 부담은 미측정. 별도 Python mock 두 결과·lease/대기/개별 결정은 격리 통과했으나 대체 증거가 아니다. 과거 A/B도 대체 불가. [E17](EVIDENCE.md#e17-p1_parallel_isolated-독립-mock-동시-작업) |
 | 모바일 | 사람이 Acceptance·증거·미확인·후보 SHA 판단 | 미실행. 이 PR을 검토 후보로 제공했으나 실제 모바일 판단은 사람에게 남음 |
 
 ## 개선과 남은 결정
 
-- **적용·검증:** 읽기 전용 연결 진단, ops env/runtime ignore, REST PR 본문 복구, Heartbeat 정리 도구 30개 회귀와 실제 idle 1회 수명·삭제. S `.gitignore` 3줄 개선은 사람의 main 채택 및 K12 대조까지 확인했다. M의 오류 계약·traceback 보정은 Draft 후보로 검증했고, 외부 task TMPDIR과 실제 실행 종료에 따른 교대 절차를 실측했다.
+- **적용·검증:** 읽기 전용 연결 진단, ops env/runtime ignore, REST PR 본문 복구, 실제 idle 1회 수명·삭제. cleanup은 초기9개(당시 전체 Python30개), 최신15개(전체125개 안에 포함)이며 최신 보강 시험은 fake CLI/합성 자료다. S `.gitignore` 3줄 개선은 사람의 main 채택 및 K12 대조까지 확인했다. M의 오류 계약·traceback 보정은 Draft 후보로 검증했고, 외부 task TMPDIR과 실제 실행 종료에 따른 교대 절차를 실측했다.
 - **검증된 설치 후보:** scripts/k12-pre-push. 기존 Kerbe hook과 byte 동일. ops 설치·Git 공통 설정 변경은 사람이 해야 한다.
 - **정책 검토:** ops 보호 기능 확보 또는 private 유지 시 보호 공백 수용 여부, 이번 S/M 밖의 writer 경로, Kerbe bootstrap 채택, ops CI PR #2의 사람이 수행할 통합 순서와 새 후보 검증. S는 이미 사람이 채택했다. 명령별 Supervisor 승인을 프로젝트 전체 영구 허용으로 확대하지 않는다.
 - **아직 주장하지 않는 것:** 전체 P0/P1 완료, Full Access에서 merge 기술적 차단 보장, 모바일 판단 성공, runtime 전체 백업·격리, 자동 복구/정리 보장.
 
 근거는 [EVIDENCE](EVIDENCE.md), 복구는 [RECOVERY](RECOVERY.md), 검증된 변경과 미검증 제안을 구분한 개정안은 [REVISION](REVISION.md)을 따른다.
+
+## 남은 차단·미확인과 정확한 다음 행동
+
+| 항목 | 아직 입증하지 못한 것 | 필요한 다음 행동 |
+|---|---|---|
+| ops 기본 권한·보호 | 과거 보호 API403·hook 미설치·Full Access merge 차단 미검증. 이번 branch GET도 protected=false | 사람이 [보호 선택지](REVISION.md#ops-보호-공백의-선택지--사람-결정)와 공통 hook 영향·기본 writer 경로를 결정. 실제 위험 push/merge로 시험하지 않음 |
+| 승인 결정 주체 | Auto-review 실제 결정·Claude 특정 deny rule/classifier | 현재 모드의 무해한 요청에서 full IDs·native 결과·결정 주체를 대조하는 별도 범위 필요. 기존 응답62건을 사람 클릭/실행 성공으로 바꾸지 않음 |
+| Heartbeat 운영 적용·복구 | 미설치 패치, orphan running 자동 진행 정지, 실24h/OS crash/exactly-once 미검증 | 사람이 배포·복구 위험을 검토. native/하위 실행·부작용 대조 없이 runOnce/daemon 재시작/record 편집 금지 |
+| 대용량 cleanup | 정상64KiB 초과 record의 안전한 선별 조회·실제 삭제 미검증 | 원본 보존. 검증된 Heartbeat-aware 조회가 없으면 차단. full IDs/소유권/실제 종료를 확보한 승인된 같은 agent 후속 턴에서만 [정상 삭제 검토](RECOVERY.md#2-heartbeat) |
+| 최신 ops CI | 후보8045543…의 hosted 실행·main 필수 검사 채택 없음 | 사람이 [bundle과 일반 CI branch 적용 절차](proposals/README.md)를 검토. 정확한 full SHA는 위 표. 새 hosted125개 확인과 Ready/main 채택은 별도 결정 |
+| M 채택·정식 병렬 | PR #5 Draft·main 미반영, 회사 로컬 변경 미동기화 | 사람이 로컬/원격 차이를 먼저 대조. 후보 변경 시 재검증 후 채택 판단. main 확인 전 정식 병렬 진입 금지; mock15는 대체 증거 아님 |
+| 모바일 | 실제 휴대폰에서 판단한 기록 없음 | 사람이 후보 SHA·Acceptance·증거·위험·승인 동작을 모바일에서 읽고 판단 결과를 기록 |
+| runtime·정리 | 실제 계정/장부/DB/volume·자동 setup·백업/복원 전체 미검증 | 필요한 후속 작업의 자원 경계부터 설계하고 폐기 가능한 fixture에서 검증. 기존 영속 자료·서비스·중복 workspace는 보존; 자동 Archive 금지 |
+
+DOCS_RECONCILE 완료는 문서·증거 정합성 확인 범위다. 위 항목을 통과시키거나 새 운영 설정을 적용한 것이 아니다.

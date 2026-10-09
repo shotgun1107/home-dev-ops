@@ -1,0 +1,1572 @@
+{
+  "taskId": "DOCS_RECONCILE",
+  "scope": "Documentation reconciliation only; no new source/runtime test execution or operational adoption",
+  "observedAt": "2026-10-09T22:01:33.855340+00:00",
+  "baselineSha": "7b321124a79d1413c62dfb0ee398d784b6fb0568",
+  "remoteSnapshot": {
+    "observedAt": "2026-10-09T21:54:53.106884+00:00",
+    "home-dev-ops#1": {
+      "html_url": "https://github.com/shotgun1107/home-dev-ops/pull/1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "5942cfa64139710af3afa1f262dc6453a405e519",
+      "updated_at": "2026-10-09T21:49:08Z",
+      "head": {
+        "ref": "docs/k12-paseo-autopilot",
+        "sha": "7b321124a79d1413c62dfb0ee398d784b6fb0568"
+      },
+      "base": {
+        "ref": "main",
+        "sha": "bf50f2bdb44e4d71fc29b31dcb0629719a345a95"
+      },
+      "checks": {
+        "total_count": 0,
+        "runs": []
+      },
+      "statuses": {
+        "state": "pending",
+        "total_count": 0,
+        "contexts": []
+      }
+    },
+    "home-dev-ops#2": {
+      "html_url": "https://github.com/shotgun1107/home-dev-ops/pull/2",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "1f95e837edc2c8b2d20372740e908f1f01052cfe",
+      "updated_at": "2026-10-09T14:05:57Z",
+      "head": {
+        "ref": "ci/k12-ops-check",
+        "sha": "f069ac35b0553f69f0a485784df0bc4f11341f1b"
+      },
+      "base": {
+        "ref": "docs/k12-paseo-autopilot",
+        "sha": "73afc54ba6ba046ad5f527c08d77fd3a20ce2a58"
+      },
+      "checks": {
+        "total_count": 1,
+        "runs": [
+          {
+            "name": "regression",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "f069ac35b0553f69f0a485784df0bc4f11341f1b",
+            "html_url": "https://github.com/shotgun1107/home-dev-ops/actions/runs/37941584724/job/113857032952",
+            "completed_at": "2026-10-09T14:05:34Z"
+          }
+        ]
+      },
+      "statuses": {
+        "state": "pending",
+        "total_count": 0,
+        "contexts": []
+      }
+    },
+    "kerbe#2": {
+      "html_url": "https://github.com/shotgun1107/kerbe/pull/2",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "a9a9cec328a88352386c9c76273dd8bf34594ccb",
+      "updated_at": "2026-10-09T11:41:58Z",
+      "head": {
+        "ref": "bootstrap/kerbe-agents-k12",
+        "sha": "1a02ad66780604909d49044ddfe14c803b0332f9"
+      },
+      "base": {
+        "ref": "main",
+        "sha": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e"
+      },
+      "checks": {
+        "total_count": 2,
+        "runs": [
+          {
+            "name": "test (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "1a02ad66780604909d49044ddfe14c803b0332f9",
+            "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37779471349/job/113318619269",
+            "completed_at": "2026-10-08T12:49:32Z"
+          },
+          {
+            "name": "test (ubuntu-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "1a02ad66780604909d49044ddfe14c803b0332f9",
+            "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37779471349/job/113318618760",
+            "completed_at": "2026-10-08T12:48:22Z"
+          }
+        ]
+      },
+      "statuses": {
+        "state": "pending",
+        "total_count": 0,
+        "contexts": []
+      }
+    },
+    "kerbe#4": {
+      "html_url": "https://github.com/shotgun1107/kerbe/pull/4",
+      "state": "closed",
+      "draft": false,
+      "merged": true,
+      "merged_at": "2026-10-09T17:01:53Z",
+      "merge_commit_sha": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "updated_at": "2026-10-09T17:01:56Z",
+      "head": {
+        "ref": "fix/ignore-local-dotenv",
+        "sha": "f0f73a87821a6b3d990142b948d13c7e2b6e067d"
+      },
+      "base": {
+        "ref": "main",
+        "sha": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e"
+      },
+      "checks": {
+        "total_count": 2,
+        "runs": [
+          {
+            "name": "test (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+            "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37954147794/job/113900232202",
+            "completed_at": "2026-10-09T15:48:01Z"
+          },
+          {
+            "name": "test (ubuntu-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+            "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37954147794/job/113900231888",
+            "completed_at": "2026-10-09T15:46:16Z"
+          }
+        ]
+      },
+      "statuses": {
+        "state": "pending",
+        "total_count": 0,
+        "contexts": []
+      }
+    },
+    "kerbe#5": {
+      "html_url": "https://github.com/shotgun1107/kerbe/pull/5",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "07e44426c1eca768cbe7574c1dc128465565ed4d",
+      "updated_at": "2026-10-09T18:17:08Z",
+      "head": {
+        "ref": "fix/malformed-remote-errors",
+        "sha": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b"
+      },
+      "base": {
+        "ref": "main",
+        "sha": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be"
+      },
+      "checks": {
+        "total_count": 2,
+        "runs": [
+          {
+            "name": "test (windows-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+            "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37971237098/job/113958094905",
+            "completed_at": "2026-10-09T18:09:50Z"
+          },
+          {
+            "name": "test (ubuntu-latest)",
+            "status": "completed",
+            "conclusion": "success",
+            "head_sha": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+            "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37971237098/job/113958094692",
+            "completed_at": "2026-10-09T18:09:08Z"
+          }
+        ]
+      },
+      "statuses": {
+        "state": "pending",
+        "total_count": 0,
+        "contexts": []
+      }
+    },
+    "home-dev-ops/main": {
+      "sha": "bf50f2bdb44e4d71fc29b31dcb0629719a345a95",
+      "protected": false
+    },
+    "kerbe/main": {
+      "sha": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "protected": true
+    },
+    "opsRecentActions": {
+      "total_count": 1,
+      "runs": [
+        {
+          "id": 37941584724,
+          "html_url": "https://github.com/shotgun1107/home-dev-ops/actions/runs/37941584724",
+          "event": "pull_request",
+          "status": "completed",
+          "conclusion": "success",
+          "head_branch": "ci/k12-ops-check",
+          "head_sha": "f069ac35b0553f69f0a485784df0bc4f11341f1b",
+          "created_at": "2026-10-09T14:05:21Z",
+          "updated_at": "2026-10-09T14:05:35Z"
+        }
+      ]
+    },
+    "previousHandoff": {
+      "id": 6089830356,
+      "html_url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089830356",
+      "created_at": "2026-10-09T21:49:08Z",
+      "updated_at": "2026-10-09T21:49:08Z",
+      "bodySha256": "58d45ee348d17c469a32d26f7207528ac565c9c1b4fd72bc1db26f033d0e79d3"
+    }
+  },
+  "referenceVerification": {
+    "observedAt": "2026-10-09T22:00:31.692725+00:00",
+    "references": [
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/actions/runs/37941584724",
+        "verified": true,
+        "id": 37941584724,
+        "apiPath": "repos/shotgun1107/home-dev-ops/actions/runs/37941584724",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T14:05:35Z"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/issues/3",
+        "verified": true,
+        "id": 5779538734,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/3",
+        "state": "open",
+        "draft": null,
+        "updated_at": "2026-10-09T15:02:07Z",
+        "bodySha256": "3ba3c296349ae881f0b2d8b69c0763edf529ffd648a01779736f06a4149a51a1"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1",
+        "verified": true,
+        "id": 4800853364,
+        "apiPath": "repos/shotgun1107/home-dev-ops/pulls/1",
+        "state": "open",
+        "draft": true,
+        "updated_at": "2026-10-09T21:55:56Z",
+        "bodySha256": "517d3076743f3a35096905cfb2f3301455deae98f6304ce1b60475d706fbe9a2"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6081867053",
+        "verified": true,
+        "id": 6081867053,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6081867053",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T13:28:18Z",
+        "bodySha256": "653ce2c35b2c87a10846d1a43a3c06ae73e6176f73936a2be297df9060756c1c"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6083052359",
+        "verified": true,
+        "id": 6083052359,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6083052359",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T14:35:00Z",
+        "bodySha256": "8171b0d2a222677b5dd06d28f586f1303e16031550bc179ca5af4c8ce6b99b29"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6083354266",
+        "verified": true,
+        "id": 6083354266,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6083354266",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T14:52:43Z",
+        "bodySha256": "e3892924198e4f074271b79811b39cede5efdac4f0375cf52ca0d33f813b17b0"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6084479751",
+        "verified": true,
+        "id": 6084479751,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6084479751",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T15:58:43Z",
+        "bodySha256": "870773895921a7d2f6e73ec6c92f44c132f6dc0c9faa6d65997011ffa46bc851"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6085738443",
+        "verified": true,
+        "id": 6085738443,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6085738443",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T17:17:20Z",
+        "bodySha256": "eed00eb0aa165058ef5f1aaf0f19d35332fb70a65272307c51caaf38f0313bb8"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088278361",
+        "verified": true,
+        "id": 6088278361,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6088278361",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T19:59:08Z",
+        "bodySha256": "75d1e52f075236b88dbfcee51e78ce1316213aa9ea7c673bdf11076644c487f2"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088341624",
+        "verified": true,
+        "id": 6088341624,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6088341624",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T20:03:21Z",
+        "bodySha256": "362851097790309ffc42049e54d7a30f5c746f4f05d08c09a9c4636996c3aa9c"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088668023",
+        "verified": true,
+        "id": 6088668023,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6088668023",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T20:25:20Z",
+        "bodySha256": "ed594df7f68a62e1fc3c1bbe3dd51e53dd594ad1c48b255034cd1274beec0c50"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088962998",
+        "verified": true,
+        "id": 6088962998,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6088962998",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T20:45:40Z",
+        "bodySha256": "5a5ffaa84810486079c106141d15c37a5e43b95ed44df2d6f5f6de9df4627212"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089010542",
+        "verified": true,
+        "id": 6089010542,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6089010542",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T20:48:58Z",
+        "bodySha256": "d7aec86e6084e61f0934414b167a4560136ecd835cec0b7036fa0cdc142c4115"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089315397",
+        "verified": true,
+        "id": 6089315397,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6089315397",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T21:10:23Z",
+        "bodySha256": "2c9c3bf07277596d3be3b88b01b2982bc7fafe9a90cf0d4035e254de296632bc"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089359221",
+        "verified": true,
+        "id": 6089359221,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6089359221",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T21:13:31Z",
+        "bodySha256": "2f7767ef6c071e159891c4b0f6d848316ed3665b53cdd78d95dc3b3e313a21d0"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089553741",
+        "verified": true,
+        "id": 6089553741,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6089553741",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T21:28:14Z",
+        "bodySha256": "287c3925a3993f8c7135cde08b02b04fef1c7eac79c54a4bc00e9f673a4389c6"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089778176",
+        "verified": true,
+        "id": 6089778176,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6089778176",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T21:45:07Z",
+        "bodySha256": "c1dc219cd6f85ee4265afedbf8cd3b5a113575b449509dcedd2c005f7a67c5a8"
+      },
+      {
+        "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089914829",
+        "verified": true,
+        "id": 6089914829,
+        "apiPath": "repos/shotgun1107/home-dev-ops/issues/comments/6089914829",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T21:55:56Z",
+        "bodySha256": "b03f2c168dfc1430ba152045487e8ed9a8c4b81729f798e01a43925e571c3ec3"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/actions/runs/37779471349",
+        "verified": true,
+        "id": 37779471349,
+        "apiPath": "repos/shotgun1107/kerbe/actions/runs/37779471349",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-08T12:49:33Z"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/actions/runs/37954147794",
+        "verified": true,
+        "id": 37954147794,
+        "apiPath": "repos/shotgun1107/kerbe/actions/runs/37954147794",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T15:48:03Z"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/actions/runs/37967823137",
+        "verified": true,
+        "id": 37967823137,
+        "apiPath": "repos/shotgun1107/kerbe/actions/runs/37967823137",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T17:40:58Z"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/actions/runs/37969609440",
+        "verified": true,
+        "id": 37969609440,
+        "apiPath": "repos/shotgun1107/kerbe/actions/runs/37969609440",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T17:56:21Z"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/actions/runs/37971237098",
+        "verified": true,
+        "id": 37971237098,
+        "apiPath": "repos/shotgun1107/kerbe/actions/runs/37971237098",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T18:09:51Z"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/issues/3",
+        "verified": true,
+        "id": 5780461703,
+        "apiPath": "repos/shotgun1107/kerbe/issues/3",
+        "state": "open",
+        "draft": null,
+        "updated_at": "2026-10-09T15:56:10Z",
+        "bodySha256": "4bbd482035d4514af7d67b462445bbacb7048f72c846a00daf6aea2ff4b3e8b4"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/issues/3#issuecomment-6083911066",
+        "verified": true,
+        "id": 6083911066,
+        "apiPath": "repos/shotgun1107/kerbe/issues/comments/6083911066",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T15:24:42Z",
+        "bodySha256": "660af9038d4eb8ec33f616cfdca4758210de4df250c293ef32e49308f94c1e84"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/pull/2#issuecomment-6063013414",
+        "verified": true,
+        "id": 6063013414,
+        "apiPath": "repos/shotgun1107/kerbe/issues/comments/6063013414",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-08T15:15:23Z",
+        "bodySha256": "7a134cfb6770390bbd747b58a4f5afee5c60aa50c488c4c54a83691e8ec3b16b"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/pull/2#issuecomment-6063025988",
+        "verified": true,
+        "id": 6063025988,
+        "apiPath": "repos/shotgun1107/kerbe/issues/comments/6063025988",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-08T15:15:59Z",
+        "bodySha256": "69b344cdf780bd11ac76d26b9f62835e43b83eb7f37bd938b92057cfae20c07a"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/pull/2#issuecomment-6080143637",
+        "verified": true,
+        "id": 6080143637,
+        "apiPath": "repos/shotgun1107/kerbe/issues/comments/6080143637",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T11:41:21Z",
+        "bodySha256": "a95803000640a1c8e55c4ab6ec7e8d2952c3705733e8d8dd849e2d95f05852a2"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/pull/4",
+        "verified": true,
+        "id": 4802672118,
+        "apiPath": "repos/shotgun1107/kerbe/pulls/4",
+        "state": "closed",
+        "draft": false,
+        "updated_at": "2026-10-09T17:01:56Z",
+        "bodySha256": "ccc95464d7960ecb625024eb3c15708f550e3d251f5028d39ab135987feca482"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/pull/4#issuecomment-6084290891",
+        "verified": true,
+        "id": 6084290891,
+        "apiPath": "repos/shotgun1107/kerbe/issues/comments/6084290891",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T15:47:38Z",
+        "bodySha256": "891dc6cb645099f4ee736847637d7bdd72a02b732c74b9b03a5b4d73c5b14fa4"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/pull/5",
+        "verified": true,
+        "id": 4803843206,
+        "apiPath": "repos/shotgun1107/kerbe/pulls/5",
+        "state": "open",
+        "draft": true,
+        "updated_at": "2026-10-09T18:17:08Z",
+        "bodySha256": "e6d3826196780d4f664db53fb7e820745e39194acaa923f25b804888b89c1a30"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086175610",
+        "verified": true,
+        "id": 6086175610,
+        "apiPath": "repos/shotgun1107/kerbe/issues/comments/6086175610",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T17:45:23Z",
+        "bodySha256": "95de72e8f40ab1161ab11f3c897b48bde44d6a90517168bca3a851bf7c387f2c"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086484807",
+        "verified": true,
+        "id": 6086484807,
+        "apiPath": "repos/shotgun1107/kerbe/issues/comments/6086484807",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T18:03:17Z",
+        "bodySha256": "9c3d6f36de941198d8771014edc203b379104ec584f9de00d72b51d9fee96368"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086696411",
+        "verified": true,
+        "id": 6086696411,
+        "apiPath": "repos/shotgun1107/kerbe/issues/comments/6086696411",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-09T18:17:06Z",
+        "bodySha256": "f97a944ffbf80d51f461e3b0e02245c140d5c3d2fd42ce4a73fa6b36be0c826e"
+      },
+      {
+        "url": "https://github.com/shotgun1107/kerbe/rules/24715075",
+        "verified": true,
+        "id": 24715075,
+        "apiPath": "repos/shotgun1107/kerbe/rulesets/24715075",
+        "state": null,
+        "draft": null,
+        "updated_at": "2026-10-08T18:58:49.571+09:00"
+      }
+    ],
+    "verifiedCount": 35,
+    "limit": "GET existence/metadata/body hash only, not a fresh reread of every historical native execution or Ruleset audit. Non-GitHub external links and browser/mobile rendering not tested.",
+    "collectorCorrection": "First collector ended on unsupported gh api --slurp in gh2.46.0 before saving its results. Saved this rerun before bounded manual GET pagination; no permissions/config changes.",
+    "efd539a6ab5cd05a2c7f33cf3b8db13c021458be": {
+      "sha": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "tree": "d288c37bb4a3f531adf20303e7e776ca1c82e74e"
+    },
+    "f0f73a87821a6b3d990142b948d13c7e2b6e067d": {
+      "sha": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+      "tree": "d288c37bb4a3f531adf20303e7e776ca1c82e74e"
+    },
+    "latestComments": [
+      {
+        "id": 6089778176,
+        "html_url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089778176",
+        "created_at": "2026-10-09T21:45:07Z",
+        "updated_at": "2026-10-09T21:45:07Z"
+      },
+      {
+        "id": 6089830356,
+        "html_url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089830356",
+        "created_at": "2026-10-09T21:49:08Z",
+        "updated_at": "2026-10-09T21:49:08Z"
+      },
+      {
+        "id": 6089914829,
+        "html_url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089914829",
+        "created_at": "2026-10-09T21:55:56Z",
+        "updated_at": "2026-10-09T21:55:56Z"
+      }
+    ],
+    "commentPagesRead": 1,
+    "totalCommentsRead": 39
+  },
+  "localVerification": {
+    "observedAt": "2026-10-09T22:01:33.772348+00:00",
+    "scope": [
+      "STATUS.md",
+      "EVIDENCE.md",
+      "RECOVERY.md",
+      "REVISION.md"
+    ],
+    "relativeLinks": {
+      "count": 113,
+      "checks": [
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e19-docs_reconcile-현황과-증거-대조",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "INDEPENDENT_REVIEW.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "PERMISSIONS.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "HEARTBEAT.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "OPS_CI.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "proposals/README.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "PARALLEL_ISOLATED.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "source/K12_Paseo_v2.4.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "source/K12_AGENTS_draft.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "evidence/issue-3-resume.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e18-review_independent-고정-sha-독립-검토",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e15-p0_recovery-야간-실패-주입",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e1-heartbeat",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e9-실제-idle-자동-재개-1회",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e14-p0_heartbeat-야간-격리-검증",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "HEARTBEAT.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e2-provider",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e10-kerbe-p1-s--실제-writer-경로",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e13-p0_permissions-야간-감사",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e3-git",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e4-runtime",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "INDEPENDENT_REVIEW.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "evidence/direct-no-auth.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "REVISION.md#p1-s-첫-후보와-범위별-진입-조건",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e11-s-main-반영과-m-진입",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md#e17-p1_parallel_isolated-독립-mock-동시-작업",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "EVIDENCE.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "RECOVERY.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "REVISION.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "REVISION.md#ops-보호-공백의-선택지--사람-결정",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "RECOVERY.md#2-heartbeat",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "STATUS.md",
+          "target": "proposals/README.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/live-snapshot.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/regression.txt",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/existing-guard.txt",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "#e19-docs_reconcile-현황과-증거-대조",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "STATUS.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "../../scripts/paseo_preflight.py",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/paseo-preflight.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/heartbeat-tick.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "../../scripts/k12-pre-push",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "../../tests/test_pre_push.py",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/additional-observations.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/live-snapshot.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "proposals/README.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/issue-3-resume.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/regression-issue-3.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/heartbeat-cleanup-probe.mjs",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/heartbeat-cleanup-race.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "../../scripts/paseo_heartbeat_cleanup.py",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/heartbeat-idle-entry.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/heartbeat-idle-completion.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-s-gate.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-s-permits.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-s-virtual-paths.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-s-result.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-s-review.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-s-ci.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-s-main-confirmation.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-m-gate.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-m-gate.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-m-validation.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-m-review.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/kerbe-m-permissions.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "PERMISSIONS.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/permission-audit.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/permission-regression.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/permission-review.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "HEARTBEAT.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/heartbeat-lifecycle.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "proposals/paseo-heartbeat-schedule.patch",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/heartbeat-review.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "FAILURE_RECOVERY.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/recovery-regression.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/recovery-review.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "OPS_CI.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "proposals/README.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/ops-ci-validation.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/ops-ci-review.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/parallel-mock-probe.py",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "PARALLEL_ISOLATED.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/parallel-isolated.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/parallel-review.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "INDEPENDENT_REVIEW.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/independent-review.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "proposals/README.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "evidence/docs-reconcile.json",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "EVIDENCE.md",
+          "target": "STATUS.md#남은-차단미확인과-정확한-다음-행동",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "RECOVERY.md",
+          "target": "STATUS.md#남은-차단미확인과-정확한-다음-행동",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "RECOVERY.md",
+          "target": "PERMISSIONS.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "RECOVERY.md",
+          "target": "FAILURE_RECOVERY.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "RECOVERY.md",
+          "target": "EVIDENCE.md#e10-kerbe-p1-s--실제-writer-경로",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "RECOVERY.md",
+          "target": "../../scripts/paseo_recovery_audit.py",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "RECOVERY.md",
+          "target": "HEARTBEAT.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "RECOVERY.md",
+          "target": "EVIDENCE.md#e8-issue-3-재개와-heartbeat-정리",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "RECOVERY.md",
+          "target": "proposals/README.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "RECOVERY.md",
+          "target": "proposals/README.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "RECOVERY.md",
+          "target": "PARALLEL_ISOLATED.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "source/K12_Paseo_v2.4.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "STATUS.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "EVIDENCE.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "EVIDENCE.md#e19-docs_reconcile-현황과-증거-대조",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "INDEPENDENT_REVIEW.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "PARALLEL_ISOLATED.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "proposals/README.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "FAILURE_RECOVERY.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "HEARTBEAT.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "PERMISSIONS.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "proposals/README.md",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        },
+        {
+          "source": "REVISION.md",
+          "target": "EVIDENCE.md#e11-s-main-반영과-m-진입",
+          "exists": true,
+          "anchorMatchesApproximation": true
+        }
+      ],
+      "allPass": true,
+      "limit": "Mechanical Markdown links and approximate GitHub heading slugs only; no browser/mobile rendering proof. Source v2.4 content not altered."
+    },
+    "canonical": [
+      {
+        "name": "K12_Paseo_v2.4.md",
+        "inputSha256": "5424563757f8321c8f19f6237db6a0d28c243a233f5c2eb9287aa3a9e0ede27d",
+        "copySha256": "5424563757f8321c8f19f6237db6a0d28c243a233f5c2eb9287aa3a9e0ede27d",
+        "equal": true
+      },
+      {
+        "name": "K12_AGENTS_draft.md",
+        "inputSha256": "f18552b6abac864afa812f475c7580d81a82574f84aeb37b7920dec8cb3d2458",
+        "copySha256": "f18552b6abac864afa812f475c7580d81a82574f84aeb37b7920dec8cb3d2458",
+        "equal": true
+      }
+    ],
+    "missingOriginalReference": {
+      "name": "K12_Paseo_Review_History.md",
+      "existsInInput": false,
+      "existsInPreservedSourceDirectory": false,
+      "status": "unverified; no substitute fabricated"
+    },
+    "testReuse": {
+      "originalEvidence": "evidence/independent-review.json",
+      "sourceSha": "1edd2ef4702031dd6fe2d59adc01e4504c5c57db",
+      "candidateSha": "80455437960f3db0cbec5f1f3df0392ad47def3c",
+      "runId": "2318a21f-4f8f-49ba-827b-c183e40dce6e",
+      "endedAt": "2026-10-09T21:41:22.131355+00:00",
+      "expected": 125,
+      "testsRun": 125,
+      "rerun": false,
+      "files": {
+        "scripts/k12-pre-push": {
+          "sha256": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+          "matches": true
+        },
+        "scripts/paseo_heartbeat_cleanup.py": {
+          "sha256": "162684a9c42bc6c99902c9a806b1ca668e24e4c1f6b3966e57ba190d8f2fc05c",
+          "matches": true
+        },
+        "scripts/paseo_permission_audit.py": {
+          "sha256": "f760a2b1c1897802fc765a60b35605171b98607219ebebb5c0091ded6f0dd576",
+          "matches": true
+        },
+        "scripts/paseo_preflight.py": {
+          "sha256": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+          "matches": true
+        },
+        "scripts/paseo_recovery_audit.py": {
+          "sha256": "e422ae84c290f683bb99e45a0fc0fb0d8fa4a871fed89b2ce2c132b7ff29028f",
+          "matches": true
+        },
+        "scripts/run_ops_ci.py": {
+          "sha256": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+          "matches": true
+        },
+        "tests/ci-manifest.json": {
+          "sha256": "db189894b88cfc1ba356b18b49297d4416b2b140943e5416156dc1efbe6bd4f6",
+          "matches": true
+        },
+        "tests/test_heartbeat_cleanup.py": {
+          "sha256": "3b5e75feeaf38a6dda47a8c461fd899a31b64bf13a9dc3e311c2cde2292977ac",
+          "matches": true
+        },
+        "tests/test_heartbeat_lifecycle.mjs": {
+          "sha256": "8fa8ec7c399b74a9a18bab2ce3b132d7c2a466127ce1fa7525e6ce3887e55622",
+          "matches": true
+        },
+        "tests/test_ops_ci.py": {
+          "sha256": "51de76430cef371abe9d5d905f907bacbc3959bce8c896ef55068b4c1784b1e6",
+          "matches": true
+        },
+        "tests/test_paseo_preflight.py": {
+          "sha256": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5",
+          "matches": true
+        },
+        "tests/test_permission_audit.py": {
+          "sha256": "b163594df908ba3c16806410aa9d1ca4e1fc4bf5f2d2aa66a88e4ceadd88c973",
+          "matches": true
+        },
+        "tests/test_pre_push.py": {
+          "sha256": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9",
+          "matches": true
+        },
+        "tests/test_recovery.py": {
+          "sha256": "32bc303377efb1ac4633969c8ef541804aae9bdc3e921ca9bbdf17f229fd321a",
+          "matches": true
+        },
+        "tests/test_recovery_pid.mjs": {
+          "sha256": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03",
+          "matches": true
+        }
+      }
+    },
+    "manifest": {
+      "schema": 1,
+      "python_version": "3.14.4",
+      "python": {
+        "test_pre_push.py": 12,
+        "test_paseo_preflight.py": 9,
+        "test_heartbeat_cleanup.py": 15,
+        "test_permission_audit.py": 39,
+        "test_recovery.py": 29,
+        "test_ops_ci.py": 21
+      },
+      "k12_only": [
+        "test_heartbeat_lifecycle.mjs",
+        "test_recovery_pid.mjs"
+      ]
+    },
+    "manifestTotal": 125,
+    "installedNodeReuse": [
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/service.js",
+        "sha256": "325066fba80c259ed0f5385042f15045820791fe048e622151259ed036dcd3c6",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/store.js",
+        "sha256": "11ff1f4ecb10a1e632741e8420b505340e5b74ddf343912a0408734531ddf58d",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/cron.js",
+        "sha256": "7e4de9dc39a982751637523b4f4aaf89c2c32c07469312b222deab8b1b98c97e",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/pid-lock.js",
+        "sha256": "7ad798710140a3a831974637cacc0eff40f0403fbd583e307a2b68dc8947c02b",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/daemon-instance.js",
+        "sha256": "029dea3bd91af1295dddb1427f152648657ad43efa1bd097894db901d0832cb9",
+        "matches": true
+      }
+    ],
+    "heartbeatPatch": {
+      "sha256": "12ee2e3efb6e778a5c2642b23d1406888950afa00b5c101a1a80529055178ce0",
+      "matches": true,
+      "applied": false
+    },
+    "mockReuse": {
+      "tests": 15,
+      "sha256": "2d85a6ecc329700795daaa9d6b3072be5f0c7e899c68d0de55db6acd16471dd5",
+      "matches": true,
+      "rerun": false
+    },
+    "bundle": {
+      "path": "docs/k12-paseo/proposals/ops-ci-reviewed-candidate.bundle",
+      "bytes": 3269,
+      "sha256": "076a4de9fe76eaa5c8b08603f36d96d31d11081f04d7e69b782f2565f9f0dcd9",
+      "matches": true,
+      "candidateSha": "80455437960f3db0cbec5f1f3df0392ad47def3c"
+    },
+    "changedPathsFromTestedSource": [
+      "docs/k12-paseo/EVIDENCE.md",
+      "docs/k12-paseo/INDEPENDENT_REVIEW.md",
+      "docs/k12-paseo/OPS_CI.md",
+      "docs/k12-paseo/RECOVERY.md",
+      "docs/k12-paseo/REVISION.md",
+      "docs/k12-paseo/STATUS.md",
+      "docs/k12-paseo/evidence/independent-review.json",
+      "docs/k12-paseo/proposals/README.md",
+      "docs/k12-paseo/proposals/ops-ci-reviewed-candidate.bundle"
+    ],
+    "jsonEvidenceParsed": 35,
+    "allPass": true
+  },
+  "baselineReview": {
+    "id": 6089914829,
+    "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089914829",
+    "reviewedSha": "7b321124a79d1413c62dfb0ee398d784b6fb0568",
+    "reviewer": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+    "nativeLine": 829,
+    "nativeTimestamp": "2026-10-09T21:53:29.261Z",
+    "originalSha256": "78051dc19848f8af398ecd33a9ce58e20dc6c731287fcb53a46cfb02e373fe2b",
+    "getVerified": true
+  },
+  "reviewLimitations": {
+    "provider": "claude",
+    "model": "claude-opus-5-5",
+    "mode": "plan",
+    "readOnly": "policy only; not technical enforcement",
+    "freshFullReads": [
+      "STATUS.md",
+      "EVIDENCE.md",
+      "RECOVERY.md",
+      "REVISION.md"
+    ],
+    "reusedPriorContext": true,
+    "blind": false,
+    "testsExecuted": 0,
+    "liveGitHubByReviewer": false,
+    "rawNativeLogsPublished": false
+  },
+  "actorsObserved": {
+    "observedAt": "2026-10-09T22:00:28.558423+00:00",
+    "actors": [
+      {
+        "Id": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+        "Provider": "codex",
+        "Model": "gpt-6-astra",
+        "Thinking": "max",
+        "Status": "running",
+        "Mode": "full-access",
+        "Cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+        "Archived": false,
+        "pendingCount": 0
+      },
+      {
+        "Id": "e2f92291-4ca9-445e-b94b-47de32029af7",
+        "Provider": "codex",
+        "Model": "gpt-6-astra",
+        "Thinking": "max",
+        "Status": "idle",
+        "Mode": "auto",
+        "Cwd": "/home/shotgun1107/.paseo-director-pilot/workspace",
+        "Archived": false,
+        "pendingCount": 0
+      },
+      {
+        "Id": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+        "Provider": "claude",
+        "Model": "claude-opus-5-5",
+        "Thinking": "auto",
+        "Status": "idle",
+        "Mode": "plan",
+        "Cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+        "Archived": false,
+        "pendingCount": 0
+      }
+    ]
+  },
+  "corrections": [
+    "E3 S adoption and initial limits now point to E11 S main / E12 actual provider handoff",
+    "E10 historical verdict scoped to its checkpoint",
+    "Current125 local vs historical115 local/21 hosted distinguished; cleanup15 vs old9 and old total30",
+    "M184 vs185 bound to exact implementation/final candidate SHA",
+    "Mock two observed writers distinguished from unverified global limit enforcement",
+    "Ambiguous repo PR2, section numbers and link labels clarified",
+    "Historical pilot heartbeat absence does not imply current absence of all automation",
+    "Installed source path typo corrected against installed files and saved hashes",
+    "Remaining blockers include unsynced company-local changes before any M adoption decision"
+  ],
+  "limitations": [
+    "Sequential GET snapshot, not atomic remote state",
+    "Check-runs0 plus status contexts0 does not prove a queued workflow; combined pending alone is not evidence of execution",
+    "Existing125 Python,47 Node and15 manual mock checks reused; not rerun or added together as hosted coverage",
+    "Canonical Review_History is unavailable; do not fabricate",
+    "No browser/mobile heading navigation or non-GitHub external-page reread",
+    "No fresh service/data-integrity, credential, full permission/ruleset or live scheduler audit",
+    "Kerbe code, branch, local checkout and company-local changes untouched; read-only GitHub metadata only",
+    "No new Supervisor/writer/Worktree/heartbeat/automation; no Ready/Merge/main/force push or operational settings changes",
+    "Root remains running until this turn ends; receipt publication is separate from idle state"
+  ],
+  "collectorIssues": [
+    {
+      "step": "GitHub reference collection",
+      "failure": "unsupported gh api --slurp on gh2.46.0",
+      "recovery": "bounded manual GET pagination; results saved before pagination;39 comments in1page",
+      "remoteMutation": false
+    },
+    {
+      "step": "historical cross-repo SHA lookup",
+      "failure": "3366227 object absent from ops object database",
+      "recovery": "full Kerbe implementation SHA read from preserved kerbe-m-validation.json; no Kerbe fetch/checkout"
+    }
+  ]
+}

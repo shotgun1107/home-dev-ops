@@ -9,8 +9,10 @@ No network, subprocess, provider/config access, or output-file writes.
 import argparse
 from collections import Counter
 import json
+import os
 from pathlib import Path
 import re
+import stat
 import sys
 
 
@@ -180,7 +182,9 @@ def main():
     parser.add_argument("--actor-evidence", help="reviewed citation for ledger actor; never inferred")
     args = parser.parse_args()
     try:
-        with args.path.open("rb") as stream:
+        fd = os.open(args.path, os.O_RDONLY | os.O_NONBLOCK | os.O_NOFOLLOW)
+        with os.fdopen(fd, "rb") as stream:
+            require(stat.S_ISREG(os.fstat(stream.fileno()).st_mode), "invalid-evidence-file")
             raw = stream.read(2 * 1024 * 1024 + 1)
         require(len(raw) <= 2 * 1024 * 1024, "input-too-large")
         data = json.loads(raw)

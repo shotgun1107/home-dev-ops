@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 import time
 
@@ -22,12 +23,43 @@ class CleanupError(Exception):
         self.receipt = receipt
 
 
+UUID = re.compile(r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}")
+SCHEDULE_LIMIT = 65536
+
+
+def unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise CleanupError("invalid-schedule")
+        result[key] = value
+    return result
+
+
+def timestamp(value):
+    if value is None:
+        return True
+    if not isinstance(value, str) or len(value) > 40:
+        return False
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).tzinfo is not None
+    except ValueError:
+        return False
+
+
 def read_owned_schedule(path, schedule_id, agent_id):
     try:
-        schedule = json.loads(path.read_text())
+        fd = os.open(path, os.O_RDONLY | os.O_NONBLOCK | os.O_NOFOLLOW)
+        with os.fdopen(fd, "rb") as handle:
+            if not stat.S_ISREG(os.fstat(handle.fileno()).st_mode):
+                raise CleanupError("schedule-unreadable")
+            raw = handle.read(SCHEDULE_LIMIT + 1)
+        if len(raw) > SCHEDULE_LIMIT:
+            raise CleanupError("schedule-unreadable")
+        schedule = json.loads(raw, object_pairs_hook=unique_object)
     except FileNotFoundError:
         raise CleanupError("schedule-not-found") from None
-    except (OSError, ValueError):
+    except (OSError, ValueError, RecursionError):
         raise CleanupError("schedule-unreadable") from None
     if not isinstance(schedule, dict):
         raise CleanupError("invalid-schedule")
@@ -35,11 +67,22 @@ def read_owned_schedule(path, schedule_id, agent_id):
     if (schedule.get("id") != schedule_id or not isinstance(target, dict)
             or target.get("type") != "agent" or target.get("agentId") != agent_id):
         raise CleanupError("schedule-owner-mismatch")
-    if schedule.get("maxRuns") != 1:
+    if type(schedule.get("maxRuns")) is not int or schedule["maxRuns"] != 1:
         raise CleanupError("requires-one-run-heartbeat")
     runs = schedule.get("runs")
     if not isinstance(runs, list) or not all(isinstance(run, dict) for run in runs):
         raise CleanupError("invalid-runs")
+    if schedule.get("status") not in ("active", "paused", "completed") or not timestamp(schedule.get("expiresAt")):
+        raise CleanupError("invalid-schedule")
+    for item in runs:
+        if item.get("status") not in ("running", "succeeded", "failed"):
+            raise CleanupError("invalid-runs")
+        for key in ("id", "agentId"):
+            value = item.get(key)
+            if value is not None and (not isinstance(value, str) or not UUID.fullmatch(value)):
+                raise CleanupError("invalid-run-metadata")
+        if not all(timestamp(item.get(key)) for key in ("scheduledFor", "startedAt", "endedAt")):
+            raise CleanupError("invalid-run-metadata")
     return schedule
 
 
@@ -49,7 +92,9 @@ def cleanup(paseo_home, schedule_id, agent_id, timeout, *, run=subprocess.run,
         raise CleanupError("invalid-heartbeat-id")
     if not agent_id:
         raise CleanupError("missing-caller-agent")
-    if not 1 <= timeout <= 900:
+    if not isinstance(agent_id, str) or not UUID.fullmatch(agent_id):
+        raise CleanupError("invalid-caller-agent")
+    if type(timeout) is not int or not 1 <= timeout <= 900:
         raise CleanupError("invalid-timeout")
     path = paseo_home / "schedules" / f"{schedule_id}.json"
     deadline = monotonic() + timeout
@@ -94,8 +139,10 @@ def cleanup(paseo_home, schedule_id, agent_id, timeout, *, run=subprocess.run,
         if result.returncode != 0:
             raise CleanupError("delete-command-failed")
         try:
+            if len(result.stdout) > SCHEDULE_LIMIT:
+                raise ValueError("oversized acknowledgement")
             acknowledgement = json.loads(result.stdout)
-        except ValueError:
+        except (ValueError, RecursionError):
             raise CleanupError("invalid-delete-acknowledgement") from None
         if not isinstance(acknowledgement, dict) or acknowledgement != {
                 "id": schedule_id, "status": "deleted"}:

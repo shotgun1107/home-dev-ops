@@ -83,6 +83,20 @@ class OpsCiTests(unittest.TestCase):
         self.test.write_text(PASS.replace(": pass", ": raise RuntimeError('synthetic')"))
         self.assertEqual(self.run_fixture(1)[-1]["errors"], 1)
 
+    def test_abrupt_zero_exit_in_test_is_not_pass(self):
+        self.test.write_text(PASS.replace(": pass", ":\n        import os\n        os._exit(0)"))
+        result = self.run_fixture(1)
+        self.assertEqual([r["phase"] for r in result], ["start", "incomplete"])
+        self.assertEqual(result[-1]["reason"], "completion-unconfirmed")
+
+    def test_abrupt_zero_exit_during_import_is_not_pass(self):
+        self.test.write_text("import os\nos._exit(0)\n" + PASS)
+        self.assertEqual(self.run_fixture(1), [{"phase": "incomplete", "reason": "completion-unconfirmed"}])
+
+    def test_normal_system_exit_is_accounted_as_error(self):
+        self.test.write_text(PASS.replace(": pass", ":\n        import sys\n        sys.exit(0)"))
+        self.assertEqual(self.run_fixture(1)[-1]["errors"], 1)
+
     def test_k12_only_is_explicitly_unexecuted(self):
         (self.root / "tests/test_host.mjs").write_text("throw new Error('must not run');\n")
         self.manifest["k12_only"] = ["test_host.mjs"]

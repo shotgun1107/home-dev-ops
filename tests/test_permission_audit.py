@@ -2,6 +2,7 @@
 import copy
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -245,6 +246,20 @@ class LedgerAndCliTests(unittest.TestCase):
         self.assertEqual(result.returncode, 2)
         self.assertEqual(result.stdout, "")
         self.assertEqual(result.stderr.strip(), '{"status":"invalid-evidence"}')
+
+    def test_nonregular_evidence_is_rejected_without_follow_or_hang(self):
+        with tempfile.TemporaryDirectory(prefix="k12-permission-file-") as folder:
+            root = Path(folder)
+            target = root / "valid.json"; target.write_text(json.dumps([response()]))
+            link = root / "link"; link.symlink_to(target)
+            fifo = root / "fifo"; os.mkfifo(fifo)
+            for path in (link, fifo, root):
+                with self.subTest(kind=path.name):
+                    result = subprocess.run([sys.executable, "-I", "-B", str(SCRIPT), "events", str(path)],
+                                            capture_output=True, text=True, timeout=3)
+                    self.assertEqual(result.returncode, 2)
+                    self.assertEqual(result.stdout, "")
+                    self.assertEqual(result.stderr.strip(), '{"status":"invalid-evidence"}')
 
 
 if __name__ == "__main__":

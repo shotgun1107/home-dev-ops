@@ -13,8 +13,10 @@ import os
 from pathlib import Path
 import platform
 import re
+import stat
 import subprocess
 import sys
+import tempfile
 import unittest
 import uuid
 
@@ -90,15 +92,13 @@ def revision(root):
     return value if result.returncode == 0 and re.fullmatch(r"[0-9a-f]{40,64}", value) else None
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
-    root = parser.parse_args().root.resolve()
+def run_suite(root, run_id, report_path):
+    """Child interpreter only: an abrupt exit must not be a parent success."""
     try:
         os.chdir(root)
         before = hashes(root)
         suite, manifest, ids = collect(root)
-        stamp = {"runId": str(uuid.uuid4()), "startedAt": datetime.now(timezone.utc).isoformat(),
+        stamp = {"runId": run_id, "startedAt": datetime.now(timezone.utc).isoformat(),
                  "python": platform.python_version(), "checkoutSha": revision(root),
                  "runnerSha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                  "filesSha256": before, "expected": len(ids), "cases": ids,
@@ -108,19 +108,74 @@ def main():
         unchanged = hashes(root) == before
         passed = (result.wasSuccessful() and result.testsRun == len(ids)
                   and not result.skipped and not result.expectedFailures and unchanged)
-        print(json.dumps({"phase": "finish", "runId": stamp["runId"],
+        finish = {"phase": "finish", "runId": stamp["runId"], "expected": len(ids),
                           "endedAt": datetime.now(timezone.utc).isoformat(),
                           "testsRun": result.testsRun, "failures": len(result.failures),
                           "errors": len(result.errors), "skipped": len(result.skipped),
                           "expectedFailures": len(result.expectedFailures),
                           "unexpectedSuccesses": len(result.unexpectedSuccesses),
-                          "filesUnchanged": unchanged, "passed": passed}, sort_keys=True), flush=True)
+                          "filesUnchanged": unchanged, "passed": passed}
+        # The parent owns this fresh directory. This receipt is an accidental
+        # early-exit check, not authentication against malicious fixture code.
+        report_path.write_text(json.dumps(finish, sort_keys=True))
+        print(json.dumps(finish, sort_keys=True), flush=True)
         return 0 if passed else 1
     except (InvalidSuite, OSError, ValueError, TypeError) as error:
         # Do not echo arbitrary fixture contents, paths or environment values.
         reason = str(error) if isinstance(error, InvalidSuite) else "invalid-suite-input"
         print(json.dumps({"phase": "rejected", "reason": reason}), flush=True)
         return 2
+
+
+def completed_report(path, run_id):
+    try:
+        fd = os.open(path, os.O_RDONLY | os.O_NONBLOCK | os.O_NOFOLLOW)
+        with os.fdopen(fd, "rb") as handle:
+            if not stat.S_ISREG(os.fstat(handle.fileno()).st_mode):
+                return False
+            raw = handle.read(65537)
+        if len(raw) > 65536:
+            return False
+        report = json.loads(raw)
+        return (isinstance(report, dict) and report.get("phase") == "finish"
+                and report.get("runId") == run_id and report.get("passed") is True
+                and report.get("filesUnchanged") is True
+                and type(report.get("expected")) is int and report["expected"] > 0
+                and type(report.get("testsRun")) is int
+                and report["testsRun"] == report["expected"]
+                and all(type(report.get(key)) is int and report[key] == 0 for key in
+                        ("failures", "errors", "skipped", "expectedFailures", "unexpectedSuccesses")))
+    except (OSError, ValueError, RecursionError):
+        return False
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
+    parser.add_argument("--child-report", type=Path, help=argparse.SUPPRESS)
+    parser.add_argument("--run-id", help=argparse.SUPPRESS)
+    args = parser.parse_args()
+    root = args.root.resolve()
+    if args.child_report is not None or args.run_id is not None:
+        if args.child_report is None or args.run_id is None:
+            parser.error("incomplete child arguments")
+        return run_suite(root, args.run_id, args.child_report)
+    run_id = str(uuid.uuid4())
+    with tempfile.TemporaryDirectory(prefix="k12-ci-completion-") as folder:
+        report = Path(folder) / "finish.json"
+        try:
+            child = subprocess.run([sys.executable, "-I", "-B", str(Path(__file__).resolve()),
+                                    "--root", str(root), "--child-report", str(report),
+                                    "--run-id", run_id], timeout=110)
+        except (OSError, subprocess.TimeoutExpired):
+            print(json.dumps({"phase": "incomplete", "reason": "child-unavailable-or-timeout"}), flush=True)
+            return 1
+        if child.returncode != 0:
+            return 2 if child.returncode == 2 else 1
+        if not completed_report(report, run_id):
+            print(json.dumps({"phase": "incomplete", "reason": "completion-unconfirmed"}), flush=True)
+            return 1
+    return 0
 
 
 if __name__ == "__main__":

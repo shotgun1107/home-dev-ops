@@ -1,7 +1,7 @@
 {
   "taskId": "P0_RECOVERY",
   "baseSha": "243ecdffa65992b661184560ed2d5932739262ba",
-  "observedAt": "2026-10-09T20:23:01.620020+00:00",
+  "observedAt": "2026-10-09T20:26:17.914618+00:00",
   "python": "Python 3.14.4",
   "pythonRuns": {
     "recovery-after-review.log": {
@@ -43,13 +43,13 @@
         "test_unknown_runtime_owner_does_not_transfer"
       ]
     },
-    "preflight-after-review.log": {
+    "preflight-provenance.log": {
       "tests": 9,
       "passed": 9,
       "failed": 0,
       "skipped": 0,
       "durationSeconds": 0.001,
-      "sha256": "bbcf7140ae3eefec2ecf15a231c70d4da8ce69c66f8822ca221b01f97e3d98ba",
+      "sha256": "d9d7e075a7dfe424db3d354af6fbfbb251b415351a348ec617dd552ca8c7d372",
       "cases": [
         "test_bad_cli_output_is_not_reachable",
         "test_cli_failure_and_secret_output_are_not_echoed",
@@ -60,7 +60,33 @@
         "test_process_execution_error_is_distinct",
         "test_stale_pid_is_inconclusive_too",
         "test_visible_process_without_probe_is_not_success"
-      ]
+      ],
+      "provenance": {
+        "taskId": "P0_RECOVERY",
+        "runId": "c6f056ac-8b76-48ef-aa62-5ab7208bda6a",
+        "startedAt": "2026-10-09T20:25:19.609880+00:00",
+        "reviewedSha": "cba377ef9b88c44576d1bc3788a8624f3444eaa6",
+        "fileSha256": {
+          "scripts/paseo_preflight.py": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+          "tests/test_paseo_preflight.py": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5"
+        },
+        "command": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_paseo_preflight.py",
+          "-v"
+        ],
+        "endedAt": "2026-10-09T20:25:19.674227+00:00",
+        "exit": 0,
+        "elapsedSeconds": 0.064345,
+        "sourceUnchangedAfterRun": true
+      }
     }
   },
   "pythonFreshTotal": 38,
@@ -320,5 +346,25 @@
     "info3": "retain uncertain publication outcome; additional replace-applied-then-error test confirms reading destination is required",
     "nodePidRerun": false,
     "nodePidSourceAndTestUnchanged": true
-  }
+  },
+  "priorUnstampedAfterReviewPreflight": {
+    "tests": 9,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 0.001,
+    "sha256": "bbcf7140ae3eefec2ecf15a231c70d4da8ce69c66f8822ca221b01f97e3d98ba",
+    "cases": [
+      "test_bad_cli_output_is_not_reachable",
+      "test_cli_failure_and_secret_output_are_not_echoed",
+      "test_malformed_metadata_and_timeout_remain_unconfirmed",
+      "test_missing_cli_is_distinct",
+      "test_namespace_invisible_pid_does_not_claim_stopped_or_running",
+      "test_only_successful_connection_is_pass",
+      "test_process_execution_error_is_distinct",
+      "test_stale_pid_is_inconclusive_too",
+      "test_visible_process_without_probe_is_not_success"
+    ]
+  },
+  "provenanceFollowup": "Independent delta Info: same test names and rounded0.001s produced identical unstamped logs. Re-executed only9 with runId/time/source hashes before+after; do not add to unique test total38."
 }

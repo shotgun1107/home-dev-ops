@@ -465,3 +465,5 @@ a2311a7… [독립 delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pul
 보정했다. 완료는 exit3, 검토 가능은0, 차단/재대조는2로 구분하고 후보 입력을 local task
 형식으로 제한했다. 기존9개 시험의 실제 /proc 존재 조회도 합성 경로로 바꿔 재검증했다.
 Info의 publication 오류 의미는 반영 뒤 응답 유실 시험을 추가하고 불확정으로 유지했다.
+
+cba377e… [독립 delta 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088668023)에서 Low2 해소·새 Low 이상0, Info1(로그 구분)을 확인했다. 기존 preflight9개만 provenance header/footer로 다시 실행해9개 OK와 source 동일을 보존했다. unique Python38/Node9 판정은 그대로이며 reviewer는 테스트를 실행하지 않았다. 최종 source/tests는 이 리뷰 SHA와 동일하다. [리뷰 영수증](evidence/recovery-review.json).

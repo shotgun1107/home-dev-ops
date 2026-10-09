@@ -113,3 +113,5 @@ ops에 저장된 증거를 재사용했다. Kerbe의 현재 상태를 조회하�
 계속한다. 기록 재조립만으로 완료/실행 종료/복구 성공을 추정하지 않는다. 후보 도구의 운영 채택,
 자동화 연결, 서비스 적용 및 실제 orphan 복구는 별도 사람 검토다. 기존 보호·권한·CI 공백과
 전체 P0/P1 미완료 상태는 유지한다.
+
+고정 SHA `cba377ef9b88c44576d1bc3788a8624f3444eaa6`의 [독립 delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088668023)는 Low2 해소·새 Low 이상0을 확인했다. 새 Info는 전후 preflight 로그가 같은 이름/반올림 시간으로 동일 hash였다는 출처 한계다. 해당9개만 run ID·UTC 시각·실행 전후 source/test hash를 로그에 담아 추가 재실행했고 모두 통과했다. 사례 수38에 합산하지 않는다. 최종 문서 영수증 이후 source/tests는 리뷰 SHA와 같다. [원문·게시 GET 영수증](evidence/recovery-review.json).

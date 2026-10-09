@@ -430,3 +430,15 @@ S/M 확인된 조정6건에만 bool marker를 보충했고 응답59/3·조정3/3
 최상위 ledger actor 설명은 검토자 책임이다. 2000-depth 테스트가 이전 코드에서도 OK였으므로
 RecursionError 재현으로 세지 않는다. 별도 합성 오류 주입의 exit2·고정 오류·무노출을
 [회귀 영수증](evidence/permission-regression.json)에 기록했다. [리뷰 원문 영수증](evidence/permission-review.json).
+
+## E14 P0_HEARTBEAT 야간 격리 검증
+
+기준a29f66e…의 기존 Heartbeat/권한 증거를 보존했다. [수명 감사](HEARTBEAT.md),
+[34개 설치본/후보 비교 결과](evidence/heartbeat-lifecycle.json),
+[미설치 patch](proposals/paseo-heartbeat-schedule.patch)에 정확한 조건·hash·실패를 기록했다.
+새 mkdtemp schedule store·주입 시간·stub만 사용했고 daemon.start/restart나 실제 schedule은 조작하지 않았다.
+설치본의 동일 슬롯2회/상한 초과, pause·expiry 뒤 dispatch, append 실패 guard 잔류를 재현했다.
+후보는 store mutation 안 최신 조건/현재 시각 확인과 finally로 차단하면서 독립 schedule 진행을 유지했다.
+Node34개 OK(skip0); 기존 Python68은 hash 동일로 재사용했고 현재 ops CI로 승계하지 않는다.
+24h는 가상 시간, crash는 persisted running의 새 객체 복원이다. 실제24h/OS crash와 설치 효과는 미확인이다.
+초기 stub 계약·fixture clock 오류는 시험 코드 결함으로 분리해 로그 hash를 보존했다.

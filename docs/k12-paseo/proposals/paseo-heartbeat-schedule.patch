@@ -1,0 +1,76 @@
+--- a/service.js
++++ b/service.js
+@@ -513,6 +513,12 @@
+     }
+     async runSchedule(schedule, now, options) {
+         const manual = options?.manual === true;
++        if (this.runningScheduleIds.has(schedule.id)) {
++            if (manual) {
++                throw new Error(`Schedule ${schedule.id} is already running`);
++            }
++            return;
++        }
+         this.runningScheduleIds.add(schedule.id);
+         const runId = randomUUID();
+         const runningRun = {
+@@ -525,8 +531,12 @@
+             output: null,
+             error: null,
+         };
+-        const scheduleWithRun = await this.appendRunningRun(schedule.id, runningRun);
++        let scheduleWithRun = null;
+         try {
++            scheduleWithRun = await this.appendRunningRun(schedule.id, runningRun, { manual });
++            if (!scheduleWithRun) {
++                return;
++            }
+             const result = await this.runner(scheduleWithRun, runId);
+             await this.finishRun({
+                 scheduleId: schedule.id,
+@@ -540,6 +550,9 @@
+             });
+         }
+         catch (error) {
++            if (!scheduleWithRun) {
++                throw error;
++            }
+             await this.finishRun({
+                 scheduleId: schedule.id,
+                 runId,
+@@ -555,13 +568,29 @@
+             this.runningScheduleIds.delete(schedule.id);
+         }
+     }
+-    async appendRunningRun(scheduleId, runningRun) {
+-        const updated = await this.store.update(scheduleId, (schedule) => ({
+-            ...schedule,
+-            updatedAt: runningRun.startedAt,
+-            runs: [...schedule.runs, runningRun],
+-        }));
+-        return requireSchedule(updated, scheduleId);
++    async appendRunningRun(scheduleId, runningRun, options) {
++        let claimed = false;
++        const updated = await this.store.update(scheduleId, (schedule) => {
++            if (!options?.manual) {
++                const now = this.now();
++                if (schedule.status !== "active" ||
++                    !schedule.nextRunAt ||
++                    schedule.nextRunAt !== runningRun.scheduledFor ||
++                    new Date(schedule.nextRunAt).getTime() > now.getTime() ||
++                    shouldCompleteSchedule(schedule, now) ||
++                    schedule.runs.some((run) => run.status === "running")) {
++                    return schedule;
++                }
++            }
++            claimed = true;
++            return {
++                ...schedule,
++                updatedAt: runningRun.startedAt,
++                runs: [...schedule.runs, runningRun],
++            };
++        });
++        requireSchedule(updated, scheduleId);
++        return claimed ? updated : null;
+     }
+     async finishRun(params) {
+         const updatedSchedule = await this.store.update(params.scheduleId, (schedule) => {

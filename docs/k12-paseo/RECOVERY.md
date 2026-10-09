@@ -47,6 +47,12 @@ PR 쓰기·build 명령만 on-request로 검토한다. 정상 개별 승인은 �
 
 ## 2. Heartbeat
 
+P0_HEARTBEAT [격리 검증](HEARTBEAT.md)에 따라 expiry와 실제 실행 종료를 구분한다.
+failed도maxRuns를 소모하고 permission 대기 실패는 underlying agent의 종료가 아니다.
+crash 복원 후에는 PR/HEAD·task 영수증·실제 실행을 대조한다. failed 표시는 부작용 롤백 증거가 아니다.
+manual runOnce는 expiry/maxRuns를 강제하지 않으므로 자동 복구 우회로로 사용하지 않는다.
+설치본의 stale tick·저장 실패 guard 결함은 패치 후보만 검증했으며 운영 적용은 사람이 결정한다.
+
 - 같은 Supervisor/목표의 기존 Heartbeat를 먼저 확인한다. 0.10.3의 일반 `schedule inspect`는 agent-target을 제외함을 확인했다. 일반 ls/logs도 Heartbeat 부재 판단 근거로 사용하지 않는다.
 - 현재 agent의 schedule 파일에서 id/cadence/target/expiry/maxRuns/runs만 읽거나 해당 버전의 검증된 Heartbeat 조회 경로를 사용한다. 파일 직접 편집 금지.
 - 허용된 연결 경로에서만 생성한다. 이 미션은 20분, Asia/Seoul, 24시간, 72회 상한을 사용했다.

@@ -51,6 +51,8 @@ class HeartbeatCleanupTests(unittest.TestCase):
         self.assertEqual(self.now, 1)
         self.assertTrue(receipt["deleted"])
         self.assertEqual(receipt["runs"][0]["status"], "succeeded")
+        self.assertEqual(receipt["runOutcome"], "succeeded-one-run")
+        self.assertFalse(receipt["idleResumeVerifiedByReceipt"])
         self.assertEqual(len(self.calls), 1)
 
     def test_running_timeout_does_not_delete(self):
@@ -76,6 +78,7 @@ class HeartbeatCleanupTests(unittest.TestCase):
         self.schedule.update(status="completed", runs=[{"status": "failed", "error": "sensitive raw detail"}])
         receipt = self.invoke()
         self.assertEqual(receipt["runs"][0]["status"], "failed")
+        self.assertEqual(receipt["runOutcome"], "failed-run")
         self.assertNotIn("sensitive", json.dumps(receipt))
 
     def test_cli_failure_is_redacted_and_does_not_claim_deletion(self):
@@ -92,6 +95,24 @@ class HeartbeatCleanupTests(unittest.TestCase):
             return subprocess.CompletedProcess(command, 0, '{"id":"abcdef12","status":"deleted"}', "")
         with self.assertRaisesRegex(cleanup.CleanupError, "schedule-still-present"):
             self.invoke(run=false_success)
+
+    def test_expired_without_run_is_cleaned_but_not_a_resume_pass(self):
+        self.schedule.update(status="completed", runs=[])
+        receipt = self.invoke()
+        self.assertTrue(receipt["deleted"])
+        self.assertEqual(receipt["runOutcome"], "no-run")
+        self.assertFalse(receipt["idleResumeVerifiedByReceipt"])
+
+    def test_unknown_delete_response_preserves_finished_run_evidence(self):
+        self.schedule.update(status="completed", runs=[{"status": "succeeded", "agentId": "owner"}])
+        def delete_then_lose_response(command, **kwargs):
+            self.path.unlink()
+            raise subprocess.TimeoutExpired(command, 30, output="sensitive response")
+        with self.assertRaisesRegex(cleanup.CleanupError, "delete-command-unavailable") as caught:
+            self.invoke(run=delete_then_lose_response)
+        self.assertFalse(self.path.exists())
+        self.assertEqual(caught.exception.receipt["runOutcome"], "succeeded-one-run")
+        self.assertNotIn("sensitive", json.dumps(caught.exception.receipt))
 
 
 if __name__ == "__main__":

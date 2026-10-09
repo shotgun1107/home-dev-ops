@@ -20,8 +20,9 @@ v2.4 15/18장에 따라 workflow는 일반 agent 작업 branch의 .github/workfl
 | CI run 37941584724 | 위 PR #2 기준 | CPython 3.12.15, 21 tests OK, success |
 
 [실제 로그·workflow hash](../evidence/issue-3-resume.json)는 제안 patch와 byte 일치함을 확인한다.
-현재 PR #1이 앞으로 나가면 CI PR의 base도 바뀐다. 이전 run이 새 통합 상태를 검증했다고 쓰지 않는다.
-이번 cleanup 도구의 7개 추가 시험까지 포함한 28개는 로컬 통과이며, 위 CI에는 21개만 포함됐다.
+PR #1 작업 branch가 진행하면 기존 CI run 당시 base와 달라진다. API `.base.sha`가 과거 값을
+반환할 수도 있으므로 실제 branch ref도 조회한다. 이전 run이 새 통합 상태를 검증했다고 쓰지 않는다.
+cleanup 도구의 최초 7개·리뷰 반영 후 9개 추가 시험까지 포함한 30개는 로컬 통과이며, 위 CI에는 21개만 포함됐다.
 
 두 PR은 Draft/open이다. main에는 workflow가 없고 `ops-check`가 main의 필수 검사로 설정된 증거도 없다.
 사람은 CI PR을 최신 PR #1 base와 대조하고 새 통합 SHA에서 CI를 확인한 뒤 task branch에 채택할지,

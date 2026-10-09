@@ -17,7 +17,9 @@ import time
 
 
 class CleanupError(Exception):
-    pass
+    def __init__(self, reason, receipt=None):
+        super().__init__(reason)
+        self.receipt = receipt
 
 
 def read_owned_schedule(path, schedule_id, agent_id):
@@ -61,32 +63,48 @@ def cleanup(paseo_home, schedule_id, agent_id, timeout, *, run=subprocess.run,
             raise CleanupError("waiting-for-completion-timed-out")
         sleep(1)
     # Keep the final run evidence before the supported API removes its record.
+    if not runs:
+        outcome = "no-run"
+    elif len(runs) != 1:
+        outcome = "unexpected-run-count"
+    elif runs[0].get("status") == "failed":
+        outcome = "failed-run"
+    elif runs[0].get("status") == "succeeded" and runs[0].get("agentId") == agent_id:
+        outcome = "succeeded-one-run"
+    else:
+        outcome = "unconfirmed-run"
     receipt = {
         "id": schedule_id,
         "agentId": agent_id,
         "scheduleStatusBeforeDelete": schedule["status"],
         "maxRuns": schedule["maxRuns"],
         "expiresAt": schedule.get("expiresAt"),
+        "runOutcome": outcome,
+        "idleResumeVerifiedByReceipt": False,
         "runs": [{key: item.get(key) for key in (
             "id", "scheduledFor", "startedAt", "endedAt", "status", "agentId"
         )} for item in runs],
     }
     try:
-        result = run(["paseo", "--home", str(paseo_home), "heartbeat", "delete",
-                      schedule_id, "--json"], capture_output=True, text=True, timeout=30)
-    except (OSError, subprocess.TimeoutExpired):
-        raise CleanupError("delete-command-unavailable") from None
-    if result.returncode != 0:
-        raise CleanupError("delete-command-failed")
-    try:
-        acknowledgement = json.loads(result.stdout)
-    except ValueError:
-        raise CleanupError("invalid-delete-acknowledgement") from None
-    if not isinstance(acknowledgement, dict) or acknowledgement != {
-            "id": schedule_id, "status": "deleted"}:
-        raise CleanupError("unexpected-delete-acknowledgement")
-    if path.exists():
-        raise CleanupError("schedule-still-present")
+        try:
+            result = run(["paseo", "--home", str(paseo_home), "heartbeat", "delete",
+                          schedule_id, "--json"], capture_output=True, text=True, timeout=30)
+        except (OSError, subprocess.TimeoutExpired):
+            raise CleanupError("delete-command-unavailable") from None
+        if result.returncode != 0:
+            raise CleanupError("delete-command-failed")
+        try:
+            acknowledgement = json.loads(result.stdout)
+        except ValueError:
+            raise CleanupError("invalid-delete-acknowledgement") from None
+        if not isinstance(acknowledgement, dict) or acknowledgement != {
+                "id": schedule_id, "status": "deleted"}:
+            raise CleanupError("unexpected-delete-acknowledgement")
+        if path.exists():
+            raise CleanupError("schedule-still-present")
+    except CleanupError as error:
+        error.receipt = receipt
+        raise
     receipt.update(deleted=True, observedAt=datetime.now(timezone.utc).isoformat())
     return receipt
 
@@ -95,12 +113,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("id")
     parser.add_argument("--timeout", type=int, default=600)
+    parser.add_argument("--home", type=Path,
+                        default=Path(os.environ.get("PASEO_HOME", str(Path.home() / ".paseo"))))
     args = parser.parse_args()
     try:
-        receipt = cleanup(Path.home() / ".paseo", args.id,
+        receipt = cleanup(args.home, args.id,
                           os.environ.get("PASEO_AGENT_ID", ""), args.timeout)
     except CleanupError as error:
-        print(json.dumps({"deletionConfirmed": False, "reason": str(error)}))
+        print(json.dumps({"deletionConfirmed": False, "reason": str(error),
+                          "preDeleteReceipt": error.receipt}))
         return 2
     print(json.dumps(receipt, indent=2))
     return 0

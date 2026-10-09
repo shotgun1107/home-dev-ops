@@ -34,14 +34,26 @@ Issue #3의 idle 시험은 같은 agent, `maxRuns=1`, 짧은 만료로 범위를
 자동 알림의 ID/run ID, native session의 직전 종료와 다음 시작, 저장된 run 시각을 대조한다.
 새 agent 생성이나 수동 send로 만든 재개를 Heartbeat 통과로 기록하지 않는다.
 
-Paseo 0.10.3은 실행 중 자기 Heartbeat를 지우면 종료 결과 저장에서 오류가 난다.
+Paseo 0.10.3은 해당 Heartbeat가 시작한 run 안에서 자기 Heartbeat를 지우면 종료 결과 저장에서 오류가 난다.
 [격리 재현](EVIDENCE.md#e8-issue-3-재개와-heartbeat-정리)을 근거로, 실제 시험의 정리는
-종료 뒤 `python3 -B scripts/paseo_heartbeat_cleanup.py <id> --timeout 600`으로 수행한다.
+종료 뒤 `python3 -B scripts/paseo_heartbeat_cleanup.py <id> --timeout 900`으로 수행한다.
 이 명령은 같은 caller의 1회 Heartbeat만 대상으로 하며 completed까지 기다려 CLI로 삭제한다.
 scheduled 턴 밖에서 실행하는 한시적 정리 명령이다. 실행 위치·PID·ID·기한을 PR에 기록하고,
 scheduled 턴 안에서 완료를 기다리지 않는다. 소유권 환경 변수를 바꿔 다른 agent를 가장하지 않는다.
-receipt의 run 상태가 failed면 삭제가 성공해도 자동 재개 통과가 아니다. timeout이면 완료/삭제를
-추정하지 않고 남은 ID·expiry·오류를 기록한다. raw CLI stderr나 schedule prompt는 게시하지 않는다.
+이번 실행은 Python `subprocess.Popen(start_new_session=True, close_fds=True)`으로 프로세스 session을
+분리하고 stdin을 DEVNULL, stdout/stderr를 `.runtime/<id>-cleanup.log`로 돌린다.
+정리 결과는 `.runtime/<id>-cleanup.json` 및 PR #1 코멘트에 보존한다. 부모 tool이 즉시 종료됐는지
+확인하고, 자동 재개한 턴에서는 이전 task_complete→새 task_started와 helper PID 생존을 대조한다.
+helper는 Git source 수정·commit·push를 하지 않으며 다른 agent를 시작하지 않는다.
+첫 cron까지의 대기(약 3분)+재개 턴 목표 시간(5분)이 대기 상한 900초보다 작게 잡는다.
+재개 턴이 길어져 timeout이면 정리 성공으로 쓰지 않는다. 만료/상한으로 completed된 record는
+재실행되지 않으므로, 다음 승인된 같은 agent 턴에서 record의 종료를 읽고 정상 CLI로 삭제한다.
+
+receipt는 삭제 성공과 runOutcome을 분리한다. no-run/failed-run/1개가 아닌 run은 재개 통과가 아니다.
+active-run 거부·승인 대기로 failed가 된 경우도 자동 재개 통과가 아니며 원래 run 오류를 선별해 대조한다.
+succeeded-one-run도 native idle 전환·자동 알림·동일 agent/session 확인이 추가로 필요하다.
+삭제 RPC 응답 유실은 `deletionConfirmed:false`와 `preDeleteReceipt`로 보존하고 먼저 실제 파일 부재를 읽는다.
+timeout이면 완료/삭제를 추정하지 않고 남은 ID·expiry·오류를 기록한다. raw CLI stderr나 prompt는 게시하지 않는다.
 
 ## 3. Git·PR
 

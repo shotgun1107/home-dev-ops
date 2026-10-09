@@ -41,15 +41,15 @@ P0 미확인 경로를 제외한 문서 검토·격리 시험은 계속할 수 �
 
 | 순서 | 성공 기준 | 현재 판정·정확한 다음 행동 |
 |---|---|---|
-| 선행 | 사용할 Provider 승인/차단·작업에 필요한 setup 경로 확정 | 현재 Full Access 차단 미검증. 사용할 기본 writer 경로 확정이 필요. 문서/ignore만 바꾸는 S에는 제품 runtime·새 setup 자동화가 불필요. [범위별 시작 조건](REVISION.md#p1-s-첫-후보와-범위별-진입-조건) |
-| S | 한 writer의 요청→검증→리뷰→사람 merge→main 확인 | Kerbe #2 Draft/open. S 후보로 채택할지도 사람 판단 필요. 사용자가 Ready/merge를 금지했으므로 agent가 완료시킬 수 없음 |
+| 선행 | 사용할 Provider 승인/차단·branch push/PR·작업에 필요한 setup 경로 확정 | 현재 Full Access 차단 미검증. 사용할 기본 writer의 원격 쓰기 경로도 실제 확인 필요. 문서/ignore만 바꾸는 S에는 제품 runtime·새 setup 자동화가 불필요. [범위별 시작 조건](REVISION.md#p1-s-첫-후보와-범위별-진입-조건) |
+| S | 한 writer의 요청→검증→리뷰→사람 merge→main 확인 | 후보는 Kerbe 환경 파일 제외 누락 보완. 아직 미착수이며 bootstrap #2와 별개. Ready/merge는 사람이 수행해야 하므로 agent 단독 완주 불가 |
 | M | 종료 확인·handoff·Git/runtime 대조만으로 반대 Provider가 Next 실행 | 미실행. S·선행 setup 반영 후 하나의 M 작업에서 시험 |
 | 병렬 | S/M 후 독립 결과 2개 완주·개입 부담 비교 | 미실행. 과거 A/B는 같은 목표 경쟁·승인 조건 불일치·미커밋이라 대체 불가 |
 | 모바일 | 사람이 Acceptance·증거·미확인·후보 SHA 판단 | 미실행. 이 PR을 검토 후보로 제공했으나 실제 모바일 판단은 사람에게 남음 |
 
 ## 개선과 남은 결정
 
-- **적용·검증:** 읽기 전용 연결 진단, 이 Worktree의 env/runtime ignore, REST PR 본문 복구 경로. Issue #3에서 완료 후 Heartbeat 정리 보조 명령을 추가해 회귀 28개 통과. 실제 idle 재개·정리는 별도 판정한다.
+- **적용·검증:** 읽기 전용 연결 진단, 이 Worktree의 env/runtime ignore, REST PR 본문 복구 경로. Issue #3에서 완료 후 Heartbeat 정리 보조 명령을 추가하고 독립 리뷰를 반영해 회귀 30개 통과. 실제 idle 재개·정리는 별도 판정한다.
 - **검증된 설치 후보:** scripts/k12-pre-push. 기존 Kerbe hook과 byte 동일. ops 설치·Git 공통 설정 변경은 사람이 해야 한다.
 - **정책 검토:** ops 보호 기능 확보 또는 private 유지 시 보호 공백 수용 여부, 기본 writer 경로, Kerbe bootstrap·S 채택, CI PR #2의 사람이 수행할 통합 순서와 새 후보 검증.
 - **아직 주장하지 않는 것:** 전체 P0/P1 완료, Full Access에서 merge 기술적 차단 보장, 모바일 판단 성공, runtime 전체 백업·격리, 자동 복구/정리 보장.

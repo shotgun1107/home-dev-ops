@@ -36,6 +36,7 @@ credential·CLI raw stderr 출력, start/restart/fallback 연결이 없다. 보�
 - 설정 확인은 ~/.paseo/schedules/f854c66d.json의 cadence/target/runs 필드로 수행. 최종 상태는 PR handoff를 따른다.
 - `paseo schedule inspect f854c66d`는 존재해도 not found. 설치 CLI commands/schedule/inspect.js:12가 target.type != new-agent를 의도적으로 제외한다. 일반 schedule ls/logs로 Heartbeat 부재를 단정하지 않는다. 파일을 편집해서 고치지 않는다.
 - 22:20 KST 실제 cron tick은 `already has an active run`으로 failed였다. 중복 실행은 시작되지 않았고 nextRunAt=22:40으로 갱신됐다. [기록](evidence/heartbeat-tick.json). 자동 재개 통과로 세지 않는다.
+- f854c66d는 22:35:42 KST 정상 `paseo heartbeat delete`의 `{id:f854c66d,status:deleted}` 응답과 파일 부재를 확인했다. native session `01a120af-820b-76e0-9f02-1e3fb9ed575b` JSONL 527/530행(UTC 13:35:40/42)이 출처다. 해당 heartbeat run은 22:20에 이미 failed로 끝났으며, 삭제를 실행한 것은 사용자가 시작한 Supervisor 턴이다. E8의 '그 Heartbeat가 시작한 run 안에서 자기 삭제'와 다르다. Issue #3과 재개 조회에서도 부재를 확인했다.
 - 등록은 idle 세션 재개 완료와 다르다. daemon·인증·모드·세션·writer 소유권이 유지돼야 한다. Heartbeat가 없거나 실패하면 자동 재개는 보장되지 않는다.
 
 ## E2 Provider
@@ -184,14 +185,15 @@ CI PR #2의 head `f069ac35b0553f69f0a485784df0bc4f11341f1b`는 기존 PR #1 HEAD
 base는 `docs/k12-paseo-autopilot`이다. `.github/workflows/ops-check.yml`만 추가됐고
 기존 제안 patch와 byte 일치한다. [run 37941584724](https://github.com/shotgun1107/home-dev-ops/actions/runs/37941584724),
 job 113857032952의 실제 로그에서 CPython 3.12.15·`Ran 21 tests`·`OK`를 재조회했다.
-그 성공을 이후 PR #1 변경이나 main의 필수 check로 승계하지 않는다. 이번에 추가한 정리 도구의
-7개 시험은 그 CI 실행에 포함되지 않았다. 새 로컬 회귀는 Python 3.14.4에서 총 28개 통과했다.
+그 성공을 이후 PR #1 변경이나 main의 필수 check로 승계하지 않는다. 정리 도구의
+시험은 그 CI 실행에 포함되지 않았다. 새 로컬 회귀는 Python 3.14.4에서 최초 28개,
+독립 리뷰 반영 후 30개 통과했다.
 [명령·파일 hash·결과](evidence/regression-issue-3.json).
 
 ### 자기 Heartbeat 삭제 충돌: 재현 → 개선 → 재시험
 
 설치 Paseo 0.10.3 `schedule/service.js`의 `executeSchedule`은 agent의 종료를 기다린 뒤
-`finishRun`으로 결과를 저장한다. 이 agent가 실행 중 자기 Heartbeat를 삭제하면
+`finishRun`으로 결과를 저장한다. 이 Heartbeat가 시작한 run 안에서 자기 Heartbeat를 삭제하면
 `finishRun`의 `requireSchedule`이 실패한다. 이는 daemon 연결 실패와 별개의 구현 결함이다.
 
 [재현 코드](evidence/heartbeat-cleanup-probe.mjs)는 실제 설치 모듈을 불러오되 새 `/tmp` 저장소,
@@ -207,10 +209,17 @@ job 113857032952의 실제 로그에서 CPython 3.12.15·`Ran 21 tests`·`OK`를
 동일 caller의 `maxRuns=1` Heartbeat가 completed이고 모든 run이 종료됐을 때만
 정상 CLI `heartbeat delete`를 호출한다. 최대 15분 대기, CLI 30초 제한, 삭제 응답·파일 부재 확인,
 선별한 종료 결과 영수증을 제공한다. 새 세션 실행·자동 재개·권한 변경 기능은 없다.
-7개 시험에서 실행 중 대기, timeout 시 무삭제, 타 owner·반복 미션 거부, 실패 상태 보존,
-오류 출력 비노출, 잘못된 성공 응답의 파일 부재 확인을 검증했다.
+9개 시험에서 실행 중 대기, timeout 시 무삭제, 타 owner·반복 미션 거부, 실패 상태 보존,
+오류 출력 비노출, 잘못된 성공 응답의 파일 부재 확인, run 없는 만료의 판정,
+삭제 응답 유실 후에도 삭제 전 run 증거 보존을 검증했다. `--home`/`PASEO_HOME`도 preflight와 같은 우선순위다.
 
 이 보조 명령은 **scheduled agent 턴 밖에서** 기다려야 한다. 같은 턴이 자기 완료를 기다리면 종료되지 않는다.
 실제 idle 시험에서는 원래 agent를 한 번 재개하고, 종료 후 정리만 수행하는 한시적 로컬 명령을 사용한다.
 다른 자동 재개 방식으로 대체하는 것이 아니다. 새 cron/systemd/daemon은 만들지 않는다.
 실제 one-run 수명·삭제의 최종 판정은 PR #1의 해당 ID·receipt를 따른다. 격리 결과만으로 실측 통과를 선언하지 않는다.
+
+[1891c5d… 독립 리뷰 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6083052359)을 대리 게시하고 GET으로 원문 일치를 확인했다.
+Medium 2건(정리/재개 판정 분리, 보조 프로세스 분리 실행)과 Low 4건(삭제 전 영수증 보존,
+S 후보 표 일치, 과거 삭제 경위, Paseo home 선택)을 반영했다. receipt의 `runOutcome`은
+no-run/failed-run/succeeded-one-run 등을 구분한다. 성공 run 하나여도 실제 idle 전환·자동 알림·동일 세션의
+증거 대조 전에는 idle 재개 통과가 아니다(`idleResumeVerifiedByReceipt:false`).

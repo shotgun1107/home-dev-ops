@@ -17,7 +17,10 @@
       "action": "virtual check-ignore and tracked filenames; removed unnecessary recursive ~/.paseo search from input before execution",
       "result": "allowed",
       "actualInput": "for n in .env .env.local .env.production .env.development.local nested/.env.local .env.example .env.sample nested/.env.example; do git check-ignore --no-index -v \"$n\"; rc=$?; printf \"%s exit=%s\\n\" \"$n\" \"$rc\"; done\ngit ls-files \".env*\" \"**/.env*\"\ngit worktree list",
-      "observedAt": "2026-10-09T15:38:20.108331+00:00"
+      "observedAt": "2026-10-09T15:38:20.108331+00:00",
+      "inputAdjustment": "removed unnecessary recursive ~/.paseo search before execution; existing action/actualInput and Supervisor native rows 1219/1222 corroborate this previously unstructured adjustment",
+      "supervisorNativeRequestLine": 1219,
+      "supervisorNativeAckLine": 1222
     },
     {
       "id": "permission-698c59d6-8104-4a9e-94fb-ce436a9a2e59",

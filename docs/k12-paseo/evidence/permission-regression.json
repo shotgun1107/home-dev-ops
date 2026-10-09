@@ -1,0 +1,23 @@
+{
+  "taskId": "P0_PERMISSIONS",
+  "command": "python3 -B -m unittest discover -s tests -v",
+  "python": "3.14.4",
+  "result": "OK",
+  "testsRun": 62,
+  "skipped": 0,
+  "newSyntheticTests": 32,
+  "existingRegressionTests": 30,
+  "durationSeconds": 0.219,
+  "conditions": "Synthetic fixtures only. Local temporary Git repositories and hook stdin; no remote push/merge probes, no live permission requests. No credentials/services/Kerbe data used.",
+  "fileSha256": {
+    "scripts/k12-pre-push": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+    "scripts/paseo_heartbeat_cleanup.py": "6974f196c9a3cb6af537583818c73bd0a4f2097051dc22c90994778e4758ef6e",
+    "scripts/paseo_permission_audit.py": "6d7e6549f5f78bd38604177165daef6f0d53aac686c2fcd97a6978790c1dcfb6",
+    "scripts/paseo_preflight.py": "4a0ef503a9f432fc612c95a869a05ad54360a0ebe9e8d274e2c5421abcaec7e0",
+    "tests/test_heartbeat_cleanup.py": "65309defdcf7f5e1591e5618d68d26135b8fe579cfd3dce62298601c5f5848b7",
+    "tests/test_paseo_preflight.py": "59a186bfd96fbfa12da78b758b438f4263267de5feb7fc90d88deef7474ab8ae",
+    "tests/test_permission_audit.py": "7b7b2872dcd35dda9f810dab13a70a3ab95673096ed8ef40dde2336b9fb7c186",
+    "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9"
+  },
+  "review": "Fixed-SHA review will be recorded on PR1; not yet claimed here."
+}

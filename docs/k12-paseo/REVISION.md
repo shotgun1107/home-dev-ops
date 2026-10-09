@@ -42,6 +42,14 @@ private ops 보호 API403은 반대로 로컬 구현 수정만으로 해결되�
 
 ## 확인된 불편과 아직 채택하지 않은 제안
 
+P0_PERMISSIONS 추가 검증으로 승인 기록에는 **전달 경로와 결정 주체, 응답과 실행 결과**를
+별도로 남긴다. reviewer=user나 user-rejected만으로 사람 개입을 세지 않는다.
+중복 response는 full agent/request ID로 묶고 입력 조정은 허용의 부분집합으로 센다.
+설치 Codex 새 기본 resolver는 지원 버전에서 auto-review를 고를 수 있으므로 명시 auto
+preset과 구분하고 native approval/sandbox/reviewer를 확인한다. 프로필을 변경한 것은 아니다.
+S ledger의 조정 필드 누락을 native와 대조해 보충했고 합성32개를 포함한62개가 통과했다.
+설치 소스·검증 범위와 미확인은 [권한 감사](PERMISSIONS.md)에 있다.
+
 | 항목 | 문제·대안 | 채택 전 조건 |
 |---|---|---|
 | Claude Auto | 읽기 전용 조회도 거부된 기록, merge 차단 결정 주체 불명확. Auto를 항상 무인 실행 가능하다고 표현하지 않는다 | 사람이 사용할 모드/지침 loading을 확인하고 지정 무해한 호출에 실제 거부 주체를 확보. deny 변경 없이 기록 부족부터 해결 |

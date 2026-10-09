@@ -5,6 +5,11 @@ main 직접 push/Ready 전환 금지, 기존 데이터 보존을 유지한다.
 
 ## 1. 연결·권한
 
+승인 라벨을 실제 actor로 해석하지 않는다. user-rejected는 steer/중단에서도 생기고
+reviewer=user는 전달 경로다. full agent/request ID의 응답과 native 실행 결과를 따로
+대조하고, 중복·상충은 [오프라인 권한 감사](PERMISSIONS.md)의 방식으로 확인한다.
+kind=plan/updatedPermissions는 모드·정책 변경 가능성이 있어 일상 도구 허용과 분리한다.
+
 1. 현재 cwd/branch/HEAD·dirty 여부·담당 writer·기존 명령과 Heartbeat를 확인한다.
 2. `python3 -B scripts/paseo_preflight.py`로 읽기 전용 진단한다. exit 0은 연결 확인, exit 2는 미확정이다.
 3. recorded-pid-not-visible이면 daemon 중지로 단정하지 않는다. 권한이 허용된 host에서 `paseo status --json`을 대조한다. 기존 승인이 없다면 그 경로만 보류한다.

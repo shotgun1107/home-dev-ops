@@ -409,3 +409,14 @@ attribution/collect fallback을 중단할 수 있는 결함을 선정했다. 합
 - 교대 전후 venv inode·외부 TMPDIR과 소유 workspace가 동일했다. 중단 fixture·로그·이전 wheel은 보존했다. 이는 해당 Python fixture 범위의 분리이며 OS 계정·모든 영속 DB·컨테이너 격리를 보장하지 않는다.
 - Claude의 Paseo UpdatedAt은 idle 중에도 바뀌었지만 native 마지막 assistant는 17:40:27.158Z, 254행으로 유지됐고 교대 뒤 새 user/assistant/tool 실행은 없었다. UpdatedAt 하나로 재실행을 추정하지 않았다. active 상태·pending·native 명령·자식 실행을 함께 확인한다.
 - 현재 Heartbeat 없음. 서비스 시작·재시작·설정 변경, AI Ready/Merge/main push, 자동 Archive·기존 데이터 정리를 실행하지 않았다. M의 실제 main 채택, 병렬 두 결과와 모바일 판단은 남아 있다.
+
+## E13 P0_PERMISSIONS 야간 감사
+
+기준 SHA `5a17e3d5ff5d1d72b550516da2b957ba55e8357d`의 기존 증거를 재사용했다.
+[권한 감사](PERMISSIONS.md)와 [선별 원문 metadata·설치 hash·재집계](evidence/permission-audit.json)에
+라우팅/주체/실행 결과를 구분해 보존했다. M native reviewer=user, Claude Auto/Accept Edits의
+permission-rule, baseline 중단의 user-rejected를 실제 저장 행에서 다시 확인했다.
+S inputAdjustment 누락1건은 native1219/1222행 대조 후 보충했고9/1/3으로 재집계됐다.
+M은50허용/2거부/3조정으로 기존 기록과 일치한다. 합성32개+기존30개=62개 OK(skip0).
+이는 새 위험 차단 실험이나 Auto-review 실제 결정 성공을 뜻하지 않는다.
+Kerbe·설정·서비스·자격증명 저장소 무변경, ops 작업 branch와 PR1만 결과 게시 대상으로 삼았다.

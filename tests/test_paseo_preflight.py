@@ -39,7 +39,7 @@ class PreflightTests(unittest.TestCase):
             (root / "paseo.pid").write_text('{"pid":2316,"token":"DO-NOT-EMIT"}')
             fake = subprocess.CompletedProcess([], 1, '{"password":"DO-NOT-EMIT"}', "DO-NOT-EMIT")
             with patch.object(preflight.subprocess, "run", return_value=fake) as run:
-                result = preflight.diagnose(root)
+                result = preflight.diagnose(root, proc_root=root / "synthetic-proc")
             self.assertNotIn("DO-NOT-EMIT", json.dumps(result))
             self.assertFalse(result["connection_verified"])
             self.assertEqual(result["cli_result"], "nonzero-exit")
@@ -50,7 +50,7 @@ class PreflightTests(unittest.TestCase):
             root = Path(folder)
             (root / "paseo.pid").write_text("[]")
             with patch.object(preflight.subprocess, "run", side_effect=subprocess.TimeoutExpired("paseo", 15)):
-                result = preflight.diagnose(root)
+                result = preflight.diagnose(root, proc_root=root / "synthetic-proc")
             self.assertEqual(result["verdict"], "unconfirmed")
             self.assertIsNone(result["recorded_pid"])
             self.assertEqual(result["cli_result"], "timeout")
@@ -58,7 +58,7 @@ class PreflightTests(unittest.TestCase):
     def test_missing_cli_is_distinct(self):
         with tempfile.TemporaryDirectory(prefix="k12-preflight-") as folder:
             with patch.object(preflight.subprocess, "run", side_effect=FileNotFoundError):
-                result = preflight.diagnose(Path(folder))
+                result = preflight.diagnose(Path(folder), proc_root=Path(folder) / "synthetic-proc")
             self.assertEqual(result["cli_result"], "unavailable")
             self.assertFalse(result["connection_verified"])
 
@@ -67,14 +67,14 @@ class PreflightTests(unittest.TestCase):
             with self.subTest(output=output), tempfile.TemporaryDirectory(prefix="k12-preflight-") as folder:
                 fake = subprocess.CompletedProcess([], 0, output, "")
                 with patch.object(preflight.subprocess, "run", return_value=fake):
-                    result = preflight.diagnose(Path(folder))
+                    result = preflight.diagnose(Path(folder), proc_root=Path(folder) / "synthetic-proc")
                 self.assertEqual(result["cli_result"], "invalid-output")
                 self.assertFalse(result["connection_verified"])
 
     def test_process_execution_error_is_distinct(self):
         with tempfile.TemporaryDirectory(prefix="k12-preflight-") as folder:
             with patch.object(preflight.subprocess, "run", side_effect=PermissionError):
-                result = preflight.diagnose(Path(folder))
+                result = preflight.diagnose(Path(folder), proc_root=Path(folder) / "synthetic-proc")
             self.assertEqual(result["cli_result"], "execution-error")
             self.assertFalse(result["connection_verified"])
 

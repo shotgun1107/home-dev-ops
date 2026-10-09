@@ -94,9 +94,11 @@ class RecoveryTests(unittest.TestCase):
             self.assertEqual(self.check(data)["decision"] == "handoff-reviewable", allowed)
 
     def test_main_is_never_reviewable(self):
-        for branch in ("main", "master", "refs/heads/main", "refs/heads/master"):
+        for branch in ("main", "master", "refs/heads/main", "refs/heads/master", "origin/main",
+                       "refs/remotes/origin/main", "heads/main", "HEAD", "upstream/task-name",
+                       "customremote/main", "fix/main", "docs/master", "refs/heads/docs/topic"):
             data = snapshot(); data["checkpoint"]["branch"] = data["observation"]["branch"] = branch
-            self.assertIn("protected-branch", self.check(data)["reasons"])
+            self.assertIn("branch-not-task", self.check(data)["reasons"])
 
     def test_unknown_effects_after_lost_completion_never_retries(self):
         for state in ("unknown", "conflict", "verified"):
@@ -169,6 +171,18 @@ class RecoveryTests(unittest.TestCase):
                 audit.publish_snapshot(path, new)
         self.assertEqual(audit.read_snapshot(path), new)
 
+    def test_replace_effect_then_lost_return_remains_uncertain(self):
+        path = self.root / "checkpoint.json"; old = snapshot(); audit.publish_snapshot(path, old)
+        new = copy.deepcopy(old); new["checkpoint"]["epoch"] = 2
+        original = audit.os.replace
+        def replace(a, b):
+            original(a, b)
+            raise OSError("synthetic lost replace acknowledgement")
+        with patch.object(audit.os, "replace", side_effect=replace):
+            with self.assertRaisesRegex(audit.RecoveryError, "^publication-failed-or-uncertain$"):
+                audit.publish_snapshot(path, new)
+        self.assertEqual(audit.read_snapshot(path), new)
+
     def test_abrupt_owned_child_exit_before_and_after_atomic_replace(self):
         # os._exit terminates only a freshly spawned test process, never a service.
         worker = self.root / "worker.py"
@@ -210,9 +224,23 @@ m.os.replace=replace;m.publish_snapshot(path,data)
         data["observation"]["effects"] = "verified"
         data["observation"]["receipt"] = dict(job="synthetic-job-1", head=SHA, outcome="succeeded")
         audit.publish_snapshot(path, data)
-        r = self.cli(path); self.assertEqual(r.returncode, 0)
+        r = self.cli(path); self.assertEqual(r.returncode, 3)
         self.assertEqual(json.loads(r.stdout)["decision"], "already-completed")
         self.assertEqual(effect.read_text(), "performed-once")
+
+    def test_completed_has_distinct_cli_exit_from_reviewable_and_blocked(self):
+        path = self.root / "snapshot.json"; data = snapshot()
+        data["observation"]["observedAt"] = datetime.now(timezone.utc).isoformat()
+        for receipt, effects, code, decision in [
+            (None, "absent", 0, "handoff-reviewable"),
+            (dict(job="synthetic-job-1", head=SHA, outcome="failed"), "absent", 0, "retry-reviewable"),
+            (dict(job="synthetic-job-1", head=SHA, outcome="succeeded"), "verified", 3, "already-completed"),
+            (None, "unknown", 2, "reconcile-effects"),
+        ]:
+            data["observation"].update(receipt=receipt, effects=effects)
+            audit.publish_snapshot(path, data)
+            r = self.cli(path); self.assertEqual(r.returncode, code)
+            self.assertEqual(json.loads(r.stdout)["decision"], decision)
 
     def test_remote_push_ack_loss_recovered_by_actual_local_bare_ref(self):
         # No network, user config, signing or common hooks; only fresh local Git dirs.

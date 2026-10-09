@@ -1,0 +1,30 @@
+{
+  "taskId": "P0_RECOVERY",
+  "reviewedSha": "0083b5e3cc08e4bac0f2380872e86543be802aec",
+  "reviewer": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+  "provider": "claude",
+  "mode": "plan (operational read-only)",
+  "findings": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 2,
+    "info": 2
+  },
+  "originalTextSha256": "5a92aa40962751f96b5f9bf6ab271f264c5cdb012413ad5b33f3b2eaf181aab0",
+  "native": {
+    "nativePath": "/home/shotgun1107/.claude/projects/-home-shotgun1107--paseo-worktrees-20iw348x-docs-k12-paseo-autopilot/6d620830-1287-4da7-81ed-3a563f55847a.jsonl",
+    "line": 525,
+    "timestamp": "2026-10-09T20:19:54.863Z"
+  },
+  "commentUrl": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088607750",
+  "postedBodyGetVerified": true,
+  "writerFollowup": {
+    "low1": "already-completed now exit3, reviewable0, blocked/reconcile2; CLI cases cover distinction",
+    "low2": "strict supported short local task branch form; reject main/master suffix and detached/remote/full refs",
+    "info3": "retain conservative uncertain code; injected replace-applied-then-error confirms actual destination must be inspected",
+    "info4": "existing9 now use synthetic proc_root; all other test limitations preserved",
+    "deltaReview": "pending"
+  },
+  "scope": "Static fixed Git objects and installed sources; tests/native/PR posts not independently checked"
+}

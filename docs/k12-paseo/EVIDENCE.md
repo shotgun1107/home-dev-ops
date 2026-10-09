@@ -453,7 +453,7 @@ a2311a7… [독립 delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pul
 
 기준243ecdf…의 clean/local/PR Draft HEAD 일치를 확인하고 기존 Worktree·Astra Max·Director를
 유지했다. [복구 시험](FAILURE_RECOVERY.md)과 [회귀 영수증](evidence/recovery-regression.json)에
-정확한 조건·hash·실패 분류를 남겼다. Python 신규27+기존 preflight9=36, 설치 PID Node9 OK(skip0).
+정확한 조건·hash·실패 분류를 남겼다. Python 신규29+기존 preflight9=38, 설치 PID Node9 OK(skip0).
 영향 없는 Python59·Heartbeat Node38은 hash 일치로 재사용했으며 새 실행/CI로 합산하지 않았다.
 
 기존 preflight는 조회 중 PID identity 변경도 reachable로 합성 재현됐다. 전후 stamp 확인과
@@ -461,3 +461,7 @@ a2311a7… [독립 delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pul
 실행 종료·원격 SHA·runtime/epoch·부작용 공백을 차단하고 원자적 발행의 old/new 기록 보존을
 새 시험 child의 즉시 종료로 확인했다. 실제 서비스·세션·설정·Kerbe는 변경하지 않았다.
 작업 결과 판정 도구는 offline advisory이며 자동 복구/권한 부여/lock/CAS/dispatch가 아니다.
+0083b5e… 독립 리뷰의 Low2(완료 exit0 혼합·remote/detached branch 수용)를 합성 재현 후
+보정했다. 완료는 exit3, 검토 가능은0, 차단/재대조는2로 구분하고 후보 입력을 local task
+형식으로 제한했다. 기존9개 시험의 실제 /proc 존재 조회도 합성 경로로 바꿔 재검증했다.
+Info의 publication 오류 의미는 반영 뒤 응답 유실 시험을 추가하고 불확정으로 유지했다.

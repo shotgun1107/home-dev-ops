@@ -6,7 +6,7 @@
 
 ## 성공 기준과 실측
 
-- Python 신규27개 + 변경된 preflight의 기존9개 = **36개 OK, skipped0**.
+- Python 신규29개 + 변경된 preflight의 기존9개 = **38개 OK, skipped0**.
 - 설치 PID/daemon 읽기 코드의 Node **9개 OK, skipped0**. process.kill은 모든 호출에서
   stub이며 실제 signal0도 보내지 않았다. 잠금 acquire/release나 start/stop은 호출하지 않았다.
 - 영향 없는 Python59개와 Heartbeat Node38개는 source/test/설치 hash 일치로 재사용했다.
@@ -44,11 +44,17 @@
 [paseo_recovery_audit.py](../../scripts/paseo_recovery_audit.py)는 운영자가 선별한 JSON의
 증거 일관성을 확인하는 **오프라인 검토 보조**다. 실행·재시작·lock 해제·승인·lease 획득을 하지 않는다.
 snapshot은 schema1이며 다음의 정확한 필드를 요구한다. 테스트의 `snapshot()`은 합성 예제다.
+이 JSON은 상태 대조용 선별 자료이며 정본 task/PR의 목표·Acceptance·Next를 대체하지 않는다.
+다음 Writer는 그 정본도 읽어야 한다. 이번 도구/API는 K12 Linux에서만 시험했으며
+O_NOFOLLOW/O_NONBLOCK/O_DIRECTORY를 사용하는 다른 플랫폼의 호환성은 미검증이다.
 
 - checkpoint: task/job/worktree/runtime/writer/session/branch/epoch/head.
 - observation: 동일 identity8개, localHead/remoteHead/prHead/handoffHead, observedAt,
   clean, writerState, pendingPermissions, children, nativeComplete, runtimeOwner, effects, receipt.
 - receipt: null 또는 job/head/outcome(succeeded/failed). SHA는40자리 전체 값이다.
+- 이 후보의 branch 입력은 `docs|feat|fix|chore|test|refactor|task` + `/` + 소문자 kebab
+  형식의 짧은 local 작업 이름만 수용하고 main/master 종단도 거부한다. HEAD·원격/전체 ref는
+  해석하지 않는다. 다른 명명 방식은 이 후보 범위에서 보류한다. Git/권한 설정에 적용하지 않았다.
 - observedAt은 timezone이 있는 시각, 현재 기준60초 이내/미래5초 이내다. 이는 입력의 신선도
   기준이며 snapshot이 진짜이거나 그 이후 새 실행이 없다는 증명은 아니다.
 - runtimeOwner=released는 현재 scope의 실행 소유권 반납 관찰이다. 기존 runtime 데이터 삭제를 뜻하지 않는다.
@@ -57,8 +63,10 @@ snapshot은 schema1이며 다음의 정확한 필드를 요구한다. 테스트�
   PID 소실·failed/idle·메시지 없음으로 absent를 만들어 넣지 않는다.
 
 출력은 fixed reason code와 decision만이며 arbitrary 입력값을 반사하지 않는다.
-handoff-reviewable/retry-reviewable/already-completed의 exit0은 **검토 가능한 증거 조합**이다.
-실행 허가나 배타적 소유권이 아니다. 그 외는 exit2, automaticAction은 항상none이다.
+handoff-reviewable/retry-reviewable의 exit0은 **검토 가능한 증거 조합**이다.
+already-completed는 **exit3: 다시 실행하지 않음**, 차단·재대조는 exit2다.
+어느 코드도 실행 허가/배타적 소유권이 아니며 caller는 decision과 근거를 읽어야 한다.
+automaticAction은 항상none이다.
 관찰 후 새 Writer가 시작되는 경쟁을 막는 fence/lock/CAS는 구현하지 않았다.
 
 같은 모듈의 `publish_snapshot(path,data)`는 후보 Python API이며 CLI 쓰기 모드는 없다.
@@ -83,7 +91,16 @@ task branch만 쓰고 user/system Git 설정·signing·공통 hook을 로드하�
 AssertionError에 도달했다. 이를 운영 결함 증거로 세지 않았다. 별도 명시적 RecursionError
 주입에서 기존 예외 전파를 확인하고 후보의 고정 미확정 결과를 재시험했다. source와
 fixture 문제를 구분한 원기록은 증거 JSON에 보존했다. 첫 신규26개 통과 후 fsync 반례1개를
-추가했고 최종27개가 통과했다. 실 daemon·인증·부작용 명령은 재시도하지 않았다.
+추가했고 당시27개가 통과했다. 실 daemon·인증·부작용 명령은 재시도하지 않았다.
+
+그 뒤 [독립 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088607750)의
+Low2 반례를 재현했다. 완료와 검토 가능의 exit0 혼합을 exit3으로 분리하고, origin/main·
+refs/remotes/origin/main·heads/main·HEAD 등을 거부하도록 입력 규격을 좁혔다.
+replace가 반영된 뒤 오류 응답이 난 경우도 추가해 publication-failed-or-uncertain을 유지했다.
+기계적으로 미반영이라 분류해 재실행하지 않고 목적지부터 읽는 보수적 의미다.
+초기 기존 preflight9개 중 diagnose 호출은 실제 /proc의 합성 PID 존재 여부만 읽었으며
+현재 모두 임시 proc_root로 바꿔 재시험했다. 실제 PID 조작은 없었다.
+리뷰 후 신규29+기존9=38개가 통과했다. Node9 시험·설치 source는 같아 다시 실행하지 않았다.
 
 ## 기존 증거와 남은 경계
 

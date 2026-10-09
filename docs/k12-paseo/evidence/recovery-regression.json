@@ -1,16 +1,16 @@
 {
   "taskId": "P0_RECOVERY",
   "baseSha": "243ecdffa65992b661184560ed2d5932739262ba",
-  "observedAt": "2026-10-09T20:15:51.582344+00:00",
+  "observedAt": "2026-10-09T20:23:01.620020+00:00",
   "python": "Python 3.14.4",
   "pythonRuns": {
-    "recovery-final.log": {
-      "tests": 27,
-      "passed": 27,
+    "recovery-after-review.log": {
+      "tests": 29,
+      "passed": 29,
       "failed": 0,
       "skipped": 0,
-      "durationSeconds": 0.486,
-      "sha256": "b4d50c22a846ba948aa78d39ddd83850f300145f54d5aef205ba4ef8ab7b8a41",
+      "durationSeconds": 0.589,
+      "sha256": "a9eda7a6ba55acf6e61c1b16a4620e117e7d9df3c32ca11fd375b5040b1f3387",
       "cases": [
         "test_auth_failures_not_retried_or_echoed",
         "test_changed_identity_during_probe_no_longer_claims_stable_connection",
@@ -25,6 +25,7 @@
         "test_atomic_publication_errors_preserve_readable_destination",
         "test_cli_partial_oversized_duplicate_and_special_files_no_secret_output",
         "test_complete_handoff_reviewable_without_grant",
+        "test_completed_has_distinct_cli_exit_from_reviewable_and_blocked",
         "test_directory_sync_error_after_replace_is_uncertain_not_rollback",
         "test_dirty_state_not_discarded",
         "test_each_revision_must_match_not_only_local_head",
@@ -35,13 +36,14 @@
         "test_invalid_types_missing_fields_and_extra_keys_fail_closed",
         "test_main_is_never_reviewable",
         "test_remote_push_ack_loss_recovered_by_actual_local_bare_ref",
+        "test_replace_effect_then_lost_return_remains_uncertain",
         "test_stale_future_and_boundary_observations",
         "test_success_receipt_requires_effect_confirmation",
         "test_unknown_effects_after_lost_completion_never_retries",
         "test_unknown_runtime_owner_does_not_transfer"
       ]
     },
-    "preflight-regression.log": {
+    "preflight-after-review.log": {
       "tests": 9,
       "passed": 9,
       "failed": 0,
@@ -61,7 +63,7 @@
       ]
     }
   },
-  "pythonFreshTotal": 36,
+  "pythonFreshTotal": 38,
   "nodeInstalledPid": {
     "node": "v22.22.1",
     "sources": [
@@ -132,9 +134,9 @@
   },
   "fileSha256": {
     "scripts/paseo_preflight.py": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
-    "scripts/paseo_recovery_audit.py": "37f996237c54c17e3a3ce71fcfe7e09fe1b2253b3e19c569061ecd12978a261b",
-    "tests/test_paseo_preflight.py": "59a186bfd96fbfa12da78b758b438f4263267de5feb7fc90d88deef7474ab8ae",
-    "tests/test_recovery.py": "2a8dce122d90697c7ace3dab2865313ddd235a77aa95926b31fcb320f50ec21a",
+    "scripts/paseo_recovery_audit.py": "e422ae84c290f683bb99e45a0fc0fb0d8fa4a871fed89b2ce2c132b7ff29028f",
+    "tests/test_paseo_preflight.py": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5",
+    "tests/test_recovery.py": "32bc303377efb1ac4633969c8ef541804aae9bdc3e921ca9bbdf17f229fd321a",
     "tests/test_recovery_pid.mjs": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03"
   },
   "redBeforeFix": [
@@ -207,6 +209,116 @@
     "Atomic publisher is a candidate Python API tested only on local temporary files; no deployment, multiwriter safety, power-loss or distributed exactly-once guarantee",
     "Local bare Git push succeeded and acknowledgement was deliberately ignored; no real network interruption or GitHub handoff loss induced",
     "PID visibility and startedAt equality cannot authenticate same-boot PID identity; invalid timestamp is accepted by installed schema",
-    "Test source has synthetic-only effects/IDs; raw prompts, auth files and real credential stores not used"
-  ]
+    "Test source has synthetic-only effects/IDs; raw prompts, auth files and real credential stores not used",
+    "Initial existing9 preflight cases performed harmless real /proc synthetic-PID existence checks; corrected to synthetic proc_root and rerun. No real process signals or service changes."
+  ],
+  "beforeReviewPythonRuns": {
+    "recovery-final.log": {
+      "tests": 27,
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 0.486,
+      "sha256": "b4d50c22a846ba948aa78d39ddd83850f300145f54d5aef205ba4ef8ab7b8a41",
+      "cases": [
+        "test_auth_failures_not_retried_or_echoed",
+        "test_changed_identity_during_probe_no_longer_claims_stable_connection",
+        "test_disappearing_metadata_during_probe_is_unconfirmed",
+        "test_metadata_symlink_fifo_and_size_are_rejected_without_hang",
+        "test_oversized_cli_output_not_accepted",
+        "test_parser_recursion_fault_returns_fixed_inconclusive_result",
+        "test_stale_or_namespace_hidden_pid_cannot_be_distinguished",
+        "test_visible_reused_pid_does_not_prove_daemon_identity",
+        "test_abrupt_owned_child_exit_before_and_after_atomic_replace",
+        "test_all_identity_fields_must_match_including_epoch",
+        "test_atomic_publication_errors_preserve_readable_destination",
+        "test_cli_partial_oversized_duplicate_and_special_files_no_secret_output",
+        "test_complete_handoff_reviewable_without_grant",
+        "test_directory_sync_error_after_replace_is_uncertain_not_rollback",
+        "test_dirty_state_not_discarded",
+        "test_each_revision_must_match_not_only_local_head",
+        "test_effect_without_receipt_is_reconciled_by_fresh_process",
+        "test_failed_receipt_is_not_side_effect_rollback",
+        "test_foreign_or_old_receipt_rejected",
+        "test_interrupted_writer_quiescence_checks_are_independent",
+        "test_invalid_types_missing_fields_and_extra_keys_fail_closed",
+        "test_main_is_never_reviewable",
+        "test_remote_push_ack_loss_recovered_by_actual_local_bare_ref",
+        "test_stale_future_and_boundary_observations",
+        "test_success_receipt_requires_effect_confirmation",
+        "test_unknown_effects_after_lost_completion_never_retries",
+        "test_unknown_runtime_owner_does_not_transfer"
+      ]
+    },
+    "preflight-regression.log": {
+      "tests": 9,
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 0.001,
+      "sha256": "bbcf7140ae3eefec2ecf15a231c70d4da8ce69c66f8822ca221b01f97e3d98ba",
+      "cases": [
+        "test_bad_cli_output_is_not_reachable",
+        "test_cli_failure_and_secret_output_are_not_echoed",
+        "test_malformed_metadata_and_timeout_remain_unconfirmed",
+        "test_missing_cli_is_distinct",
+        "test_namespace_invisible_pid_does_not_claim_stopped_or_running",
+        "test_only_successful_connection_is_pass",
+        "test_process_execution_error_is_distinct",
+        "test_stale_pid_is_inconclusive_too",
+        "test_visible_process_without_probe_is_not_success"
+      ]
+    }
+  },
+  "beforeReviewFileSha256": {
+    "scripts/paseo_preflight.py": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+    "scripts/paseo_recovery_audit.py": "37f996237c54c17e3a3ce71fcfe7e09fe1b2253b3e19c569061ecd12978a261b",
+    "tests/test_paseo_preflight.py": "59a186bfd96fbfa12da78b758b438f4263267de5feb7fc90d88deef7474ab8ae",
+    "tests/test_recovery.py": "2a8dce122d90697c7ace3dab2865313ddd235a77aa95926b31fcb320f50ec21a",
+    "tests/test_recovery_pid.mjs": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03"
+  },
+  "reviewCounterexamples": {
+    "reviewedSha": "0083b5e3cc08e4bac0f2380872e86543be802aec",
+    "reviewUrl": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088607750",
+    "red": [
+      {
+        "case": "completed-exit-overlaps-reviewable",
+        "decision": "already-completed",
+        "exit": 0,
+        "defectReproduced": true
+      },
+      {
+        "case": "branch-reference-not-task",
+        "input": "origin/main",
+        "decision": "handoff-reviewable",
+        "defectReproduced": true
+      },
+      {
+        "case": "branch-reference-not-task",
+        "input": "refs/remotes/origin/main",
+        "decision": "handoff-reviewable",
+        "defectReproduced": true
+      },
+      {
+        "case": "branch-reference-not-task",
+        "input": "heads/main",
+        "decision": "handoff-reviewable",
+        "defectReproduced": true
+      },
+      {
+        "case": "branch-reference-not-task",
+        "input": "HEAD",
+        "decision": "handoff-reviewable",
+        "defectReproduced": true
+      }
+    ],
+    "fixes": [
+      "already-completed exit3, reviewable0, blocked/reconcile2; no automatic action from any code",
+      "narrow candidate local task branch grammar rejects detached/remote/full-ref aliases",
+      "all existing preflight diagnose cases now use synthetic proc_root"
+    ],
+    "info3": "retain uncertain publication outcome; additional replace-applied-then-error test confirms reading destination is required",
+    "nodePidRerun": false,
+    "nodePidSourceAndTestUnchanged": true
+  }
 }

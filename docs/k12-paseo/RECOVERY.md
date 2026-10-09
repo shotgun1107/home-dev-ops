@@ -57,6 +57,9 @@ exit0은 검토 가능 판정이며 실행 승인/소유권 획득이 아니다.
 표시로 새 Writer를 시작하지 않는다. 원자적 발행 도중 오류가 나면 이전 또는 새 완전한 기록이
 남을 수 있으므로 실제 파일을 읽는다. 부작용이 있고 receipt가 없거나 응답만 유실됐다면
 원격 ref/정확한 job 결과부터 대조하고 무조건 push/작업을 반복하지 않는다.
+already-completed는 exit3으로 분리한다. exit0도 즉시 실행 조건으로 연결하지 말고
+decision·정본 task/PR의 Next·현재 소유권을 확인한다. detached/remote 참조는 작업 branch로
+해석하지 않는다. 후보의 좁은 branch 입력 규격이 기존 Git 권한 정책을 바꾸는 것은 아니다.
 
 ## 2. Heartbeat
 

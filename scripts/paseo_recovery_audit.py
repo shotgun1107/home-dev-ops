@@ -2,7 +2,8 @@
 """Offline recovery evidence check. Never executes, grants a lease, or repairs.
 
 Input is an operator-curated snapshot, not authenticated live evidence. Exit 0
-means reviewable/already completed within that snapshot, never permission to run.
+means reviewable, 3 means already completed (do not rerun), 2 means blocked or
+reconciliation needed. No exit code grants permission to run.
 """
 import argparse
 from datetime import datetime, timezone
@@ -19,6 +20,7 @@ IDENTITY = {"task", "job", "worktree", "runtime", "writer", "session", "branch",
 EXTRA = {"localHead", "remoteHead", "prHead", "handoffHead", "observedAt", "clean",
          "writerState", "pendingPermissions", "children", "nativeComplete", "runtimeOwner",
          "effects", "receipt"}
+TASK_BRANCH = re.compile(r"(?:docs|feat|fix|chore|test|refactor|task)/[a-z0-9]+(?:-[a-z0-9]+)*")
 
 
 class RecoveryError(Exception):
@@ -87,8 +89,10 @@ def assess(data, *, now=None):
         reasons.append("observation-not-fresh")
     if any(c[key] != o[key] for key in IDENTITY):
         reasons.append("identity-or-ownership-mismatch")
-    if c["branch"] in ("main", "master", "refs/heads/main", "refs/heads/master"):
-        reasons.append("protected-branch")
+    # This candidate accepts an explicit, narrow short local task-branch form;
+    # it never resolves a remote-tracking ref or detached HEAD into write scope.
+    if not TASK_BRANCH.fullmatch(c["branch"]) or c["branch"].split("/")[-1] in ("main", "master"):
+        reasons.append("branch-not-task")
     if any(o[key] != c["head"] for key in ("localHead", "remoteHead", "prHead", "handoffHead")):
         reasons.append("revision-unconfirmed")
     if not o["clean"]:
@@ -165,7 +169,9 @@ def main():
                   "automaticAction": "none", "snapshotAuthenticated": False,
                   "liveLeaseAcquired": False}
     print(json.dumps(result, sort_keys=True))
-    return 0 if result["decision"] in ("handoff-reviewable", "retry-reviewable", "already-completed") else 2
+    if result["decision"] == "already-completed":
+        return 3
+    return 0 if result["decision"] in ("handoff-reviewable", "retry-reviewable") else 2
 
 
 if __name__ == "__main__":

@@ -7,7 +7,9 @@
       "id": "permission-8fcbbed6-6ce9-4e68-a6aa-92f425f7e37c",
       "tool": "Bash",
       "action": "git/hook/presence read-only diagnostic",
-      "result": "allowed"
+      "result": "allowed",
+      "observedAt": "2026-10-09T15:37:32.900Z",
+      "supervisorNativeAckLine": 1193
     },
     {
       "id": "permission-a76046a1-7d93-4847-8227-44da399e82ea",
@@ -22,7 +24,9 @@
       "action": "unnecessary recursive ~/.paseo JSON search",
       "result": "denied",
       "reason": "outside task; may read raw sessions or credentials",
-      "stoppedWithoutRetry": true
+      "stoppedWithoutRetry": true,
+      "observedAt": "2026-10-09T15:39:15.879Z",
+      "supervisorNativeAckLine": 1251
     },
     {
       "id": "permission-192b9fe3-151f-40ef-9225-0683425b32bc",
@@ -56,7 +60,10 @@
       "action": "task-specific temporary Markdown PR body",
       "result": "allowed",
       "inputAdjustment": "correct approval sequence, distinguish requested Bash from auto-permitted reads, human merge vs Supervisor main verification",
-      "observedAt": "2026-10-09T15:45:21.402411+00:00"
+      "observedAt": "2026-10-09T15:45:21.402411+00:00",
+      "filePath": "/tmp/kerbe-p1-s-dotenv-pr-body.md",
+      "writtenBodySha256": "ac95c8f6ed98da2c04d20fe2fa3882c5c45bc709ef86aec317550bff380efd74",
+      "hashScope": "temporary body written before PR creation; later Supervisor API updates are separate"
     },
     {
       "id": "permission-9314eab3-fc41-4f82-9b2d-8ef165985557",

@@ -18,10 +18,10 @@
 | ID | 항목·성공 기준 | 판정 | 증거·제한 |
 |---|---|---|---|
 | P0-H1 | 기존 daemon 연결 원인 식별·안전한 생성 | 통과(호스트 경로) | PID namespace로 기본 탐색 실패 재현, 기존 host PID에 연결·Heartbeat 생성. sandbox 연결 자체는 해결하지 않음. [E1](EVIDENCE.md#e1-heartbeat) |
-| P0-H2 | 자동 재개·중복 방지·만료·정리 | 한시적 1회 수명 통과 | 427d614c의 실제 idle 재개→run succeeded→종료 후 정상 삭제→영수증 게시·GET 확인. 앞선 active-run 거부와 구분. 24시간 반복 운영 전체 검증은 아님. 현재 Heartbeat 없음. [E9](EVIDENCE.md#e9-실제-idle-자동-재개-1회) |
+| P0-H2 | 자동 재개·중복 방지·만료·정리 | 한시적 1회 수명 통과 / 만료 종료 미실행 | 427d614c는 maxRuns=1 완료로 종료됐다. 실제 idle 재개→run succeeded→정상 삭제→영수증 게시·GET 확인. 만료 전 삭제했으므로 expiry 종료·24시간 반복 운영은 미실행. 현재 Heartbeat 없음. [E9](EVIDENCE.md#e9-실제-idle-자동-재개-1회) |
 | P0-A1 | Codex 기본 모드·merge 실행 전 차단 | 과거 gh pr merge 형태 통과 / 현 Full Access 미통과 | 과거 Paseo on-request/workspace-write의 forbidden 거부. 현재 Full Access를 대체 증거로 쓰지 않음. [E2](EVIDENCE.md#e2-provider) |
 | P0-A2 | Claude Auto·merge deny 실제 적용 | 부분 검증 | gh pr merge 형태의 실행 전 거부 확인, deny rule인지 classifier인지 미확인. 정상 조회 거부 사례도 있어 writer 승인 안정성은 보류 |
-| P0-A3 | source 편집·commit·branch push·Draft PR | 경로별 통과 | 새 Claude Accept Edits S Writer가 실제 PR #4 생성·HEAD GET 완료. 개별 요청 9건 Supervisor 승인·범위 밖 1건 거부. Codex 기본 모드 원격 쓰기나 무인 실행으로 확대하지 않음 |
+| P0-A3 | source 편집·commit·branch push·Draft PR | 경로별 통과 | 새 Claude Accept Edits S Writer가 실제 PR #4 생성·HEAD GET 완료. 개별 요청 9건 Supervisor 승인(3건 입력 조정)·범위 밖 1건 거부. source는 단일 Writer, 시험 shell/PR 본문에는 Supervisor 개입. Codex 기본 모드 원격 쓰기나 무인 실행으로 확대하지 않음 |
 | P0-A4 | S Work·C의 실제 모드·merge 차단·현재 보호 대조 | 이번 S 범위 통과 | 동일 Opus 5.5/medium/Accept Edits의 과거 실행 전 permission-rule 거부 재사용. 현재 버전·deny·신규 native 모드·hook·Ruleset 대조. 새 위험 호출 없음. matched-rule ID와 모든 우회 경로 봉쇄는 미확인. [E10](EVIDENCE.md#e10-kerbe-p1-s--실제-writer-경로) |
 | P0-G1 | Kerbe 서버 측 main 보호 | 통과(실효 구성 조회) | ruleset active, PR 필수, 삭제/non-FF 금지, 2 CI strict, bypass 없음. 위험 push/merge 실험은 안 함 |
 | P0-G2 | home-dev-ops 서버 측 보호 | 차단 | private repo 보호 API 403: Pro/public 필요. 공개 전환·구독 변경은 사람 결정. [E3](EVIDENCE.md#e3-git) |

@@ -348,3 +348,10 @@ Writer의 최종 '승인 대기로 멈춘 명령 없음'은 종료 시점에 남
 **판정: S 실행 부분 완료 / 사람 채택 대기.** 사람이 정확한 PR #4 후보를 직접 Ready·merge한 뒤
 Supervisor가 실제 main 반영을 확인해야 완주다. 현재 main은 026a8a0…이며 M·병렬·모바일은
 미실행 그대로다. Writer와 reviewer는 idle, pending permission은 없다. 기존 dirty A/B와 PR #2는 보존했다.
+
+운영 문서 `0727e0a8c5993c28f432c9f2ec13f6866fb3f191`도 기존 Claude reviewer가 정적 검토했다.
+[원문 대리 게시·GET 확인](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6084479751):
+Medium 이상 0건, Low 3건. 만료 종료 경로 미실행, Supervisor 입력 조정 3건의 요약,
+임시 PR 본문 hash와 실제 게시 본문 hash의 구분, full agent/request ID만 사용하는 절차를 보완했다.
+초기 허용·거부 응답의 native 시각도 선별해 추가했다. 실제 모든 요청은 full ID를 사용했다.
+이 리뷰는 저장소 증거와 설치 CLI 소스의 정적 대조이며 GitHub/native 원문 전체를 독립 재실측한 것은 아니다.

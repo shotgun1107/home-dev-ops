@@ -9,7 +9,8 @@
     "head": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
     "base": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
     "testMergeSha": "96e852f564830e5d19106455b7959e707992f9cd",
-    "bodyGetEqual": true
+    "bodyGetEqual": true,
+    "bodySha256": "ccc95464d7960ecb625024eb3c15708f550e3d251f5028d39ab135987feca482"
   },
   "git": {
     "head": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",

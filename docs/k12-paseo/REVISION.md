@@ -29,7 +29,7 @@ v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. o
 | 15장 비밀정보 | ops 작업 파일의 env/runtime 제외를 추가하고 공개 example 추적 가능성을 확인한다 | .gitignore 전후 check-ignore 실측. 명시적 stage/비밀 검사는 계속 필요 |
 | 19장 결과 재사용 | SHA·실효 모드·실행 주체·시간·대상 조건이 맞는 기존 증거를 재사용한다 | Python 후속 실측·현재 import 검사·CI와 기존 review 대조 |
 | 6·7장 프로필 확인 | 현재 UI mode·과거 persistence metadata와 실제 호출 당시 native mode를 구분한다. task에 적용할 버전·deny·project/local override·hook을 확인한다 | S의 Work·C는 동일 조합의 과거 보호/쓰기 증거와 새 native 세션을 대조. Auto 쓰기나 Full Access 보호 증거로 확대하지 않음 |
-| 7장 일상 승인 | 이미 허용된 task의 pending 명령을 Supervisor가 검토할 때는 agent/request ID 하나씩 응답하고 주체·범위·입력 조정을 기록한다 | S에서 개별 승인 9건·범위 밖 거부 1건. `permit allow` ID 생략은 모든 대기를 승인하므로 금지. 영구 규칙 변경·무인 승인·사람 클릭 성공과 구분 |
+| 7장 일상 승인 | 이미 허용된 task의 pending 명령을 Supervisor가 검토할 때는 full agent/request ID 하나씩 응답하고 주체·범위·입력 조정을 기록한다 | S에서 개별 승인 9건·범위 밖 거부 1건. `permit allow` ID 생략/`--all`과 첫 일치 선택을 하는 짧은 prefix 모두 금지. 영구 규칙 변경·무인 승인·사람 클릭 성공과 구분 |
 
 연결 문제는 운영 daemon 구현 실패로 다루기보다 진단과 실행 경계의 문제로 다루는 편이 맞다.
 기존 host 경로는 동작하므로 재시작/인증 완화가 필요하지 않다.

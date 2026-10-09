@@ -20,8 +20,10 @@ shell wrapper·직접 API로 우회하지 않는다. 독립적으로 승인된 �
 Plan이라는 이름도 파일시스템 read-only 보장으로 사용하지 않는다.
 
 S에서 확인한 Accept Edits도 일반 Bash에 승인을 요청한다. 사용자가 이미 허용한 task 동작을
-Supervisor가 맡아 처리할 때는 pending agent/request ID와 실제 명령을 먼저 대조하고
+Supervisor가 맡아 처리할 때는 pending full agent/request ID와 실제 명령을 먼저 대조하고
 `paseo permit allow <agent-id> <request-id>`로 그 요청 하나만 응답한다. ID 생략/`--all`은 쓰지 않는다.
+agent와 request는 **full ID만** 사용한다. CLI는 request prefix의 첫 일치를 선택하므로 짧은 prefix도 금지한다.
+`--input`으로 입력을 좁힐 때도 full ID가 가리키는 대상 요청이 정확히 하나인지 먼저 대조한다.
 이 경로는 사람 클릭이나 무인 자동 승인 시험이 아니다. 허용 범위를 벗어난 검색은 실행 전에
 입력을 좁히거나 `permit deny <agent-id> <request-id> --message ...`로 거부하고 결과를 확인한다.
 denied 동작의 wrapper/API 우회, merge/Ready/main push 승인, rules/mode/영구 allow 변경은 포함하지 않는다.

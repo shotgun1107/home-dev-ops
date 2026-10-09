@@ -6,10 +6,10 @@
 
 | 최신 전달 대상 | 정확한 값 |
 |---|---|
-| ops source | `0c91fd95b4e6c3f87a7c8b4a25887d2d157879c3` |
-| CI 통합 후보 | `a14365297170fbc79eae167a686ca311abee50b2` |
+| ops source | `1edd2ef4702031dd6fe2d59adc01e4504c5c57db` |
+| CI 통합 후보 | `80455437960f3db0cbec5f1f3df0392ad47def3c` |
 | 유지된 PR #2 head | `f069ac35b0553f69f0a485784df0bc4f11341f1b` |
-| [새 bundle](ops-ci-reviewed-candidate.bundle) | 2874 bytes, SHA256 `6fae355a696f37c305524a6a5672123705587492e996eb49dabcd55877a4a272` |
+| [새 bundle](ops-ci-reviewed-candidate.bundle) | 3269 bytes, SHA256 `076a4de9fe76eaa5c8b08603f36d96d31d11081f04d7e69b782f2565f9f0dcd9` |
 | bundle ref | `refs/heads/ci/ops-ci-independent-review` |
 | 실제 local 검사 | `timeout 120s python -I -B scripts/run_ops_ci.py`, Python3.14.4, **125개 OK / skip0** |
 | 미실행 | 최신 GitHub-hosted run·Ready·merge·main 필수 검사 채택 |
@@ -17,7 +17,7 @@
 새 후보의 source 대비 전체 tree 차이는 `.github/workflows/ops-check.yml` 하나다.
 workflow는 과거5d7d1e1…와 동일하다. PR #2 f069ac3…가 조상이며 별도 clone에서 새 bundle
 verify/import·같은 full SHA 복원을 확인했다. prerequisite는 f069ac3…,73afc54…,ad3acae…,
-44a8fa5…,0c91fd9…의 full object이며 [영수증](../evidence/independent-review.json)에 모두 있다.
+44a8fa5…,0c91fd9…,1edd2ef…의 full object이며 [영수증](../evidence/independent-review.json)에 모두 있다.
 이는 PR #1/#2 이력을 가져온 clone을 위한 bundle이며 단독 완전 백업이 아니다.
 
 ## 최신 후보의 사람 적용 절차
@@ -26,20 +26,24 @@ verify/import·같은 full SHA 복원을 확인했다. prerequisite는 f069ac3�
    `ci/k12-ops-check`를 fetch한다. PR #2의 실제 remote head가 위 f069ac3…인지 확인한다.
    움직였으면 새 base에서 다시 검토하고 force/reset으로 맞추지 않는다.
 2. **PR #1 최신 handoff에 적힌 최종 보고 HEAD를 그 clone의 새 local branch에 checkout**한다.
-   그 commit에 새 bundle이 있어야 한다. source0c91fd9…나 fetch만으로 bundle 파일이 생기는 것은 아니다.
+   그 commit에 최신 bundle이 있어야 한다. source commit checkout에는 이전 bundle만 있거나 없을 수 있으며 fetch만으로 working tree 파일은 갱신되지 않는다.
    위 SHA256을 대조하고 `git bundle verify docs/k12-paseo/proposals/ops-ci-reviewed-candidate.bundle`을 실행한다.
 3. 아직 없는 local ref로 가져온다:
-   `git fetch docs/k12-paseo/proposals/ops-ci-reviewed-candidate.bundle refs/heads/ci/ops-ci-independent-review:refs/heads/review/ops-ci-a143652`.
-   같은 ref가 이미 있으면 SHA를 먼저 비교한다. `git rev-parse review/ops-ci-a143652`의 full SHA와
-   `git merge-base --is-ancestor f069ac35b0553f69f0a485784df0bc4f11341f1b review/ops-ci-a143652`의 exit0을 확인한다.
+   `git fetch docs/k12-paseo/proposals/ops-ci-reviewed-candidate.bundle refs/heads/ci/ops-ci-independent-review:refs/heads/review/ops-ci-8045543`.
+   같은 ref가 이미 있으면 SHA를 먼저 비교한다. `git rev-parse review/ops-ci-8045543`의 full SHA와
+   `git merge-base --is-ancestor f069ac35b0553f69f0a485784df0bc4f11341f1b review/ops-ci-8045543`의 exit0을 확인한다.
 4. 고정 SHA의 source/manifest/workflow와 독립 리뷰를 확인한다. 사람이 채택한 경우에만 정상 task push:
-   `git push origin a14365297170fbc79eae167a686ca311abee50b2:refs/heads/ci/k12-ops-check`.
+   `git push origin 80455437960f3db0cbec5f1f3df0392ad47def3c:refs/heads/ci/k12-ops-check`.
    거부되면 실제 ref/오류를 재대조한다. force·권한 확대는 하지 않고 PR #2 Draft를 유지한다.
 5. 새 hosted run에서 실제 base ref·merge 부모·checkout SHA·source/test hash와
    **125 executed / skip0 / failure0 / 동일 runId finish / pass**를 확인한다. 테스트 source/manifest가
    달라졌으면 이 숫자를 강제하지 말고 새 변경을 리뷰한다. 후속 PR #1 보고 diff가 문서뿐인지도 확인한다.
    과거21개 hosted·115개 local·이번125개 local을 새 hosted 성공으로 대체하지 않는다.
 6. 필요한 검사 후 PR 통합 순서·Ready/main 채택은 사람이 별도로 결정한다.
+
+직전125개 후보a143652…의2874-byte bundle은 보고 commit
+`c0d2cd0d7d1f38bc8746cacd6baed9fbc8435a2e`에 보존했다. 최신 후보는 대용량 record의
+오류 구분·보존 subcase를 추가한 뒤 같은125개를 다시 통과했다. 자동 대용량 삭제를 지원한 변경은 아니다.
 
 ## 과거 OPS_CI 기록 — 115개 후보 보존
 

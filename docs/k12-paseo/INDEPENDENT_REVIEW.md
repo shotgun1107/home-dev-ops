@@ -20,6 +20,12 @@ EVIDENCE/RECOVERY 전체를 새로 읽은 리뷰가 아니다. reviewer는 테�
 표의 “blob hash”는 Git object ID가 아닌 SHA-256 접두사다. 이 세 가지를 원문 바로 위에 정정했다.
 독립 리뷰를 실행 증거나 무조건 옳은 판정으로 취급하지 않는다.
 
+[후속 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089709950)은6개 script와
+변경된3개 시험 파일을 새로 읽어 Low1/입력 보정을 확인했다. 원문 v2.4를 과거에 “전부 읽었다”는
+초기 설명도 선택 section 읽기였다고 정정했다. 증거 JSON은 일부 필드, bundle은 header만 읽었다.
+대용량 지적을 위해 설치된 service/schema2개도 추가 정적 조회했으므로 모든 읽기가 고정 Git 객체였다는
+설명은 하지 않는다. reviewer의 테스트 실행은 여전히0이다.
+
 ## 재현·원인·수정
 
 | 문제 | 수정 전 실제 합성 관찰 | 후보와 동일 조건 결과 |
@@ -37,19 +43,33 @@ receipt는 승인·작업 성공·idle 자동 재개의 증명이 아니며 기�
 처음 paired harness는 예상 FIFO 오류 후 fixture 제거가 빠져 뒤의 fixture writer가 막혔다.
 45초 상한으로 시험 프로세스만 회수하고 per-case finally로 보정했다. 제품/daemon 결함으로 세지 않았다.
 다음 시도의2개 실패는 Python3.14가 depth2000 JSON을 파싱해 decoder 대신 schema가 거부한
-오류 이름 차이였다. 고정 오류·부작용 없음 조건을 두 거부 경로에 맞췄고 제품 코드는 그대로였다.
+  오류 이름 차이였다. 고정 오류·부작용 없음 조건을 두 거부 경로에 맞췄고 제품 코드는 그대로였다.
+
+## 대용량 정상 record — 자동 삭제 확대 대신 보존 경로
+
+후속 Low1은 정상 prompt/agent output도 schedule JSON을64KiB보다 크게 만들 수 있다는 점이다.
+한도를 임의로 늘리는 근거가 없으므로 **제한을 유지하고 큰 record의 자동 cleanup은 지원하지 않는**
+정책을 명시했다. 새 `schedule-too-large`는 파손/실종과 구분되며 `preDeleteReceipt:null`,
+`deletionConfirmed:false`다. record를 수정/삭제하지 않는다. 정상 completed 구조에70,000-byte 합성 output을
+넣은 subcase를 기존 file-input 시험에 추가했다. 검사 수는 그대로125개다. 이전 코드의 모호한 오류와
+새 오류를 같은1개 시험에서 대조해2 subtest 실패→통과했고 fake CLI가 호출되지 않았음을 확인했다.
+
+정확한 다음 행동은 [복구 절차](RECOVERY.md#2-heartbeat)다. 원본을 자르거나 cap을 우회하지 않고,
+같은 agent의 승인된 후속 턴에서 소유권·completed·실제 실행 종료를 별도로 확인한 뒤 정상 CLI 삭제를
+검토한다. 확인할 수 없으면 ID·관찰 크기·마지막 시각과 미확인 이유를 보존한다. 자동 cleanup 성공은 아니다.
 
 ## 고정 후보와 검증
 
-- 구현 source: `0c91fd95b4e6c3f87a7c8b4a25887d2d157879c3`.
-- CI 통합 후보: `a14365297170fbc79eae167a686ca311abee50b2`.
+- 최종 구현 source: `1edd2ef4702031dd6fe2d59adc01e4504c5c57db`.
+- 최종 CI 통합 후보: `80455437960f3db0cbec5f1f3df0392ad47def3c`.
   새 disposable clone의 local 통합이며 GitHub merge가 아니다. source 대비 workflow 파일 하나만 다르고,
   workflow bytes는 과거5d7d1e1… 후보와 같다. 실제 ops branch에 활성 workflow를 추가하지 않았다.
 - 정확한 workflow 명령 `timeout 120s python -I -B scripts/run_ops_ci.py`를 local Python3.14.4에서
   실행해 **125개 OK / skip0 / failure0 / error0**, 실행 전후 bytes 동일·clean을 확인했다.
-  CI21 + cleanup15 + permission39 + recovery29 + preflight9 + guard12다.
-- run ID `9fa1c691-e717-45ac-8336-ef2d0911478e`, 완료 시각 `2026-10-09T21:31:05.961559+00:00`.
-  old115의 성공은 당시 고정 후보의 역사이며 최신125개 성공으로 바꿔 적지 않았다.
+  test_ops_ci.py의 회귀21 + cleanup15 + permission39 + recovery29 + preflight9 + guard12다.
+- 최종 run ID `2318a21f-4f8f-49ba-827b-c183e40dce6e`, 완료 시각 `2026-10-09T21:41:22.131355+00:00`.
+  최초 source0c91fd9…/candidatea143652…의125개 run9fa1c691…도 별도로 보존했다.
+  대용량 subcase 뒤 재시험을 추가125개 사례로 합산하지 않는다. old115의 성공도 당시 고정 후보의 역사다.
 - Node38+9와 수동 mock15는 source/harness/patch hash 일치로 증거를 재사용했다.
   새 실행이나 hosted Python 검사 수에 합산하지 않는다.
 - [새 bundle·사람 적용 절차](proposals/README.md)를 제공한다. 별도 clone에서 bundle verify/import,

@@ -1,7 +1,7 @@
 # OPS_CI — 최신 suite와 CI Draft의 대조
 
 후속 [REVIEW_INDEPENDENT](INDEPENDENT_REVIEW.md)에서 CI 조기 exit0를 보정했다.
-최신 source는0c91fd9…, 통합 후보a143652…의 **125개 OK**이며 새 bundle을 제공한다.
+최신 source는1edd2ef…, 통합 후보8045543…의 **125개 OK**이며 새 bundle을 제공한다.
 아래115개·5d7d1e1…·원격21개는 OPS_CI 당시의 고정 기록으로 보존한다.
 
 2026-10-10 KST. 범위는 home-dev-ops의 합성 시험과 CI 제안이다.

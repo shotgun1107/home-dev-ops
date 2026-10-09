@@ -121,6 +121,14 @@ REVIEW_INDEPENDENT 보강 후보는 schedule의 leaf symlink/FIFO를 거부하�
 이는 신뢰한 상위 home 경로나 caller 환경의 인증을 대체하지 않는다. 조회→delete RPC는 원자적이지 않으므로
 동시 record 변경을 막는 서버 CAS/lock을 검증했다고 하지 않는다. 새15개 cleanup 검사는 모두 fake CLI/주입 함수였다.
 
+`schedule-too-large`는 정상 prompt/agent output으로도 발생한다.64KiB를 넘는 record의 자동 삭제는
+지원하지 않으며 원본은 보존한다. schedule JSON을 잘라내거나 cap·caller 환경을 바꾸어 재시도하지 않는다.
+기존 선별 영수증과 정상 daemon 조회에서 전체 prompt/output을 출력하지 않고 schedule/run/full agent ID,
+maxRuns=1·completed 및 실제 native/하위 실행 종료를 대조한다. 그 근거를 확보한 **같은 agent의 승인된
+후속 턴**에서만 정상 `paseo heartbeat delete <정확한 ID> --json` 경로를 검토하고 응답·record 부재를 확인한다.
+자료를 안전하게 확인할 수 없으면 삭제하지 않고 ID·관찰 크기·마지막 시각·미확인 사유를 남긴다.
+이번 검증은70,000-byte 합성 output의 보존/오류 구분뿐이며 실제 대용량 record 삭제는 미실행이다.
+
 ## 3. Git·PR
 
 시작/재개 시 `git status --short --branch`, `git rev-parse HEAD`, `git log`,

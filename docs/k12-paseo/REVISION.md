@@ -19,6 +19,7 @@ v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. o
 
 | 원문 관련 항목 | 변경 내용 | 근거와 적용 한계 |
 |---|---|---|
+| 4·19장 동시 작업 관찰 | 승인 대기 writer도 상한에 포함하고, source·Git/common dir·runtime과 요청 ID를 분리해 기록한다. 한 작업의 대기가 독립 작업의 완료를 막는지 관찰한다 | 두 Python mock writer·14개 계약 회귀로 격리 검증. 실제 Paseo dispatch/Provider 부담·정식 P1 결과가 아니므로 M main 선행과 기존 진입 조건은 유지한다. [E17](PARALLEL_ISOLATED.md) |
 | 15·19장 CI 증거 | 실제 base ref·head·merge 부모·checkout SHA와 suite inventory/실행 수를 함께 기록한다. source/tests byte 동일할 때만 로컬 증거를 재사용한다 | OPS_CI 과거21→시작97→후보115개. 일부 suite만 남은 성공을 차단했다. Node47은 K12 별도 증거. 정확한 통합 bundle은 격리 검증했으나 실제 hosted 최신 run과 사람 채택은 대기. [검증](OPS_CI.md) |
 | 13·16장 중단 복구 | handoff의 원격 SHA·Writer/native/하위 실행 종료·runtime 소유권·부작용 결과를 각각 대조한다. PID 전후 stamp 변화를 미확정으로 판정한다 | P0_RECOVERY Python38·설치 PID Node9 격리 시험. 원자적 발행 전후 새 child 종료 실측. 오프라인 판정은 lease/실행 허가가 아니며 controller에 연결하지 않음. [범위](FAILURE_RECOVERY.md) |
 | 7·16장 권한/복구 | daemon 연결 오류에서 sandbox와 host 가시성을 먼저 대조한다. CLI stopped 하나로 start/restart하지 않는다 | E1 실제 namespace 차이·host 연결·진단 도구 9개 회귀. sandbox 접근 개방은 아님 |

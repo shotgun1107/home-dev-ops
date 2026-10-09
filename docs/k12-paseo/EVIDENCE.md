@@ -488,3 +488,22 @@ remote workflow push·Actions 최신 실행·Ready/Merge/main push·보호 변�
 독립 고정 SHA [원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088962998)은 Critical/High/Medium0·Low1·Info2다. Low1의 누락된 후속 문서를 정확한 candidate/부모/tree/bundle과 사람 절차로 보완했다. source/tests/workflow 변경은 없다. [리뷰 영수증](evidence/ops-ci-review.json).
 
 3d68f76… [독립 delta](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089010542)에서 Low1 해소·새 Low 이상0, Info1의 bundle 읽기 경로를 명확히 했다. source/tests/manifest/workflow/patch/bundle은 그대로이며115개 실측을 재사용했다.
+
+## E17 P1_PARALLEL_ISOLATED 독립 mock 동시 작업
+
+시작646ffd9…에서 기존 Astra Max/Director/reviewer·PR1 Draft·clean을 확인했다.
+[수동 probe](evidence/parallel-mock-probe.py)는 별도 source/task/result/runtime/local Git을 가진
+Python mock writer2개만 띄웠다. 실제 Paseo/Provider 세션은 만들지 않았으며 운영 정책을 변경하지 않았다.
+[결과](PARALLEL_ISOLATED.md)와 [full ID·SHA·시간·결정·수집 원문](evidence/parallel-isolated.json)을 보존한다.
+
+초기 두 작업 완료 후, 이미 준비된 결정이 만료 검사를 건너뛰는 mock harness 반례를 발견했다.
+신규14개 중1개 실패(exit0, 기대77)를 재현·보정했고14개 OK(skip0). 보정135c10c…에서
+같은 A/B를 새 경로로 다시 실행해 두 local commit·clean·child exit0/reaped를 확인했다.
+동시 writer/lease 겹침 하한16.928993초, B 승인 대기 중 A 완료와 B HEAD 불변·결과 부재를 관찰했다.
+추가 같은 task writer는 exit75로 lease 미획득, 성공 writer 상한2였다.
+
+수동 mock 결정은 최초2+재시험2=4건이며 모두 full writer/request/task ID·operation hash를
+직접 대조했다. 시간은 의도적 보류를 포함하고 실제 Provider 승인 부담/직렬 대비 성능은 미측정이다.
+기존 Python115 source/tests는 OPS_CI hash와 동일해 재사용했으며 새14개와 hosted 성공으로 합산하지 않았다.
+이 수동 probe는 기존 CI manifest 밖의 독립 실험이며 CI gate를 바꾸지 않았다.
+M main 선행·정식 P1 진입은 그대로 남는다. Kerbe·서비스·설정·권한·원격 CI branch·main은 건드리지 않았다.

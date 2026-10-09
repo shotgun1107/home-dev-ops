@@ -15,6 +15,10 @@
 새 inventory 검사18개를 포함해 **115개 OK(skip0)**. Node47개는 hash 일치 증거를 재사용했다.
 원격 CI는 보호 공백으로 보류하고 정확한 후보 bundle·사람 적용 절차를 제공한다. [CI 대조](OPS_CI.md).
 
+야간 **P1_PARALLEL_ISOLATED**: 별도 Git/runtime의 Python mock writer2개를 실제 동시 실행했다.
+중복 writer 차단·한 작업의 승인 대기 중 다른 작업 완료를 확인했고, mock 만료 결함은 보정 후
+계약14개와 동일 조건의 두 결과로 재검증했다. **실제 Provider 부담·정식 P1 병렬은 미검증/미진입**. [범위](PARALLEL_ISOLATED.md).
+
 ## 기준
 
 - [v2.4 원문](source/K12_Paseo_v2.4.md)과 [AGENTS 초안](source/K12_AGENTS_draft.md)은 입력과 byte 동일. 원문 참조 `K12_Paseo_Review_History.md`는 입력에 없어 미확인.
@@ -64,7 +68,7 @@ M도 같은 전용 Worktree에서 Claude→Codex 순차 교대, 구현·검증·
 | 선행 | 사용할 Provider 승인/차단·branch push/PR·작업에 필요한 setup 경로 확정 | S는 Work·C의 동일 프로필과 ignore-only 쓰기 경로를 대조했다. M은 새 Work·C/Build·X의 native·task 원격 쓰기·신규 venv/import·fixture TMPDIR을 실제 확인한 뒤 진입했다. [범위별 조건](REVISION.md#p1-s-첫-후보와-범위별-진입-조건) |
 | S | 한 writer의 요청→검증→리뷰→사람 merge→main 확인 | **완주 확인.** PR #4 후보 f0f73a8…가 사람에 의해 squash merge됨. 실제 main `efd539a6ab5cd05a2c7f33cf3b8db13c021458be`와 K12 origin/main·후보의 전체 tree 일치, main 필수 CI 2개 성공. 기존 42개·리뷰·제품 CI 증거 재사용. [E11](EVIDENCE.md#e11-s-main-반영과-m-진입) |
 | M | 종료 확인·handoff·Git/runtime 대조만으로 반대 Provider가 Next 실행 | **교대·개발·전달 통과 / 사람 채택 대기.** Claude 종료·push/runtime 확인 후 새 Codex가 기록만으로 복원. 최종 `7ff930cefd308c37702aff7c7efd48fc4c9e4c9b`, 로컬 선택22 OK·전체 Ran185 OK(skip2)·wheel, 새 Windows/Ubuntu CI 각185 OK(skip1/2), 독립 P2 해결·새 P0/P1/P2 0. [PR #5](https://github.com/shotgun1107/kerbe/pull/5)를 사람이 Ready/merge한 뒤 main 대조 필요 |
-| 병렬 | S/M 후 독립 결과 2개 완주·개입 부담 비교 | 미실행. 과거 A/B는 같은 목표 경쟁·승인 조건 불일치·미커밋이라 대체 불가 |
+| 병렬 | S/M 후 독립 결과 2개 완주·개입 부담 비교 | 정식 미진입. M main 선행은 그대로이며 실제 Provider 부담은 미측정. 별도 Python mock 두 결과·lease/대기/개별 결정은 격리 통과했으나 대체 증거가 아니다. 과거 A/B도 대체 불가. [E17](EVIDENCE.md#e17-p1_parallel_isolated-독립-mock-동시-작업) |
 | 모바일 | 사람이 Acceptance·증거·미확인·후보 SHA 판단 | 미실행. 이 PR을 검토 후보로 제공했으나 실제 모바일 판단은 사람에게 남음 |
 
 ## 개선과 남은 결정

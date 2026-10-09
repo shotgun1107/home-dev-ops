@@ -202,3 +202,14 @@ manifest 개수/파일/버전이 맞지 않으면 검사를 생략하거나 숫�
 Node K12 시험을 hosted Python 검사에 합산하지 않는다. bundle prerequisite 또는 원격 HEAD가
 변했다면 새 base에서 다시 대조하고 새 후보·새 CI 결과를 남긴다. 이 작업은 기존 CI PR2를
 원격 갱신하지 않았으므로 서버 측 rollback은 없다. 새 task-owned fixture들은 보존했다.
+
+## 8. 독립 mock 작업의 대기·종료
+
+[수동 mock probe](PARALLEL_ISOLATED.md)는 요청별 full ID/hash와 task root를 확인한 결정만 받는다.
+파일이 있다는 사실만으로 미만료라고 판단하지 않고 부작용 직전 만료를 확인한다. 잘못된 결정78,
+거부79, 대기 만료77, 이미 사용 중인 writer75를 완료로 세지 않는다. 이는 실제 Paseo permission
+오류 코드나 복구 API가 아니다. stale PID만 보고 기존 세션을 종료하거나 lock을 지우지 않는다.
+
+독립 task A가 완료돼도 B가 pending이면 전체 결과를 완료로 기록하지 않는다. 각 후보 SHA/clean/결과와
+launcher의 owned child 종료·회수까지 대조한다. 재시험은 새 disposable 경로에서 수행하고 기존
+source/runtime/결정 파일을 덮어쓰지 않는다. 현실 Provider나 영속 runtime의 복구는 기존 P0 조건을 따른다.

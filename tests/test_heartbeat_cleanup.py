@@ -137,17 +137,26 @@ class HeartbeatCleanupTests(unittest.TestCase):
         target = self.home / "synthetic.json"
         self.schedule.update(status="completed", runs=[])
         target.write_text(json.dumps(self.schedule))
-        for kind in ("fifo", "symlink", "oversized", "deep", "directory"):
+        for kind in ("fifo", "symlink", "oversized", "completed-large-output", "deep", "directory"):
             with self.subTest(kind=kind):
                 if kind == "fifo": os.mkfifo(self.path)
                 elif kind == "symlink": self.path.symlink_to(target)
                 elif kind == "oversized": self.path.write_text("x" * 65537)
+                elif kind == "completed-large-output":
+                    self.schedule["runs"] = [{"status": "succeeded", "agentId": OWNER, "output": "x" * 70000}]
+                    self.save()
                 elif kind == "deep": self.path.write_text("[" * 2000 + "0" + "]" * 2000)
                 else: self.path.mkdir()
                 try:
-                    reason = self.cli()["reason"]
+                    receipt = self.cli()
+                    reason = receipt["reason"]
+                    self.assertIsNone(receipt["preDeleteReceipt"])
+                    self.assertFalse(receipt["deletionConfirmed"])
                     if kind == "deep":
                         self.assertIn(reason, ("schedule-unreadable", "invalid-schedule"))
+                    elif kind in ("oversized", "completed-large-output"):
+                        self.assertEqual(reason, "schedule-too-large")
+                        self.assertTrue(self.path.exists())
                     else:
                         self.assertEqual(reason, "schedule-unreadable")
                 finally:

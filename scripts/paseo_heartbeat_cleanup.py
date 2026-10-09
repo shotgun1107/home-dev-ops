@@ -55,7 +55,7 @@ def read_owned_schedule(path, schedule_id, agent_id):
                 raise CleanupError("schedule-unreadable")
             raw = handle.read(SCHEDULE_LIMIT + 1)
         if len(raw) > SCHEDULE_LIMIT:
-            raise CleanupError("schedule-unreadable")
+            raise CleanupError("schedule-too-large")
         schedule = json.loads(raw, object_pairs_hook=unique_object)
     except FileNotFoundError:
         raise CleanupError("schedule-not-found") from None

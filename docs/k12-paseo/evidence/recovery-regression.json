@@ -1,0 +1,212 @@
+{
+  "taskId": "P0_RECOVERY",
+  "baseSha": "243ecdffa65992b661184560ed2d5932739262ba",
+  "observedAt": "2026-10-09T20:15:51.582344+00:00",
+  "python": "Python 3.14.4",
+  "pythonRuns": {
+    "recovery-final.log": {
+      "tests": 27,
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 0.486,
+      "sha256": "b4d50c22a846ba948aa78d39ddd83850f300145f54d5aef205ba4ef8ab7b8a41",
+      "cases": [
+        "test_auth_failures_not_retried_or_echoed",
+        "test_changed_identity_during_probe_no_longer_claims_stable_connection",
+        "test_disappearing_metadata_during_probe_is_unconfirmed",
+        "test_metadata_symlink_fifo_and_size_are_rejected_without_hang",
+        "test_oversized_cli_output_not_accepted",
+        "test_parser_recursion_fault_returns_fixed_inconclusive_result",
+        "test_stale_or_namespace_hidden_pid_cannot_be_distinguished",
+        "test_visible_reused_pid_does_not_prove_daemon_identity",
+        "test_abrupt_owned_child_exit_before_and_after_atomic_replace",
+        "test_all_identity_fields_must_match_including_epoch",
+        "test_atomic_publication_errors_preserve_readable_destination",
+        "test_cli_partial_oversized_duplicate_and_special_files_no_secret_output",
+        "test_complete_handoff_reviewable_without_grant",
+        "test_directory_sync_error_after_replace_is_uncertain_not_rollback",
+        "test_dirty_state_not_discarded",
+        "test_each_revision_must_match_not_only_local_head",
+        "test_effect_without_receipt_is_reconciled_by_fresh_process",
+        "test_failed_receipt_is_not_side_effect_rollback",
+        "test_foreign_or_old_receipt_rejected",
+        "test_interrupted_writer_quiescence_checks_are_independent",
+        "test_invalid_types_missing_fields_and_extra_keys_fail_closed",
+        "test_main_is_never_reviewable",
+        "test_remote_push_ack_loss_recovered_by_actual_local_bare_ref",
+        "test_stale_future_and_boundary_observations",
+        "test_success_receipt_requires_effect_confirmation",
+        "test_unknown_effects_after_lost_completion_never_retries",
+        "test_unknown_runtime_owner_does_not_transfer"
+      ]
+    },
+    "preflight-regression.log": {
+      "tests": 9,
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 0.001,
+      "sha256": "bbcf7140ae3eefec2ecf15a231c70d4da8ce69c66f8822ca221b01f97e3d98ba",
+      "cases": [
+        "test_bad_cli_output_is_not_reachable",
+        "test_cli_failure_and_secret_output_are_not_echoed",
+        "test_malformed_metadata_and_timeout_remain_unconfirmed",
+        "test_missing_cli_is_distinct",
+        "test_namespace_invisible_pid_does_not_claim_stopped_or_running",
+        "test_only_successful_connection_is_pass",
+        "test_process_execution_error_is_distinct",
+        "test_stale_pid_is_inconclusive_too",
+        "test_visible_process_without_probe_is_not_success"
+      ]
+    }
+  },
+  "pythonFreshTotal": 36,
+  "nodeInstalledPid": {
+    "node": "v22.22.1",
+    "sources": [
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/pid-lock.js",
+        "sha256": "7ad798710140a3a831974637cacc0eff40f0403fbd583e307a2b68dc8947c02b"
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/daemon-instance.js",
+        "sha256": "029dea3bd91af1295dddb1427f152648657ad43efa1bd097894db901d0832cb9"
+      }
+    ],
+    "observations": [
+      {
+        "scenario": "ESRCH-hidden-or-gone-preserves-lock",
+        "instance": null,
+        "lockPreserved": true,
+        "hostLivenessInferred": false
+      },
+      {
+        "scenario": "EPERM-counts-as-visible-not-daemon-identity",
+        "instanceReturned": true,
+        "realPermissionChanged": false
+      },
+      {
+        "scenario": "other-probe-error-is-not-visible",
+        "instance": null
+      },
+      {
+        "scenario": "preboot-stale-lock-ignores-reused-pid",
+        "pidProbes": 0,
+        "lockPreserved": true
+      },
+      {
+        "scenario": "same-boot-reused-pid-cannot-prove-owner",
+        "instanceReturned": true,
+        "processIdentityVerified": false
+      },
+      {
+        "scenario": "same-pid-different-start-stamp-is-replaced",
+        "stampCompared": true
+      },
+      {
+        "scenario": "invalid-time-stamp-does-not-prove-current-boot",
+        "acceptedByInstalledSchema": true,
+        "processIdentityVerified": false
+      },
+      {
+        "scenario": "truncated-lock-bounded-read-error-preserves-bytes",
+        "errorCode": "DAEMON_STATE_READ_FAILED",
+        "lockPreserved": true
+      },
+      {
+        "scenario": "missing-synthetic-lock-does-not-create-state",
+        "createdState": false
+      }
+    ],
+    "realSignals": 0,
+    "realServiceActions": 0,
+    "realCredentialReads": 0,
+    "fixtureRemoved": true,
+    "tests": 9,
+    "passed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 712.109435,
+    "logSha256": "979e8f1ca07e873cf6856d2a30ead73cb0c1b378fb87fee06446aaf144c7693d"
+  },
+  "fileSha256": {
+    "scripts/paseo_preflight.py": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+    "scripts/paseo_recovery_audit.py": "37f996237c54c17e3a3ce71fcfe7e09fe1b2253b3e19c569061ecd12978a261b",
+    "tests/test_paseo_preflight.py": "59a186bfd96fbfa12da78b758b438f4263267de5feb7fc90d88deef7474ab8ae",
+    "tests/test_recovery.py": "2a8dce122d90697c7ace3dab2865313ddd235a77aa95926b31fcb320f50ec21a",
+    "tests/test_recovery_pid.mjs": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03"
+  },
+  "redBeforeFix": [
+    {
+      "case": "same-pid-identity-changed-during-status",
+      "connectionVerified": true,
+      "expected": false,
+      "defectReproduced": true
+    },
+    {
+      "case": "deep-pid-metadata",
+      "exceptionType": "AssertionError",
+      "expected": "fixed inconclusive result",
+      "defectReproduced": false
+    }
+  ],
+  "parserFaultInjection": {
+    "case": "pid-parser-recursion-fault-injection",
+    "exceptionType": "RecursionError",
+    "defectReproduced": true,
+    "recursionLimit": 1000,
+    "initialDepth2000DidNotRaise": true
+  },
+  "initialHarnessObservation": "Depth2000 probe reached the stub CLI AssertionError rather than reproducing parser overflow. Retained as unsuccessful probe; explicit RecursionError fault injection used for the before/after assertion. No real CLI ran.",
+  "selectedOutcomes": {
+    "identityStampChangesDuringProbe": "old connection_verified=true; new observation-changed + connection_verified=false; CLI reachability recorded separately",
+    "nonAtomicChildExit": "partial JSON rejected, no retry/action",
+    "atomicChildExitBeforeReplace": "prior complete snapshot retained, task-owned temp preserved until fixture teardown",
+    "atomicChildExitAfterReplace": "new complete snapshot readable; no power-loss durability claim",
+    "directoryFsyncFailure": "publication uncertain; destination already new, no rollback claim",
+    "lostLocalPushAcknowledgement": "new local bare task ref read and matched once; no network or GitHub push loss induced",
+    "interruptedWriterOrChildren": "blocked despite idle/HEAD when other required evidence missing",
+    "effectWithoutReceipt": "reconcile-effects, same synthetic effect unchanged; exact successful receipt plus verified effect => already-completed"
+  },
+  "reuse": {
+    "pythonTests": 59,
+    "sourceHashes": {
+      "scripts/k12-pre-push": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+      "scripts/paseo_heartbeat_cleanup.py": "6974f196c9a3cb6af537583818c73bd0a4f2097051dc22c90994778e4758ef6e",
+      "scripts/paseo_permission_audit.py": "eab828e729afdac61a53194ae01f0b5e2effa111c4a37d717dad430408c6f371",
+      "tests/test_heartbeat_cleanup.py": "65309defdcf7f5e1591e5618d68d26135b8fe579cfd3dce62298601c5f5848b7",
+      "tests/test_permission_audit.py": "28aed72bed6db7ea3cebb7f8ef91c821442b14b04492058df106fe42b7d05a8d",
+      "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9"
+    },
+    "originalReceipt": "permission-regression.json",
+    "originalReceiptSha256": "c4c1db0ae4ef9f80210cccdefb626849884f0514be25e5bf3897e671f1785bde",
+    "heartbeatNodeTests": 38,
+    "heartbeatReceipt": "heartbeat-lifecycle.json",
+    "heartbeatReceiptSha256": "43eef0e64e4de2d3aeadb0decfbffd77d1ea6816f495f9cced1fcc04676b34a0",
+    "rerun": false
+  },
+  "savedEvidence": [
+    {
+      "file": "paseo-preflight.json",
+      "sha256": "010dcdf8a3d1243e1bd93829802f08df1ef4d279aafb3a43b6d5b439cdb359cf"
+    },
+    {
+      "file": "kerbe-m-validation.json",
+      "sha256": "9cfd9936ebc54be5f930b706d73d05bf385959caa6fb707b80682d0d7ecd3c31"
+    },
+    {
+      "file": "heartbeat-lifecycle.json",
+      "sha256": "43eef0e64e4de2d3aeadb0decfbffd77d1ea6816f495f9cced1fcc04676b34a0"
+    }
+  ],
+  "limits": [
+    "Only newly spawned disposable test children exit; real Paseo sessions/services remain untouched",
+    "CLI/proc observations in Python are stubs; Node uses installed read-only paths with process.kill fully stubbed; no real signals",
+    "Offline snapshot is unauthenticated, time-bounded advice, not a lease/fence/approval or automatic dispatch",
+    "Atomic publisher is a candidate Python API tested only on local temporary files; no deployment, multiwriter safety, power-loss or distributed exactly-once guarantee",
+    "Local bare Git push succeeded and acknowledgement was deliberately ignored; no real network interruption or GitHub handoff loss induced",
+    "PID visibility and startedAt equality cannot authenticate same-boot PID identity; invalid timestamp is accepted by installed schema",
+    "Test source has synthetic-only effects/IDs; raw prompts, auth files and real credential stores not used"
+  ]
+}

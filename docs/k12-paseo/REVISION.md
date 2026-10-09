@@ -19,6 +19,7 @@ v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. o
 
 | 원문 관련 항목 | 변경 내용 | 근거와 적용 한계 |
 |---|---|---|
+| 13·16장 중단 복구 | handoff의 원격 SHA·Writer/native/하위 실행 종료·runtime 소유권·부작용 결과를 각각 대조한다. PID 전후 stamp 변화를 미확정으로 판정한다 | P0_RECOVERY Python36·설치 PID Node9 격리 시험. 원자적 발행 전후 새 child 종료 실측. 오프라인 판정은 lease/실행 허가가 아니며 controller에 연결하지 않음. [범위](FAILURE_RECOVERY.md) |
 | 7·16장 권한/복구 | daemon 연결 오류에서 sandbox와 host 가시성을 먼저 대조한다. CLI stopped 하나로 start/restart하지 않는다 | E1 실제 namespace 차이·host 연결·진단 도구 9개 회귀. sandbox 접근 개방은 아님 |
 | 13·18장 자동 재개 | 생성/주기 실행/idle 재개/종료 결과 저장/삭제를 각각 기록한다. agent-target 조회를 일반 schedule 조회와 구분한다. 자기 run이 끝난 뒤 삭제한다 | CLI filtering·자기 삭제 충돌 격리 재현, 정리 도구 9개 시험 통과. E9의 실제 idle 1회 재개와 이후 succeeded·정상 삭제·게시 GET 영수증까지 확인 |
 | 9장 보호 확인 | classic branch protection과 Rulesets/effective rules를 각각 확인한다. 보호 기능 미지원은 repo별 정책 결함으로 기록한다 | Kerbe classic404+effective active, private ops403 실측 |

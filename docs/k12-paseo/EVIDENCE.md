@@ -448,3 +448,16 @@ Low1은 종료 저장 연속 실패 뒤 orphan running 정지였다. 설치본�
 다음 tick 진행을 확인했다. patch bytes는 그대로이며 stop() 비취소는 정적 확인이다.
 
 a2311a7… [독립 delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088341624)는 새 지적0이며 원문 게시·GET 일치를 확인했다. 기존 Low1의 자동 복구는 해결하지 않았고 시험·한계로 다뤘다. 최종 문서 영수증 추가 이후 시험·patch bytes는 이 리뷰 SHA와 같다. [리뷰 영수증](evidence/heartbeat-review.json).
+
+## E15 P0_RECOVERY 야간 실패 주입
+
+기준243ecdf…의 clean/local/PR Draft HEAD 일치를 확인하고 기존 Worktree·Astra Max·Director를
+유지했다. [복구 시험](FAILURE_RECOVERY.md)과 [회귀 영수증](evidence/recovery-regression.json)에
+정확한 조건·hash·실패 분류를 남겼다. Python 신규27+기존 preflight9=36, 설치 PID Node9 OK(skip0).
+영향 없는 Python59·Heartbeat Node38은 hash 일치로 재사용했으며 새 실행/CI로 합산하지 않았다.
+
+기존 preflight는 조회 중 PID identity 변경도 reachable로 합성 재현됐다. 전후 stamp 확인과
+입력 실패의 고정 미확정 판정으로 보정했다. PID 가시성은 신원 인증이 아니다. handoff 후보는
+실행 종료·원격 SHA·runtime/epoch·부작용 공백을 차단하고 원자적 발행의 old/new 기록 보존을
+새 시험 child의 즉시 종료로 확인했다. 실제 서비스·세션·설정·Kerbe는 변경하지 않았다.
+작업 결과 판정 도구는 offline advisory이며 자동 복구/권한 부여/lock/CAS/dispatch가 아니다.

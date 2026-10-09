@@ -21,6 +21,11 @@ updatedPermissions 응답은 사람이 결정할 항목이며 Supervisor가 일�
 검증: host/sandbox 차이 재현, 기존 host 연결, Heartbeat 생성/삭제까지 통과.
 수동 daemon 시작/재시작/손상 복구는 미실행이며 별도 승인 대상이다.
 
+P0_RECOVERY의 [실패 주입](FAILURE_RECOVERY.md) 후 preflight는 조회 전후 pid/startedAt이
+달라지면 observation-changed/exit2로 판정한다. CLI reachable과 PID 신원 확인을 구분하며
+현재 /proc의 PID만으로 같은 daemon이라고 단정하지 않는다. 원본 lock을 지우거나 daemon을
+재시작하지 않고 허용된 읽기 경로에서 해당 관찰만 재대조한다.
+
 Claude Auto 거부는 요청/도구/거부 문구/시각을 기록한다. 같은 호출을 근거 없이 반복하거나
 shell wrapper·직접 API로 우회하지 않는다. 독립적으로 승인된 작업은 계속한다.
 권한 파일의 deny/forbidden과 classifier를 구분하지 못하면 해당 경로를 통과로 선언하지 않는다.
@@ -44,6 +49,14 @@ PR 쓰기·build 명령만 on-request로 검토한다. 정상 개별 승인은 �
 실행 중 `paseo send`는 현재 명령을 중단시킬 수 있다. 중단됐다면 native의 user-rejected
 라벨만으로 사람이 거부했다고 기록하지 말고 실제 발신자·명령·완료 여부를 대조한다.
 남은 프로세스와 부작용을 먼저 확인하고 로그/잔여 fixture를 보존한 뒤 필요한 시험만 재개한다.
+
+handoff에는 task/job·full SHA·writer/session·정규화 worktree/runtime·소유권 세대를 대조할
+정보를 남긴다. 전환 전 local/remote/PR/handoff SHA, dirty, pending/하위 실행/native 종료,
+runtime 소유권 반납과 실제 부작용을 읽는다. [오프라인 검사 후보](../../scripts/paseo_recovery_audit.py)의
+exit0은 검토 가능 판정이며 실행 승인/소유권 획득이 아니다. 오래된 snapshot이나 하나의 idle
+표시로 새 Writer를 시작하지 않는다. 원자적 발행 도중 오류가 나면 이전 또는 새 완전한 기록이
+남을 수 있으므로 실제 파일을 읽는다. 부작용이 있고 receipt가 없거나 응답만 유실됐다면
+원격 ref/정확한 job 결과부터 대조하고 무조건 push/작업을 반복하지 않는다.
 
 ## 2. Heartbeat
 

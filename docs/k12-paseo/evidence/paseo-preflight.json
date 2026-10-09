@@ -1,0 +1,28 @@
+{
+  "host": {
+    "exit": 0,
+    "data": {
+      "verdict": "reachable",
+      "local_daemon_report": "running",
+      "connection_verified": true,
+      "recorded_pid": 2316,
+      "recorded_pid_visible": true,
+      "next_step": "none",
+      "pid_metadata": "present",
+      "cli_result": "ok"
+    }
+  },
+  "codexSandbox": {
+    "exit": 2,
+    "data": {
+      "verdict": "recorded-pid-not-visible",
+      "local_daemon_report": "stopped",
+      "connection_verified": false,
+      "recorded_pid": 2316,
+      "recorded_pid_visible": false,
+      "next_step": "compare with an authorized host-side status check; do not start/restart",
+      "pid_metadata": "present",
+      "cli_result": "ok"
+    }
+  }
+}

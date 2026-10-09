@@ -46,7 +46,10 @@ P0_HEARTBEAT: maxRuns는 성공 횟수가 아니라 terminal 시도 수이며 ex
 agent를 종료시키지 않는다. schedule completed/failed와 업무·runtime 종료를 별도로 판정한다.
 crash 뒤에는 실제 PR/HEAD·task 영수증을 대조하고 중복 부작용을 피한다. runOnce로 자동 재개를
 대체하지 않는다. stale tick과 append 실패 guard 누수는 동일 조건의 미설치 패치 복사본에서
-보정했고 Node34개가 통과했다. 실제 배포·daemon 변경은 사람이 결정할 별도 위험 검토다.
+보정했고 Node38개가 통과했다. 실제 배포·daemon 변경은 사람이 결정할 별도 위험 검토다.
+후보는 종료 저장의 연속 실패로 남은 orphan running에서 재실행을 거부한다. 저장소가
+복구돼도 자동 진행이 멈추는 한계까지 실측했으며, 임의 재실행·daemon 재시작을 복구 정책으로
+채택하지 않는다. 실제 실행·부작용을 대조한 뒤 사람이 복구 방식을 결정한다.
 [시험·설치 후보·미확인 범위](HEARTBEAT.md)를 적용 근거로 보존한다.
 
 P0_PERMISSIONS 추가 검증으로 승인 기록에는 **전달 경로와 결정 주체, 응답과 실행 결과**를

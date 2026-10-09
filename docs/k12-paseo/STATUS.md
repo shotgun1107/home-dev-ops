@@ -8,7 +8,7 @@
 새 실환경 권한 시험·설정 변경은 없으며 Auto-review의 실제 결정은 미확인이다.
 
 야간 **P0_HEARTBEAT**: 설치본의 stale tick/guard 누수 결함 재현, 미설치 패치 후보의
-동일 조건 보정과 장기·만료·crash 상태 복원 **Node34개 격리 시험 통과**.
+동일 조건 보정과 장기·만료·crash 상태 복원 **Node38개 격리 시험 통과**.
 실제24시간·daemon crash는 미실행. [수명·동시성 감사](HEARTBEAT.md).
 
 ## 기준
@@ -27,7 +27,7 @@
 |---|---|---|---|
 | P0-H1 | 기존 daemon 연결 원인 식별·안전한 생성 | 통과(호스트 경로) | PID namespace로 기본 탐색 실패 재현, 기존 host PID에 연결·Heartbeat 생성. sandbox 연결 자체는 해결하지 않음. [E1](EVIDENCE.md#e1-heartbeat) |
 | P0-H2 | 자동 재개·중복 방지·만료·정리 | 실제1회 수명 통과 / 장기·만료 격리 검증 / 실24h 미실행 | 427d614c의 실제 idle→succeeded→삭제 영수증 재사용. expiry는 실행 강제 종료가 아니고 failed도maxRuns를 소모함. 설치본 stale tick 결함은 H3에 분리. [E9](EVIDENCE.md#e9-실제-idle-자동-재개-1회), [E14](EVIDENCE.md#e14-p0_heartbeat-야간-격리-검증) |
-| P0-H3 | 동시 tick·저장 실패·crash 상태 복원 | 설치본 결함 재현 / 후보 격리 통과 / 운영 미적용 | 같은 슬롯 중복·pause/expiry 뒤 dispatch·append 실패 guard 누수를 후보에서 차단. Node34개, 기존 Python68 hash 재사용. crash 부작용 exactly-once·실제 daemon 장애 복구 보장은 아님. [수명 감사](HEARTBEAT.md) |
+| P0-H3 | 동시 tick·저장 실패·crash 상태 복원 | 설치본 결함 재현 / 후보 격리 통과 / 운영 미적용 | 같은 슬롯 중복·pause/expiry 뒤 dispatch·append 실패 guard 누수를 후보에서 차단. Node38개, 기존 Python68 hash 재사용. 종료 저장 연속 실패의 orphan running은 후보에서도 자동 진행 정지로 남음. crash 부작용 exactly-once·실제 daemon 장애 복구 보장은 아님. [수명 감사](HEARTBEAT.md) |
 | P0-A1 | Codex 기본 모드·merge 실행 전 차단 | 과거 gh pr merge 형태 통과 / 현 Full Access 미통과 | 과거 Paseo on-request/workspace-write의 forbidden 거부. 현재 Full Access를 대체 증거로 쓰지 않음. [E2](EVIDENCE.md#e2-provider) |
 | P0-A2 | Claude Auto·merge deny 실제 적용 | 부분 검증 | gh pr merge 형태의 실행 전 거부 확인, deny rule인지 classifier인지 미확인. 정상 조회 거부 사례도 있어 writer 승인 안정성은 보류 |
 | P0-A3 | source 편집·commit·branch push·Draft PR | 경로별 통과 | S Work·C의 PR 생성과 M의 Claude→Codex 실제 source·Git·Draft/PR 본문 쓰기를 확인. M은 Claude 승인16/명시거부2/입력조정3, Codex 승인34(초기2+구현21+리뷰후속11). Supervisor 개입이며 무인 승인 성공이 아님. [E12](EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원) |

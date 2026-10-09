@@ -1,0 +1,32 @@
+{
+  "taskId": "P0_HEARTBEAT",
+  "reviewedSha": "e8036f7e7c96d4aa88afa793b39eaac36ce41fec",
+  "reviewer": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+  "provider": "claude",
+  "mode": "plan (operational read-only)",
+  "findings": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 1,
+    "info": 3
+  },
+  "originalTextSha256": "d69bd32a1ccf9fce8572b7356bc9254fada74340dce8c2569e7c6f2bf151a16c",
+  "native": {
+    "nativePath": "/home/shotgun1107/.claude/projects/-home-shotgun1107--paseo-worktrees-20iw348x-docs-k12-paseo-autopilot/6d620830-1287-4da7-81ed-3a563f55847a.jsonl",
+    "line": 451,
+    "timestamp": "2026-10-09T19:57:41.921Z"
+  },
+  "commentUrl": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088278361",
+  "postedBodyGetVerified": true,
+  "scope": "fixed Git objects and selected installed sources; tests and live evidence not independently reproduced",
+  "writerFollowup": {
+    "low1": "reproduced terminal-write failure, documented fail-closed orphan stall and human recovery decision; no automatic recovery change",
+    "info2": "reproduced deleted snapshot abort and next-tick progress, inherited behavior",
+    "info3": "documented stop() non-cancellation as source-only observation",
+    "info4": "preserved interval/provider/crash/multiprocess limitations",
+    "tests": 38,
+    "patchUnchanged": true,
+    "deltaReview": "pending"
+  }
+}

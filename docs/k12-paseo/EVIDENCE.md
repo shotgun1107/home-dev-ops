@@ -434,11 +434,15 @@ RecursionError 재현으로 세지 않는다. 별도 합성 오류 주입의 exi
 ## E14 P0_HEARTBEAT 야간 격리 검증
 
 기준a29f66e…의 기존 Heartbeat/권한 증거를 보존했다. [수명 감사](HEARTBEAT.md),
-[34개 설치본/후보 비교 결과](evidence/heartbeat-lifecycle.json),
+[38개 설치본/후보 비교 결과](evidence/heartbeat-lifecycle.json),
 [미설치 patch](proposals/paseo-heartbeat-schedule.patch)에 정확한 조건·hash·실패를 기록했다.
 새 mkdtemp schedule store·주입 시간·stub만 사용했고 daemon.start/restart나 실제 schedule은 조작하지 않았다.
 설치본의 동일 슬롯2회/상한 초과, pause·expiry 뒤 dispatch, append 실패 guard 잔류를 재현했다.
 후보는 store mutation 안 최신 조건/현재 시각 확인과 finally로 차단하면서 독립 schedule 진행을 유지했다.
-Node34개 OK(skip0); 기존 Python68은 hash 동일로 재사용했고 현재 ops CI로 승계하지 않는다.
+Node38개 OK(skip0); 기존 Python68은 hash 동일로 재사용했고 현재 ops CI로 승계하지 않는다.
 24h는 가상 시간, crash는 persisted running의 새 객체 복원이다. 실제24h/OS crash와 설치 효과는 미확인이다.
 초기 stub 계약·fixture clock 오류는 시험 코드 결함으로 분리해 로그 hash를 보존했다.
+e8036f7… [독립 리뷰 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088278361)의
+Low1은 종료 저장 연속 실패 뒤 orphan running 정지였다. 설치본의 추가 실행과 후보의
+진행 정지를 합성 재현했고 복구 한계를 문서화했다. Info의 list 이후 삭제도 같은 tick 중단·
+다음 tick 진행을 확인했다. patch bytes는 그대로이며 stop() 비취소는 정적 확인이다.

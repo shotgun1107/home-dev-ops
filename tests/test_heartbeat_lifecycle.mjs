@@ -233,6 +233,64 @@ for (const [variant, Service] of [['installed', Installed], ['candidate', Candid
     return { guardLeaked: stuck, runnerCallsAfterStorageRecovered: calls };
   });
 
+  check('finish-storage-failure-leaves-orphan-running-record', async () => {
+    let calls = 0, failedWrites = 0;
+    const runner = async () => { calls++; return { agentId: fixtureAgent, output: null }; };
+    const f = await fixture(Service, { runner });
+    const s = await f.create({ maxRuns: null }); f.setTime(s.nextRunAt);
+    assert.equal(s.expiresAt, null); assert.equal(s.maxRuns, null);
+    const write = f.service.store.write.bind(f.service.store);
+    f.service.store.write = async schedule => {
+      if (schedule.runs.some(r => r.status !== 'running')) {
+        failedWrites++; throw new Error('synthetic terminal storage failure');
+      }
+      return write(schedule);
+    };
+    await assert.rejects(f.service.tick(), /synthetic terminal storage failure/);
+    assert.equal(failedWrites, 2); assert.equal(calls, 1);
+    assert.equal(f.service.runningScheduleIds.has(s.id), false);
+    f.service.store.write = write;
+    for (const time of ['13:40', '14:00', '14:20']) {
+      f.setTime(`2026-10-09T${time}:00Z`); await f.service.tick();
+    }
+    const orphaned = await f.service.inspect(s.id);
+    assert.equal(orphaned.status, 'active'); assert.equal(orphaned.runs[0].status, 'running');
+    assert.equal(calls, variant === 'installed' ? 4 : 1);
+    assert.equal(orphaned.runs.length, calls);
+    const afterStorageRecovery = calls;
+    // Only a new object over this synthetic store; never restart the daemon.
+    let clock = new Date('2026-10-09T15:05:00Z');
+    const restored = new Service({ paseoHome: f.home, logger, now: () => clock, runner });
+    await restored.recoverInterruptedRuns();
+    const recovered = await restored.inspect(s.id);
+    assert.equal(recovered.runs[0].status, 'failed');
+    clock = new Date(recovered.nextRunAt); await restored.tick();
+    assert.equal(calls, afterStorageRecovery + 1);
+    assert.ok((await restored.inspect(s.id)).runs.every(r => r.status !== 'running'));
+    return { terminalWritesFailed: failedWrites, memoryGuardCleared: true,
+      callsAfterStorageRecoveryAndThreeTicks: afterStorageRecovery, orphanStatus: orphaned.runs[0].status,
+      scheduleStatus: orphaned.status, candidateStalls: variant === 'candidate',
+      syntheticRecoveryAllowsNextRun: true, actualProcessCrash: false };
+  });
+
+  check('deleted-snapshot-aborts-tick-but-next-tick-progresses', async () => {
+    const calls = [];
+    const f = await fixture(Service, { runner: async s => { calls.push(s.name); return { agentId: fixtureAgent, output: null }; } });
+    const a = await f.create({ name: 'A', maxRuns: 1 }); f.setTime('2026-10-09T13:08:06Z');
+    const b = await f.create({ name: 'B', maxRuns: 1 }); f.setTime(a.nextRunAt);
+    const list = f.service.store.list.bind(f.service.store), captured = deferred(), release = deferred();
+    f.service.store.list = async () => { const items = await list(); captured.resolve(); await release.promise; return items; };
+    const stale = f.service.tick(); await captured.promise;
+    await f.service.store.delete(a.id); release.resolve();
+    await assert.rejects(stale, /Schedule not found/);
+    assert.deepEqual(calls, []);
+    const leaked = f.service.runningScheduleIds.has(a.id);
+    assert.equal(leaked, variant === 'installed');
+    await f.service.tick(); assert.deepEqual(calls, ['B']);
+    assert.equal((await f.service.inspect(b.id)).status, 'completed');
+    return { firstTickAborted: true, nextTickRunnerCalls: calls, deletedScheduleGuardLeaked: leaked };
+  });
+
   check('expiry-elapses-between-list-and-claim', async () => {
     let calls = 0;
     const f = await fixture(Service, { runner: async () => { calls++; return { agentId: fixtureAgent, output: null }; } });
@@ -281,7 +339,7 @@ for (const [variant, Service] of [['installed', Installed], ['candidate', Candid
 
 after(async () => {
   assert.equal(hash(await readFile(sourcePath, 'utf8')), hash(source), 'Installed source must remain unchanged');
-  assert.equal(observations.length, 34, 'All bounded cases must finish');
+  assert.equal(observations.length, 38, 'All bounded cases must finish');
   const sources = [];
   for (const name of ['service.js', 'store.js', 'cron.js']) {
     const path = join(base, 'schedule', name);

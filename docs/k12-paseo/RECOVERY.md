@@ -52,6 +52,14 @@ failed도maxRuns를 소모하고 permission 대기 실패는 underlying agent의
 crash 복원 후에는 PR/HEAD·task 영수증·실제 실행을 대조한다. failed 표시는 부작용 롤백 증거가 아니다.
 manual runOnce는 expiry/maxRuns를 강제하지 않으므로 자동 복구 우회로로 사용하지 않는다.
 설치본의 stale tick·저장 실패 guard 결함은 패치 후보만 검증했으며 운영 적용은 사람이 결정한다.
+종료 성공·실패 결과 저장이 모두 실패하면 디스크에 orphan running이 남을 수 있다.
+후보는 이때 중복 실행을 막지만 저장소가 복구돼도 active/running에서 자동 진행이 멈춘다.
+실제 agent/native·하위 실행·PR/HEAD·부작용과 저장 실패 로그를 먼저 대조해
+실행 중/종료/미확인을 구분하고 정확한 schedule/run ID와 마지막 저장 시각을 남긴다.
+만료·maxRuns·completed만으로 underlying run 종료를 추정하지 않는다. run 파일 수동 편집,
+runOnce 우회, 무단 daemon 재시작은 하지 않는다. 확인된 저장 장애의 해소와 해당 run의
+복구 방식은 사람이 위험 검토한다. 새 객체의 복구 성공은 실제 서비스 재시작 승인이나
+무손실 복구 보장이 아니다. 설치본 stop()도 interval만 지우며 진행 중 작업을 취소하지 않는다.
 
 - 같은 Supervisor/목표의 기존 Heartbeat를 먼저 확인한다. 0.10.3의 일반 `schedule inspect`는 agent-target을 제외함을 확인했다. 일반 ls/logs도 Heartbeat 부재 판단 근거로 사용하지 않는다.
 - 현재 agent의 schedule 파일에서 id/cadence/target/expiry/maxRuns/runs만 읽거나 해당 버전의 검증된 Heartbeat 조회 경로를 사용한다. 파일 직접 편집 금지.

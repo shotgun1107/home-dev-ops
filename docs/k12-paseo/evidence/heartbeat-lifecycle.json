@@ -109,6 +109,27 @@
     },
     {
       "variant": "installed",
+      "scenario": "finish-storage-failure-leaves-orphan-running-record",
+      "terminalWritesFailed": 2,
+      "memoryGuardCleared": true,
+      "callsAfterStorageRecoveryAndThreeTicks": 4,
+      "orphanStatus": "running",
+      "scheduleStatus": "active",
+      "candidateStalls": false,
+      "syntheticRecoveryAllowsNextRun": true,
+      "actualProcessCrash": false
+    },
+    {
+      "variant": "installed",
+      "scenario": "deleted-snapshot-aborts-tick-but-next-tick-progresses",
+      "firstTickAborted": true,
+      "nextTickRunnerCalls": [
+        "B"
+      ],
+      "deletedScheduleGuardLeaked": true
+    },
+    {
+      "variant": "installed",
       "scenario": "expiry-elapses-between-list-and-claim",
       "runnerCallsAfterExpiry": 1,
       "freshClaimClockChecked": false
@@ -228,6 +249,27 @@
     },
     {
       "variant": "candidate",
+      "scenario": "finish-storage-failure-leaves-orphan-running-record",
+      "terminalWritesFailed": 2,
+      "memoryGuardCleared": true,
+      "callsAfterStorageRecoveryAndThreeTicks": 1,
+      "orphanStatus": "running",
+      "scheduleStatus": "active",
+      "candidateStalls": true,
+      "syntheticRecoveryAllowsNextRun": true,
+      "actualProcessCrash": false
+    },
+    {
+      "variant": "candidate",
+      "scenario": "deleted-snapshot-aborts-tick-but-next-tick-progresses",
+      "firstTickAborted": true,
+      "nextTickRunnerCalls": [
+        "B"
+      ],
+      "deletedScheduleGuardLeaked": false
+    },
+    {
+      "variant": "candidate",
       "scenario": "expiry-elapses-between-list-and-claim",
       "runnerCallsAfterExpiry": 0,
       "freshClaimClockChecked": true
@@ -263,16 +305,16 @@
     }
   ],
   "taskId": "P0_HEARTBEAT",
-  "observedAt": "2026-10-09T19:54:46.344439+00:00",
+  "observedAt": "2026-10-09T20:00:27.118730+00:00",
   "baseSha": "a29f66e0a676afb0e621f5942a696152e87b181f",
   "command": "node --test --test-concurrency=1 tests/test_heartbeat_lifecycle.mjs",
-  "tests": 34,
-  "passed": 34,
+  "tests": 38,
+  "passed": 38,
   "failed": 0,
   "skipped": 0,
-  "durationMs": 812.051904,
-  "testSha256": "f740d45dee7da964e45b5c1e11e8639b5aedd6076f32c2abdbba67e8fe8adc68",
-  "logSha256": "432bb377594540996b356e35724a7f61138054654d613b8deb350878c98cfceb",
+  "durationMs": 836.258868,
+  "testSha256": "8fa8ec7c399b74a9a18bab2ce3b132d7c2a466127ce1fa7525e6ce3887e55622",
+  "logSha256": "6b1be647965dcd14979272d264a00258b67c1e0eb42b0ded95c1a8dfbc60806d",
   "installedPatchApplied": false,
   "harnessCorrections": [
     {
@@ -320,6 +362,20 @@
     "single ScheduleService/Store instance claim serialization, not multiprocess locking",
     "manual runOnce cap/expiry bypass behavior preserved; never recommended as automated recovery",
     "schedule failed/completed does not prove underlying agent quiescence or side-effect rollback",
-    "candidate not installed; upstream/install/service decisions require human review"
-  ]
+    "candidate not installed; upstream/install/service decisions require human review",
+    "candidate fails closed on persisted orphan running after both terminal writes fail; no automatic reconciliation or restart implemented",
+    "missing schedule between list/claim aborts current tick; next tick can progress; inherited behavior",
+    "start()/interval are not exercised; stop() non-cancellation is a source-only observation",
+    "startedAt is the captured tick time, not a proven actual provider start timestamp"
+  ],
+  "reviewCounterexamples": {
+    "reviewedSha": "e8036f7e7c96d4aa88afa793b39eaac36ce41fec",
+    "reviewUrl": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088278361",
+    "addedScenarios": [
+      "finish-storage-failure-leaves-orphan-running-record",
+      "deleted-snapshot-aborts-tick-but-next-tick-progresses"
+    ],
+    "patchUnchanged": true,
+    "previous34LogSha256": "432bb377594540996b356e35724a7f61138054654d613b8deb350878c98cfceb"
+  }
 }

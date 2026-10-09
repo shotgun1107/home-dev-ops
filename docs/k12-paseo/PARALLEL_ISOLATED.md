@@ -102,3 +102,8 @@ task 결과를 쓰지 않았다. 성공적으로 소유한 writer 상한은2다.
 
 초기/보정 실행 디렉터리와 local commit/runtime 기록은 보존했다. 새 unit-test fixture만 자체
 종료 시 정리했으며 기존 Worktree/영속 데이터/세션/서비스의 정리나 Archive는 하지 않았다.
+
+추가 격리 보강: 앞선 두 round의 결과/저장소/runtime은 독립이었지만 실행 harness는 ops의
+고정 파일을 공유했고 launcher가 cwd를 지정하지 않았다(설치 실행 경로의 소스 확인이며 당시 cwd는 미기록).
+각 task Git에 `worker.py` 사본을 넣고 child cwd를 그 task로 지정했다. 새로운15번째 계약 시험은
+이전 구현에서 실패했고 보정 후15개 통과했다. 실제 child가 기록한 cwd/workerSource를 새 round에서 대조한다.

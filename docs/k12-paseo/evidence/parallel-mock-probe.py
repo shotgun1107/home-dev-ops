@@ -109,7 +109,8 @@ def worker(root, seconds=120):
             return 76
         req = request(task)
         start = {"pid": os.getpid(), "taskId": task["taskId"], "writerId": task["writerId"],
-                 "state": "waiting-mock-decision", "startedAt": now(), "monotonic": time.monotonic()}
+                 "state": "waiting-mock-decision", "startedAt": now(), "monotonic": time.monotonic(),
+                 "cwd": str(Path.cwd().resolve()), "workerSource": str(Path(__file__).resolve())}
         write_new(root / ".runtime/started.json", start)
         write_new(root / ".runtime/request.json", req)
         deadline = time.monotonic() + seconds
@@ -156,7 +157,8 @@ def create_task(parent, kind, data):
             "kind": kind, "input": data, "root": str(root), "branch": "mock/" + kind}
     write_new(root / "task.json", task)
     (root / ".gitignore").write_text(".runtime/\n")
-    git(root, "add", "task.json", ".gitignore")
+    (root / "worker.py").write_bytes(Path(__file__).read_bytes())
+    git(root, "add", "task.json", ".gitignore", "worker.py")
     git(root, "commit", "-qm", "Create independent synthetic task")
     return root
 
@@ -173,8 +175,8 @@ def launch():
         for root in roots:
             stream = (root / ".runtime/worker.log").open("x")
             streams.append(stream)
-            processes.append(subprocess.Popen([sys.executable, "-I", "-B", str(probe), "--worker", str(root)],
-                                              stdout=stream, stderr=subprocess.STDOUT,
+            processes.append(subprocess.Popen([sys.executable, "-I", "-B", str(root / "worker.py"), "--worker", str(root)],
+                                              cwd=root, stdout=stream, stderr=subprocess.STDOUT,
                                               env={"PATH": os.environ["PATH"], "LANG": "C"}))
         meta["pids"] = [p.pid for p in processes]
         write_new(parent / "launch.json", meta)
@@ -254,6 +256,12 @@ class ContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             expected(dict(self.task, kind="remote-push"))
 
+    def test_task_has_its_own_immutable_worker_source(self):
+        worker_source = self.root / "worker.py"
+        self.assertTrue(worker_source.is_file())
+        self.assertEqual(worker_source.read_bytes(), Path(__file__).read_bytes())
+        self.assertIn("worker.py", git(self.root, "ls-files").splitlines())
+
     def test_task_path_and_branch_must_match(self):
         self.assertTrue(validate_task(self.root, self.task))
         self.assertFalse(validate_task(self.root, dict(self.task, root="/different")))
@@ -288,15 +296,19 @@ class ContractTests(unittest.TestCase):
 
     def test_denied_worker_does_not_write_or_commit_result(self):
         base = git(self.root, "rev-parse", "HEAD")
-        child = subprocess.Popen([sys.executable, "-I", "-B", str(Path(__file__).resolve()),
+        child = subprocess.Popen([sys.executable, "-I", "-B", str(self.root / "worker.py"),
                                   "--worker", str(self.root)], stdout=subprocess.PIPE,
-                                 stderr=subprocess.PIPE, env={"PATH": os.environ["PATH"], "LANG": "C"})
+                                 stderr=subprocess.PIPE, cwd=self.root,
+                                 env={"PATH": os.environ["PATH"], "LANG": "C"})
         try:
             deadline = time.monotonic() + 3
             while not (self.root / ".runtime/request.json").exists():
                 self.assertLess(time.monotonic(), deadline)
                 time.sleep(0.01)
             req = json.loads((self.root / ".runtime/request.json").read_text())
+            started = json.loads((self.root / ".runtime/started.json").read_text())
+            self.assertEqual(started["cwd"], str(self.root))
+            self.assertEqual(started["workerSource"], str(self.root / "worker.py"))
             response = {k: req[k] for k in ("taskId", "writerId", "requestId", "operationHash")}
             response.update(decision="deny", actor="supervisor", reviewedAt=now())
             write_new(self.root / ".runtime/decision.json", response)

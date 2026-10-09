@@ -16,7 +16,7 @@ E1~E18은 시점별 기록이다. 각 절의 현재/이번·설치 버전·설�
 - 승인된 host 실행: running/reachable. 데몬은 10/07부터 실행 중이며 새로 시작하지 않았다.
 - 재현: `codex sandbox -- paseo status --json`. Codex 0.160.1은 `sandbox -- <command>` 문법이다. 잘못 시도한 `sandbox linux --help`는 execvp linux 실패, 상태 변경 없음.
 - sandbox 안 PID는 2, 기록된 supervisor PID 2316은 /proc에 없음. host에서는 존재. PID/network namespace inode가 각각 다르다. 현재 CLI 보조 재현이며 이전 Paseo 실측과 구분한다.
-- 설치 파일 `@getpaseo/server/dist/server/server/daemon-instance.js:29–31`은 isPidLockOwnerRunning=false면 null 반환. 같은 디렉터리의 `pid-lock.js:33–41`은 process.kill(pid,0) 실패가 EPERM이 아니면 false다. 격리된 PID 공간의 결과를 호스트 daemon 중지로 해석하는 진단 결함이다. 경로는 E19의 실제 설치 파일·hash 대조로 이전 `dist/src/server` 오기를 정정했다.
+- 설치 파일 `@getpaseo/server/dist/src/server/daemon-instance.js:29–31`은 isPidLockOwnerRunning=false면 null 반환. 같은 디렉터리의 `pid-lock.js:33–41`은 process.kill(pid,0) 실패가 EPERM이 아니면 false다. 격리된 PID 공간의 결과를 호스트 daemon 중지로 해석하는 진단 결함이다. E19에서 이 경로와 `dist/server/server`의 동일 bytes 사본을 각각 확인했다. 원래 경로가 오기라는 중간 판정은 철회했다.
 - 네트워크 namespace도 달라 --host 문자열만 바꾸면 해결된다고 주장하지 않는다. 임의 재시작은 금지했다.
 
 ### 개선과 재시험
@@ -570,7 +570,7 @@ local/origin/PR #1 일치·clean·open/Draft를 확인했다. 구현·시험·�
 - 현재125·과거115·과거 hosted21, cleanup15·초기9·당시 전체30을 구분했다. M의184와185도 SHA 단계로 구분했다.
 - mock2 writer 관찰을 전역 상한 강제로 표현하지 않는다. repo가 모호한 PR #2와 문서 label/절 번호를 정리했다.
 - 이전 pilot Heartbeat 부재는 당시 기록으로 한정했다. 새 Heartbeat/자동화를 생성·삭제하지 않았고 기존 Director/coordinator는 유지했다.
-- 설치 source 경로 오기를 실제 파일/hash와 대조해 고쳤다. 보호 설정 전체·서비스 건강·credential mode를 새로 감사하지 않았다. branch의 protected 표시와 Ruleset 링크 존재 GET만으로 전체 보호 재검증을 주장하지 않는다.
+- 설치 source 두 경로를 실제 파일/hash로 대조했다. `dist/src/server`도 존재하며 `dist/server/server` 사본과 byte 동일하므로 중간 후보의 오기 판정을 철회했다. 보호 설정 전체·서비스 건강·credential mode를 새로 감사하지 않았다. branch의 protected 표시와 Ruleset 링크 존재 GET만으로 전체 보호 재검증을 주장하지 않는다.
 
 reviewer는 기존 Claude Opus5.5/Plan 세션을 재사용했다. 운영상 readonly이고 blind/기술적 격리는
 아니다. 고정 Git 객체만 읽었고 source/tests 실행·GitHub·native 전체 재조회는 하지 않았다.
@@ -581,4 +581,6 @@ reviewer는 기존 Claude Opus5.5/Plan 세션을 재사용했다. 운영상 read
 Heartbeat 운영 적용·orphan/대용량 복구, 최신 CI 채택, 회사 변경 대조 후 M 채택, 정식 병렬·모바일,
 추가 runtime 검증이다. 문서 정합성 확인을 이 항목들의 통과나 전체 미션 완료로 해석하지 않는다.
 
-이번 문서 검사에서는 상대 링크/근사 anchor113개와 GitHub 참조35개의 GET을 확인했다. 원문2개·source/tests15개·설치 Node source5개·patch/mock/bundle의 hash가 보존 근거와 일치했다. 수집기의 `gh api --slurp`는 설치 gh2.46.0에서 지원되지 않아 실패했고, 상태 변경 없이 한정된 GET 페이지 조회로 보정했다. 이는 운영 daemon 결함이나 권한 거부가 아니다.
+고정 문서 후보9cc1610…의 검사에서는 상대 링크/근사 anchor113개와 GitHub 참조35개의 GET을 확인했다. 원문2개·source/tests15개·설치 Node source5개·patch/mock/bundle의 hash가 보존 근거와 일치했다. 수집기의 `gh api --slurp`는 설치 gh2.46.0에서 지원되지 않아 실패했고, 상태 변경 없이 한정된 GET 페이지 조회로 보정했다. 이는 운영 daemon 결함이나 권한 거부가 아니다.
+
+9cc1610…의 [독립 문서 재검토 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090018253)은 기준 Low6/Info4 해소·새 Low1/Info1을 기록했다. Low는 원래 설치 경로를 오기로 단정한 설명이었다. 루트가 두 경로의 daemon-instance/pid-lock 각각을 새로 읽어 서로 다른 inode·동일 SHA256 사본임을 확인해 판정을 철회했다. Info는 최신 회귀21개를 `test_ops_ci21`로 명시해 과거 hosted21개와 구분했다. reviewer는 STATUS 전체와 다른 세 문서의 전체 diff를 새로 읽고 미변경 내용은 기준 전체 읽기를 재사용했다. 증거 JSON은 선택 필드만 읽었으며 GitHub/테스트 재실행은 없었다.

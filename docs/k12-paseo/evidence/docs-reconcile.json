@@ -1542,7 +1542,7 @@
     "Mock two observed writers distinguished from unverified global limit enforcement",
     "Ambiguous repo PR2, section numbers and link labels clarified",
     "Historical pilot heartbeat absence does not imply current absence of all automation",
-    "Installed source path typo corrected against installed files and saved hashes",
+    "Both installed source paths exist and are byte-identical copies; premature typo assertion withdrawn after independent review",
     "Remaining blockers include unsynced company-local changes before any M adoption decision"
   ],
   "limitations": [
@@ -1568,5 +1568,77 @@
       "failure": "3366227 object absent from ops object database",
       "recovery": "full Kerbe implementation SHA read from preserved kerbe-m-validation.json; no Kerbe fetch/checkout"
     }
+  ],
+  "candidateReview": {
+    "reviewedSha": "9cc1610c3832baf3ea19f74d3e5067abedcb7233",
+    "id": 6090018253,
+    "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090018253",
+    "nativeLine": 871,
+    "nativeTimestamp": "2026-10-09T22:03:41.684Z",
+    "originalSha256": "d11d2de9a7c198d2da80f7a1f14eb2864ab6f8264118371d6352857e4f6af08f",
+    "getVerified": true,
+    "baselineLow6Info4Resolved": true,
+    "newFindings": {
+      "Low": 1,
+      "Info": 1
+    },
+    "readingScope": "Fresh full STATUS; full delta EVIDENCE/RECOVERY/REVISION, unchanged content reused from fresh baseline full reads. Selected JSON fields only; localVerification/referenceVerification/collectorIssues/baselineReview/reviewLimitations/scope skipped. No tests or live queries."
+  },
+  "installedPathFollowup": {
+    "observedAt": "2026-10-09T22:04:20.527833+00:00",
+    "files": [
+      {
+        "name": "daemon-instance.js",
+        "paths": [
+          {
+            "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/src/server/daemon-instance.js",
+            "exists": true,
+            "sha256": "029dea3bd91af1295dddb1427f152648657ad43efa1bd097894db901d0832cb9",
+            "resolvedPath": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/src/server/daemon-instance.js",
+            "device": 66306,
+            "inode": 36718286
+          },
+          {
+            "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/daemon-instance.js",
+            "exists": true,
+            "sha256": "029dea3bd91af1295dddb1427f152648657ad43efa1bd097894db901d0832cb9",
+            "resolvedPath": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/daemon-instance.js",
+            "device": 66306,
+            "inode": 36718285
+          }
+        ],
+        "bothExist": true,
+        "byteEqual": true,
+        "sameInode": false
+      },
+      {
+        "name": "pid-lock.js",
+        "paths": [
+          {
+            "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/src/server/pid-lock.js",
+            "exists": true,
+            "sha256": "7ad798710140a3a831974637cacc0eff40f0403fbd583e307a2b68dc8947c02b",
+            "resolvedPath": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/src/server/pid-lock.js",
+            "device": 66306,
+            "inode": 36718482
+          },
+          {
+            "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/pid-lock.js",
+            "exists": true,
+            "sha256": "7ad798710140a3a831974637cacc0eff40f0403fbd583e307a2b68dc8947c02b",
+            "resolvedPath": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/pid-lock.js",
+            "device": 66306,
+            "inode": 36718481
+          }
+        ],
+        "bothExist": true,
+        "byteEqual": true,
+        "sameInode": false
+      }
+    ]
+  },
+  "followupCorrections": [
+    "The original dist/src/server citation was valid; both paths exist, different inodes, byte-identical daemon-instance/pid-lock copies",
+    "STATUS labels test_ops_ci21 distinctly from historical hosted21"
   ]
 }

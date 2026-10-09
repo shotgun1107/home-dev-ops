@@ -11,7 +11,7 @@
 |---|---|
 | 이번 대조 기준 ops 보고 HEAD | `7b321124a79d1413c62dfb0ee398d784b6fb0568`, local/origin/PR #1 일치·clean·open/Draft. 최종 문서 HEAD는 PR handoff에 별도 기록 |
 | 검증한 구현 source | `1edd2ef4702031dd6fe2d59adc01e4504c5c57db` |
-| 최신 격리 CI 전달 후보 | `80455437960f3db0cbec5f1f3df0392ad47def3c`, Python3.14.4 **125 executed / skip0 / failure0 / error0**. cleanup15·permission39·recovery29·preflight9·guard12·CI21. Node38+9와 mock15는 별도 재사용 |
+| 최신 격리 CI 전달 후보 | `80455437960f3db0cbec5f1f3df0392ad47def3c`, Python3.14.4 **125 executed / skip0 / failure0 / error0**. cleanup15·permission39·recovery29·preflight9·guard12·test_ops_ci21. Node38+9와 mock15는 별도 재사용 |
 | ops 원격 CI | PR #1 기준 HEAD의 check-runs0·status contexts0. combined `pending`은 실행 대기 증거가 아님. PR #2는 `f069ac35b0553f69f0a485784df0bc4f11341f1b` open/Draft, 유일한 Actions run37941584724의 **과거21개** 성공. 최신125개 hosted 미실행 |
 | Kerbe S / main | PR #4 merged, 실제 main `efd539a6ab5cd05a2c7f33cf3b8db13c021458be` 유지. K12 fetch/tree 일치 실측은 E11을 재사용 |
 | Kerbe M | PR #5 `7ff930cefd308c37702aff7c7efd48fc4c9e4c9b` open/Draft·2 check success, main 미반영. 회사 로컬 미동기화 변경은 조회·검증하지 않았으며 이 후보의 근거를 확장하지 않음 |

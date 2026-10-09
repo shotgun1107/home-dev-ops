@@ -127,3 +127,17 @@ Codex 입력/출력도 `usage.last`에서 가져온다. token 스냅샷들을 �
 재설정하지 않는다. 과거 pilot Heartbeat 삭제를 현재 모든 자동화 부재나 자동 재개 보장으로 해석하지 않는다.
 어떤 PR도 AI Ready/Merge하지 않았고 main/force push·Kerbe 변경·자동 Archive·서비스 조작은 없다.
 `OVERNIGHT_REPORT.json`은 PR 게시/GET 검증 후 root만 원자 기록한다. 전체 운영 채택과 미션 완주를 뜻하지 않는다.
+
+## 보고 검토와 최종 전달 관찰
+
+고정 `d8ade7e32314ba137ada3dbedd04b31307d33019`의 [독립 Claude 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090183386)는
+새 Critical/High/Medium/Low/Info0이다. 종합 보고 전체·STATUS/EVIDENCE 변경과 비용 JSON 전체를 새로 읽고
+다른 증거는 선택 필드만 대조했다. 과거 문맥 재사용·운영상 readonly이며 기술적 격리/blind 리뷰가 아니다.
+실제 청구·야간 승인 전수·live GitHub 재실측·테스트 실행은 하지 않았다.
+
+리뷰 뒤 `2026-10-09T22:18:24.265007+00:00`부터 순차 조회한 CLI CostUsd는 root0·Director0·Claude reviewer
+**27.583550799999994 USD(약27.583551)**다. 앞서 보존한26.535272를 덮어쓰거나 이 차액을 해당 리뷰 비용으로
+귀속하지 않는다. root/Director 비용 미제공과 야간 총비용 미확인은 그대로다. 이 시점 reviewer/Director는
+idle·pending0, root는 현재 턴 running·pending0이다. 영수증 존재와 root idle은 별개다.
+이 추가는 리뷰 결론·게시 영수증·시간이 붙은 관찰뿐이며 source/tests/proposals/원문 bytes는 그대로다.
+최종 보고 HEAD·push/PR Draft/clean·coordinator 영수증은 PR의 마지막 handoff와 최종 응답에서 확인한다.

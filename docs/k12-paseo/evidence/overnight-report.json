@@ -450,7 +450,64 @@
       "LastUsage replacement/merge and Codex usage.last prevent summing snapshots as an overnight ledger"
     ],
     "personalLedgerOrCredentialAccess": false,
-    "runtimeOrConfigChanged": false
+    "runtimeOrConfigChanged": false,
+    "afterReportReview": {
+      "observedAt": "2026-10-09T22:18:24.265007+00:00",
+      "actors": [
+        {
+          "Id": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+          "Provider": "codex",
+          "Model": "gpt-6-astra",
+          "Thinking": "max",
+          "Status": "running",
+          "Mode": "full-access",
+          "Cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+          "Archived": false,
+          "LastUsage": {
+            "InputTokens": 184292,
+            "OutputTokens": 953,
+            "CachedTokens": 182016,
+            "CostUsd": 0
+          },
+          "pendingCount": 0
+        },
+        {
+          "Id": "e2f92291-4ca9-445e-b94b-47de32029af7",
+          "Provider": "codex",
+          "Model": "gpt-6-astra",
+          "Thinking": "max",
+          "Status": "idle",
+          "Mode": "auto",
+          "Cwd": "/home/shotgun1107/.paseo-director-pilot/workspace",
+          "Archived": false,
+          "LastUsage": {
+            "InputTokens": 41556,
+            "OutputTokens": 31,
+            "CachedTokens": 40960,
+            "CostUsd": 0
+          },
+          "pendingCount": 0
+        },
+        {
+          "Id": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+          "Provider": "claude",
+          "Model": "claude-opus-5-5",
+          "Thinking": "auto",
+          "Status": "idle",
+          "Mode": "plan",
+          "Cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+          "Archived": false,
+          "LastUsage": {
+            "InputTokens": 10,
+            "OutputTokens": 5737,
+            "CachedTokens": 3838614,
+            "CostUsd": 27.583550799999994
+          },
+          "pendingCount": 0
+        }
+      ]
+    },
+    "afterSnapshotLimit": "Still a timestamped SDK/CLI display, not an overnight subtotal or invoice. No cost delta attributed; missing Codex cost remains unknown. Root turn still running."
   },
   "safety": [
     "Existing Astra Max and Director preserved; same ops writer/worktree/branch",
@@ -637,5 +694,46 @@
         "OVERNIGHT_REPORT.md"
       ]
     }
-  }
+  },
+  "independentReview": {
+    "reviewedSha": "d8ade7e32314ba137ada3dbedd04b31307d33019",
+    "id": 6090183386,
+    "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090183386",
+    "nativeLine": 913,
+    "nativeTimestamp": "2026-10-09T22:17:10.227Z",
+    "originalSha256": "ff65a445abe37b98586a97cb3283e3ad931f33ce31d5608112269897b6a89fec",
+    "getVerified": true,
+    "newFindings": 0,
+    "reviewer": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+    "provider": "claude",
+    "model": "claude-opus-5-5",
+    "mode": "plan",
+    "readOnly": "policy only; not technical",
+    "sameContextReused": true,
+    "freshFullRead": [
+      "OVERNIGHT_REPORT.md",
+      "STATUS/EVIDENCE delta",
+      "costAccounting including5 installed-source excerpts"
+    ],
+    "selectedRead": [
+      "coordinator",
+      "permissionAccounting",
+      "safety",
+      "limits",
+      "verification canonical and partial testReuse"
+    ],
+    "skipped": [
+      "full priorTasks",
+      "full remoteSnapshot beyond PR1/PR2",
+      "remaining verification"
+    ],
+    "notIndependentlyVerified": [
+      "live GitHub/receipt file hashes/comment bodies",
+      "installed inspect.js hash",
+      "actual billing/cost semantics",
+      "total real approvals/human clicks"
+    ],
+    "reviewerTestsExecuted": 0
+  },
+  "postReviewScope": "Only review conclusion/publication receipt and timestamped after-review actor/usage observation. Main report was reviewed at d8ade7e32314ba137ada3dbedd04b31307d33019; no claim of independent re-review of these receipts."
 }

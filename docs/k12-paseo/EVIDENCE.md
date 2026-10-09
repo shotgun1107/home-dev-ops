@@ -446,3 +446,5 @@ e8036f7… [독립 리뷰 원문](https://github.com/shotgun1107/home-dev-ops/pu
 Low1은 종료 저장 연속 실패 뒤 orphan running 정지였다. 설치본의 추가 실행과 후보의
 진행 정지를 합성 재현했고 복구 한계를 문서화했다. Info의 list 이후 삭제도 같은 tick 중단·
 다음 tick 진행을 확인했다. patch bytes는 그대로이며 stop() 비취소는 정적 확인이다.
+
+a2311a7… [독립 delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088341624)는 새 지적0이며 원문 게시·GET 일치를 확인했다. 기존 Low1의 자동 복구는 해결하지 않았고 시험·한계로 다뤘다. 최종 문서 영수증 추가 이후 시험·patch bytes는 이 리뷰 SHA와 같다. [리뷰 영수증](evidence/heartbeat-review.json).

@@ -9,6 +9,8 @@ main 직접 push/Ready 전환 금지, 기존 데이터 보존을 유지한다.
 reviewer=user는 전달 경로다. full agent/request ID의 응답과 native 실행 결과를 따로
 대조하고, 중복·상충은 [오프라인 권한 감사](PERMISSIONS.md)의 방식으로 확인한다.
 kind=plan/updatedPermissions는 모드·정책 변경 가능성이 있어 일상 도구 허용과 분리한다.
+설치 Claude의 bypass launch capability와 현재 활성 모드는 별개다. 모드 변경 및
+updatedPermissions 응답은 사람이 결정할 항목이며 Supervisor가 일상 요청으로 승인하지 않는다.
 
 1. 현재 cwd/branch/HEAD·dirty 여부·담당 writer·기존 명령과 Heartbeat를 확인한다.
 2. `python3 -B scripts/paseo_preflight.py`로 읽기 전용 진단한다. exit 0은 연결 확인, exit 2는 미확정이다.

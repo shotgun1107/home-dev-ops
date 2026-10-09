@@ -1,6 +1,6 @@
 {
   "taskId": "P0_PERMISSIONS",
-  "observedAt": "2026-10-09T19:27:56.705860+00:00",
+  "observedAt": "2026-10-09T19:36:11.259903+00:00",
   "baseSha": "5a17e3d5ff5d1d72b550516da2b957ba55e8357d",
   "versions": {
     "paseo": "0.10.3",
@@ -384,7 +384,7 @@
   ],
   "selectedLedgerReports": {
     "kerbe-s-permits.json": {
-      "sha256": "52c6210f10f11e9ba3365303eac19999ac5c35812414821c2fc21cc4e40dc806",
+      "sha256": "972d7a71e6eddbb489807b9961c4e9e61fcbd2361c4e47ac31b475060f650019",
       "report": {
         "schemaVersion": 1,
         "counts": {
@@ -412,7 +412,7 @@
       }
     },
     "kerbe-m-permissions.json": {
-      "sha256": "1a041fdafbcbde36ab97a96cfa85590a27ae996b4a138c336945fbec32516a6c",
+      "sha256": "3bc38962a38862ecf02107be07f61a7d3e6c72d3d4e9885290c29b995d444566",
       "report": {
         "schemaVersion": 1,
         "counts": {

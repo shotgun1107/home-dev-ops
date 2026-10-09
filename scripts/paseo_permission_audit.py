@@ -15,7 +15,7 @@ import sys
 
 
 UUID = r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
-ACTORS = {"human", "supervisor", "auto-review", "provider", "unknown"}
+ACTORS = {"human", "supervisor", "auto-review", "provider", "daemon", "unknown"}
 FIELDS = {
     "eventId", "agentId", "requestId", "operationId", "kind", "outcome",
     "label", "actor", "actorEvidence", "evidence", "inputAdjusted",
@@ -44,7 +44,9 @@ def codex_route(context):
     sandbox = sandbox.get("type") if isinstance(sandbox, dict) else None
     if policy == "never":
         return "no-interactive-review"
-    if policy != "on-request" or sandbox not in {"read-only", "workspace-write"}:
+    # Bound this helper to the installed Paseo promotion predicate we audited.
+    # Other valid Codex profiles need their own evidence; don't guess here.
+    if policy != "on-request" or sandbox != "workspace-write":
         return "unconfirmed"
     if reviewer == "user":
         return "user-channel-actor-unconfirmed"
@@ -81,8 +83,9 @@ def audit_events(events):
         require("inputAdjusted" not in event or type(event["inputAdjusted"]) is bool, "invalid-adjustment")
         if kind == "response":
             require(isinstance(event.get("requestId"), str) and
-                    re.fullmatch(r"permission-(?:(?:exec|file|plan|question|mcp)-)?" + UUID,
+                    re.fullmatch(r"permission-(?:exec-)?" + UUID,
                                  event["requestId"]), "full-request-id-required")
+            require(event.get("actor") != "provider", "provider-layer-is-not-response-actor")
             require(event.get("outcome") in {"allow", "deny"}, "invalid-response")
             require(not event.get("inputAdjusted") or event["outcome"] == "allow", "adjusted-denial")
             require("operationId" not in event and "label" not in event, "mixed-event-kinds")
@@ -97,6 +100,9 @@ def audit_events(events):
             else:
                 require(event.get("label") in {"permission-rule", "forbidden", "user-rejected", "auto-mode-bypass", "unknown"}, "invalid-denial-label")
                 require("outcome" not in event, "mixed-event-kinds")
+                if event["label"] in {"permission-rule", "forbidden"}:
+                    require(event.get("actor", "unknown") in {"provider", "unknown"},
+                            "contradictory-provider-denial-actor")
         event_key = (event["agentId"], event["eventId"])
         if event_key in seen_events:
             require(seen_events[event_key] == event, "conflicting-event-id")
@@ -135,21 +141,29 @@ def audit_events(events):
 
 
 def ledger_events(ledger, actor="unknown", actor_evidence=None):
-    """Adapt the checked-in S/M selected ledgers without emitting tool input."""
+    """Adapt homogeneous S/M ledgers; mixed actors must use curated events."""
     require(isinstance(ledger, dict), "invalid-ledger")
     records = ledger.get("requests")
     require(isinstance(records, list) and len(records) <= 10000, "invalid-ledger-requests")
     events = []
     for index, record in enumerate(records):
         require(isinstance(record, dict), "invalid-ledger-record")
+        require(not (set(record) & {"actor", "reviewer", "actorEvidence"}),
+                "per-record-actors-require-events")
         result = record.get("result")
         require(isinstance(result, str) and (result == "allowed" or result in DENIED_RESULTS), "unknown-ledger-result")
+        adjusted = record.get("inputAdjusted", False)
+        require(type(adjusted) is bool, "invalid-adjustment-marker")
+        detail = record.get("inputAdjustment")
+        if adjusted or detail is not None:
+            require(adjusted and isinstance(detail, str) and bool(detail.strip()),
+                    "adjustment-needs-explicit-marker-and-detail")
         event = {
             "eventId": f"ledger:{index}",
             "agentId": record.get("agentId", ledger.get("agentId")),
             "requestId": record.get("requestId", record.get("id")),
             "kind": "response", "outcome": "allow" if result == "allowed" else "deny",
-            "inputAdjusted": bool(record.get("inputAdjustment")),
+            "inputAdjusted": adjusted,
             "actor": actor, "evidence": f"ledger/requests/{index}",
         }
         if actor_evidence is not None:
@@ -172,7 +186,7 @@ def main():
         data = json.loads(raw)
         events = ledger_events(data, args.actor, args.actor_evidence) if args.kind == "ledger" else data
         report = audit_events(events)
-    except (OSError, ValueError, TypeError, KeyError):
+    except (OSError, ValueError, TypeError, KeyError, RecursionError):
         print('{"status":"invalid-evidence"}', file=sys.stderr)
         return 2
     print(json.dumps(report, indent=2, sort_keys=True))

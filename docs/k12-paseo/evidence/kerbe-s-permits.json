@@ -20,7 +20,8 @@
       "observedAt": "2026-10-09T15:38:20.108331+00:00",
       "inputAdjustment": "removed unnecessary recursive ~/.paseo search before execution; existing action/actualInput and Supervisor native rows 1219/1222 corroborate this previously unstructured adjustment",
       "supervisorNativeRequestLine": 1219,
-      "supervisorNativeAckLine": 1222
+      "supervisorNativeAckLine": 1222,
+      "inputAdjusted": true
     },
     {
       "id": "permission-698c59d6-8104-4a9e-94fb-ce436a9a2e59",
@@ -37,7 +38,8 @@
       "result": "allowed",
       "inputAdjustment": "replaced outer single-quoted python -c with quoted heredoc to preserve inner f-string quotes",
       "testCodeSha256": "7c2c7151541d0f0e17b3a596154e7fac2d6bcbc67ac5c853bba3e0dd640b8666",
-      "observedAt": "2026-10-09T15:42:14.804960+00:00"
+      "observedAt": "2026-10-09T15:42:14.804960+00:00",
+      "inputAdjusted": true
     },
     {
       "id": "permission-38b73146-01cb-4442-83dd-6c46ffc92bbf",
@@ -66,7 +68,8 @@
       "observedAt": "2026-10-09T15:45:21.402411+00:00",
       "filePath": "/tmp/kerbe-p1-s-dotenv-pr-body.md",
       "writtenBodySha256": "ac95c8f6ed98da2c04d20fe2fa3882c5c45bc709ef86aec317550bff380efd74",
-      "hashScope": "temporary body written before PR creation; later Supervisor API updates are separate"
+      "hashScope": "temporary body written before PR creation; later Supervisor API updates are separate",
+      "inputAdjusted": true
     },
     {
       "id": "permission-9314eab3-fc41-4f82-9b2d-8ef165985557",

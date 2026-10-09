@@ -35,7 +35,8 @@
       "action": "baseline once, with task TMPDIR and synthetic unit/integration fixtures only",
       "inputAdjustment": "removed duplicated full-suite invocation; one verbose execution captures skips and preserves test exit status",
       "result": "allowed",
-      "observedAt": "2026-10-09T17:33:08.830294+00:00"
+      "observedAt": "2026-10-09T17:33:08.830294+00:00",
+      "inputAdjusted": true
     },
     {
       "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
@@ -43,7 +44,8 @@
       "action": "single baseline retry justified by Supervisor send interruption; /proc matching worktree only Claude remains",
       "inputAdjustment": "write baseline-retry.log instead of overwriting aborted baseline.log; preserve tmp5hh6g14i",
       "result": "allowed",
-      "observedAt": "2026-10-09T17:33:52.992430+00:00"
+      "observedAt": "2026-10-09T17:33:52.992430+00:00",
+      "inputAdjusted": true
     },
     {
       "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
@@ -107,7 +109,8 @@
       "action": "write scoped Draft PR body temp file",
       "inputAdjustment": "correct ambiguous relative task link to fixed checkpoint absolute GitHub URL",
       "result": "allowed",
-      "observedAt": "2026-10-09T17:39:02.925951+00:00"
+      "observedAt": "2026-10-09T17:39:02.925951+00:00",
+      "inputAdjusted": true
     },
     {
       "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",

@@ -420,3 +420,8 @@ S inputAdjustment 누락1건은 native1219/1222행 대조 후 보충했고9/1/3�
 M은50허용/2거부/3조정으로 기존 기록과 일치한다. 합성32개+기존30개=62개 OK(skip0).
 이는 새 위험 차단 실험이나 Auto-review 실제 결정 성공을 뜻하지 않는다.
 Kerbe·설정·서비스·자격증명 저장소 무변경, ops 작업 branch와 PR1만 결과 게시 대상으로 삼았다.
+
+E13 독립 리뷰 후속: 초기 후보 bbe9f7f9adb82a74c6ef672ba37b4b45dc2a740f에
+새 반례38개를 적용해20 assertion/subtest failure를 재현했다. actor 모순·혼합 ledger·
+명시 조정 marker·JSON 깊이 처리와 문서 범위를 보강한 후 전체68개 OK(skip0).
+S/M 확인된 조정6건에만 bool marker를 보충했고 응답59/3·조정3/3은 변하지 않았다.

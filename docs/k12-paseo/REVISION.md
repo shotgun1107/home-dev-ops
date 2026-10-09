@@ -47,7 +47,9 @@ P0_PERMISSIONS 추가 검증으로 승인 기록에는 **전달 경로와 결정
 중복 response는 full agent/request ID로 묶고 입력 조정은 허용의 부분집합으로 센다.
 설치 Codex 새 기본 resolver는 지원 버전에서 auto-review를 고를 수 있으므로 명시 auto
 preset과 구분하고 native approval/sandbox/reviewer를 확인한다. 프로필을 변경한 것은 아니다.
-S ledger의 조정 필드 누락을 native와 대조해 보충했고 합성32개를 포함한62개가 통과했다.
+S ledger의 조정 필드 누락을 native와 대조해 보충했고 리뷰 반례 보강 후 합성38개 포함68개가 통과했다.
+혼합 actor ledger를 일괄 덮어쓰지 않고, 조정은 명시 bool과 설명으로 남긴다. 모드 변경과
+updatedPermissions는 Supervisor의 일상 승인 대상에서 제외하고 사람이 결정한다.
 설치 소스·검증 범위와 미확인은 [권한 감사](PERMISSIONS.md)에 있다.
 
 | 항목 | 문제·대안 | 채택 전 조건 |

@@ -56,6 +56,18 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(report["counts"]["denialActor:provider"], 1)
         self.assertIn("does not identify", report["limits"][-1])
 
+    def test_provider_rule_cannot_be_overridden_by_actor_claim(self):
+        for label in ["permission-rule", "forbidden"]:
+            for actor in ["human", "supervisor", "auto-review", "daemon"]:
+                with self.subTest(label=label, actor=actor), self.assertRaises(ValueError):
+                    self.counts([observation(label=label, actor=actor, actorEvidence="synthetic/claim")])
+
+    def test_provider_layer_and_daemon_response_are_distinct(self):
+        with self.assertRaisesRegex(ValueError, "provider-layer"):
+            self.counts([response(actor="provider", actorEvidence="synthetic/claim")])
+        counts = self.counts([response(actor="daemon", actorEvidence="synthetic/voice-speak-policy")])
+        self.assertEqual(counts["responseActor:daemon"], 1)
+
     def test_auto_mode_bypass_label_does_not_identify_classifier(self):
         self.assertEqual(self.counts([observation(label="auto-mode-bypass")])["denialActor:unknown"], 1)
 
@@ -155,14 +167,37 @@ class RoutingTests(unittest.TestCase):
             self.assertEqual(audit.codex_route(context), "unconfirmed")
 
     def test_unvalidated_policy_or_sandbox_not_guessed(self):
-        for change in [{"approval_policy": {"granular": {}}}, {"sandbox_policy": {"type": "danger-full-access"}}, {"sandbox_policy": None}]:
+        for change in [{"approval_policy": {"granular": {}}}, {"sandbox_policy": {"type": "danger-full-access"}}, {"sandbox_policy": {"type": "read-only"}}, {"sandbox_policy": None}]:
             self.assertEqual(audit.codex_route(dict(self.context(), **change)), "unconfirmed")
 
 
 class LedgerAndCliTests(unittest.TestCase):
     def ledger(self):
         return {"agentId": A, "requests": [{"id": R, "result": "allowed",
-                    "actualInput": "SYNTHETIC_SECRET", "inputAdjustment": "selected correction"}]}
+                    "actualInput": "SYNTHETIC_SECRET", "inputAdjusted": True,
+                    "inputAdjustment": "selected correction"}]}
+
+    def test_mixed_actor_ledger_is_never_silently_overridden(self):
+        for field in ["actor", "reviewer", "actorEvidence"]:
+            ledger = self.ledger()
+            ledger["requests"][0][field] = "human"
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, "per-record-actors"):
+                audit.ledger_events(ledger, "supervisor", "synthetic/cli-claim")
+
+    def test_adjustment_text_without_boolean_marker_is_ambiguous(self):
+        for text in ["none", "no change", "actual correction", ""]:
+            ledger = self.ledger()
+            del ledger["requests"][0]["inputAdjusted"]
+            ledger["requests"][0]["inputAdjustment"] = text
+            with self.subTest(text=text), self.assertRaisesRegex(ValueError, "explicit-marker"):
+                audit.ledger_events(ledger)
+
+    def test_adjustment_requires_boolean_and_detail(self):
+        for marker, detail in [("false", "correction"), (1, "correction"), (True, None), (True, " "), (False, "correction")]:
+            ledger = self.ledger()
+            ledger["requests"][0].update(inputAdjusted=marker, inputAdjustment=detail)
+            with self.subTest(marker=marker, detail=detail), self.assertRaises(ValueError):
+                audit.ledger_events(ledger)
 
     def test_old_ledger_schema_and_raw_input_omission(self):
         events = audit.ledger_events(self.ledger())
@@ -204,6 +239,12 @@ class LedgerAndCliTests(unittest.TestCase):
 
     def test_cli_size_bound(self):
         self.assertEqual(self.cli(" " * (2 * 1024 * 1024 + 1)).returncode, 2)
+
+    def test_deep_json_uses_fixed_error_without_traceback(self):
+        result = self.cli("[" * 2000 + "0" + "]" * 2000)
+        self.assertEqual(result.returncode, 2)
+        self.assertEqual(result.stdout, "")
+        self.assertEqual(result.stderr.strip(), '{"status":"invalid-evidence"}')
 
 
 if __name__ == "__main__":

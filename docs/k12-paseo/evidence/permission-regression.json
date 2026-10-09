@@ -3,21 +3,34 @@
   "command": "python3 -B -m unittest discover -s tests -v",
   "python": "3.14.4",
   "result": "OK",
-  "testsRun": 62,
+  "testsRun": 68,
   "skipped": 0,
-  "newSyntheticTests": 32,
+  "newSyntheticTests": 38,
   "existingRegressionTests": 30,
-  "durationSeconds": 0.219,
+  "durationSeconds": 0.239,
   "conditions": "Synthetic fixtures only. Local temporary Git repositories and hook stdin; no remote push/merge probes, no live permission requests. No credentials/services/Kerbe data used.",
   "fileSha256": {
     "scripts/k12-pre-push": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
     "scripts/paseo_heartbeat_cleanup.py": "6974f196c9a3cb6af537583818c73bd0a4f2097051dc22c90994778e4758ef6e",
-    "scripts/paseo_permission_audit.py": "6d7e6549f5f78bd38604177165daef6f0d53aac686c2fcd97a6978790c1dcfb6",
+    "scripts/paseo_permission_audit.py": "eab828e729afdac61a53194ae01f0b5e2effa111c4a37d717dad430408c6f371",
     "scripts/paseo_preflight.py": "4a0ef503a9f432fc612c95a869a05ad54360a0ebe9e8d274e2c5421abcaec7e0",
     "tests/test_heartbeat_cleanup.py": "65309defdcf7f5e1591e5618d68d26135b8fe579cfd3dce62298601c5f5848b7",
     "tests/test_paseo_preflight.py": "59a186bfd96fbfa12da78b758b438f4263267de5feb7fc90d88deef7474ab8ae",
-    "tests/test_permission_audit.py": "7b7b2872dcd35dda9f810dab13a70a3ab95673096ed8ef40dde2336b9fb7c186",
+    "tests/test_permission_audit.py": "28aed72bed6db7ea3cebb7f8ef91c821442b14b04492058df106fe42b7d05a8d",
     "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9"
   },
-  "review": "Fixed-SHA review will be recorded on PR1; not yet claimed here."
+  "review": "Initial fixed-SHA independent review produced Low4/Info3; synthetic counterexamples reproduced and fixed. Final delta review follows on PR1.",
+  "beforeReviewFix": {
+    "scriptSha": "bbe9f7f9adb82a74c6ef672ba37b4b45dc2a740f",
+    "testCount": 38,
+    "failureAssertionsAndSubtests": 20,
+    "exitCode": 1,
+    "logSha256": "754acfac93709e83075e28bf8c4012b01ec813552448de246c126ce6ec213ba9"
+  },
+  "afterReviewFix": {
+    "testCount": 68,
+    "skipped": 0,
+    "result": "OK",
+    "logSha256": "b985447ae0f543de29b2a6f060a18b9f8523890baebb9abe567e52f84b25ff53"
+  }
 }

@@ -4,7 +4,7 @@
 최신 후보 SHA·writer 상태·Next·Heartbeat 상태는 [Draft PR #1](https://github.com/shotgun1107/home-dev-ops/pull/1)의 handoff를 따른다.
 
 야간 **P0_PERMISSIONS 감사**: 설치 승인 라우팅과 기존 S/M 기록 대조, 집계 결함 수정,
-신규 합성32개+기존30개=62개 통과. [권한 감사](PERMISSIONS.md).
+독립 리뷰 반례 재현·보강 후 신규 합성38개+기존30개=68개 통과. [권한 감사](PERMISSIONS.md).
 새 실환경 권한 시험·설정 변경은 없으며 Auto-review의 실제 결정은 미확인이다.
 
 ## 기준

@@ -1,6 +1,6 @@
 # 실측 근거와 결함 재현
 
-2026-10-09 KST 수집. 원문/세션 전문·인증값은 저장하지 않는다. 판정은 실행 범위에 한정한다.
+2026-10-09~10 KST 수집. 원문/세션 전문·인증값은 저장하지 않는다. 판정은 실행 범위에 한정한다.
 [실제 상태 JSON](evidence/live-snapshot.json), [21개 회귀 결과](evidence/regression.txt), [기존 hook 직접 시험](evidence/existing-guard.txt). 일괄 수집 시작 시각·Python/Git 버전·시험한 파일 hash를 출력에 보존했다.
 
 ## E1 Heartbeat
@@ -93,7 +93,8 @@ main 생성/FF, 삭제, rewind, divergence, unknown remote object, 복수 ref �
 두 repo에 현재 tracked .gitattributes/LFS 계약이 없어 LFS 연계는 미적용 범위다.
 
 home-dev-ops에는 활성 hook과 env ignore가 없었다. .gitignore 추가 후 .env/.env.local/.venv/.runtime 제외,
-.env.example 추적 가능을 git check-ignore --no-index로 확인했다. Kerbe의 .env.local 누락은 발견만 기록한다.
+.env.example 추적 가능을 git check-ignore --no-index로 확인했다. 당시 발견한 Kerbe의 .env.local 누락은
+이후 E10의 별도 S branch에서 수정·검증했으며 main 채택은 대기 중이다.
 ignore는 비밀 검사와 명시적 stage를 대체하지 않는다.
 
 ## E4 Runtime
@@ -245,12 +246,105 @@ helper PID 718949는 이전 턴 종료 뒤에도 살아 있고 새 process sessi
 
 이것은 기존 host/Full Access 조건의 **idle 자동 진입 1회 통과**다. 22:20 active-run 거부 시험과 구분한다.
 daemon 재시작·sandbox·승인 정책 변경 뒤의 복원까지 보장하지 않는다.
-현재 scheduled run의 상태는 아직 running, endedAt은 null이다. run의 agentId도 `finishRun` 전이라 null이며
-실제 target/agent/native session과 별도로 기록했다. 이 단계에서 succeeded 또는 삭제 완료라고 쓰지 않는다.
-
-현재 턴을 종료한 뒤 이미 시작한 helper가 completed를 확인해 CLI로 삭제하고
-`.runtime/427d614c-cleanup.json` 및 [PR #1](https://github.com/shotgun1107/home-dev-ops/pull/1)에 영수증을 남긴다.
-실행 중 자기 삭제는 하지 않는다. 삭제·게시가 실패하면 성공으로 추정하지 않고 같은 PR에 ID·만료·남은 행동을 유지한다.
+자동 재개 턴에서 보존한 최초 관찰은 running / endedAt=null이었다. 이후 2026-10-10 KST의
+S 착수 턴에서 [종료·삭제 영수증](evidence/heartbeat-idle-completion.json)과
+[GitHub 게시 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6083354266)을 대조했다.
+같은 run이 14:52:41.857Z에 succeeded로 종료됐고 helper는 completed 확인 후 CLI 삭제를 수행했다.
+14:52:42.715659Z의 deleted=true, helper exit=0, 게시 GET 일치와 현재 schedule 파일 부재를 확인했다.
+실행 중 자기 삭제 없이 **idle 재개→run 종료→정상 삭제→영수증 게시 1회**가 통과했다.
+receipt의 `idleResumeVerifiedByReceipt:false`는 도구가 자체적으로 idle 진입을 판정하지 않는다는 뜻이다.
+idle 진입은 앞 표의 native 이벤트·자동 알림·발화 전 관찰을 함께 대조해 판정했다.
+현재 Heartbeat는 없으며 이후 자동 재개는 보장되지 않는다.
 
 코드/시험 6개 hash가 기존 30개 회귀 실측과 모두 일치해 테스트를 재실행하지 않았다.
 이 관찰 기록만으로 Provider 권한 보호·S/M·병렬·모바일 시험을 통과시키지 않는다.
+
+## E10 Kerbe P1 S — 실제 Writer 경로
+
+2026-10-10 KST [Kerbe Issue #3](https://github.com/shotgun1107/kerbe/issues/3)과
+[실행 handoff](https://github.com/shotgun1107/kerbe/issues/3#issuecomment-6083911066)를 읽었다.
+시작 main은 `026a8a0e4cd6a0a7782f90f0848e641b33759a3e`, bootstrap PR #2는 Draft·미병합이다.
+새 작업에 필요한 보호 경로만 확인했고 제품 runtime/setup 시험을 추가 선행 조건으로 삼지 않았다.
+
+### 기존 증거 재사용과 현재 경로 대조
+
+[선별한 gate 기록](evidence/kerbe-s-gate.json)에 시각·행 번호·설정 hash와 한계를 보존했다.
+
+- **같은 Work·C 조합:** Claude `claude-opus-5-5 / medium / acceptEdits`.
+  CL-WRITER의 실제 commit/push/Draft 호출은 143/150/160행, 성공은 144/151/162행이다.
+  해당 사용자 턴의 native permissionMode는 acceptEdits였다. 현재 그 과거 agent의 Auto 표시를
+  소급 적용하지 않는다. 다른 모드의 원격 쓰기 성공으로도 확대하지 않는다.
+- **동일 조합의 merge 실행 전 거부:** f9f790e3의 native
+  `~/.claude/projects/-home-shotgun1107-workspace-kerbe/0972fce4-f77c-4fe4-98e4-222044eed621.jsonl`
+  3행은 사용자가 PR 999999·zero match-head의 단일 호출을 지정한 acceptEdits 턴이다.
+  21행(10/08 10:28:08.512Z)의 실제 호출과 22행(.535Z)의 permission-rule 거부를 확인했다.
+  당시와 현재 Claude 버전은 2.1.292다. 별도의 새 위험 호출을 수행하지 않았다.
+- **거부 근거의 한계:** matched-rule ID는 없다. permission-rule 필드 하나로 자동 deny를 확정하지 않는다.
+  일치 deny가 시험 전에 존재한 기록·변하지 않은 settings mtime/hash, 23ms의 실행 전 거부,
+  daemon 집계의 해당 30초 창에 수동 permission response가 없는 점을 함께 대조했다.
+  후속 설정 조회는 10:34:11.526Z에 사람이 거절한 별도 요청이다.
+  정확한 `gh pr merge` 호출 형태의 권한 계층 거부 증거이며 모든 shell/API 경로 봉쇄는 아니다.
+- **현재 조건:** global `Bash(gh pr merge *)` deny 유지, 새 Worktree에 project/local override 없음.
+  Ruleset 24715075 active·main PR/strict CI 필수·bypass 없음. 새 Worktree가 상속한 실행 가능한
+  pre-push의 hash는 기존 12개 fixture 시험 대상과 같다. 보호 규칙·hook은 수정하지 않았다.
+
+프로젝트 전체 provider/model 기본값 지정은 조사한 설정에서 확인되지 않았다. 다른 프로젝트 기본값을
+변경하지 않고, v2.4의 Work·C와 실제 성공 이력이 일치하는 조합을 이번 S에만 재사용했다.
+Supervisor는 기존 Astra Max/ops Worktree를 유지한다. 새 Writer는
+`010fafb2-a8ee-4b16-bb83-692dc75c3a8d`, workspace `wks_ac69cdda2677c33b`,
+branch `fix/ignore-local-dotenv`의 유일한 writer다. 실제 native session
+`28804af0-349f-4e75-ab76-15a1dbb074c9`의 3행과 21행에서도 버전·모드·모델·medium을 확인했다.
+초기 읽기 전용 턴이 clean/base/hook을 확인한 뒤에만 후속 편집을 허용했다.
+동시 writer는 ops Supervisor와 S Writer 두 명이며 원본 Kerbe와 bootstrap은 비writer다.
+
+### 승인 방식에서 발견한 운영 차이
+
+Accept Edits의 일반 Bash는 개별 승인 대기가 발생했다. 현재 사용자가 허용한 조사·작업 branch
+쓰기 범위의 요청은 Supervisor가 실제 명령을 읽고 **요청 ID 하나씩** 정상 `permit` 경로로 처리한다.
+사람이 클릭한 시험이나 무인 자동 승인 통과로 기록하지 않는다. mode/rules/allow 목록은 변경하지 않는다.
+
+초기 두 번째 요청에는 불필요한 `~/.paseo` 전체 JSON 검색이 섞여 있었다. 실행 전에
+`updatedInput`으로 가상 경로 검사·tracked 이름·worktree 조회만 남겼다. 다음 요청에 같은 검색이
+포함돼 명시적으로 거부하자 Writer가 재시도 없이 종료했다. 실제 광범위 검색은 실행하지 않았다.
+후속 턴은 repo 안의 필요한 작업만 다시 지정했다. 이 거부는 **Supervisor 범위 통제**이며
+자동 merge deny 증거가 아니다. CLI의 `permit allow`는 ID를 생략하면 모든 대기를 승인하므로
+운영 명령에서는 agent ID와 request ID를 모두 지정한다. 영구 권한 변경을 전송하지 않는다.
+
+[개별 요청 기록](evidence/kerbe-s-permits.json)은 승인 9건(Bash 8건·임시 PR 본문 Write 1건),
+거부 1건이다. 승인 9건 중 전역 검색 제거, 시험 명령의 shell 인용 수정, PR 본문의 시점·주체
+정정은 `updatedInput`으로 실행 전에 반영했다. 영구 `updatedPermissions`는 전송하지 않았다.
+Writer의 최종 '승인 대기로 멈춘 명령 없음'은 종료 시점에 남은 대기가 없다는 사실이며,
+그 문구를 실행 도중 승인 개입 0건으로 계산하지 않는다.
+
+### 재현 → 개선 → 재시험 → 독립 검토
+
+- **이전:** 실제 새 Worktree에서 8개 가상 이름을 조회했다. `.env`만 제외되고
+  `.env.local`·`.env.production`·`.env.development.local`·`nested/.env.local`은 제외되지 않았다.
+  공개 example/sample은 이미 추적 가능했다. tracked dotenv 후보는 파일명 검사에서 없었다.
+- **개선:** 기존 `.env` 다음에 `.env.*`, `!.env.example`, `!.env.sample` 3줄만 추가했다.
+  `.gitignore` 외의 제품·workflow·권한 파일은 변경하지 않았다. 실제 비밀 파일도 생성·열람하지 않았다.
+- **이후:** 같은 경로와 중첩/예외/회귀를 포함한 [42개 가상 경로](evidence/kerbe-s-virtual-paths.json)가
+  모두 통과했다. `--no-index -q`의 exit 0/1을 단언했고 다른 코드는 실패로 처리했다.
+  `git diff --check` 통과, tracked-but-ignored 목록 없음, 변경 파일은 `.gitignore` 하나였다.
+  Supervisor는 Writer의 Python 시험 코드에 포함된 shell 인용 충돌을 실행 전 quoted heredoc으로
+  바꿨다. 실제 42개 명령 실행은 같은 Claude Writer의 Bash 도구에서 이뤄졌다.
+- **전달:** `f0f73a87821a6b3d990142b948d13c7e2b6e067d`를 `fix/ignore-local-dotenv`에 일반 push해
+  [Draft PR #4](https://github.com/shotgun1107/kerbe/pull/4)를 생성했다. [실제 결과](evidence/kerbe-s-result.json)의
+  local/remote/PR SHA·clean·Draft·미병합을 대조했다. 원본 main checkout도 clean이었다.
+- **독립 검토:** 기존 Codex reviewer `349afd27-7108-41c1-a870-e3be8ef7bef1`가 같은 full SHA를
+  정적으로 검토해 P0/P1/P2 모두 0건. [원문](https://github.com/shotgun1107/kerbe/pull/4#issuecomment-6084290891)을
+  Supervisor가 대리 게시하고 GET 일치를 확인했다. [로컬 선별 증거](evidence/kerbe-s-review.json).
+  reviewer는 테스트나 소스 수정을 하지 않았고 전후 원본 checkout은 clean이다.
+- **CI:** [run 37954147794](https://github.com/shotgun1107/kerbe/actions/runs/37954147794)의 기존
+  Ubuntu·Windows job이 모두 성공했다. 각 `Ran 182 tests` / `OK`이고 skip은 Ubuntu 2개,
+  Windows 1개다. 설치·wheel도 모두 성공했다. [job/선별 로그](evidence/kerbe-s-ci.json).
+  실제 checkout은 PR 시험 merge `96e852f564830e5d19106455b7959e707992f9cd`이며
+  head f0f73a8…와 base 026a8a0…를 조합한다. 이는 AI가 main을 병합했다는 뜻이 아니다.
+
+로컬 제품 설치·전체 테스트·wheel은 ignore-only 영향 판단으로 미실행이며 위 CI와 구분한다.
+제품 runtime/setup·DB·실제 계정 격리는 이번 S가 사용하지 않아 통과 범위에 포함하지 않는다.
+무시된 부모 폴더의 예제, 이미 tracked인 파일, 강제 add는 `.gitignore`만으로 보호되지 않는다.
+
+**판정: S 실행 부분 완료 / 사람 채택 대기.** 사람이 정확한 PR #4 후보를 직접 Ready·merge한 뒤
+Supervisor가 실제 main 반영을 확인해야 완주다. 현재 main은 026a8a0…이며 M·병렬·모바일은
+미실행 그대로다. Writer와 reviewer는 idle, pending permission은 없다. 기존 dirty A/B와 PR #2는 보존했다.

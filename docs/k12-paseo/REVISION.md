@@ -1,6 +1,6 @@
 # K12 Paseo 운영 체계 v2.4.1 개정안 — Draft
 
-2026-10-09. [v2.4 정본](source/K12_Paseo_v2.4.md)을 보존한 추가 개정안이다.
+2026-10-10. [v2.4 정본](source/K12_Paseo_v2.4.md)을 보존한 추가 개정안이다.
 **검토 전 정본을 대체하지 않는다. 전체 P0/P1의 통과 선언도 아니다.**
 판정 근거는 [현황](STATUS.md)과 [실측](EVIDENCE.md)을 따른다.
 
@@ -20,7 +20,7 @@ v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. o
 | 원문 관련 항목 | 변경 내용 | 근거와 적용 한계 |
 |---|---|---|
 | 7·16장 권한/복구 | daemon 연결 오류에서 sandbox와 host 가시성을 먼저 대조한다. CLI stopped 하나로 start/restart하지 않는다 | E1 실제 namespace 차이·host 연결·진단 도구 9개 회귀. sandbox 접근 개방은 아님 |
-| 13·18장 자동 재개 | 생성/주기 실행/idle 재개/종료 결과 저장/삭제를 각각 기록한다. agent-target 조회를 일반 schedule 조회와 구분한다. 자기 run이 끝난 뒤 삭제한다 | CLI filtering 확인. 해당 Heartbeat run 중 삭제 오류 및 완료 후 삭제를 격리 재현, 정리 도구 9개 시험 통과. E9에서 같은 agent의 실제 idle 재개 1회 통과. run 종료·실제 삭제는 후속 영수증으로 별도 확인 |
+| 13·18장 자동 재개 | 생성/주기 실행/idle 재개/종료 결과 저장/삭제를 각각 기록한다. agent-target 조회를 일반 schedule 조회와 구분한다. 자기 run이 끝난 뒤 삭제한다 | CLI filtering·자기 삭제 충돌 격리 재현, 정리 도구 9개 시험 통과. E9의 실제 idle 1회 재개와 이후 succeeded·정상 삭제·게시 GET 영수증까지 확인 |
 | 9장 보호 확인 | classic branch protection과 Rulesets/effective rules를 각각 확인한다. 보호 기능 미지원은 repo별 정책 결함으로 기록한다 | Kerbe classic404+effective active, private ops403 실측 |
 | 9장 local guard | 설치 여부·실효 경로와 guard 로직 통과를 분리한다. 기존 Kerbe 후보를 hash와 격리 시험으로 검토한다 | 12개 guard 시험 통과. ops 설치·LFS chaining·서버 강제 차단 검증은 별도 |
 | 9·13장 PR 복구 | gh pr edit의 projectCards 호환성 오류에는 승인된 동일 본문 REST PATCH와 GET 확인을 허용된 복구 경로로 둔다 | 같은 오류 재현 및 현재 PR 갱신 성공. 권한 거부 우회가 아님 |
@@ -28,6 +28,8 @@ v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. o
 | 14·19장 접근 확인 | Direct 비밀번호 미전송 거부를 별도 확인 완료로 기록한다 | 공개 /ws에서 password_required·4401, credential 미사용. relay/모바일 UX 보장 아님 |
 | 15장 비밀정보 | ops 작업 파일의 env/runtime 제외를 추가하고 공개 example 추적 가능성을 확인한다 | .gitignore 전후 check-ignore 실측. 명시적 stage/비밀 검사는 계속 필요 |
 | 19장 결과 재사용 | SHA·실효 모드·실행 주체·시간·대상 조건이 맞는 기존 증거를 재사용한다 | Python 후속 실측·현재 import 검사·CI와 기존 review 대조 |
+| 6·7장 프로필 확인 | 현재 UI mode·과거 persistence metadata와 실제 호출 당시 native mode를 구분한다. task에 적용할 버전·deny·project/local override·hook을 확인한다 | S의 Work·C는 동일 조합의 과거 보호/쓰기 증거와 새 native 세션을 대조. Auto 쓰기나 Full Access 보호 증거로 확대하지 않음 |
+| 7장 일상 승인 | 이미 허용된 task의 pending 명령을 Supervisor가 검토할 때는 agent/request ID 하나씩 응답하고 주체·범위·입력 조정을 기록한다 | S에서 개별 승인 9건·범위 밖 거부 1건. `permit allow` ID 생략은 모든 대기를 승인하므로 금지. 영구 규칙 변경·무인 승인·사람 클릭 성공과 구분 |
 
 연결 문제는 운영 daemon 구현 실패로 다루기보다 진단과 실행 경계의 문제로 다루는 편이 맞다.
 기존 host 경로는 동작하므로 재시작/인증 완화가 필요하지 않다.
@@ -68,7 +70,9 @@ token 교체, 기존 hook 덮어쓰기는 어느 선택에도 자동 포함되�
 
 후보 결과는 **Kerbe의 `.env.local` 등 환경 파일 제외 누락 보완**으로 좁힌다.
 이미 발견한 누락을 수정하는 작은 결과이며 신규 기능 설계나 실제 개인 데이터가 필요 없다.
-아직 Kerbe 파일을 바꾸거나 새 Worktree/worker를 만들지 않았다. bootstrap PR #2와도 별개다.
+[Kerbe Issue #3](https://github.com/shotgun1107/kerbe/issues/3)의 승인된 S를 별도 전용 Worktree에서
+실행했고 [Draft PR #4](https://github.com/shotgun1107/kerbe/pull/4)로 검증·리뷰까지 전달했다.
+bootstrap PR #2는 별개이며 main에 아직 합쳐지지 않았다.
 
 - Acceptance: 임시 파일명에 대한 `git check-ignore --no-index`로 `.env`, `.env.local`,
   `.env.test` 제외와 `.env.example` 추적 가능을 확인한다. 실제 비밀 파일은 열지 않는다.
@@ -85,7 +89,9 @@ token 교체, 기존 hook 덮어쓰기는 어느 선택에도 자동 포함되�
 - 끝 조건: 하나의 Draft PR에서 검증·리뷰까지 진행한 뒤 사람이 Ready/merge를 수행한다.
   agent가 실제 main 반영을 확인해야 S 완주다. 그 전에는 검토 준비까지의 부분 진행으로 기록한다.
 
-현재 막힌 것은 필요한 writer 보호 경로의 확정과 사람의 최종 main 채택이다.
+이번 S의 Writer 경로는 실제 대조·개별 승인으로 통과했다. 현재 S에 남은 것은 사람의 최종 main 채택과 이후 확인이다.
+프로젝트 전체 기본 모델/무인 승인 정책을 이 한 번의 결과로 확정하지 않는다. `.gitignore`는
+기존 tracked 파일·강제 add·이미 무시된 부모 디렉터리를 바꾸지 않으며 비밀값 검사 기능도 아니다.
 서버 보호가 다른 repo인 ops에서 미지원이라는 이유나 사용하지 않을 DB가 미검증이라는 이유를 추가 관문으로 만들지 않는다.
 
 ## P1에 사용할 시험 설계 — 아직 실행 결과가 아님

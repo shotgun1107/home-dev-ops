@@ -16,7 +16,7 @@
 | ID | 항목·성공 기준 | 판정 | 증거·제한 |
 |---|---|---|---|
 | P0-H1 | 기존 daemon 연결 원인 식별·안전한 생성 | 통과(호스트 경로) | PID namespace로 기본 탐색 실패 재현, 기존 host PID에 연결·Heartbeat 생성. sandbox 연결 자체는 해결하지 않음. [E1](EVIDENCE.md#e1-heartbeat) |
-| P0-H2 | 자동 재개·중복 방지·만료·정리 | 부분 검증 | 생성/소유 agent/24h/72회 설정·중단 시 삭제 확인. 실행 중 tick·idle 재개는 PR 최신 기록을 따름 |
+| P0-H2 | 자동 재개·중복 방지·만료·정리 | 부분 검증 | 생성·소유·상한·삭제 확인. 22:20 tick은 active run 때문에 failed, 중복 실행 없음. idle 재개 미확인 |
 | P0-A1 | Codex 기본 모드·merge 실행 전 차단 | 과거 시험 통과, 현재 경로 제한 | 과거 Paseo on-request/workspace-write의 forbidden 거부. 현재 Full Access를 대체 증거로 쓰지 않음. [E2](EVIDENCE.md#e2-provider) |
 | P0-A2 | Claude Auto·merge deny 실제 적용 | 부분 검증 | 실행 전 거부 확인, deny rule인지 classifier인지 미확인. 정상 조회 거부 사례도 있어 writer 승인 안정성은 보류 |
 | P0-A3 | source 편집·commit·branch push·Draft PR | 경로별 통과 | 과거 Claude PR #2, 현재 Codex Full Access PR #1. Codex 기본 모드 원격 쓰기까지 동일 판정하지 않음 |

@@ -34,6 +34,7 @@ credential·CLI raw stderr 출력, start/restart/fallback 연결이 없다. 보�
 - f854c66d: 재개한 기존 Supervisor에 생성. target c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd, cron `*/20 * * * *`, Asia/Seoul, maxRuns 72, expiresAt `2026-10-10T13:08:05.160Z`.
 - 설정 확인은 ~/.paseo/schedules/f854c66d.json의 cadence/target/runs 필드로 수행. 최종 상태는 PR handoff를 따른다.
 - `paseo schedule inspect f854c66d`는 존재해도 not found. 설치 CLI commands/schedule/inspect.js:12가 target.type != new-agent를 의도적으로 제외한다. 일반 schedule ls/logs로 Heartbeat 부재를 단정하지 않는다. 파일을 편집해서 고치지 않는다.
+- 22:20 KST 실제 cron tick은 `already has an active run`으로 failed였다. 중복 실행은 시작되지 않았고 nextRunAt=22:40으로 갱신됐다. [기록](evidence/heartbeat-tick.json). 자동 재개 통과로 세지 않는다.
 - 등록은 idle 세션 재개 완료와 다르다. daemon·인증·모드·세션·writer 소유권이 유지돼야 한다. Heartbeat가 없거나 실패하면 자동 재개는 보장되지 않는다.
 
 ## E2 Provider

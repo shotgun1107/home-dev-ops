@@ -97,3 +97,7 @@ reviewer는 시험을 실행하지 않았으며 Plan mode의 기술적 readonly�
 **이번 safe fallback 산출물:** 최신 suite 대조·실패 주입·개선·고정 후보 검증·복원 가능한 제안.
 **미완료:** 보호 공백에 대한 사람 결정, 원격 CI branch 적용, 실제 새 hosted run, 필수 검사/main 채택.
 AI Ready/Merge/main push·권한/보호 변경·Kerbe 수정은 하지 않았다. P0 전체 또는 P1 전체의 완료 선언이 아니다.
+
+후속 고정 SHA `3d68f76e456f03f423533b02642117705770a1b6`의 [독립 delta 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089010542)은
+Low1 해소·새 Low 이상0·Info1이다. Info의 bundle 경로는 위 보고 commit이 checkout된 별도 검토 clone 기준으로 명시했다.
+최종 후속 변경은 문서/리뷰 영수증뿐이며 source/tests/manifest/workflow/patch/bundle bytes는 검증·리뷰 당시와 같다.

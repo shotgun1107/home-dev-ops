@@ -486,3 +486,5 @@ remote workflow push·Actions 최신 실행·Ready/Merge/main push·보호 변�
 로컬 실패 회귀는 후보 명령 검증의 증거이며 hosted CI 성공이나 저장소의 기술적 권한 차단 보장은 아니다.
 
 독립 고정 SHA [원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088962998)은 Critical/High/Medium0·Low1·Info2다. Low1의 누락된 후속 문서를 정확한 candidate/부모/tree/bundle과 사람 절차로 보완했다. source/tests/workflow 변경은 없다. [리뷰 영수증](evidence/ops-ci-review.json).
+
+3d68f76… [독립 delta](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089010542)에서 Low1 해소·새 Low 이상0, Info1의 bundle 읽기 경로를 명확히 했다. source/tests/manifest/workflow/patch/bundle은 그대로이며115개 실측을 재사용했다.

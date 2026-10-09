@@ -41,7 +41,10 @@ K12 설치본에 의존하는 Node **47개**는 별도 증거 재사용이다.
 1. PR #1 최신 handoff의 source/tests와 위 고정 후보·독립 리뷰를 대조한다. 별도 검토용 clone에서
    현재 PR #1과 `ci/k12-ops-check`를 fetch한다. 원격 PR #2 head가 아직 위 f069ac3…인지 확인한다.
    달라졌다면 중단하고 새 이력을 재대조한다. force/reset으로 맞추지 않는다.
-2. bundle SHA-256과 prerequisite를 검증한다. 비어 있는 새 local review ref로 import한다.
+2. 아래 repo-relative bundle 경로는 파일을 포함한 PR #1 보고 commit
+   `3d68f76e456f03f423533b02642117705770a1b6` 또는 그 후속을 **별도 검토 clone의 새 local branch에서 checkout한 상태** 기준이다.
+   fetch만으로 working tree 파일이 생기지는 않는다. 기존 운영 Worktree를 전환하지 않는다.
+   그 checkout의 bundle SHA-256과 prerequisite를 검증한다. 비어 있는 새 local review ref로 import한다.
    `git bundle verify docs/k12-paseo/proposals/ops-ci-candidate.bundle`
    이후 `git fetch docs/k12-paseo/proposals/ops-ci-candidate.bundle refs/heads/ci/ops-ci-isolated:refs/heads/review/ops-ci-5d7d1e1`.
    같은 local ref가 이미 있으면 재사용을 추정하지 말고 그 SHA부터 대조한다.

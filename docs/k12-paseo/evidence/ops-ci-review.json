@@ -17,5 +17,19 @@
     "Low": 1,
     "Info": 2
   },
-  "reviewerTestsExecuted": false
+  "reviewerTestsExecuted": false,
+  "delta": {
+    "reviewedSha": "3d68f76e456f03f423533b02642117705770a1b6",
+    "nativeLine": 595,
+    "nativeTimestamp": "2026-10-09T20:47:43.190Z",
+    "originalSha256": "505d5054e037d3185e0649bbdb83955314209a3dc1e37c24931c8e201b7b72c2",
+    "commentId": 6089010542,
+    "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089010542",
+    "getVerified": true,
+    "priorLowResolved": true,
+    "newLowOrHigher": 0,
+    "newInfo": 1,
+    "reviewerTestsExecuted": false,
+    "infoResolution": "Specify PR1 report commit checkout for repo-relative bundle path; docs only."
+  }
 }

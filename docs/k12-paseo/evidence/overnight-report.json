@@ -1,0 +1,641 @@
+{
+  "taskId": "OVERNIGHT_REPORT",
+  "baselineSha": "a332a1b756006cca4851ccd0a52fb3d6e5e220f8",
+  "observedAt": "2026-10-09T22:15:26.333422+00:00",
+  "scope": "Consolidated handoff; no new product/regression execution or operational adoption",
+  "coordinator": {
+    "startedAt": "2026-10-09T19:20:41.261515+00:00",
+    "directorId": "e2f92291-4ca9-445e-b94b-47de32029af7",
+    "astraId": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+    "active": {
+      "taskId": "OVERNIGHT_REPORT",
+      "dispatchedAt": "2026-10-09T22:09:33.063496+00:00",
+      "by": "DIRECTOR"
+    },
+    "completed": [
+      {
+        "taskId": "P0_PERMISSIONS",
+        "status": "completed",
+        "finishedAt": "2026-10-09T19:42:48.320979+00:00",
+        "by": "DIRECTOR"
+      },
+      {
+        "taskId": "P0_HEARTBEAT",
+        "status": "completed",
+        "finishedAt": "2026-10-09T20:06:03.764039+00:00",
+        "by": "DIRECTOR"
+      },
+      {
+        "taskId": "P0_RECOVERY",
+        "status": "completed",
+        "finishedAt": "2026-10-09T20:28:41.464751+00:00",
+        "by": "DIRECTOR"
+      },
+      {
+        "taskId": "OPS_CI",
+        "status": "completed",
+        "finishedAt": "2026-10-09T20:52:34.706996+00:00",
+        "by": "DIRECTOR"
+      },
+      {
+        "taskId": "P1_PARALLEL_ISOLATED",
+        "status": "completed",
+        "finishedAt": "2026-10-09T21:17:18.155889+00:00",
+        "by": "DIRECTOR"
+      },
+      {
+        "taskId": "REVIEW_INDEPENDENT",
+        "status": "completed",
+        "finishedAt": "2026-10-09T21:50:05.444176+00:00",
+        "by": "DIRECTOR"
+      },
+      {
+        "taskId": "DOCS_RECONCILE",
+        "status": "completed",
+        "finishedAt": "2026-10-09T22:09:15.362646+00:00",
+        "by": "DIRECTOR"
+      }
+    ],
+    "failureCount": 0,
+    "observedAt": "2026-10-09T22:11:05.547457+00:00"
+  },
+  "priorTasks": [
+    {
+      "taskId": "P0_PERMISSIONS",
+      "receiptStatus": "completed",
+      "finalReportSha": "a29f66e0a676afb0e621f5942a696152e87b181f",
+      "ancestorOfBaseline": true,
+      "receiptSha256": "d46a35c38029a41bdab549c0a27d4db9543eea21fc8628be59320bf41a9951c5",
+      "handoff": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088008156",
+      "handoffGetVerified": true,
+      "handoffBodySha256": "ac2cc6538c668003d2c202e3a2f9913544d518d17b103e28dafe70400726dc2a"
+    },
+    {
+      "taskId": "P0_HEARTBEAT",
+      "receiptStatus": "completed",
+      "finalReportSha": "243ecdffa65992b661184560ed2d5932739262ba",
+      "ancestorOfBaseline": true,
+      "receiptSha256": "8596c556fc08dab6416364b0bf1432620e976fdfe8bba8b40d37efff2f53ceae",
+      "handoff": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088366661",
+      "handoffGetVerified": true,
+      "handoffBodySha256": "f02f9ed9c3eabe84cd3bc48b383cfb71fcade1ad0afe8fca38dbdfa19ec7e053"
+    },
+    {
+      "taskId": "P0_RECOVERY",
+      "receiptStatus": "completed",
+      "finalReportSha": "44a8fa593310d11d5d4d2de045e4f3ac54926555",
+      "ancestorOfBaseline": true,
+      "receiptSha256": "46cccc994ddd80f0ac6665a04376a790c9d85a31c4d9113d72c5079aa94ea134",
+      "handoff": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088705504",
+      "handoffGetVerified": true,
+      "handoffBodySha256": "ee23f72a5d7dd3fe75874365df7d41ad2b9ae0915917bbfb9e2427e8a8d3cde2"
+    },
+    {
+      "taskId": "OPS_CI",
+      "receiptStatus": "completed",
+      "finalReportSha": "646ffd91d5eab7213f14a079415d53d327374a4b",
+      "ancestorOfBaseline": true,
+      "receiptSha256": "1c4c76338302daf23762c879f6b5c8cfa64dd9ebe64a8812389ff16d128251c2",
+      "handoff": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089051704",
+      "handoffGetVerified": true,
+      "handoffBodySha256": "33d26a82c45fa974e2785aae8d08cba43078d7999dede25cc7af828d90efe98c"
+    },
+    {
+      "taskId": "P1_PARALLEL_ISOLATED",
+      "receiptStatus": "completed",
+      "finalReportSha": "81e1547da5f7d6579471ad1f8f4c8b5fa3269c4e",
+      "ancestorOfBaseline": true,
+      "receiptSha256": "5fcdf2591fcce02a450259de02f0377e6d7191500be30ec5fea75debdd138d42",
+      "handoff": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089394906",
+      "handoffGetVerified": true,
+      "handoffBodySha256": "f8f16e878002eb2247e843aca5459c72fb543c871e2941e84bc2b452b0400268"
+    },
+    {
+      "taskId": "REVIEW_INDEPENDENT",
+      "receiptStatus": "completed",
+      "finalReportSha": "7b321124a79d1413c62dfb0ee398d784b6fb0568",
+      "ancestorOfBaseline": true,
+      "receiptSha256": "1b30c966116ec9f05cd0c7715e38f04f63d7bb500ccb56508bc0731a14dd5821",
+      "handoff": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089830356",
+      "handoffGetVerified": true,
+      "handoffBodySha256": "58d45ee348d17c469a32d26f7207528ac565c9c1b4fd72bc1db26f033d0e79d3"
+    },
+    {
+      "taskId": "DOCS_RECONCILE",
+      "receiptStatus": "completed",
+      "finalReportSha": "a332a1b756006cca4851ccd0a52fb3d6e5e220f8",
+      "ancestorOfBaseline": true,
+      "receiptSha256": "33d1b1a2eb220e322bc8a26aad63b8b0c34644c189f3cd7fa7a63b609e083411",
+      "handoff": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090069590",
+      "handoffGetVerified": true,
+      "handoffBodySha256": "748f55bb10a83f6c4e1aae18e03112a738423136236658b36ca295b58dc6e580"
+    }
+  ],
+  "remoteSnapshot": {
+    "observedAt": "2026-10-09T22:12:08.930827+00:00",
+    "home-dev-ops#1": {
+      "html_url": "https://github.com/shotgun1107/home-dev-ops/pull/1",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "e27c99ae81f3882d7f061ce6345545e273369e1e",
+      "head": "a332a1b756006cca4851ccd0a52fb3d6e5e220f8",
+      "base": "bf50f2bdb44e4d71fc29b31dcb0629719a345a95",
+      "checks": []
+    },
+    "home-dev-ops#2": {
+      "html_url": "https://github.com/shotgun1107/home-dev-ops/pull/2",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "1f95e837edc2c8b2d20372740e908f1f01052cfe",
+      "head": "f069ac35b0553f69f0a485784df0bc4f11341f1b",
+      "base": "73afc54ba6ba046ad5f527c08d77fd3a20ce2a58",
+      "checks": [
+        {
+          "name": "regression",
+          "head_sha": "f069ac35b0553f69f0a485784df0bc4f11341f1b",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/shotgun1107/home-dev-ops/actions/runs/37941584724/job/113857032952"
+        }
+      ]
+    },
+    "kerbe#2": {
+      "html_url": "https://github.com/shotgun1107/kerbe/pull/2",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "a9a9cec328a88352386c9c76273dd8bf34594ccb",
+      "head": "1a02ad66780604909d49044ddfe14c803b0332f9",
+      "base": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+      "checks": [
+        {
+          "name": "test (windows-latest)",
+          "head_sha": "1a02ad66780604909d49044ddfe14c803b0332f9",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37779471349/job/113318619269"
+        },
+        {
+          "name": "test (ubuntu-latest)",
+          "head_sha": "1a02ad66780604909d49044ddfe14c803b0332f9",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37779471349/job/113318618760"
+        }
+      ]
+    },
+    "kerbe#4": {
+      "html_url": "https://github.com/shotgun1107/kerbe/pull/4",
+      "state": "closed",
+      "draft": false,
+      "merged": true,
+      "merged_at": "2026-10-09T17:01:53Z",
+      "merge_commit_sha": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "head": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+      "base": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+      "checks": [
+        {
+          "name": "test (windows-latest)",
+          "head_sha": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37954147794/job/113900232202"
+        },
+        {
+          "name": "test (ubuntu-latest)",
+          "head_sha": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37954147794/job/113900231888"
+        }
+      ]
+    },
+    "kerbe#5": {
+      "html_url": "https://github.com/shotgun1107/kerbe/pull/5",
+      "state": "open",
+      "draft": true,
+      "merged": false,
+      "merged_at": null,
+      "merge_commit_sha": "07e44426c1eca768cbe7574c1dc128465565ed4d",
+      "head": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+      "base": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "checks": [
+        {
+          "name": "test (windows-latest)",
+          "head_sha": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37971237098/job/113958094905"
+        },
+        {
+          "name": "test (ubuntu-latest)",
+          "head_sha": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37971237098/job/113958094692"
+        }
+      ]
+    },
+    "home-dev-ops/main": {
+      "sha": "bf50f2bdb44e4d71fc29b31dcb0629719a345a95",
+      "protected": false
+    },
+    "kerbe/main": {
+      "sha": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "protected": true
+    },
+    "opsActions": {
+      "totalCount": 1,
+      "runs": [
+        {
+          "id": 37941584724,
+          "head_sha": "f069ac35b0553f69f0a485784df0bc4f11341f1b",
+          "status": "completed",
+          "conclusion": "success",
+          "html_url": "https://github.com/shotgun1107/home-dev-ops/actions/runs/37941584724"
+        }
+      ]
+    }
+  },
+  "permissionAccounting": {
+    "selectedHistoricalLedgers": {
+      "kerbe-s-permits.json": {
+        "sha256": "972d7a71e6eddbb489807b9961c4e9e61fcbd2361c4e47ac31b475060f650019",
+        "counts": {
+          "allowed": 9,
+          "denied": 1,
+          "inputAdjustments": 3,
+          "responseActor:supervisor": 10,
+          "responses": 10
+        },
+        "byAgent": {
+          "010fafb2-a8ee-4b16-bb83-692dc75c3a8d": {
+            "allowed": 9,
+            "denied": 1,
+            "inputAdjustments": 3,
+            "responseActor:supervisor": 10,
+            "responses": 10
+          }
+        }
+      },
+      "kerbe-m-permissions.json": {
+        "sha256": "3bc38962a38862ecf02107be07f61a7d3e6c72d3d4e9885290c29b995d444566",
+        "counts": {
+          "allowed": 50,
+          "denied": 2,
+          "inputAdjustments": 3,
+          "responseActor:supervisor": 52,
+          "responses": 52
+        },
+        "byAgent": {
+          "6f07d351-77ef-40a2-bf62-95b647c25726": {
+            "allowed": 16,
+            "denied": 2,
+            "inputAdjustments": 3,
+            "responseActor:supervisor": 18,
+            "responses": 18
+          },
+          "dc583f6a-fe16-4025-b277-0103a6b94a75": {
+            "allowed": 34,
+            "responseActor:supervisor": 34,
+            "responses": 34
+          }
+        }
+      }
+    },
+    "selectedHistoricalTotal": {
+      "responses": 62,
+      "allowed": 59,
+      "denied": 3,
+      "inputAdjustmentsSubsetOfAllowed": 6
+    },
+    "overnightMock": {
+      "initialManualDecisions": 2,
+      "fixedManualDecisions": 2,
+      "totalManualMockDecisions": 6,
+      "repeatReason": "expiry implementation correction, then explicit worker source/cwd separation; neither is evidence of a real Provider policy failure",
+      "serialComparableBaseline": false,
+      "providerBurdenComparison": "unmeasured",
+      "latenciesIncludeIntentionalHoldingAndSupervisorToolTime": true,
+      "sourceIsolatedManualDecisions": 2
+    },
+    "overnightRealProviderResponses": null,
+    "overnightHumanClicks": null,
+    "limits": [
+      "S/M responses predate this overnight evaluation and are reused evidence",
+      "Mock6 are manually reviewed fixture decisions, not real Paseo permits or human clicks",
+      "Pending0 snapshots are not cumulative response counts",
+      "No full overnight permission-event/human-intervention census collected; unknown is not zero"
+    ]
+  },
+  "costAccounting": {
+    "beforeThisReportReview": {
+      "observedAt": "2026-10-09T22:11:05.547574+00:00",
+      "actors": [
+        {
+          "Id": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+          "Provider": "codex",
+          "Model": "gpt-6-astra",
+          "Thinking": "max",
+          "Status": "running",
+          "Mode": "full-access",
+          "Cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+          "Archived": false,
+          "LastUsage": {
+            "InputTokens": 151442,
+            "OutputTokens": 1419,
+            "CachedTokens": 145408,
+            "CostUsd": 0
+          },
+          "pendingCount": 0
+        },
+        {
+          "Id": "e2f92291-4ca9-445e-b94b-47de32029af7",
+          "Provider": "codex",
+          "Model": "gpt-6-astra",
+          "Thinking": "max",
+          "Status": "idle",
+          "Mode": "auto",
+          "Cwd": "/home/shotgun1107/.paseo-director-pilot/workspace",
+          "Archived": false,
+          "LastUsage": {
+            "InputTokens": 41556,
+            "OutputTokens": 31,
+            "CachedTokens": 40960,
+            "CostUsd": 0
+          },
+          "pendingCount": 0
+        },
+        {
+          "Id": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+          "Provider": "claude",
+          "Model": "claude-opus-5-5",
+          "Thinking": "auto",
+          "Status": "idle",
+          "Mode": "plan",
+          "Cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+          "Archived": false,
+          "LastUsage": {
+            "InputTokens": 6,
+            "OutputTokens": 1930,
+            "CachedTokens": 2253974,
+            "CostUsd": 26.535271999999992
+          },
+          "pendingCount": 0
+        }
+      ]
+    },
+    "installedSourceCitations": [
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/dist/commands/agent/inspect.js",
+        "sha256": "04ce73aca8f49ecbe43302cee5d203e8b46f09a3af676c7a8a97288811d68040",
+        "lines": [
+          61,
+          69
+        ],
+        "finding": "CLI defaults absent totalCostUsd to0",
+        "excerpt": "function buildLastUsage(snapshot) {\n    if (!snapshot.lastUsage)\n        return null;\n    return {\n        InputTokens: snapshot.lastUsage.inputTokens ?? 0,\n        OutputTokens: snapshot.lastUsage.outputTokens ?? 0,\n        CachedTokens: snapshot.lastUsage.cachedInputTokens ?? 0,\n        CostUsd: snapshot.lastUsage.totalCostUsd ?? 0,\n    };"
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/providers/codex-app-server-agent.js",
+        "sha256": "da3a578f881d2813d850c218f6089cb493c18155e0aab19b5a3f94b4ea720c6e",
+        "lines": [
+          673,
+          689
+        ],
+        "finding": "Codex usage reads last tokens; no totalCostUsd in this mapping",
+        "excerpt": "export function toAgentUsage(tokenUsage) {\n    const usage = toObjectRecord(tokenUsage);\n    if (!usage)\n        return undefined;\n    const last = toObjectRecord(usage.last);\n    const contextWindowMaxTokens = firstPositiveFiniteNumber(usage.model_context_window, usage.modelContextWindow);\n    const contextWindowUsedTokens = firstPositiveFiniteNumber(last?.total_tokens, last?.totalTokens);\n    return {\n        inputTokens: typeof last?.inputTokens === \"number\" ? last.inputTokens : undefined,\n        cachedInputTokens: typeof last?.cachedInputTokens === \"number\" ? last.cachedInputTokens : undefined,\n        outputTokens: typeof last?.outputTokens === \"number\" ? last.outputTokens : undefined,\n        ...(contextWindowMaxTokens !== undefined ? { contextWindowMaxTokens } : {}),\n        ...(contextWindowUsedTokens !== undefined ? { contextWindowUsedTokens } : {}),\n    };\n}\nfunction extractUserText(content) {\n    if (!Array.isArray(content))"
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/providers/claude/agent.js",
+        "sha256": "819dcfaff5148b39a99a83259842fba06299039cb466d30858fa16c79f8d0009",
+        "lines": [
+          1426,
+          1445
+        ],
+        "finding": "Claude result usage forwards total_cost_usd",
+        "excerpt": "        return this.createUsageUpdatedEvent(usedTokens);\n    }\n    buildResultUsage(message, modelUsage) {\n        try {\n            if (!message.usage) {\n                return undefined;\n            }\n            const usage = {\n                inputTokens: message.usage.input_tokens,\n                cachedInputTokens: message.usage.cache_read_input_tokens,\n                outputTokens: message.usage.output_tokens,\n                totalCostUsd: message.total_cost_usd,\n            };\n            const modelContextWindowMaxTokens = this.recordModelUsage(modelUsage ?? message.modelUsage);\n            if (this.contextWindowMaxTokens !== undefined) {\n                usage.contextWindowMaxTokens = this.contextWindowMaxTokens;\n            }\n            else if (modelContextWindowMaxTokens !== undefined) {\n                usage.contextWindowMaxTokens = modelContextWindowMaxTokens;\n            }"
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/agent-manager.js",
+        "sha256": "09e1a170a75fc6b1f4eca29779feb7ada0c6d607bd33588f545e619174d7fa65",
+        "lines": [
+          3022,
+          3025
+        ],
+        "finding": "usage_updated replaces lastUsage",
+        "excerpt": "            case \"usage_updated\":\n                agent.lastUsage = event.usage;\n                this.emitState(agent);\n                return undefined;"
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/agent-manager.js",
+        "sha256": "09e1a170a75fc6b1f4eca29779feb7ada0c6d607bd33588f545e619174d7fa65",
+        "lines": [
+          3152,
+          3157
+        ],
+        "finding": "turn_completed merges event usage; absent usage may retain prior values",
+        "excerpt": "        if (event.usage) {\n            agent.lastUsage = { ...agent.lastUsage, ...event.usage };\n        }\n        // If no usage on turn_completed, keep lastUsage as-is so context window\n        // data accumulated during streaming isn't lost when the provider omits\n        // it from the completion event."
+      }
+    ],
+    "overnightTotalUsd": null,
+    "billingVerified": false,
+    "inference": [
+      "CLI zero can mean absent cost; Codex mapper does not provide totalCostUsd",
+      "Claude reported total_cost_usd is forwarded; no matched overnight-start baseline or billing reconciliation",
+      "LastUsage replacement/merge and Codex usage.last prevent summing snapshots as an overnight ledger"
+    ],
+    "personalLedgerOrCredentialAccess": false,
+    "runtimeOrConfigChanged": false
+  },
+  "safety": [
+    "Existing Astra Max and Director preserved; same ops writer/worktree/branch",
+    "No Kerbe code/branch/local checkout access; read-only GitHub metadata only",
+    "No Ready/Merge/main/force push, privilege/auth/rules/common-hook changes, service controls or Archive",
+    "No new Supervisor/writer/worktree/heartbeat/automation; existing reviewer may be reused read-only-by-policy",
+    "Only root writes current coordinator receipt after final PR GET verification"
+  ],
+  "limits": [
+    "Sequential observations, not atomic multi-system state",
+    "Controller7 completed/failures0 is job bookkeeping, not all tests passed or this report completed/idle",
+    "Unchanged measured125 Python,47 Node,15 manual mock reused; do not add historical suites repeatedly",
+    "M main/formal parallel/mobile/latest hosted CI and protected default ops remain incomplete",
+    "Canonical Review_History unavailable",
+    "Costs and total real approval counts remain unknown; no guessed monetary total"
+  ],
+  "verification": {
+    "observedAt": "2026-10-09T22:15:26.357026+00:00",
+    "canonical": [
+      {
+        "name": "K12_Paseo_v2.4.md",
+        "inputSha256": "5424563757f8321c8f19f6237db6a0d28c243a233f5c2eb9287aa3a9e0ede27d",
+        "copySha256": "5424563757f8321c8f19f6237db6a0d28c243a233f5c2eb9287aa3a9e0ede27d",
+        "equal": true
+      },
+      {
+        "name": "K12_AGENTS_draft.md",
+        "inputSha256": "f18552b6abac864afa812f475c7580d81a82574f84aeb37b7920dec8cb3d2458",
+        "copySha256": "f18552b6abac864afa812f475c7580d81a82574f84aeb37b7920dec8cb3d2458",
+        "equal": true
+      }
+    ],
+    "missingOriginalReference": {
+      "name": "K12_Paseo_Review_History.md",
+      "existsInInput": false,
+      "existsInPreservedSourceDirectory": false,
+      "status": "unverified; no substitute fabricated"
+    },
+    "testReuse": {
+      "originalEvidence": "evidence/independent-review.json",
+      "sourceSha": "1edd2ef4702031dd6fe2d59adc01e4504c5c57db",
+      "candidateSha": "80455437960f3db0cbec5f1f3df0392ad47def3c",
+      "runId": "2318a21f-4f8f-49ba-827b-c183e40dce6e",
+      "endedAt": "2026-10-09T21:41:22.131355+00:00",
+      "expected": 125,
+      "testsRun": 125,
+      "rerun": false,
+      "files": {
+        "scripts/k12-pre-push": {
+          "sha256": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+          "matches": true
+        },
+        "scripts/paseo_heartbeat_cleanup.py": {
+          "sha256": "162684a9c42bc6c99902c9a806b1ca668e24e4c1f6b3966e57ba190d8f2fc05c",
+          "matches": true
+        },
+        "scripts/paseo_permission_audit.py": {
+          "sha256": "f760a2b1c1897802fc765a60b35605171b98607219ebebb5c0091ded6f0dd576",
+          "matches": true
+        },
+        "scripts/paseo_preflight.py": {
+          "sha256": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+          "matches": true
+        },
+        "scripts/paseo_recovery_audit.py": {
+          "sha256": "e422ae84c290f683bb99e45a0fc0fb0d8fa4a871fed89b2ce2c132b7ff29028f",
+          "matches": true
+        },
+        "scripts/run_ops_ci.py": {
+          "sha256": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+          "matches": true
+        },
+        "tests/ci-manifest.json": {
+          "sha256": "db189894b88cfc1ba356b18b49297d4416b2b140943e5416156dc1efbe6bd4f6",
+          "matches": true
+        },
+        "tests/test_heartbeat_cleanup.py": {
+          "sha256": "3b5e75feeaf38a6dda47a8c461fd899a31b64bf13a9dc3e311c2cde2292977ac",
+          "matches": true
+        },
+        "tests/test_heartbeat_lifecycle.mjs": {
+          "sha256": "8fa8ec7c399b74a9a18bab2ce3b132d7c2a466127ce1fa7525e6ce3887e55622",
+          "matches": true
+        },
+        "tests/test_ops_ci.py": {
+          "sha256": "51de76430cef371abe9d5d905f907bacbc3959bce8c896ef55068b4c1784b1e6",
+          "matches": true
+        },
+        "tests/test_paseo_preflight.py": {
+          "sha256": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5",
+          "matches": true
+        },
+        "tests/test_permission_audit.py": {
+          "sha256": "b163594df908ba3c16806410aa9d1ca4e1fc4bf5f2d2aa66a88e4ceadd88c973",
+          "matches": true
+        },
+        "tests/test_pre_push.py": {
+          "sha256": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9",
+          "matches": true
+        },
+        "tests/test_recovery.py": {
+          "sha256": "32bc303377efb1ac4633969c8ef541804aae9bdc3e921ca9bbdf17f229fd321a",
+          "matches": true
+        },
+        "tests/test_recovery_pid.mjs": {
+          "sha256": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03",
+          "matches": true
+        }
+      }
+    },
+    "manifest": {
+      "schema": 1,
+      "python_version": "3.14.4",
+      "python": {
+        "test_pre_push.py": 12,
+        "test_paseo_preflight.py": 9,
+        "test_heartbeat_cleanup.py": 15,
+        "test_permission_audit.py": 39,
+        "test_recovery.py": 29,
+        "test_ops_ci.py": 21
+      },
+      "k12_only": [
+        "test_heartbeat_lifecycle.mjs",
+        "test_recovery_pid.mjs"
+      ]
+    },
+    "manifestTotal": 125,
+    "installedNodeReuse": [
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/service.js",
+        "sha256": "325066fba80c259ed0f5385042f15045820791fe048e622151259ed036dcd3c6",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/store.js",
+        "sha256": "11ff1f4ecb10a1e632741e8420b505340e5b74ddf343912a0408734531ddf58d",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/cron.js",
+        "sha256": "7e4de9dc39a982751637523b4f4aaf89c2c32c07469312b222deab8b1b98c97e",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/pid-lock.js",
+        "sha256": "7ad798710140a3a831974637cacc0eff40f0403fbd583e307a2b68dc8947c02b",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/daemon-instance.js",
+        "sha256": "029dea3bd91af1295dddb1427f152648657ad43efa1bd097894db901d0832cb9",
+        "matches": true
+      }
+    ],
+    "heartbeatPatch": {
+      "sha256": "12ee2e3efb6e778a5c2642b23d1406888950afa00b5c101a1a80529055178ce0",
+      "matches": true,
+      "applied": false
+    },
+    "mockReuse": {
+      "tests": 15,
+      "sha256": "2d85a6ecc329700795daaa9d6b3072be5f0c7e899c68d0de55db6acd16471dd5",
+      "matches": true,
+      "rerun": false
+    },
+    "bundle": {
+      "path": "docs/k12-paseo/proposals/ops-ci-reviewed-candidate.bundle",
+      "bytes": 3269,
+      "sha256": "076a4de9fe76eaa5c8b08603f36d96d31d11081f04d7e69b782f2565f9f0dcd9",
+      "matches": true,
+      "candidateSha": "80455437960f3db0cbec5f1f3df0392ad47def3c"
+    },
+    "jsonEvidenceParsed": 36,
+    "allPass": true,
+    "relativeLinks": {
+      "count": 131,
+      "allPass": true,
+      "limit": "Mechanical Markdown links and approximate GitHub heading slugs only; no browser/mobile rendering proof. Source v2.4 content not altered.",
+      "scope": [
+        "STATUS.md",
+        "EVIDENCE.md",
+        "RECOVERY.md",
+        "REVISION.md",
+        "OVERNIGHT_REPORT.md"
+      ]
+    }
+  }
+}

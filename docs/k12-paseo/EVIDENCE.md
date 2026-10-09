@@ -586,3 +586,13 @@ Heartbeat 운영 적용·orphan/대용량 복구, 최신 CI 채택, 회사 변�
 9cc1610…의 [독립 문서 재검토 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090018253)은 기준 Low6/Info4 해소·새 Low1/Info1을 기록했다. Low는 원래 설치 경로를 오기로 단정한 설명이었다. 루트가 두 경로의 daemon-instance/pid-lock 각각을 새로 읽어 서로 다른 inode·동일 SHA256 사본임을 확인해 판정을 철회했다. Info는 최신 회귀21개를 `test_ops_ci21`로 명시해 과거 hosted21개와 구분했다. reviewer는 STATUS 전체와 다른 세 문서의 전체 diff를 새로 읽고 미변경 내용은 기준 전체 읽기를 재사용했다. 증거 JSON은 선택 필드만 읽었으며 GitHub/테스트 재실행은 없었다.
 
 최종 문서 후보 `1de59fdef1348ca4a7635e59f806e053978e5dd2`의 [독립 delta 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090043149)은 이전 Low1/Info1 해소·새 지적0이다. 전체 고정 diff와 추가 JSON 필드를 읽고 나머지는 이전 읽기를 재사용했다. 그 뒤 변경은 이 리뷰 결론·게시 영수증뿐이며 전체 문서의 새 재검토를 뜻하지 않는다. 최종 보고 HEAD는 PR handoff에 기록하며 source/tests/proposals/원문 bytes는 그대로다.
+
+## E20 OVERNIGHT_REPORT 야간 종합 handoff
+
+기준 `a332a1b756006cca4851ccd0a52fb3d6e5e220f8`에서 clean·PR #1 Draft 일치를 확인했다.
+[종합 보고](OVERNIGHT_REPORT.md)와 [선별 영수증](evidence/overnight-report.json)에 선행7개 task의
+receipt/보고 SHA/실제 handoff GET, 시험 재사용 조건, 새 원격 상태, 비용·승인 집계 범위를 모았다.
+S/M의62개 선별 응답과 야간 mock 결정6건을 구분한다. 실제 야간 승인·사람 클릭 전수 합계는 미확인이다.
+agent inspect CostUsd는 설치 매핑상 미제공도0으로 표시하며 Codex는 비용을 전달하지 않는다.
+Claude 표시값도 이 야간 작업의 실제 청구액으로 귀속하지 않는다. source 행/hash로 의미를 확인했으며
+개인 token 장부·credential은 열람하지 않았고 서비스·권한 설정을 조작하지 않았다. 기존 시험을 새로 실행했다고 기록하지 않는다.

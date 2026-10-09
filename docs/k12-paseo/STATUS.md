@@ -3,6 +3,9 @@
 2026-10-10 KST. **P0 부분 검증, P1 S 완주 확인, M 교대·구현·검증·독립 리뷰·Draft 전달 완료. M의 사람 채택과 실제 main 확인은 대기 중이며 미션 전체 완료가 아니다.**
 최신 후보 SHA·writer 상태·Next·Heartbeat 상태는 [Draft PR #1](https://github.com/shotgun1107/home-dev-ops/pull/1)의 handoff를 따른다.
 
+[야간 종합 handoff](OVERNIGHT_REPORT.md)에 task별 고정 SHA·시험 재사용·승인/비용 집계 범위와
+다음 안전한 행동을 모았다. CostUsd0을 무료로 해석하지 않으며 야간 총비용·실제 승인 전수 합계는 미확인이다.
+
 **DOCS_RECONCILE 대조 시점: 2026-10-10 06:54 KST부터 시작한 순차 GET.** 아래 최신 표와
 [E19](EVIDENCE.md#e19-docs_reconcile-현황과-증거-대조)를 먼저 본다. 이후 E1~E18과 야간 task 요약의
 숫자·설정·서비스 상태는 각 기록 당시의 관찰이다. 최신 source/tests는 byte 동일하여 재실행하지 않았다.

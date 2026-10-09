@@ -1,0 +1,19 @@
+{
+  "recordedAt": "2026-10-09T14:26:33.974311+00:00",
+  "command": "python3 -B -m unittest discover -s tests -v",
+  "python": "Python 3.14.4",
+  "workingDirectory": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+  "result": "OK",
+  "testsRun": 28,
+  "durationSeconds": 0.056,
+  "newCleanupTests": 7,
+  "existingRegressionTests": 21,
+  "sourceHashes": {
+    "scripts/k12-pre-push": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+    "scripts/paseo_heartbeat_cleanup.py": "4839ddebf1fcb8ae98fedc7df34c6c8bddcab086c1f165406ea02326345d1d39",
+    "scripts/paseo_preflight.py": "4a0ef503a9f432fc612c95a869a05ad54360a0ebe9e8d274e2c5421abcaec7e0",
+    "tests/test_heartbeat_cleanup.py": "8177de6f1d88397794e4edf9747113e4e5924776b3bb85f537ba8fadf83553a2",
+    "tests/test_paseo_preflight.py": "59a186bfd96fbfa12da78b758b438f4263267de5feb7fc90d88deef7474ab8ae",
+    "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9"
+  }
+}

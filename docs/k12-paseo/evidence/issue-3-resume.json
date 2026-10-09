@@ -1,0 +1,105 @@
+{
+  "collectionStartedAt": "2026-10-09T14:26:26.312526+00:00",
+  "issue": "https://github.com/shotgun1107/home-dev-ops/issues/3",
+  "startingCleanHead": "73afc54ba6ba046ad5f527c08d77fd3a20ce2a58",
+  "supervisor": {
+    "Id": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+    "Provider": "codex",
+    "Model": "gpt-6-astra",
+    "Thinking": "max",
+    "Mode": "full-access",
+    "Status": "running",
+    "Cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+    "ParentAgentId": null
+  },
+  "workspaceId": "wks_91760bd37449c714",
+  "nativeSessionId": "01a120af-820b-76e0-9f02-1e3fb9ed575b",
+  "activeAgents": [
+    {
+      "id": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+      "provider": "codex/gpt-6-astra",
+      "thinking": "max",
+      "cwd": "~/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+      "status": "running"
+    }
+  ],
+  "heartbeatFilesBeforeTest": [],
+  "pullRequests": [
+    {
+      "url": "https://github.com/shotgun1107/home-dev-ops/pull/1",
+      "state": "open",
+      "draft": true,
+      "baseRef": "main",
+      "baseSha": "bf50f2bdb44e4d71fc29b31dcb0629719a345a95",
+      "headRef": "docs/k12-paseo-autopilot",
+      "headSha": "73afc54ba6ba046ad5f527c08d77fd3a20ce2a58"
+    },
+    {
+      "url": "https://github.com/shotgun1107/home-dev-ops/pull/2",
+      "state": "open",
+      "draft": true,
+      "baseRef": "docs/k12-paseo-autopilot",
+      "baseSha": "73afc54ba6ba046ad5f527c08d77fd3a20ce2a58",
+      "headRef": "ci/k12-ops-check",
+      "headSha": "f069ac35b0553f69f0a485784df0bc4f11341f1b"
+    },
+    {
+      "url": "https://github.com/shotgun1107/kerbe/pull/2",
+      "state": "open",
+      "draft": true,
+      "baseRef": "main",
+      "baseSha": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+      "headRef": "bootstrap/kerbe-agents-k12",
+      "headSha": "1a02ad66780604909d49044ddfe14c803b0332f9"
+    }
+  ],
+  "opsPr1CheckRuns": 0,
+  "ci": {
+    "id": 37941584724,
+    "head_sha": "f069ac35b0553f69f0a485784df0bc4f11341f1b",
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "success",
+    "path": ".github/workflows/ops-check.yml",
+    "created_at": "2026-10-09T14:05:21Z",
+    "updated_at": "2026-10-09T14:05:35Z",
+    "html_url": "https://github.com/shotgun1107/home-dev-ops/actions/runs/37941584724",
+    "baseShaAtRun": "73afc54ba6ba046ad5f527c08d77fd3a20ce2a58",
+    "jobId": 113857032952,
+    "selectedJobLog": [
+      "2026-10-09T14:05:30.4124518Z Successfully set up CPython (3.12.15)",
+      "2026-10-09T14:05:31.3460250Z Ran 21 tests in 0.223s",
+      "2026-10-09T14:05:31.3460810Z OK"
+    ],
+    "workflowMatchesProposal": true,
+    "workflowSha256": "d6487a85494a7fd15c4f453e7c022881308aac80a826c93efd73e1f58a67e475"
+  },
+  "opsProtection": {
+    "rulesets": {
+      "returncode": 1,
+      "status": "403",
+      "message": "Upgrade to GitHub Pro or make this repository public to enable this feature."
+    },
+    "branches/main/protection": {
+      "returncode": 1,
+      "status": "403",
+      "message": "Upgrade to GitHub Pro or make this repository public to enable this feature."
+    }
+  },
+  "opsHook": {
+    "path": "/home/shotgun1107/workspace/home-dev-ops/.git/hooks/pre-push",
+    "exists": false,
+    "coreHooksPath": null
+  },
+  "sourceHashes": {
+    "K12_Paseo_v2.4.md": {
+      "sha256": "5424563757f8321c8f19f6237db6a0d28c243a233f5c2eb9287aa3a9e0ede27d",
+      "inputEqualsPreserved": true
+    },
+    "K12_AGENTS_draft.md": {
+      "sha256": "f18552b6abac864afa812f475c7580d81a82574f84aeb37b7920dec8cb3d2458",
+      "inputEqualsPreserved": true
+    }
+  },
+  "collectedAt": "2026-10-09T14:26:33.973745+00:00"
+}

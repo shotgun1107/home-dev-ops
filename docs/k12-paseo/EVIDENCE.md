@@ -116,7 +116,7 @@ base/head 모두 paseo.json/dev-setup 없음. uv.lock/frozen 설치 경로가 �
 
 user paseo/docker active, system docker.service/docker.socket disabled·inactive, Docker securityOptions rootless,
 Minecraft/geyser/viaproxy/backup 4개 healthy. docker/lxd 그룹 없음. 서비스·volume·prune 조작은 하지 않았다.
-[추가 관찰 증거](evidence/additional-observations.json)에 credential mode·system units·groups·Docker securityOptions를 저장했다. PID 2041(node)이 2316(Paseo supervisor)의 부모이고 2365(daemon)가 그 자식임을 ps로 확인했다. unit MainPID와 daemon PID가 다른 이유가 이 process chain이다. 관찰 시점 상태이며 내부 데이터 무결성 전체 검사는 아니다.
+[추가 관찰 증거](evidence/additional-observations.json)에 credential mode·system units·groups·Docker securityOptions를 저장했다. PID 2041(node)이 2316(Paseo supervisor)의 부모이고 2365(daemon worker)가 그 자식임을 ps로 확인했다. unit MainPID·PID lock의 supervisor·daemon worker가 다른 이유가 이 process chain이다. 관찰 시점 상태이며 내부 데이터 무결성 전체 검사는 아니다.
 
 Public Direct 추가 시험: /ws에 Authorization/cookie/hello auth 없이 한 번 연결,
 protocolVersion 1·hello_rejection capability 전송→hello.rejected/password_required, close 4401.
@@ -165,6 +165,52 @@ CL-P0:179는 과거 git lfs track/ls-files/env 진단 중 hook/config/.git/lfs �
 Claude reviewer b8e68af1은 고정 SHA `2873a57a804c96225b774bc1c9f86dae87628db3`를 읽기 전용으로 검토했다.
 [원문 대리 게시](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6081867053)는 GitHub GET으로 원문 일치를 확인했다.
 Medium 1건(Full Access 예외/보호 공백 명시), Low 8건을 반영했다. Plan 파일 쓰기 없이 종료·idle을 확인하고 writer가 수정했다.
-현 후보에는 GitHub checks가 없어 통과로 기록하지 않는다. [CI 제안](proposals/README.md)은 workflow patch로 보존하고 사람 적용 후 실행을 기다린다.
+이 리뷰 당시 후보에는 GitHub checks가 없었다. 이후 사람이 허용한 별도 CI PR #2에서 실행된 결과와 운영 PR #1의 관계는 [CI 기록](proposals/README.md) 및 E8에 구분한다.
 
-최초 리뷰 지적 반영 후 Claude의 fd8f1f28abf8dab17d3a926f3dfd394e0fc54d6c 재리뷰에서 Medium 이상 없음. 남은 Low 2건은 supervisor/worker 용어와 batch 시각 표기로 수정했다. 최종 후보 리뷰의 원문·SHA는 PR에 보존한다. 코드와 테스트 bytes는 이 재리뷰 이후 변경하지 않았다.
+최초 리뷰 지적 반영 후 Claude의 fd8f1f28abf8dab17d3a926f3dfd394e0fc54d6c 재리뷰에서 Medium 이상 없음. 남은 Low 2건은 supervisor/worker 용어와 batch 시각 표기로 수정했다. 최종 후보 리뷰의 원문·SHA는 PR에 보존한다. 그 재리뷰부터 73afc54…까지 코드와 테스트 bytes는 동일했다. Issue #3 이후 추가한 도구·시험은 E8로 구분한다.
+
+## E8 Issue #3 재개와 Heartbeat 정리
+
+### 실제 상태와 CI
+
+2026-10-09 23시 KST [Issue #3](https://github.com/shotgun1107/home-dev-ops/issues/3)과
+PR #1·#2·현재 Git을 대조했다. 시작 local/PR #1 HEAD는 `73afc54ba6ba046ad5f527c08d77fd3a20ce2a58`,
+clean이었다. Supervisor는 같은 `c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd`,
+workspace `wks_91760bd37449c714`, 실제 model/thinking=`gpt-6-astra`/`max`, mode=full-access다.
+설정 변경이나 새 Supervisor 생성은 하지 않았다. [선별한 API·로컬 증거](evidence/issue-3-resume.json).
+ops 보호 API의 403, core.hooksPath unset, 활성 pre-push 부재를 다시 확인했다.
+
+CI PR #2의 head `f069ac35b0553f69f0a485784df0bc4f11341f1b`는 기존 PR #1 HEAD를 부모로 하며
+base는 `docs/k12-paseo-autopilot`이다. `.github/workflows/ops-check.yml`만 추가됐고
+기존 제안 patch와 byte 일치한다. [run 37941584724](https://github.com/shotgun1107/home-dev-ops/actions/runs/37941584724),
+job 113857032952의 실제 로그에서 CPython 3.12.15·`Ran 21 tests`·`OK`를 재조회했다.
+그 성공을 이후 PR #1 변경이나 main의 필수 check로 승계하지 않는다. 이번에 추가한 정리 도구의
+7개 시험은 그 CI 실행에 포함되지 않았다. 새 로컬 회귀는 Python 3.14.4에서 총 28개 통과했다.
+[명령·파일 hash·결과](evidence/regression-issue-3.json).
+
+### 자기 Heartbeat 삭제 충돌: 재현 → 개선 → 재시험
+
+설치 Paseo 0.10.3 `schedule/service.js`의 `executeSchedule`은 agent의 종료를 기다린 뒤
+`finishRun`으로 결과를 저장한다. 이 agent가 실행 중 자기 Heartbeat를 삭제하면
+`finishRun`의 `requireSchedule`이 실패한다. 이는 daemon 연결 실패와 별개의 구현 결함이다.
+
+[재현 코드](evidence/heartbeat-cleanup-probe.mjs)는 실제 설치 모듈을 불러오되 새 `/tmp` 저장소,
+고정된 가짜 agent ID, 로컬 runner만 사용한다. `start()`를 호출하지 않고 daemon/provider에 연결하지 않는다.
+[실측](evidence/heartbeat-cleanup-race.json):
+
+| 조건 | 결과 |
+|---|---|
+| 실행 안에서 schedule 삭제 | 파일 삭제 후 `Schedule not found: <fixture-id>` 오류, 결과 저장 불가 |
+| maxRuns=1 실행 종료 후 삭제 | completed / run succeeded 저장, 삭제 성공, 오류 없음 |
+
+운영 daemon/전역 설치를 패치하지 않았다. [정리 명령](../../scripts/paseo_heartbeat_cleanup.py)은
+동일 caller의 `maxRuns=1` Heartbeat가 completed이고 모든 run이 종료됐을 때만
+정상 CLI `heartbeat delete`를 호출한다. 최대 15분 대기, CLI 30초 제한, 삭제 응답·파일 부재 확인,
+선별한 종료 결과 영수증을 제공한다. 새 세션 실행·자동 재개·권한 변경 기능은 없다.
+7개 시험에서 실행 중 대기, timeout 시 무삭제, 타 owner·반복 미션 거부, 실패 상태 보존,
+오류 출력 비노출, 잘못된 성공 응답의 파일 부재 확인을 검증했다.
+
+이 보조 명령은 **scheduled agent 턴 밖에서** 기다려야 한다. 같은 턴이 자기 완료를 기다리면 종료되지 않는다.
+실제 idle 시험에서는 원래 agent를 한 번 재개하고, 종료 후 정리만 수행하는 한시적 로컬 명령을 사용한다.
+다른 자동 재개 방식으로 대체하는 것이 아니다. 새 cron/systemd/daemon은 만들지 않는다.
+실제 one-run 수명·삭제의 최종 판정은 PR #1의 해당 ID·receipt를 따른다. 격리 결과만으로 실측 통과를 선언하지 않는다.

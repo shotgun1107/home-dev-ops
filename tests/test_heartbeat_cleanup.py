@@ -1,0 +1,98 @@
+"""Cleanup must wait for completion and never delete another agent's schedule."""
+import importlib.util
+import json
+from pathlib import Path
+import subprocess
+import tempfile
+import unittest
+
+
+spec = importlib.util.spec_from_file_location(
+    "cleanup", Path(__file__).resolve().parents[1] / "scripts/paseo_heartbeat_cleanup.py")
+cleanup = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(cleanup)
+
+
+class HeartbeatCleanupTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="k12-cleanup-test-")
+        self.addCleanup(self.temp.cleanup)
+        self.home = Path(self.temp.name)
+        (self.home / "schedules").mkdir()
+        self.path = self.home / "schedules" / "abcdef12.json"
+        self.schedule = {"id": "abcdef12", "target": {"type": "agent", "agentId": "owner"},
+                         "maxRuns": 1, "status": "active", "runs": [{"status": "running"}]}
+        self.calls = []
+        self.now = 0
+
+    def save(self):
+        self.path.write_text(json.dumps(self.schedule))
+
+    def advance(self, seconds):
+        self.now += seconds
+
+    def delete(self, command, **kwargs):
+        self.calls.append(command)
+        self.path.unlink()
+        return subprocess.CompletedProcess(command, 0, '{"id":"abcdef12","status":"deleted"}', "")
+
+    def invoke(self, **kwargs):
+        self.save()
+        return cleanup.cleanup(self.home, "abcdef12", "owner", 2, run=kwargs.pop("run", self.delete),
+                               monotonic=lambda: self.now,
+                               sleep=kwargs.pop("sleep", self.advance), **kwargs)
+
+    def test_waits_until_run_has_finished(self):
+        def complete_after_first_poll(seconds):
+            self.advance(seconds)
+            self.schedule.update(status="completed", runs=[{"status": "succeeded", "agentId": "owner"}])
+            self.save()
+        receipt = self.invoke(sleep=complete_after_first_poll)
+        self.assertEqual(self.now, 1)
+        self.assertTrue(receipt["deleted"])
+        self.assertEqual(receipt["runs"][0]["status"], "succeeded")
+        self.assertEqual(len(self.calls), 1)
+
+    def test_running_timeout_does_not_delete(self):
+        with self.assertRaisesRegex(cleanup.CleanupError, "timed-out"):
+            self.invoke()
+        self.assertEqual(self.calls, [])
+        self.assertTrue(self.path.exists())
+
+    def test_wrong_owner_is_rejected_before_delete(self):
+        self.schedule["target"]["agentId"] = "other"
+        self.schedule["status"] = "completed"
+        with self.assertRaisesRegex(cleanup.CleanupError, "owner-mismatch"):
+            self.invoke()
+        self.assertEqual(self.calls, [])
+
+    def test_recurring_mission_is_not_a_cleanup_target(self):
+        self.schedule["maxRuns"] = 72
+        with self.assertRaisesRegex(cleanup.CleanupError, "requires-one-run"):
+            self.invoke()
+        self.assertEqual(self.calls, [])
+
+    def test_failed_run_is_preserved_as_failed_in_receipt(self):
+        self.schedule.update(status="completed", runs=[{"status": "failed", "error": "sensitive raw detail"}])
+        receipt = self.invoke()
+        self.assertEqual(receipt["runs"][0]["status"], "failed")
+        self.assertNotIn("sensitive", json.dumps(receipt))
+
+    def test_cli_failure_is_redacted_and_does_not_claim_deletion(self):
+        self.schedule.update(status="completed", runs=[])
+        def fail(command, **kwargs):
+            return subprocess.CompletedProcess(command, 1, "sensitive output", "sensitive error")
+        with self.assertRaisesRegex(cleanup.CleanupError, "^delete-command-failed$"):
+            self.invoke(run=fail)
+        self.assertTrue(self.path.exists())
+
+    def test_success_acknowledgement_does_not_replace_absence_check(self):
+        self.schedule.update(status="completed", runs=[])
+        def false_success(command, **kwargs):
+            return subprocess.CompletedProcess(command, 0, '{"id":"abcdef12","status":"deleted"}', "")
+        with self.assertRaisesRegex(cleanup.CleanupError, "schedule-still-present"):
+            self.invoke(run=false_success)
+
+
+if __name__ == "__main__":
+    unittest.main()

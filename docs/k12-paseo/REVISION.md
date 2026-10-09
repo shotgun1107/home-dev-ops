@@ -20,7 +20,7 @@ v2.4의 기본 승인 정책을 변경하는 근거로 채택하지 않는다. o
 | 원문 관련 항목 | 변경 내용 | 근거와 적용 한계 |
 |---|---|---|
 | 7·16장 권한/복구 | daemon 연결 오류에서 sandbox와 host 가시성을 먼저 대조한다. CLI stopped 하나로 start/restart하지 않는다 | E1 실제 namespace 차이·host 연결·진단 도구 9개 회귀. sandbox 접근 개방은 아님 |
-| 13·18장 자동 재개 | Heartbeat 생성/실제 주기 실행/idle 재개/삭제를 구분해 기록한다. agent-target 조회를 일반 schedule 조회와 구분한다 | 0.10.3 CLI filtering 원인 확인·생성/삭제 성공. idle 자동 복원은 미확인 |
+| 13·18장 자동 재개 | 생성/주기 실행/idle 재개/종료 결과 저장/삭제를 각각 기록한다. agent-target 조회를 일반 schedule 조회와 구분한다. 자기 run이 끝난 뒤 삭제한다 | CLI filtering 확인. 자기 실행 중 삭제 오류 및 완료 후 삭제를 격리 재현. 1회·소유권·시간 제한을 둔 정리 도구 7개 시험 통과. idle 자동 복원·실제 지연 정리는 아직 미확인 |
 | 9장 보호 확인 | classic branch protection과 Rulesets/effective rules를 각각 확인한다. 보호 기능 미지원은 repo별 정책 결함으로 기록한다 | Kerbe classic404+effective active, private ops403 실측 |
 | 9장 local guard | 설치 여부·실효 경로와 guard 로직 통과를 분리한다. 기존 Kerbe 후보를 hash와 격리 시험으로 검토한다 | 12개 guard 시험 통과. ops 설치·LFS chaining·서버 강제 차단 검증은 별도 |
 | 9·13장 PR 복구 | gh pr edit의 projectCards 호환성 오류에는 승인된 동일 본문 REST PATCH와 GET 확인을 허용된 복구 경로로 둔다 | 같은 오류 재현 및 현재 PR 갱신 성공. 권한 거부 우회가 아님 |
@@ -41,12 +41,50 @@ private ops 보호 API403은 반대로 로컬 구현 수정만으로 해결되�
 | Claude Auto | 읽기 전용 조회도 거부된 기록, merge 차단 결정 주체 불명확. Auto를 항상 무인 실행 가능하다고 표현하지 않는다 | 사람이 사용할 모드/지침 loading을 확인하고 지정 무해한 호출에 실제 거부 주체를 확보. deny 변경 없이 기록 부족부터 해결 |
 | Codex 기본 실행 | 기본 workspace-write의 편집/차단 증거는 있으나 현 Full Access 원격 쓰기를 기본 모드 통과로 승계할 수 없음 | 기본 경로를 채택할 때 branch push/PR의 필요한 명령별 승인·네트워크 조건 확인. broad gh/shell allow를 넣지 않음 |
 | ops 서버 보호 | private 유지+현재 계정 기능으로는 보호 API 사용 불가 | Pro 등 보호 기능 확보, 또는 private 유지와 보호 공백의 명시적 위험 수용을 사람 결정. public 전환은 자동 제안 채택하지 않음 |
-| ops CI | 코드가 포함된 이 PR의 check-runs가 비어 있음 | 준비한 workflow patch를 사람이 별도 branch/PR로 적용하고 실제 CI 성공을 후보 SHA에 연결. 로컬 21개 통과로 대신하지 않음 |
+| ops CI | CI PR #2에서 21개 성공했으나 PR #1/main의 성공이 아님 | CI PR base는 PR #1 작업 branch다. 사람이 통합 순서를 선택하고 새 통합 SHA에서 CI를 확인. 이번 로컬 28개로 대신하지 않음 |
 | guard 배포 | 검증 후보가 있어도 ops에는 미설치 | 공통 Git 영향·기존 hook/LFS 연결 검토 후 사람이 설치하고 task 경로에서 재검증 |
 | Kerbe setup | .venv 수동 경로는 실측, base의 자동 setup은 없음 | 경량 Python repo에서 수동 on-demand 유지 또는 최소 dev-setup/paseo.json 도입을 선택. 후자를 도입하면 별도 chore PR 검증·사람 merge 후 새 Worktree에서 시험 |
 | A/B 조건 | 기존 실험은 승인 모드/거부 하네스가 달라 능력 비교 불가 | 동일 작업/기준 SHA/권한 조건/종료 조건으로 별도 설계. P1 독립 결과 병렬 시험과 구분 |
 | 중복 workspace | 과거 Claude A/B 같은 경로에 unarchived workspace 2개 | 하나를 소유 기록으로 선택하고 다른 세션을 비writer로 유지. 정리/Archive는 별도 사람 결정 |
 | reviewer | Claude Plan은 기술적 read-only가 아님 | 고정 Git 객체 정적 검토·운영상 수정 금지 fallback 명시, 필요 시 검증된 sandbox 사용. 도구 이름만으로 격리 보장하지 않음 |
+
+## ops 보호 공백의 선택지 — 사람 결정
+
+현재 결합은 private 보호 API 403 + 활성 local hook 없음 + Full Access 차단 미검증이다.
+Full Access 선택을 이 세 가지의 해결 또는 상시 위험 수용으로 확대 해석하지 않는다.
+
+| 선택지 | 범위와 남는 위험 | 최소 다음 행동 |
+|---|---|---|
+| private 유지·서버 보호 기능 확보 | 비용/계정 정책 결정 필요. 보호를 만들기 전까지 현재 공백 유지 | 사람이 사용 가능한 계정 기능을 선택하고 main PR 필수·삭제/non-FF 제한·실제 CI 이름·bypass를 검토. agent는 적용 후 GET 검증 |
+| private 유지·현 기능 유지 | local guard는 로컬 사고 방지이며 웹/API merge나 다른 checkout을 막지 못함 | 사람이 guard 설치·사용할 기본 Provider 차단 검증 범위를 승인. 서버 보호 부재의 위험 수용 여부를 별도로 명시. 이것만으로 P0-G2 통과 처리하지 않음 |
+| 공개 전환 | 보호 기능 외에 운영 기록·과거 Git 이력까지 공개되는 위험 | 별도 공개 적합성 검토와 명시 승인 필요. 이번 미션에서는 채택·실행하지 않음 |
+| 현재 예외 범위 유지 | 보고·임시 fixture 시험·작업 branch/PR 갱신을 운영 규칙에 의존 | 사용자에게 이미 허용받은 현재 범위만 계속. 기술적 차단을 전제한 일상 writer 경로는 보류 |
+
+위 선택은 Kerbe public의 확인된 Ruleset을 없애거나 불필요하게 막는 이유가 아니다.
+실제 작업 repo·Provider·runtime별로 진입 조건을 판정한다. 전역 gh/shell 허용, sudo 확대,
+token 교체, 기존 hook 덮어쓰기는 어느 선택에도 자동 포함되지 않는다.
+
+## P1 S 첫 후보와 범위별 진입 조건
+
+후보 결과는 **Kerbe의 `.env.local` 등 환경 파일 제외 누락 보완**으로 좁힌다.
+이미 발견한 누락을 수정하는 작은 결과이며 신규 기능 설계나 실제 개인 데이터가 필요 없다.
+아직 Kerbe 파일을 바꾸거나 새 Worktree/worker를 만들지 않았다. bootstrap PR #2와도 별개다.
+
+- Acceptance: 임시 파일명에 대한 `git check-ignore --no-index`로 `.env`, `.env.local`,
+  `.env.test` 제외와 `.env.example` 추적 가능을 확인한다. 실제 비밀 파일은 열지 않는다.
+  제품 코드·workflow·권한 파일 무변경과 diff를 검사하고 보안 경계 변경으로 고정 SHA 반대 Provider 리뷰를 받는다.
+- 시작 조건: 기본 writer 프로필과 merge 차단의 실제 적용을 확인한다. 이미 통과한 동일 조건 증거는 재사용하되
+  현재 Full Access 실측으로 대체하지 않는다. Kerbe bootstrap PR #2가 미반영이라는 사실과 base 지침 차이를 기록하고,
+  현재 승인된 v2.4 안전 지침을 적용한다. 자동 setup의 base 변경을 사용하지 않는 이 후보에 bootstrap merge를 별도 필수 관문으로 추가하지 않는다.
+  허용된 task Worktree 하나·writer 하나를 정하고 main/base SHA·기존 hook·Ruleset을 읽어 대조한다.
+- 불필요한 선행 조건: 이 후보는 Python 실행·설치·개인 장부·Credential Manager·DB·컨테이너를 쓰지 않는다.
+  새 setup 자동화나 runtime 분리 전체를 이 S의 전제 조건으로 요구하지 않는다.
+  나중에 코드/runtime 범위가 추가되면 그때 해당 격리를 먼저 검증한다.
+- 끝 조건: 하나의 Draft PR에서 검증·리뷰까지 진행한 뒤 사람이 Ready/merge를 수행한다.
+  agent가 실제 main 반영을 확인해야 S 완주다. 그 전에는 검토 준비까지의 부분 진행으로 기록한다.
+
+현재 막힌 것은 필요한 writer 보호 경로의 확정과 사람의 최종 main 채택이다.
+서버 보호가 다른 repo인 ops에서 미지원이라는 이유나 사용하지 않을 DB가 미검증이라는 이유를 추가 관문으로 만들지 않는다.
 
 ## P1에 사용할 시험 설계 — 아직 실행 결과가 아님
 

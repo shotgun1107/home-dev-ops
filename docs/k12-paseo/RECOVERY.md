@@ -29,6 +29,20 @@ Plan이라는 이름도 파일시스템 read-only 보장으로 사용하지 않�
 - 사용자 일시중단/종료 또는 사람 결정만 남을 때 정확한 ID로 `paseo heartbeat delete <id> --json`을 수행하고 응답을 확인한다.
 - 삭제 실패 시 ID와 만료 시각을 PR에 남기고 성공으로 보고하지 않는다. 다른 자동화로 무단 대체하지 않는다.
 
+Issue #3의 idle 시험은 같은 agent, `maxRuns=1`, 짧은 만료로 범위를 제한한다.
+시험 전 PR·commit을 보존하고 턴을 실제로 종료한다. tool sleep/wait 중인 agent는 idle이 아니다.
+자동 알림의 ID/run ID, native session의 직전 종료와 다음 시작, 저장된 run 시각을 대조한다.
+새 agent 생성이나 수동 send로 만든 재개를 Heartbeat 통과로 기록하지 않는다.
+
+Paseo 0.10.3은 실행 중 자기 Heartbeat를 지우면 종료 결과 저장에서 오류가 난다.
+[격리 재현](EVIDENCE.md#e8-issue-3-재개와-heartbeat-정리)을 근거로, 실제 시험의 정리는
+종료 뒤 `python3 -B scripts/paseo_heartbeat_cleanup.py <id> --timeout 600`으로 수행한다.
+이 명령은 같은 caller의 1회 Heartbeat만 대상으로 하며 completed까지 기다려 CLI로 삭제한다.
+scheduled 턴 밖에서 실행하는 한시적 정리 명령이다. 실행 위치·PID·ID·기한을 PR에 기록하고,
+scheduled 턴 안에서 완료를 기다리지 않는다. 소유권 환경 변수를 바꿔 다른 agent를 가장하지 않는다.
+receipt의 run 상태가 failed면 삭제가 성공해도 자동 재개 통과가 아니다. timeout이면 완료/삭제를
+추정하지 않고 남은 ID·expiry·오류를 기록한다. raw CLI stderr나 schedule prompt는 게시하지 않는다.
+
 ## 3. Git·PR
 
 시작/재개 시 `git status --short --branch`, `git rev-parse HEAD`, `git log`,
@@ -56,7 +70,8 @@ reviewer가 직접 게시하지 못하면 원문·full SHA·검토 방식·미�
 writer는 `reviewer: <provider> / writer 대리 게시` 표기와 원문을 보존하고 PR 게시물을 재조회한다.
 실제 게시 전에는 PR 기록 완료라고 쓰지 않는다. 후보가 바뀌면 변경 부분과 영향 맥락을 재리뷰한다.
 
-workflow 변경은 이번 미션에 추가하지 않았다. 원문 v2.4 15장의 patch 보존·사람 반영 경로를 유지한다.
+Supervisor 작업 branch에 workflow 변경을 추가하지 않았다. 사람이 허용한 CI PR #2는 별도로 존재한다.
+원문 v2.4 15장의 patch 보존·사람 반영 경로를 유지한다.
 base 수신 중 workflow 충돌 시 pre-merge HEAD/base/충돌 경로 기록 후 merge --abort,
 원래 HEAD와 clean 복귀 확인이 원문 절차다. **이번에 재현한 복구는 아니다.** 실패 시 reset을 강행하지 않는다.
 

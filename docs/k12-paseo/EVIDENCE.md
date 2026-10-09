@@ -584,3 +584,5 @@ Heartbeat 운영 적용·orphan/대용량 복구, 최신 CI 채택, 회사 변�
 고정 문서 후보9cc1610…의 검사에서는 상대 링크/근사 anchor113개와 GitHub 참조35개의 GET을 확인했다. 원문2개·source/tests15개·설치 Node source5개·patch/mock/bundle의 hash가 보존 근거와 일치했다. 수집기의 `gh api --slurp`는 설치 gh2.46.0에서 지원되지 않아 실패했고, 상태 변경 없이 한정된 GET 페이지 조회로 보정했다. 이는 운영 daemon 결함이나 권한 거부가 아니다.
 
 9cc1610…의 [독립 문서 재검토 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090018253)은 기준 Low6/Info4 해소·새 Low1/Info1을 기록했다. Low는 원래 설치 경로를 오기로 단정한 설명이었다. 루트가 두 경로의 daemon-instance/pid-lock 각각을 새로 읽어 서로 다른 inode·동일 SHA256 사본임을 확인해 판정을 철회했다. Info는 최신 회귀21개를 `test_ops_ci21`로 명시해 과거 hosted21개와 구분했다. reviewer는 STATUS 전체와 다른 세 문서의 전체 diff를 새로 읽고 미변경 내용은 기준 전체 읽기를 재사용했다. 증거 JSON은 선택 필드만 읽었으며 GitHub/테스트 재실행은 없었다.
+
+최종 문서 후보 `1de59fdef1348ca4a7635e59f806e053978e5dd2`의 [독립 delta 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090043149)은 이전 Low1/Info1 해소·새 지적0이다. 전체 고정 diff와 추가 JSON 필드를 읽고 나머지는 이전 읽기를 재사용했다. 그 뒤 변경은 이 리뷰 결론·게시 영수증뿐이며 전체 문서의 새 재검토를 뜻하지 않는다. 최종 보고 HEAD는 PR handoff에 기록하며 source/tests/proposals/원문 bytes는 그대로다.

@@ -89,7 +89,8 @@ bootstrap PR #2는 별개이며 main에 아직 합쳐지지 않았다.
 - 끝 조건: 하나의 Draft PR에서 검증·리뷰까지 진행한 뒤 사람이 Ready/merge를 수행한다.
   agent가 실제 main 반영을 확인해야 S 완주다. 그 전에는 검토 준비까지의 부분 진행으로 기록한다.
 
-이번 S의 Writer 경로는 실제 대조·개별 승인으로 통과했다. 현재 S에 남은 것은 사람의 최종 main 채택과 이후 확인이다.
+이번 S의 Writer 경로는 실제 대조·개별 승인으로 통과했다. 이후 사람이 PR #4를 squash merge했고
+K12 fetch·전체 tree 일치·실제 main 필수 CI를 확인해 S 완주를 확정했다([E11](EVIDENCE.md#e11-s-main-반영과-m-진입)).
 프로젝트 전체 기본 모델/무인 승인 정책을 이 한 번의 결과로 확정하지 않는다. `.gitignore`는
 기존 tracked 파일·강제 add·이미 무시된 부모 디렉터리를 바꾸지 않으며 비밀값 검사 기능도 아니다.
 서버 보호가 다른 repo인 ops에서 미지원이라는 이유나 사용하지 않을 DB가 미검증이라는 이유를 추가 관문으로 만들지 않는다.
@@ -98,6 +99,7 @@ bootstrap PR #2는 별개이며 main에 아직 합쳐지지 않았다.
 
 P0 미확인은 영향을 받는 기능/Provider 경로만 제한한다. 다만 S/M/병렬 선행 관계는 바꾸지 않는다.
 P1 성공 정의를 문서 작성/정적 review로 낮춰 통과시키지 않는다.
+S는 E11까지 실측 완료이며, 아래 M 이후 항목은 실행 결과가 추가되기 전까지 설계로 구분한다.
 
 1. **진입:** 사용할 writer의 권한/merge 차단, source 쓰기·branch push/PR 경로,
    실제 setup/check/import 경계, repo 보호/guard, 수동 merge·정리 정책을 확인한다.

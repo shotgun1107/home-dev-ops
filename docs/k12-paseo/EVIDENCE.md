@@ -355,3 +355,24 @@ Medium 이상 0건, Low 3건. 만료 종료 경로 미실행, Supervisor 입력 
 임시 PR 본문 hash와 실제 게시 본문 hash의 구분, full agent/request ID만 사용하는 절차를 보완했다.
 초기 허용·거부 응답의 native 시각도 선별해 추가했다. 실제 모든 요청은 full ID를 사용했다.
 이 리뷰는 저장소 증거와 설치 CLI 소스의 정적 대조이며 GitHub/native 원문 전체를 독립 재실측한 것은 아니다.
+
+## E11 S main 반영과 M 진입
+
+[최신 사람 병합 확인 기록](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6085738443)을 읽고
+K12에서 [원격/로컬 증거](evidence/kerbe-s-main-confirmation.json)를 별도로 수집했다.
+PR #4는 2026-10-09 17:01:53Z에 사람이 squash merge했다. 입력 후보 f0f73a8…와 실제 결과
+`efd539a6ab5cd05a2c7f33cf3b8db13c021458be`는 SHA가 다르지만 전체 tree
+`d288c37bb4a3f531adf20303e7e776ca1c82e74e`가 같다. K12의 S Worktree에서 정상 fetch 후
+origin/main이 실제 merge SHA와 일치하고 전체 diff가 비어 있음을 확인했다.
+원본 checkout의 local main은 026a8a0…로 보존했고 source 파일을 갱신하거나 main을 merge하지 않았다.
+실제 main SHA의 Ubuntu·Windows 필수 check도 completed/success다. S Writer idle·pending 없음,
+S Worktree clean·보존을 확인했다. **S 완주 통과이며 정리/Archive 완료와는 별개다.**
+
+M은 malformed Git remote URL의 raw ValueError가 제품 RemoteNormalizationError 계약을 벗어나
+attribution/collect fallback을 중단할 수 있는 결함을 선정했다. 합성 URL과 fake git_probe로 시험한다.
+기준은 S가 반영된 efd539a6…이며 [초기 gate/설계](evidence/kerbe-m-gate.json)에 소유권과 조건을 남겼다.
+첫 Claude Writer는 RED 회귀시험과 추적된 handoff를 남기고 commit/push/Draft 후 종료한다.
+다음 Codex는 task 위치와 안전 경계만 전달받아 같은 Git/runtime을 대조하고 Next를 복원한다.
+이전 writer idle·하위 실행 종료·원격 checkpoint 일치·runtime 소유권을 확인하기 전에는 교대하지 않는다.
+기본 Codex의 실제 모드와 원격 쓰기는 source 수정 전에 별도 확인하며 Full Access로 우회하지 않는다.
+이 문단은 시험 설계와 진입 기록이며 M 복원 성공 결과가 아니다.

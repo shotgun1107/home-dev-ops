@@ -1,6 +1,6 @@
 # K12 Paseo P0/P1 검증 현황
 
-2026-10-10 KST. **P0 부분 검증, P1 S 실행 부분 완료·사람 채택 대기. 미션 전체 완료가 아니다.**
+2026-10-10 KST. **P0 부분 검증, P1 S 완주 확인, M 교대 시험 착수. 미션 전체 완료가 아니다.**
 최신 후보 SHA·writer 상태·Next·Heartbeat 상태는 [Draft PR #1](https://github.com/shotgun1107/home-dev-ops/pull/1)의 handoff를 따른다.
 
 ## 기준
@@ -40,19 +40,20 @@
 
 Kerbe의 ignore만 바꾸는 S에 필요한 경로를 통과해 실제 작업에 진입했다.
 [Draft PR #4](https://github.com/shotgun1107/kerbe/pull/4)의 구현·검증·독립 리뷰·원격 전달까지 마쳤다.
-S 완주와 다음 단계는 사람의 채택 및 실제 main 확인이 남아 있다.
+이후 사람의 squash merge와 K12 fetch 결과를 대조해 S 완주를 확인했다.
+현재 M은 같은 전용 Worktree에서 Claude→Codex 순차 교대를 시험하는 단계다.
 
 | 순서 | 성공 기준 | 현재 판정·정확한 다음 행동 |
 |---|---|---|
 | 선행 | 사용할 Provider 승인/차단·branch push/PR·작업에 필요한 setup 경로 확정 | Work·C의 기존 동일 프로필 증거와 현재 실제 Writer를 대조. 이번 task의 개별 승인 경로로 구현·commit·push·Draft를 확인했다. 제품 runtime·새 setup은 사용하지 않음. [범위별 조건](REVISION.md#p1-s-첫-후보와-범위별-진입-조건) |
-| S | 한 writer의 요청→검증→리뷰→사람 merge→main 확인 | **실행 부분 완료 / 사람 채택 대기.** PR #4 HEAD `f0f73a87821a6b3d990142b948d13c7e2b6e067d`: 42개 가상 경로 통과, Codex 정적 리뷰 P0/P1/P2 0건, Ubuntu/Windows CI 각 182 tests OK(skip 2/1)·wheel 성공. 아직 Draft·미병합, 실제 main은 기존 026a8a0… |
-| M | 종료 확인·handoff·Git/runtime 대조만으로 반대 Provider가 Next 실행 | 미실행. S·선행 setup 반영 후 하나의 M 작업에서 시험 |
+| S | 한 writer의 요청→검증→리뷰→사람 merge→main 확인 | **완주 확인.** PR #4 후보 f0f73a8…가 사람에 의해 squash merge됨. 실제 main `efd539a6ab5cd05a2c7f33cf3b8db13c021458be`와 K12 origin/main·후보의 전체 tree 일치, main 필수 CI 2개 성공. 기존 42개·리뷰·제품 CI 증거 재사용. [E11](EVIDENCE.md#e11-s-main-반영과-m-진입) |
+| M | 종료 확인·handoff·Git/runtime 대조만으로 반대 Provider가 Next 실행 | 착수. malformed Git remote 오류 형식과 기존 fallback 복원을 한 결과로 선정. Claude RED tests/handoff → 종료·push/runtime 소유 확인 → Codex 복원·구현·검증. 두 번째 Writer의 실제 기본 모드/원격 쓰기 gate 통과 전 소스 수정 보류 |
 | 병렬 | S/M 후 독립 결과 2개 완주·개입 부담 비교 | 미실행. 과거 A/B는 같은 목표 경쟁·승인 조건 불일치·미커밋이라 대체 불가 |
 | 모바일 | 사람이 Acceptance·증거·미확인·후보 SHA 판단 | 미실행. 이 PR을 검토 후보로 제공했으나 실제 모바일 판단은 사람에게 남음 |
 
 ## 개선과 남은 결정
 
-- **적용·검증:** 읽기 전용 연결 진단, ops env/runtime ignore, REST PR 본문 복구, Heartbeat 정리 도구 30개 회귀와 실제 idle 1회 수명·삭제. 이번 S는 `.gitignore` 3줄 개선을 branch에서 실측했고 실제 main 채택은 대기 중이다.
+- **적용·검증:** 읽기 전용 연결 진단, ops env/runtime ignore, REST PR 본문 복구, Heartbeat 정리 도구 30개 회귀와 실제 idle 1회 수명·삭제. S `.gitignore` 3줄 개선은 사람의 main 채택 및 K12 대조까지 확인했다.
 - **검증된 설치 후보:** scripts/k12-pre-push. 기존 Kerbe hook과 byte 동일. ops 설치·Git 공통 설정 변경은 사람이 해야 한다.
 - **정책 검토:** ops 보호 기능 확보 또는 private 유지 시 보호 공백 수용 여부, 이번 S 밖의 기본 writer 경로, Kerbe bootstrap·S 채택, ops CI PR #2의 사람이 수행할 통합 순서와 새 후보 검증. 명령별 Supervisor 승인을 프로젝트 전체 영구 허용으로 확대하지 않는다.
 - **아직 주장하지 않는 것:** 전체 P0/P1 완료, Full Access에서 merge 기술적 차단 보장, 모바일 판단 성공, runtime 전체 백업·격리, 자동 복구/정리 보장.

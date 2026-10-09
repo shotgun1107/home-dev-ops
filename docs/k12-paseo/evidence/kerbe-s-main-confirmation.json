@@ -1,0 +1,51 @@
+{
+  "observedAt": "2026-10-09T17:20:42.259283+00:00",
+  "githubHandoff": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6085738443",
+  "approvedHead": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+  "pr4": {
+    "state": "closed",
+    "draft": false,
+    "merged": true,
+    "merged_at": "2026-10-09T17:01:53Z",
+    "merge_commit_sha": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be"
+  },
+  "remoteMain": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+  "k12FetchedOriginMain": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+  "mergeParents": [
+    "026a8a0e4cd6a0a7782f90f0848e641b33759a3e"
+  ],
+  "candidateTree": "d288c37bb4a3f531adf20303e7e776ca1c82e74e",
+  "mainTree": "d288c37bb4a3f531adf20303e7e776ca1c82e74e",
+  "fullTreeDiffExit": 0,
+  "changedFilesFromParent": [
+    ".gitignore"
+  ],
+  "mainChecks": [
+    {
+      "name": "test (ubuntu-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "details_url": "https://github.com/shotgun1107/kerbe/actions/runs/37963362159/job/113931479656"
+    },
+    {
+      "name": "test (windows-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "details_url": "https://github.com/shotgun1107/kerbe/actions/runs/37963362159/job/113931479385"
+    }
+  ],
+  "originalCheckout": {
+    "head": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+    "status": "",
+    "note": "kept original files/branch; origin/main fetched from S worktree, no local main checkout or merge"
+  },
+  "sWorktree": {
+    "head": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+    "status": "",
+    "preserved": true
+  },
+  "prior42PathChecks": "reused: identical full Git tree; not rerun",
+  "decision": "P1 S completed: human adoption plus actual main confirmed on GitHub and K12; cleanup separate, no archive"
+}

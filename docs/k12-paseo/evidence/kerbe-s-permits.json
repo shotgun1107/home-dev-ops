@@ -1,0 +1,87 @@
+{
+  "agentId": "010fafb2-a8ee-4b16-bb83-692dc75c3a8d",
+  "reviewer": "existing Astra Max Supervisor acting within user-authorized task operations",
+  "grant": "individual pending request only; no updatedPermissions/rules/mode changes",
+  "requests": [
+    {
+      "id": "permission-8fcbbed6-6ce9-4e68-a6aa-92f425f7e37c",
+      "tool": "Bash",
+      "action": "git/hook/presence read-only diagnostic",
+      "result": "allowed",
+      "observedAt": "2026-10-09T15:37:32.900Z",
+      "supervisorNativeAckLine": 1193
+    },
+    {
+      "id": "permission-a76046a1-7d93-4847-8227-44da399e82ea",
+      "tool": "Bash",
+      "action": "virtual check-ignore and tracked filenames; removed unnecessary recursive ~/.paseo search from input before execution",
+      "result": "allowed",
+      "actualInput": "for n in .env .env.local .env.production .env.development.local nested/.env.local .env.example .env.sample nested/.env.example; do git check-ignore --no-index -v \"$n\"; rc=$?; printf \"%s exit=%s\\n\" \"$n\" \"$rc\"; done\ngit ls-files \".env*\" \"**/.env*\"\ngit worktree list",
+      "observedAt": "2026-10-09T15:38:20.108331+00:00",
+      "inputAdjustment": "removed unnecessary recursive ~/.paseo search before execution; existing action/actualInput and Supervisor native rows 1219/1222 corroborate this previously unstructured adjustment",
+      "supervisorNativeRequestLine": 1219,
+      "supervisorNativeAckLine": 1222,
+      "inputAdjusted": true
+    },
+    {
+      "id": "permission-698c59d6-8104-4a9e-94fb-ce436a9a2e59",
+      "action": "unnecessary recursive ~/.paseo JSON search",
+      "result": "denied",
+      "reason": "outside task; may read raw sessions or credentials",
+      "stoppedWithoutRetry": true,
+      "observedAt": "2026-10-09T15:39:15.879Z",
+      "supervisorNativeAckLine": 1251
+    },
+    {
+      "id": "permission-192b9fe3-151f-40ef-9225-0683425b32bc",
+      "action": "42 virtual path assertions",
+      "result": "allowed",
+      "inputAdjustment": "replaced outer single-quoted python -c with quoted heredoc to preserve inner f-string quotes",
+      "testCodeSha256": "7c2c7151541d0f0e17b3a596154e7fac2d6bcbc67ac5c853bba3e0dd640b8666",
+      "observedAt": "2026-10-09T15:42:14.804960+00:00",
+      "inputAdjusted": true
+    },
+    {
+      "id": "permission-38b73146-01cb-4442-83dd-6c46ffc92bbf",
+      "action": "read-only tracked-ignored/diff whitespace/filelist/base checks",
+      "result": "allowed",
+      "observedAt": "2026-10-09T15:42:51.985106+00:00"
+    },
+    {
+      "id": "permission-52d3960a-3488-4be6-b5cb-f1aa2b08af1d",
+      "action": "stage only .gitignore and commit on fix/ignore-local-dotenv after 42 checks",
+      "result": "allowed",
+      "observedAt": "2026-10-09T15:43:38.262909+00:00"
+    },
+    {
+      "id": "permission-030ba339-05a2-4931-a6a4-00de93ccd371",
+      "action": "ordinary push to origin refs/heads/fix/ignore-local-dotenv only, then ls-remote",
+      "head": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+      "result": "allowed",
+      "observedAt": "2026-10-09T15:44:29.074329+00:00"
+    },
+    {
+      "id": "permission-208cbe36-c7df-4cf9-a93d-2219f8fb0c66",
+      "action": "task-specific temporary Markdown PR body",
+      "result": "allowed",
+      "inputAdjustment": "correct approval sequence, distinguish requested Bash from auto-permitted reads, human merge vs Supervisor main verification",
+      "observedAt": "2026-10-09T15:45:21.402411+00:00",
+      "filePath": "/tmp/kerbe-p1-s-dotenv-pr-body.md",
+      "writtenBodySha256": "ac95c8f6ed98da2c04d20fe2fa3882c5c45bc709ef86aec317550bff380efd74",
+      "hashScope": "temporary body written before PR creation; later Supervisor API updates are separate",
+      "inputAdjusted": true
+    },
+    {
+      "id": "permission-9314eab3-fc41-4f82-9b2d-8ef165985557",
+      "action": "gh pr create --draft on kerbe, main base, fix/ignore-local-dotenv head, reviewed body file",
+      "result": "allowed",
+      "observedAt": "2026-10-09T15:45:46.806701+00:00"
+    },
+    {
+      "id": "permission-04e7201f-b2b6-4d4e-bbc5-931c170466db",
+      "action": "read-only local/remote SHA, Draft, files and CI run verification",
+      "result": "allowed",
+      "observedAt": "2026-10-09T15:46:23.097796+00:00"
+    }
+  ]
+}

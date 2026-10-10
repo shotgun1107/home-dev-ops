@@ -1,0 +1,127 @@
+{
+  "observedAt": "2026-10-09T14:50:10.569525+00:00",
+  "probeMarker": "K12-IDLE-20261009-A",
+  "registration": {
+    "created": true,
+    "observedAt": "2026-10-09T14:45:37.699523+00:00",
+    "probeMarker": "K12-IDLE-20261009-A",
+    "schedule": {
+      "id": "427d614c",
+      "name": "K12 Paseo Pilot idle probe",
+      "target": {
+        "type": "agent",
+        "agentId": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd"
+      },
+      "cadence": {
+        "type": "cron",
+        "expression": "48 23 * * *",
+        "timezone": "Asia/Seoul"
+      },
+      "createdAt": "2026-10-09T14:45:37.682Z",
+      "nextRunAt": "2026-10-09T14:48:00.000Z",
+      "expiresAt": "2026-10-09T15:00:37.676Z",
+      "maxRuns": 1,
+      "status": "active"
+    },
+    "head": "3ee941a4bae0136efa4d687260b5f01c7536eada",
+    "nativeLogPath": "/home/shotgun1107/.codex/sessions/2026/10/09/rollout-2026-10-09T21-42-15-01a120af-820b-76e0-9f02-1e3fb9ed575b.jsonl",
+    "nativeBaselineLines": 919,
+    "cleanupWrapperPath": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot/.runtime/heartbeat_cleanup_report.py",
+    "cleanupWrapperSha256": "4d9ce2e558961fd650dd21ee97131e5660285f2c6058c6f7521bc4979a153c19",
+    "cleanupScriptSha256": "6974f196c9a3cb6af537583818c73bd0a4f2097051dc22c90994778e4758ef6e",
+    "cleanupPid": 718949,
+    "idleResumeVerified": false,
+    "cleanupSessionId": 718949,
+    "cleanupLaunchedAt": "2026-10-09T14:46:24.882618+00:00",
+    "cleanupWaitSeconds": 900,
+    "cleanupLogPath": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot/.runtime/427d614c-cleanup.log"
+  },
+  "beforeFireIdleObservation": {
+    "observedAt": "2026-10-09T14:46:53.938748+00:00",
+    "id": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+    "status": "idle",
+    "nativeSessionId": "01a120af-820b-76e0-9f02-1e3fb9ed575b",
+    "workspaceId": "wks_91760bd37449c714",
+    "model": "gpt-6-astra",
+    "thinking": "max",
+    "agentUpdatedAt": "2026-10-09T14:46:53.542Z",
+    "heartbeatId": "427d614c",
+    "nextRunAt": "2026-10-09T14:48:00.000Z",
+    "runCount": 0,
+    "observerPid": 718949
+  },
+  "nativeLogPath": "/home/shotgun1107/.codex/sessions/2026/10/09/rollout-2026-10-09T21-42-15-01a120af-820b-76e0-9f02-1e3fb9ed575b.jsonl",
+  "nativeLifecycleAfterRegistration": [
+    {
+      "line": 937,
+      "timestamp": "2026-10-09T14:46:53.539Z",
+      "type": "task_complete",
+      "turnId": "01a12103-6d25-7e62-b0e5-f98fae585906"
+    },
+    {
+      "line": 939,
+      "timestamp": "2026-10-09T14:48:00.674Z",
+      "type": "task_started",
+      "turnId": "01a12122-a39b-7ef1-bdef-108b7e67c0c7"
+    }
+  ],
+  "automaticNotification": {
+    "line": 941,
+    "timestamp": "2026-10-09T14:48:00.702Z",
+    "role": "user",
+    "heading": "Schedule \"K12 Paseo Pilot idle probe\" fired (id=427d614c, run=f398d566-5e92-447c-9020-f5edd6c3024d).",
+    "markerPresent": true
+  },
+  "currentSupervisor": {
+    "Id": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+    "Provider": "codex",
+    "Model": "gpt-6-astra",
+    "Thinking": "max",
+    "Mode": "full-access",
+    "Status": "running",
+    "Cwd": "/home/shotgun1107/.paseo/worktrees/20iw348x/docs-k12-paseo-autopilot",
+    "PendingPermissions": []
+  },
+  "scheduleSnapshot": {
+    "id": "427d614c",
+    "target": {
+      "type": "agent",
+      "agentId": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd"
+    },
+    "status": "active",
+    "nextRunAt": "2026-10-09T14:48:00.000Z",
+    "lastRunAt": null,
+    "expiresAt": "2026-10-09T15:00:37.676Z",
+    "maxRuns": 1
+  },
+  "runSnapshot": {
+    "id": "f398d566-5e92-447c-9020-f5edd6c3024d",
+    "scheduledFor": "2026-10-09T14:48:00.000Z",
+    "startedAt": "2026-10-09T14:48:00.662Z",
+    "endedAt": null,
+    "status": "running",
+    "agentId": null
+  },
+  "helper": {
+    "pid": 718949,
+    "sessionId": 718949,
+    "processState": "S (sleeping)",
+    "commandMatchesRecordedWrapper": true,
+    "survivedPreviousAgentTurn": true
+  },
+  "verdicts": {
+    "idleAutomaticEntry": "passed",
+    "sameAgentAndNativeSession": "passed",
+    "noNewSupervisorOrWorktree": "passed",
+    "scheduledRunCompletion": "pending-current-turn-exit",
+    "heartbeatDeletion": "pending-completion-helper",
+    "cleanupPublication": "pending-completion-helper"
+  },
+  "regressionReuse": {
+    "tests": 30,
+    "allRecordedSourceHashesMatch": true,
+    "reexecuted": false,
+    "evidence": "regression-issue-3.json#afterReview"
+  },
+  "limit": "Single real idle resumption in the current host/full-access configuration; not a guarantee across daemon restarts, sandbox or approval changes. Run completion and cleanup require the later receipt."
+}

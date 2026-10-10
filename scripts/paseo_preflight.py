@@ -8,7 +8,30 @@ import argparse
 import json
 import os
 from pathlib import Path
+import stat
 import subprocess
+
+
+def read_pid_metadata(paseo_home):
+    """Bounded observation only; no lock removal or process ownership claim."""
+    try:
+        fd = os.open(paseo_home / "paseo.pid", os.O_RDONLY | os.O_NONBLOCK | os.O_NOFOLLOW)
+        with os.fdopen(fd, "rb") as handle:
+            if not stat.S_ISREG(os.fstat(handle.fileno()).st_mode):
+                return None, "unreadable-or-invalid"
+            raw = handle.read(65537)
+        if len(raw) > 65536:
+            return None, "unreadable-or-invalid"
+        metadata = json.loads(raw)
+        value = metadata.get("pid") if isinstance(metadata, dict) else None
+        if isinstance(value, int) and not isinstance(value, bool) and value > 0:
+            started = metadata.get("startedAt")
+            # Compare the identity stamp, but never echo it or treat PID visibility
+            # as proof that the process is the expected daemon.
+            return (value, started if isinstance(started, str) else None), "present"
+    except (OSError, ValueError, RecursionError):
+        pass
+    return None, "unreadable-or-invalid"
 
 
 def assess(status, recorded_pid, pid_visible):
@@ -30,18 +53,10 @@ def assess(status, recorded_pid, pid_visible):
     }
 
 
-def diagnose(paseo_home):
-    recorded_pid = None
-    metadata_state = "unreadable-or-invalid"
-    try:
-        metadata = json.loads((paseo_home / "paseo.pid").read_text())
-        value = metadata.get("pid") if isinstance(metadata, dict) else None
-        if isinstance(value, int) and not isinstance(value, bool) and value > 0:
-            recorded_pid = value
-            metadata_state = "present"
-    except (OSError, ValueError):
-        pass
-    pid_visible = recorded_pid is not None and Path("/proc", str(recorded_pid)).is_dir()
+def diagnose(paseo_home, *, proc_root=Path("/proc")):
+    before, metadata_state = read_pid_metadata(paseo_home)
+    recorded_pid = before[0] if before else None
+    pid_visible = recorded_pid is not None and (proc_root / str(recorded_pid)).is_dir()
     status = {}
     cli_result = "failed"
     try:
@@ -52,6 +67,8 @@ def diagnose(paseo_home):
         if result.returncode != 0:
             cli_result = "nonzero-exit"
         else:
+            if len(result.stdout) > 1048576:
+                raise ValueError("oversized status")
             parsed = json.loads(result.stdout)
             if isinstance(parsed, dict):
                 status = parsed
@@ -64,10 +81,18 @@ def diagnose(paseo_home):
         cli_result = "timeout"
     except OSError:
         cli_result = "execution-error"
-    except ValueError:
+    except (ValueError, RecursionError):
         cli_result = "invalid-output"
-    return {**assess(status, recorded_pid, pid_visible),
-            "pid_metadata": metadata_state, "cli_result": cli_result}
+    after, after_state = read_pid_metadata(paseo_home)
+    changed = before != after or metadata_state != after_state
+    result = assess(status, recorded_pid, pid_visible)
+    if changed:
+        result.update(verdict="observation-changed", connection_verified=False,
+                      next_step="repeat read-only identity/status comparison; do not start/restart")
+    result.update(pid_metadata=metadata_state, cli_result=cli_result,
+                  observation_changed=changed, pid_identity_verified=False,
+                  cli_connection_reachable=status.get("connectedDaemon") == "reachable")
+    return result
 
 
 def main():

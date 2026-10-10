@@ -1,0 +1,34 @@
+{
+  "reviewer": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+  "provider": "claude",
+  "model": "claude-opus-5-5",
+  "reviewedSha": "c98b27a2a34fc57f7acc6d2e902f2a5ff9762e99",
+  "nativeLine": 627,
+  "nativeTimestamp": "2026-10-09T21:07:34.956Z",
+  "originalSha256": "6cc3676f28fb606c4660603874cc4951de3b612dbecd07116813dcad16f76d6f",
+  "commentId": 6089315397,
+  "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089315397",
+  "getVerified": true,
+  "findings": {
+    "Critical": 0,
+    "High": 0,
+    "Medium": 0,
+    "Low": 1,
+    "Info": 2
+  },
+  "reviewerTestsExecuted": false,
+  "delta": {
+    "reviewedSha": "03ed878bbd8c1ff9dffa89900b797f8398bc1a2e",
+    "nativeLine": 647,
+    "nativeTimestamp": "2026-10-09T21:12:32.461Z",
+    "originalSha256": "9588030a9d1a1a5a41ea1c62e37c7f5a0f8a57429acc813048f1f0d04dc775c4",
+    "commentId": 6089359221,
+    "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089359221",
+    "getVerified": true,
+    "priorLowResolved": true,
+    "newLowOrHigher": 0,
+    "newInfo": 1,
+    "reviewerTestsExecuted": false,
+    "infoDisposition": "Naming limitation documented; source bytes intentionally unchanged."
+  }
+}

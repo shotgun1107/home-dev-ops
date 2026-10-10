@@ -1,0 +1,31 @@
+{
+  "observedAt": "2026-10-09T14:22:02.820Z",
+  "node": "v22.22.1",
+  "source": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/service.js",
+  "fixtureRoot": "/tmp/k12-heartbeat-lifecycle-U2HBXO",
+  "daemonConnected": false,
+  "providerStarted": false,
+  "results": [
+    {
+      "scenario": "delete-during-run",
+      "error": "Schedule not found: <fixture-id>",
+      "statusBeforeCleanup": null,
+      "runStatuses": [],
+      "removedAfterCleanup": true,
+      "runningSetCleared": true
+    },
+    {
+      "scenario": "delete-after-completion",
+      "error": null,
+      "statusBeforeCleanup": "completed",
+      "runStatuses": [
+        "succeeded"
+      ],
+      "removedAfterCleanup": true,
+      "runningSetCleared": true
+    }
+  ],
+  "sourceSha256": "325066fba80c259ed0f5385042f15045820791fe048e622151259ed036dcd3c6",
+  "reproduction": "node docs/k12-paseo/evidence/heartbeat-cleanup-probe.mjs",
+  "trackedProbeReplay": {"observedAt":"2026-10-09T14:29:33.526Z","node":"v22.22.1","source":"/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/service.js","fixtureRoot":"/tmp/k12-heartbeat-lifecycle-DseF6Z","daemonConnected":false,"providerStarted":false,"results":[{"scenario":"delete-during-run","error":"Schedule not found: <fixture-id>","statusBeforeCleanup":null,"runStatuses":[],"removedAfterCleanup":true,"runningSetCleared":true},{"scenario":"delete-after-completion","error":null,"statusBeforeCleanup":"completed","runStatuses":["succeeded"],"removedAfterCleanup":true,"runningSetCleared":true}]}
+}

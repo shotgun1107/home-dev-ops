@@ -1,0 +1,31 @@
+{
+  "observedAt": "2026-10-09T15:52:49.136399+00:00",
+  "opsRegressionReused": {
+    "tests": 30,
+    "basis": "source/test bytes unchanged from afterReview record",
+    "allSixHashesMatch": {
+      "scripts/k12-pre-push": true,
+      "scripts/paseo_heartbeat_cleanup.py": true,
+      "scripts/paseo_preflight.py": true,
+      "tests/test_heartbeat_cleanup.py": true,
+      "tests/test_paseo_preflight.py": true,
+      "tests/test_pre_push.py": true
+    }
+  },
+  "immutableInputsByteEqual": {
+    "K12_Paseo_v2.4.md": true,
+    "K12_AGENTS_draft.md": true
+  },
+  "localDocumentLinksChecked": 45,
+  "newEvidenceJsonParsed": 7,
+  "commonSecretPatterns": "not found; not comprehensive secret detection",
+  "gitDiffCheckExit": 0,
+  "afterLowReviewEdits": {
+    "observedAt": "2026-10-09T15:59:18.009099+00:00",
+    "localDocumentLinksChecked": 45,
+    "jsonParsed": 8,
+    "gitDiffCheckExit": 0,
+    "commonSecretPatterns": "not found; not comprehensive detection",
+    "allSixSourceAndTestHashesStillMatch": true
+  }
+}

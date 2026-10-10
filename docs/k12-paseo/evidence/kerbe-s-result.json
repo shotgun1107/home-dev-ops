@@ -1,0 +1,44 @@
+{
+  "observedAt": "2026-10-09T15:49:51.079933+00:00",
+  "pr": {
+    "number": 4,
+    "url": "https://github.com/shotgun1107/kerbe/pull/4",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "head": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+    "base": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+    "testMergeSha": "96e852f564830e5d19106455b7959e707992f9cd",
+    "bodyGetEqual": true,
+    "bodySha256": "ccc95464d7960ecb625024eb3c15708f550e3d251f5028d39ab135987feca482"
+  },
+  "git": {
+    "head": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+    "branch": "fix/ignore-local-dotenv",
+    "status": "",
+    "changedFiles": [
+      ".gitignore"
+    ],
+    "diffCheckExit": 0,
+    "remoteHead": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+    "remoteMain": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e"
+  },
+  "writer": {
+    "Id": "010fafb2-a8ee-4b16-bb83-692dc75c3a8d",
+    "Provider": "claude",
+    "Model": "claude-opus-5-5",
+    "Thinking": "medium",
+    "Mode": "acceptEdits",
+    "Cwd": "/home/shotgun1107/.paseo/worktrees/007unhvc/kerbe-p1-s-dotenv",
+    "Status": "idle",
+    "PendingPermissions": []
+  },
+  "scope": "S execution portion done, human Ready/merge and actual main verification pending",
+  "heartbeat": "427d614c deleted; no automatic resume guaranteed",
+  "reviewComment": "https://github.com/shotgun1107/kerbe/pull/4#issuecomment-6084290891",
+  "ciRun": 37954147794,
+  "approvalRequests": {
+    "allowed": 9,
+    "denied": 1
+  }
+}

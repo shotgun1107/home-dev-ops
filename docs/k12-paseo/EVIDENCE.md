@@ -1,7 +1,11 @@
 # 실측 근거와 결함 재현
 
-2026-10-09 KST 수집. 원문/세션 전문·인증값은 저장하지 않는다. 판정은 실행 범위에 한정한다.
-[실제 상태 JSON](evidence/live-snapshot.json), [21개 회귀 결과](evidence/regression.txt), [기존 hook 직접 시험](evidence/existing-guard.txt). 일괄 수집 시작 시각·Python/Git 버전·시험한 파일 hash를 출력에 보존했다.
+2026-10-09~10 KST 수집. 원문/세션 전문·인증값은 저장하지 않는다. 판정은 실행 범위에 한정한다.
+[최초 상태 JSON](evidence/live-snapshot.json), [당시21개 회귀 결과](evidence/regression.txt), [기존 hook 직접 시험](evidence/existing-guard.txt). 일괄 수집 시작 시각·Python/Git 버전·시험한 파일 hash를 출력에 보존했다.
+
+E1~E18은 시점별 기록이다. 각 절의 현재/이번·설치 버전·설정·서비스 건강·검사 수는 **그 관찰 당시**를
+뜻하며 이후에도 유지됐다는 보장이 아니다. S main은 E11, M 교대/전달은 E12, 최신125개는 E18로
+갱신됐다. [E19](#e19-docs_reconcile-현황과-증거-대조)의 새 원격 조회와 [현재 판정](STATUS.md)을 함께 본다.
 
 ## E1 Heartbeat
 
@@ -12,7 +16,7 @@
 - 승인된 host 실행: running/reachable. 데몬은 10/07부터 실행 중이며 새로 시작하지 않았다.
 - 재현: `codex sandbox -- paseo status --json`. Codex 0.160.1은 `sandbox -- <command>` 문법이다. 잘못 시도한 `sandbox linux --help`는 execvp linux 실패, 상태 변경 없음.
 - sandbox 안 PID는 2, 기록된 supervisor PID 2316은 /proc에 없음. host에서는 존재. PID/network namespace inode가 각각 다르다. 현재 CLI 보조 재현이며 이전 Paseo 실측과 구분한다.
-- 설치 파일 `@getpaseo/server/dist/src/server/daemon-instance.js:29–31`은 isPidLockOwnerRunning=false면 null 반환. `pid-lock.js:33–41`은 process.kill(pid,0) 실패가 EPERM이 아니면 false다. 격리된 PID 공간의 결과를 호스트 daemon 중지로 해석하는 진단 결함이다.
+- 설치 파일 `@getpaseo/server/dist/src/server/daemon-instance.js:29–31`은 isPidLockOwnerRunning=false면 null 반환. 같은 디렉터리의 `pid-lock.js:33–41`은 process.kill(pid,0) 실패가 EPERM이 아니면 false다. 격리된 PID 공간의 결과를 호스트 daemon 중지로 해석하는 진단 결함이다. E19에서 이 경로와 `dist/server/server`의 동일 bytes 사본을 각각 확인했다. 원래 경로가 오기라는 중간 판정은 철회했다.
 - 네트워크 namespace도 달라 --host 문자열만 바꾸면 해결된다고 주장하지 않는다. 임의 재시작은 금지했다.
 
 ### 개선과 재시험
@@ -36,6 +40,7 @@ credential·CLI raw stderr 출력, start/restart/fallback 연결이 없다. 보�
 - 설정 확인은 ~/.paseo/schedules/f854c66d.json의 cadence/target/runs 필드로 수행. 최종 상태는 PR handoff를 따른다.
 - `paseo schedule inspect f854c66d`는 존재해도 not found. 설치 CLI commands/schedule/inspect.js:12가 target.type != new-agent를 의도적으로 제외한다. 일반 schedule ls/logs로 Heartbeat 부재를 단정하지 않는다. 파일을 편집해서 고치지 않는다.
 - 22:20 KST 실제 cron tick은 `already has an active run`으로 failed였다. 중복 실행은 시작되지 않았고 nextRunAt=22:40으로 갱신됐다. [기록](evidence/heartbeat-tick.json). 자동 재개 통과로 세지 않는다.
+- f854c66d는 22:35:42 KST 정상 `paseo heartbeat delete`의 `{id:f854c66d,status:deleted}` 응답과 파일 부재를 확인했다. native session `01a120af-820b-76e0-9f02-1e3fb9ed575b` JSONL 527/530행(UTC 13:35:40/42)이 출처다. 해당 heartbeat run은 22:20에 이미 failed로 끝났으며, 삭제를 실행한 것은 사용자가 시작한 Supervisor 턴이다. E8의 '그 Heartbeat가 시작한 run 안에서 자기 삭제'와 다르다. Issue #3과 재개 조회에서도 부재를 확인했다.
 - 등록은 idle 세션 재개 완료와 다르다. daemon·인증·모드·세션·writer 소유권이 유지돼야 한다. Heartbeat가 없거나 실패하면 자동 재개는 보장되지 않는다.
 
 ## E2 Provider
@@ -92,7 +97,8 @@ main 생성/FF, 삭제, rewind, divergence, unknown remote object, 복수 ref �
 두 repo에 현재 tracked .gitattributes/LFS 계약이 없어 LFS 연계는 미적용 범위다.
 
 home-dev-ops에는 활성 hook과 env ignore가 없었다. .gitignore 추가 후 .env/.env.local/.venv/.runtime 제외,
-.env.example 추적 가능을 git check-ignore --no-index로 확인했다. Kerbe의 .env.local 누락은 발견만 기록한다.
+.env.example 추적 가능을 git check-ignore --no-index로 확인했다. 당시 발견한 Kerbe의 .env.local 누락은
+이후 E10의 별도 S branch에서 수정·검증했고 E11에서 사람의 main 채택·K12 대조까지 확인했다.
 ignore는 비밀 검사와 명시적 stage를 대체하지 않는다.
 
 ## E4 Runtime
@@ -116,7 +122,7 @@ base/head 모두 paseo.json/dev-setup 없음. uv.lock/frozen 설치 경로가 �
 
 user paseo/docker active, system docker.service/docker.socket disabled·inactive, Docker securityOptions rootless,
 Minecraft/geyser/viaproxy/backup 4개 healthy. docker/lxd 그룹 없음. 서비스·volume·prune 조작은 하지 않았다.
-[추가 관찰 증거](evidence/additional-observations.json)에 credential mode·system units·groups·Docker securityOptions를 저장했다. PID 2041(node)이 2316(Paseo supervisor)의 부모이고 2365(daemon)가 그 자식임을 ps로 확인했다. unit MainPID와 daemon PID가 다른 이유가 이 process chain이다. 관찰 시점 상태이며 내부 데이터 무결성 전체 검사는 아니다.
+[추가 관찰 증거](evidence/additional-observations.json)에 credential mode·system units·groups·Docker securityOptions를 저장했다. PID 2041(node)이 2316(Paseo supervisor)의 부모이고 2365(daemon worker)가 그 자식임을 ps로 확인했다. unit MainPID·PID lock의 supervisor·daemon worker가 다른 이유가 이 process chain이다. 관찰 시점 상태이며 내부 데이터 무결성 전체 검사는 아니다.
 
 Public Direct 추가 시험: /ws에 Authorization/cookie/hello auth 없이 한 번 연결,
 protocolVersion 1·hello_rejection capability 전송→hello.rejected/password_required, close 4401.
@@ -158,13 +164,437 @@ CL-P0:179는 과거 git lfs track/ls-files/env 진단 중 hook/config/.git/lfs �
 원문 SHA-256은 [snapshot](evidence/live-snapshot.json)에 기록했다. 원문 Markdown 두 칸 줄바꿈 때문에
 전체 git diff --check는 21개 공백 경고를 낸다. 원문을 변조하지 않고 신규 파일 검사를 분리했다.
 흔한 token/private-key 패턴 검사는 통과했지만 모든 비밀 탐지의 보장은 아니다.
-자료가 없는 모바일 판단·실제 Provider writer 교대·main 채택·파괴적 복구는 미실행으로 남긴다.
+최초 수집 때 실제 Provider writer 교대·main 채택도 미실행이었으나, E11의 S main 확인과 E12의
+Claude→Codex 교대 실측으로 갱신됐다. 모바일 판단·M main 채택·파괴적 복구는 여전히 미실행이다.
 
 ## E7 이번 독립 리뷰와 CI 공백
 
 Claude reviewer b8e68af1은 고정 SHA `2873a57a804c96225b774bc1c9f86dae87628db3`를 읽기 전용으로 검토했다.
 [원문 대리 게시](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6081867053)는 GitHub GET으로 원문 일치를 확인했다.
 Medium 1건(Full Access 예외/보호 공백 명시), Low 8건을 반영했다. Plan 파일 쓰기 없이 종료·idle을 확인하고 writer가 수정했다.
-현 후보에는 GitHub checks가 없어 통과로 기록하지 않는다. [CI 제안](proposals/README.md)은 workflow patch로 보존하고 사람 적용 후 실행을 기다린다.
+이 리뷰 당시 후보에는 GitHub checks가 없었다. 이후 사람이 허용한 별도 CI PR #2에서 실행된 결과와 운영 PR #1의 관계는 [CI 기록](proposals/README.md) 및 E8에 구분한다.
 
-최초 리뷰 지적 반영 후 Claude의 fd8f1f28abf8dab17d3a926f3dfd394e0fc54d6c 재리뷰에서 Medium 이상 없음. 남은 Low 2건은 supervisor/worker 용어와 batch 시각 표기로 수정했다. 최종 후보 리뷰의 원문·SHA는 PR에 보존한다. 코드와 테스트 bytes는 이 재리뷰 이후 변경하지 않았다.
+최초 리뷰 지적 반영 후 Claude의 fd8f1f28abf8dab17d3a926f3dfd394e0fc54d6c 재리뷰에서 Medium 이상 없음. 남은 Low 2건은 supervisor/worker 용어와 batch 시각 표기로 수정했다. 최종 후보 리뷰의 원문·SHA는 PR에 보존한다. 그 재리뷰부터 73afc54…까지 코드와 테스트 bytes는 동일했다. Issue #3 이후 추가한 도구·시험은 E8로 구분한다.
+
+## E8 Issue #3 재개와 Heartbeat 정리
+
+### 실제 상태와 CI
+
+2026-10-09 23시 KST [Issue #3](https://github.com/shotgun1107/home-dev-ops/issues/3)과
+PR #1·#2·현재 Git을 대조했다. 시작 local/PR #1 HEAD는 `73afc54ba6ba046ad5f527c08d77fd3a20ce2a58`,
+clean이었다. Supervisor는 같은 `c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd`,
+workspace `wks_91760bd37449c714`, 실제 model/thinking=`gpt-6-astra`/`max`, mode=full-access다.
+설정 변경이나 새 Supervisor 생성은 하지 않았다. [선별한 API·로컬 증거](evidence/issue-3-resume.json).
+ops 보호 API의 403, core.hooksPath unset, 활성 pre-push 부재를 다시 확인했다.
+
+CI PR #2의 head `f069ac35b0553f69f0a485784df0bc4f11341f1b`는 기존 PR #1 HEAD를 부모로 하며
+base는 `docs/k12-paseo-autopilot`이다. `.github/workflows/ops-check.yml`만 추가됐고
+기존 제안 patch와 byte 일치한다. [run 37941584724](https://github.com/shotgun1107/home-dev-ops/actions/runs/37941584724),
+job 113857032952의 실제 로그에서 CPython 3.12.15·`Ran 21 tests`·`OK`를 재조회했다.
+그 성공을 이후 PR #1 변경이나 main의 필수 check로 승계하지 않는다. 정리 도구의
+시험은 그 CI 실행에 포함되지 않았다. 새 로컬 회귀는 Python 3.14.4에서 최초 28개,
+독립 리뷰 반영 후 30개 통과했다.
+[명령·파일 hash·결과](evidence/regression-issue-3.json).
+
+### 자기 Heartbeat 삭제 충돌: 재현 → 개선 → 재시험
+
+설치 Paseo 0.10.3 `schedule/service.js`의 `executeSchedule`은 agent의 종료를 기다린 뒤
+`finishRun`으로 결과를 저장한다. 이 Heartbeat가 시작한 run 안에서 자기 Heartbeat를 삭제하면
+`finishRun`의 `requireSchedule`이 실패한다. 이는 daemon 연결 실패와 별개의 구현 결함이다.
+
+[재현 코드](evidence/heartbeat-cleanup-probe.mjs)는 실제 설치 모듈을 불러오되 새 `/tmp` 저장소,
+고정된 가짜 agent ID, 로컬 runner만 사용한다. `start()`를 호출하지 않고 daemon/provider에 연결하지 않는다.
+[실측](evidence/heartbeat-cleanup-race.json):
+
+| 조건 | 결과 |
+|---|---|
+| 실행 안에서 schedule 삭제 | 파일 삭제 후 `Schedule not found: <fixture-id>` 오류, 결과 저장 불가 |
+| maxRuns=1 실행 종료 후 삭제 | completed / run succeeded 저장, 삭제 성공, 오류 없음 |
+
+운영 daemon/전역 설치를 패치하지 않았다. [정리 명령](../../scripts/paseo_heartbeat_cleanup.py)은
+동일 caller의 `maxRuns=1` Heartbeat가 completed이고 모든 run이 종료됐을 때만
+정상 CLI `heartbeat delete`를 호출한다. 최대 15분 대기, CLI 30초 제한, 삭제 응답·파일 부재 확인,
+선별한 종료 결과 영수증을 제공한다. 새 세션 실행·자동 재개·권한 변경 기능은 없다.
+당시9개 시험에서 실행 중 대기, timeout 시 무삭제, 타 owner·반복 미션 거부, 실패 상태 보존,
+오류 출력 비노출, 잘못된 성공 응답의 파일 부재 확인, run 없는 만료의 판정,
+삭제 응답 유실 후에도 삭제 전 run 증거 보존을 검증했다. `--home`/`PASEO_HOME`도 preflight와 같은 우선순위다.
+
+이 보조 명령은 **scheduled agent 턴 밖에서** 기다려야 한다. 같은 턴이 자기 완료를 기다리면 종료되지 않는다.
+실제 idle 시험에서는 원래 agent를 한 번 재개하고, 종료 후 정리만 수행하는 한시적 로컬 명령을 사용한다.
+다른 자동 재개 방식으로 대체하는 것이 아니다. 새 cron/systemd/daemon은 만들지 않는다.
+실제 one-run 수명·삭제의 최종 판정은 PR #1의 해당 ID·receipt를 따른다. 격리 결과만으로 실측 통과를 선언하지 않는다.
+
+[1891c5d… 독립 리뷰 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6083052359)을 대리 게시하고 GET으로 원문 일치를 확인했다.
+Medium 2건(정리/재개 판정 분리, 보조 프로세스 분리 실행)과 Low 4건(삭제 전 영수증 보존,
+S 후보 표 일치, 과거 삭제 경위, Paseo home 선택)을 반영했다. receipt의 `runOutcome`은
+no-run/failed-run/succeeded-one-run 등을 구분한다. 성공 run 하나여도 실제 idle 전환·자동 알림·동일 세션의
+증거 대조 전에는 idle 재개 통과가 아니다(`idleResumeVerifiedByReceipt:false`).
+
+## E9 실제 idle 자동 재개 1회
+
+Heartbeat `427d614c`, run `f398d566-5e92-447c-9020-f5edd6c3024d`가 같은 Supervisor를
+**idle에서 실제로 자동 재개했다.** [선별한 관찰 증거](evidence/heartbeat-idle-entry.json)는 다음 순서를 확인한다.
+
+| 시각 (2026-10-09 UTC, KST=+9시간) | 실제 관찰 |
+|---|---|
+| 14:45:37.682 | 같은 agent 대상 생성, maxRuns=1, nextRunAt=14:48, expiresAt=15:00:37.676 |
+| 14:46:53.539 | 기존 native 턴 task_complete (JSONL 937행) |
+| 14:46:53.938748 | 분리된 관찰 명령이 agent idle / run 0 / 같은 native session / Astra Max를 읽음 |
+| 14:48:00.662 | 등록된 schedule run 시작 |
+| 14:48:00.674 | 같은 native session의 새 task_started (939행) |
+| 14:48:00.702 | 해당 schedule ID/run ID/고유 marker의 자동 알림 수신 (941행) |
+
+Supervisor·workspace·native session·Worktree가 그대로이며 수동 send/새 agent로 재개하지 않았다.
+재개 후 model/thinking/mode는 `gpt-6-astra`/`max`/`full-access`, pending permissions는 없다.
+helper PID 718949는 이전 턴 종료 뒤에도 살아 있고 새 process session 및 지정 wrapper 명령이 일치한다.
+전체 세션·prompt·credential은 복사하지 않고 위 식별자·이벤트·시각만 보존했다.
+
+이것은 기존 host/Full Access 조건의 **idle 자동 진입 1회 통과**다. 22:20 active-run 거부 시험과 구분한다.
+daemon 재시작·sandbox·승인 정책 변경 뒤의 복원까지 보장하지 않는다.
+자동 재개 턴에서 보존한 최초 관찰은 running / endedAt=null이었다. 이후 2026-10-10 KST의
+S 착수 턴에서 [종료·삭제 영수증](evidence/heartbeat-idle-completion.json)과
+[GitHub 게시 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6083354266)을 대조했다.
+같은 run이 14:52:41.857Z에 succeeded로 종료됐고 helper는 completed 확인 후 CLI 삭제를 수행했다.
+14:52:42.715659Z의 deleted=true, helper exit=0, 게시 GET 일치와 현재 schedule 파일 부재를 확인했다.
+실행 중 자기 삭제 없이 **idle 재개→run 종료→정상 삭제→영수증 게시 1회**가 통과했다.
+receipt의 `idleResumeVerifiedByReceipt:false`는 도구가 자체적으로 idle 진입을 판정하지 않는다는 뜻이다.
+idle 진입은 앞 표의 native 이벤트·자동 알림·발화 전 관찰을 함께 대조해 판정했다.
+E9 종료 확인 당시 이 pilot Heartbeat는 삭제됐으며 그 schedule로 이후 자동 재개는 보장되지 않는다.
+이는 이후 Director/coordinator를 포함한 모든 자동화의 현재 부재를 뜻하지 않는다.
+
+코드/시험 6개 hash가 기존 30개 회귀 실측과 모두 일치해 테스트를 재실행하지 않았다.
+이 관찰 기록만으로 Provider 권한 보호·S/M·병렬·모바일 시험을 통과시키지 않는다.
+
+## E10 Kerbe P1 S — 실제 Writer 경로
+
+2026-10-10 KST [Kerbe Issue #3](https://github.com/shotgun1107/kerbe/issues/3)과
+[실행 handoff](https://github.com/shotgun1107/kerbe/issues/3#issuecomment-6083911066)를 읽었다.
+시작 main은 `026a8a0e4cd6a0a7782f90f0848e641b33759a3e`, bootstrap PR #2는 Draft·미병합이다.
+새 작업에 필요한 보호 경로만 확인했고 제품 runtime/setup 시험을 추가 선행 조건으로 삼지 않았다.
+
+### 기존 증거 재사용과 현재 경로 대조
+
+[선별한 gate 기록](evidence/kerbe-s-gate.json)에 시각·행 번호·설정 hash와 한계를 보존했다.
+
+- **같은 Work·C 조합:** Claude `claude-opus-5-5 / medium / acceptEdits`.
+  CL-WRITER의 실제 commit/push/Draft 호출은 143/150/160행, 성공은 144/151/162행이다.
+  해당 사용자 턴의 native permissionMode는 acceptEdits였다. 현재 그 과거 agent의 Auto 표시를
+  소급 적용하지 않는다. 다른 모드의 원격 쓰기 성공으로도 확대하지 않는다.
+- **동일 조합의 merge 실행 전 거부:** f9f790e3의 native
+  `~/.claude/projects/-home-shotgun1107-workspace-kerbe/0972fce4-f77c-4fe4-98e4-222044eed621.jsonl`
+  3행은 사용자가 PR 999999·zero match-head의 단일 호출을 지정한 acceptEdits 턴이다.
+  21행(10/08 10:28:08.512Z)의 실제 호출과 22행(.535Z)의 permission-rule 거부를 확인했다.
+  당시와 현재 Claude 버전은 2.1.292다. 별도의 새 위험 호출을 수행하지 않았다.
+- **거부 근거의 한계:** matched-rule ID는 없다. permission-rule 필드 하나로 자동 deny를 확정하지 않는다.
+  일치 deny가 시험 전에 존재한 기록·변하지 않은 settings mtime/hash, 23ms의 실행 전 거부,
+  daemon 집계의 해당 30초 창에 수동 permission response가 없는 점을 함께 대조했다.
+  후속 설정 조회는 10:34:11.526Z에 사람이 거절한 별도 요청이다.
+  정확한 `gh pr merge` 호출 형태의 권한 계층 거부 증거이며 모든 shell/API 경로 봉쇄는 아니다.
+- **현재 조건:** global `Bash(gh pr merge *)` deny 유지, 새 Worktree에 project/local override 없음.
+  Ruleset 24715075 active·main PR/strict CI 필수·bypass 없음. 새 Worktree가 상속한 실행 가능한
+  pre-push의 hash는 기존 12개 fixture 시험 대상과 같다. 보호 규칙·hook은 수정하지 않았다.
+
+프로젝트 전체 provider/model 기본값 지정은 조사한 설정에서 확인되지 않았다. 다른 프로젝트 기본값을
+변경하지 않고, v2.4의 Work·C와 실제 성공 이력이 일치하는 조합을 이번 S에만 재사용했다.
+Supervisor는 기존 Astra Max/ops Worktree를 유지한다. 새 Writer는
+`010fafb2-a8ee-4b16-bb83-692dc75c3a8d`, workspace `wks_ac69cdda2677c33b`,
+branch `fix/ignore-local-dotenv`의 유일한 writer다. 실제 native session
+`28804af0-349f-4e75-ab76-15a1dbb074c9`의 3행과 21행에서도 버전·모드·모델·medium을 확인했다.
+초기 읽기 전용 턴이 clean/base/hook을 확인한 뒤에만 후속 편집을 허용했다.
+동시 writer는 ops Supervisor와 S Writer 두 명이며 원본 Kerbe와 bootstrap은 비writer다.
+
+### 승인 방식에서 발견한 운영 차이
+
+Accept Edits의 일반 Bash는 개별 승인 대기가 발생했다. 현재 사용자가 허용한 조사·작업 branch
+쓰기 범위의 요청은 Supervisor가 실제 명령을 읽고 **요청 ID 하나씩** 정상 `permit` 경로로 처리한다.
+사람이 클릭한 시험이나 무인 자동 승인 통과로 기록하지 않는다. mode/rules/allow 목록은 변경하지 않는다.
+
+초기 두 번째 요청에는 불필요한 `~/.paseo` 전체 JSON 검색이 섞여 있었다. 실행 전에
+`updatedInput`으로 가상 경로 검사·tracked 이름·worktree 조회만 남겼다. 다음 요청에 같은 검색이
+포함돼 명시적으로 거부하자 Writer가 재시도 없이 종료했다. 실제 광범위 검색은 실행하지 않았다.
+후속 턴은 repo 안의 필요한 작업만 다시 지정했다. 이 거부는 **Supervisor 범위 통제**이며
+자동 merge deny 증거가 아니다. CLI의 `permit allow`는 ID를 생략하면 모든 대기를 승인하므로
+운영 명령에서는 agent ID와 request ID를 모두 지정한다. 영구 권한 변경을 전송하지 않는다.
+
+[개별 요청 기록](evidence/kerbe-s-permits.json)은 승인 9건(Bash 8건·임시 PR 본문 Write 1건),
+거부 1건이다. 승인 9건 중 전역 검색 제거, 시험 명령의 shell 인용 수정, PR 본문의 시점·주체
+정정은 `updatedInput`으로 실행 전에 반영했다. 영구 `updatedPermissions`는 전송하지 않았다.
+Writer의 최종 '승인 대기로 멈춘 명령 없음'은 종료 시점에 남은 대기가 없다는 사실이며,
+그 문구를 실행 도중 승인 개입 0건으로 계산하지 않는다.
+
+### 재현 → 개선 → 재시험 → 독립 검토
+
+- **이전:** 실제 새 Worktree에서 8개 가상 이름을 조회했다. `.env`만 제외되고
+  `.env.local`·`.env.production`·`.env.development.local`·`nested/.env.local`은 제외되지 않았다.
+  공개 example/sample은 이미 추적 가능했다. tracked dotenv 후보는 파일명 검사에서 없었다.
+- **개선:** 기존 `.env` 다음에 `.env.*`, `!.env.example`, `!.env.sample` 3줄만 추가했다.
+  `.gitignore` 외의 제품·workflow·권한 파일은 변경하지 않았다. 실제 비밀 파일도 생성·열람하지 않았다.
+- **이후:** 같은 경로와 중첩/예외/회귀를 포함한 [42개 가상 경로](evidence/kerbe-s-virtual-paths.json)가
+  모두 통과했다. `--no-index -q`의 exit 0/1을 단언했고 다른 코드는 실패로 처리했다.
+  `git diff --check` 통과, tracked-but-ignored 목록 없음, 변경 파일은 `.gitignore` 하나였다.
+  Supervisor는 Writer의 Python 시험 코드에 포함된 shell 인용 충돌을 실행 전 quoted heredoc으로
+  바꿨다. 실제 42개 명령 실행은 같은 Claude Writer의 Bash 도구에서 이뤄졌다.
+- **전달:** `f0f73a87821a6b3d990142b948d13c7e2b6e067d`를 `fix/ignore-local-dotenv`에 일반 push해
+  [Draft PR #4](https://github.com/shotgun1107/kerbe/pull/4)를 생성했다. [실제 결과](evidence/kerbe-s-result.json)의
+  local/remote/PR SHA·clean·Draft·미병합을 대조했다. 원본 main checkout도 clean이었다.
+- **독립 검토:** 기존 Codex reviewer `349afd27-7108-41c1-a870-e3be8ef7bef1`가 같은 full SHA를
+  정적으로 검토해 P0/P1/P2 모두 0건. [원문](https://github.com/shotgun1107/kerbe/pull/4#issuecomment-6084290891)을
+  Supervisor가 대리 게시하고 GET 일치를 확인했다. [로컬 선별 증거](evidence/kerbe-s-review.json).
+  reviewer는 테스트나 소스 수정을 하지 않았고 전후 원본 checkout은 clean이다.
+- **CI:** [run 37954147794](https://github.com/shotgun1107/kerbe/actions/runs/37954147794)의 기존
+  Ubuntu·Windows job이 모두 성공했다. 각 `Ran 182 tests` / `OK`이고 skip은 Ubuntu 2개,
+  Windows 1개다. 설치·wheel도 모두 성공했다. [job/선별 로그](evidence/kerbe-s-ci.json).
+  실제 checkout은 PR 시험 merge `96e852f564830e5d19106455b7959e707992f9cd`이며
+  head f0f73a8…와 base 026a8a0…를 조합한다. 이는 AI가 main을 병합했다는 뜻이 아니다.
+
+로컬 제품 설치·전체 테스트·wheel은 ignore-only 영향 판단으로 미실행이며 위 CI와 구분한다.
+제품 runtime/setup·DB·실제 계정 격리는 이번 S가 사용하지 않아 통과 범위에 포함하지 않는다.
+무시된 부모 폴더의 예제, 이미 tracked인 파일, 강제 add는 `.gitignore`만으로 보호되지 않는다.
+
+**E10 당시 판정: S 실행 부분 완료 / 사람 채택 대기.** 당시 main은 026a8a0…이며 M·병렬·모바일은
+미실행이었다. 이후 E11에서 사람의 PR #4 merge와 실제 main 대조로 S 완주, E12에서 M 교대·개발·
+Draft 전달을 확인했다. E10 종료 당시 Writer/reviewer는 idle·pending0이었고 기존 dirty A/B와 Kerbe PR #2는 보존했다.
+
+운영 문서 `0727e0a8c5993c28f432c9f2ec13f6866fb3f191`도 기존 Claude reviewer가 정적 검토했다.
+[원문 대리 게시·GET 확인](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6084479751):
+Medium 이상 0건, Low 3건. 만료 종료 경로 미실행, Supervisor 입력 조정 3건의 요약,
+임시 PR 본문 hash와 실제 게시 본문 hash의 구분, full agent/request ID만 사용하는 절차를 보완했다.
+초기 허용·거부 응답의 native 시각도 선별해 추가했다. 실제 모든 요청은 full ID를 사용했다.
+이 리뷰는 저장소 증거와 설치 CLI 소스의 정적 대조이며 GitHub/native 원문 전체를 독립 재실측한 것은 아니다.
+
+## E11 S main 반영과 M 진입
+
+[최신 사람 병합 확인 기록](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6085738443)을 읽고
+K12에서 [원격/로컬 증거](evidence/kerbe-s-main-confirmation.json)를 별도로 수집했다.
+PR #4는 2026-10-09 17:01:53Z에 사람이 squash merge했다. 입력 후보 f0f73a8…와 실제 결과
+`efd539a6ab5cd05a2c7f33cf3b8db13c021458be`는 SHA가 다르지만 전체 tree
+`d288c37bb4a3f531adf20303e7e776ca1c82e74e`가 같다. K12의 S Worktree에서 정상 fetch 후
+origin/main이 실제 merge SHA와 일치하고 전체 diff가 비어 있음을 확인했다.
+원본 checkout의 local main은 026a8a0…로 보존했고 source 파일을 갱신하거나 main을 merge하지 않았다.
+실제 main SHA의 Ubuntu·Windows 필수 check도 completed/success다. S Writer idle·pending 없음,
+S Worktree clean·보존을 확인했다. **S 완주 통과이며 정리/Archive 완료와는 별개다.**
+
+M은 malformed Git remote URL의 raw ValueError가 제품 RemoteNormalizationError 계약을 벗어나
+attribution/collect fallback을 중단할 수 있는 결함을 선정했다. 합성 URL과 fake git_probe로 시험한다.
+기준은 S가 반영된 efd539a6…이며 [초기 gate/설계](evidence/kerbe-m-gate.json)에 소유권과 조건을 남겼다.
+첫 Claude Writer는 RED 회귀시험과 추적된 handoff를 남기고 commit/push/Draft 후 종료한다.
+다음 Codex는 task 위치와 안전 경계만 전달받아 같은 Git/runtime을 대조하고 Next를 복원한다.
+이전 writer idle·하위 실행 종료·원격 checkpoint 일치·runtime 소유권을 확인하기 전에는 교대하지 않는다.
+기본 Codex의 실제 모드와 원격 쓰기는 source 수정 전에 별도 확인하며 Full Access로 우회하지 않는다.
+이 문단은 시험 설계와 진입 기록이며 M 복원 성공 결과가 아니다.
+
+## E12. M 같은 Worktree의 Claude → Codex 복원
+
+- 하나의 결과: malformed IPv6 remote의 `urlsplit` 원시 `ValueError`를 제품의 `RemoteNormalizationError` 계약으로 변환해 기존 metadata fallback을 유지한다. 실제 계정·원본 Codex 자료 없이 합성 URL·fake probe로 검증한다. 별도 cwd Git probe 예외 adapter 문제는 범위 밖이다.
+- workspace `wks_6ff707e7c396efdb`, branch `fix/malformed-remote-errors`, base `efd539a6ab5cd05a2c7f33cf3b8db13c021458be`. [Kerbe PR #5](https://github.com/shotgun1107/kerbe/pull/5)를 Draft로 유지한다. [gate와 교대 증거](evidence/kerbe-m-gate.json).
+- Claude `6f07d351-77ef-40a2-bf62-95b647c25726`은 새 venv와 회귀시험 2개, tracked handoff를 작성했다. checkpoint `ce96e381385bfc09829819309c1381c8ddf0a529`는 source 미수정이며 local/remote/PR 일치·clean이었다. 17:40:27.180Z idle, pending·자식 프로세스·하위 agent·Heartbeat 없음 확인 뒤에만 다음 Writer를 시작했다. idle Claude 프로세스 자체는 유지했고 Archive하지 않았다.
+- 새 Codex `dc583f6a-fe16-4025-b277-0103a6b94a75`의 native `01a121c1-56ff-7c81-86b7-e50ff617dce8`는 17:41:21.285Z 시작됐다. 8행에서 실제 Codex 0.160.1 / gpt-6.1-sol / medium / on-request / workspace-write / network=false를 확인했다. 이전 같은 프로필의 실행 전 merge forbidden 증거를 재사용했고 새 위험 merge/main push probe는 하지 않았다.
+- 새 세션에는 canonical task 경로와 소유권·안전 gate만 전달했다. 원래 Claude 대화·업무 설명을 주입하지 않았다. Codex는 목표/범위, SHA/dirty/PR, RED·미실행, TMPDIR 보정, runtime import와 Next를 복원하고 부족한 업무 정보가 없다고 보고했다. native 63행 final, 66행 17:43:17.935Z task_complete를 확인했다. 사용자 업무 재설명 0회이며 Supervisor의 안전·단계 조정과 개별 명령 승인은 있었다.
+
+### Setup 문제의 재현과 보정
+
+- 신규 Worktree `.venv`: uv 0.12.23, Python 3.14.4, pip 26.2.1, tzdata 2026.5. no-cache·Python 다운로드 없이 system interpreter를 사용했다. hardlink 불가 경고 후 copy fallback으로 생성 성공했다. editable install 성공, `sys.prefix`와 `codex_usage.__file__`이 해당 Worktree를 가리키는 assert 통과. 글로벌 Python/PYTHONPATH 설치 우회는 하지 않았다.
+- 첫 baseline은 Supervisor가 실행 중 `paseo send`로 보충 메시지를 보내면서 중단됐다. native 103–106행의 user-rejected 라벨은 실제 사람 클릭이 아니다. 남은 test process가 없음을 확인하고 `baseline.log`와 합성 잔여 fixture를 보존한 뒤 별도 `baseline-retry.log`로 한 번 재시험했다.
+- Worktree 안 TMPDIR에서는 **182 tests, failures=2, skipped=2**. Git이 fixture의 상위 Kerbe 저장소를 발견해 non-repository 판정과 doctor 기대값이 어긋났다. 제품 소스·시험 조건을 완화해 숨기지 않았다.
+- 새 전용 `/tmp/kerbe-m-6f07d351-CYllHj`는 UID 1000·0700, Git rev-parse exit128(비저장소)을 확인했다. 같은 실패 2개는 **2 tests OK (0.028s)**. 소유자는 같은 workspace이며 경로를 task handoff와 로컬 pointer에 기록했다. 기존 자료는 보존했다. 새 TMPDIR의 전체 suite는 수정 후보 단계에서 검증하도록 남겼다.
+- Claude RED: 선택 module **21 methods, errors=3**. 정규화 1개 method의 subcase 2개와 attribution method 1개가 원시 ValueError로 실패, 나머지 19개 method 통과. [RED CI 37967823137](https://github.com/shotgun1107/kerbe/actions/runs/37967823137)에서도 Windows·Ubuntu 각 **184 tests, errors=3, skip 1/2**로 재현됐다. 계획된 미완성 checkpoint이며 성공으로 세지 않는다.
+
+### 구현·전달·독립 리뷰 후 재검증
+
+- Codex는 source 수정 전 task branch no-op push와 [인수 comment](https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086175610) POST/GET을 직접 수행했다. 기본 sandbox의 network=false 및 common Git index.lock 제한은 명령별 정상 요청으로 처리했다. 이 경로는 Full Access 전환이나 영구 allow가 아니다.
+- 같은 Worktree·venv/TMPDIR에서 RED 21/errors3을 재현하고 최소 구현 후 21 OK, 전체 Ran184 OK(skip2), wheel 성공을 확인했다. wheel 첫 시도는 sandbox DNS 실패였고 같은 명령의 개별 승인 후 성공했다. 이 오류는 제품 실패와 구분했다.
+- 구현 `3366227053651fd6af1b9c6007b9d245c32fed57` 뒤 PR 본문 PATCH/GET 일치를 확인하고 이번에 만든 task 파일 하나만 삭제해 `eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f`를 전달했다. 제품 bytes 동일성을 확인해 로컬 시험을 재사용했고 해당 SHA의 [CI 37969609440](https://github.com/shotgun1107/kerbe/actions/runs/37969609440)도 Ubuntu/Windows 각184 OK(skip2/1)·wheel 성공이었다.
+- [독립 Claude 리뷰 원문](https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086484807): P0=0/P1=0/P2=1. 새 예외의 `from error`가 userinfo 포함 원인 문자열을 traceback에 남길 수 있다는 비회귀 지적이었다. 실제 secret 대신 합성 marker와 NFKC 금지 netloc로 재현했다. 새 시험만 추가한 이전 source는 Ran22 FAILED(failures=1); 원인 표시를 `from None`으로 억제한 후 같은22 OK, 전체 Ran185 OK(skip2), 별도 wheel 성공이었다. 표준 formatted traceback의 해당 경로를 검증했으며 `__context__`의 프로그램적 접근이나 모든 오류의 비밀 제거를 보장하지 않는다.
+- **M 실측 후보 `7ff930cefd308c37702aff7c7efd48fc4c9e4c9b`**: base 대비 제품 source 1개+test 파일 2개, +65/-1. [CI 37971237098](https://github.com/shotgun1107/kerbe/actions/runs/37971237098)는 Ubuntu Python3.12.15 / Windows3.12.10, 각 Ran185 OK(skip2/1), wheel 성공. 실제 CI checkout은 시험 merge `07e44426c1eca768cbe7574c1dc128465565ed4d`이며 main 채택과 구분한다. [재현·검증 증거](evidence/kerbe-m-validation.json), [리뷰 SHA·게시 영수증](evidence/kerbe-m-review.json).E19에서 원격 후보 유지·Draft를 다시 확인했으며 회사 로컬 미동기화 변경은 검증하지 않았다.
+- [새 후보의 독립 재리뷰](https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086696411)는 이전 P2 해소·새 P0/P1/P2 0건이다. 원문 게시·GET 일치를 확인했고 리뷰어는 무수정 idle이다. 사람의 채택 상태는 PR #5 최신 handoff를 따른다. 과거 리뷰·CI를 새 SHA에 그대로 승계하지 않는다. cwd probe의 별도 예외 adapter, 기존 port wrapper의 원인 표시는 범위를 늘리지 않고 남겼다.
+
+### 운영 해석과 제한
+
+- 새 Codex는 original chat 없이 tracked task와 Git/runtime으로 Next를 복원했다. 이후 task를 PR handoff로 승격·GET 확인·삭제한 뒤 P2 후속은 PR을 읽어 재개했다. 사용자 업무 재설명은 없었지만 Supervisor의 단계 조정·개별 승인·초기 증거 정정이 있었다.
+- [개별 승인 기록](evidence/kerbe-m-permissions.json)에 full ID·대상·입력 조정·거부·실행 중 send 중단을 기록했다. Claude 승인16/명시거부2/입력조정3, Codex 승인34(복원2+구현21+P2후속11)다. Claude의 승인된 첫 baseline은 send로 중단됐으므로 승인 횟수와 성공 실행 횟수는 다르다. Claude와 Codex의 시험 범위·명령 분할이 달라 단순 승인 횟수를 Provider 성능 비교로 쓰지 않는다.
+- 교대 전후 venv inode·외부 TMPDIR과 소유 workspace가 동일했다. 중단 fixture·로그·이전 wheel은 보존했다. 이는 해당 Python fixture 범위의 분리이며 OS 계정·모든 영속 DB·컨테이너 격리를 보장하지 않는다.
+- Claude의 Paseo UpdatedAt은 idle 중에도 바뀌었지만 native 마지막 assistant는 17:40:27.158Z, 254행으로 유지됐고 교대 뒤 새 user/assistant/tool 실행은 없었다. UpdatedAt 하나로 재실행을 추정하지 않았다. active 상태·pending·native 명령·자식 실행을 함께 확인한다.
+- E12 종료 시점에 미션 Heartbeat 없음. 이후 모든 자동화의 부재 주장은 아니다. 서비스 시작·재시작·설정 변경, AI Ready/Merge/main push, 자동 Archive·기존 데이터 정리를 실행하지 않았다. M의 실제 main 채택, 정식 병렬 두 결과와 모바일 판단은 남아 있다.
+
+## E13 P0_PERMISSIONS 야간 감사
+
+기준 SHA `5a17e3d5ff5d1d72b550516da2b957ba55e8357d`의 기존 증거를 재사용했다.
+[권한 감사](PERMISSIONS.md)와 [선별 원문 metadata·설치 hash·재집계](evidence/permission-audit.json)에
+라우팅/주체/실행 결과를 구분해 보존했다. M native reviewer=user, Claude Auto/Accept Edits의
+permission-rule, baseline 중단의 user-rejected를 실제 저장 행에서 다시 확인했다.
+S inputAdjustment 누락1건은 native1219/1222행 대조 후 보충했고9/1/3으로 재집계됐다.
+M은50허용/2거부/3조정으로 기존 기록과 일치한다. 합성32개+기존30개=62개 OK(skip0).
+이는 새 위험 차단 실험이나 Auto-review 실제 결정 성공을 뜻하지 않는다.
+Kerbe·설정·서비스·자격증명 저장소 무변경, ops 작업 branch와 PR1만 결과 게시 대상으로 삼았다.
+
+E13 독립 리뷰 후속: 초기 후보 bbe9f7f9adb82a74c6ef672ba37b4b45dc2a740f에
+새 반례38개를 적용해20 assertion/subtest failure를 재현했다. actor 모순·혼합 ledger·
+명시 조정 marker·JSON 깊이 처리와 문서 범위를 보강한 후 전체68개 OK(skip0).
+S/M 확인된 조정6건에만 bool marker를 보충했고 응답59/3·조정3/3은 변하지 않았다.
+
+최종 delta 독립 리뷰:7edc8b9…의 Low4/Info3 해결, 새 Low 이상0·Info2.
+최상위 ledger actor 설명은 검토자 책임이다. 2000-depth 테스트가 이전 코드에서도 OK였으므로
+RecursionError 재현으로 세지 않는다. 별도 합성 오류 주입의 exit2·고정 오류·무노출을
+[회귀 영수증](evidence/permission-regression.json)에 기록했다. [리뷰 원문 영수증](evidence/permission-review.json).
+
+## E14 P0_HEARTBEAT 야간 격리 검증
+
+기준a29f66e…의 기존 Heartbeat/권한 증거를 보존했다. [수명 감사](HEARTBEAT.md),
+[38개 설치본/후보 비교 결과](evidence/heartbeat-lifecycle.json),
+[미설치 patch](proposals/paseo-heartbeat-schedule.patch)에 정확한 조건·hash·실패를 기록했다.
+새 mkdtemp schedule store·주입 시간·stub만 사용했고 daemon.start/restart나 실제 schedule은 조작하지 않았다.
+설치본의 동일 슬롯2회/상한 초과, pause·expiry 뒤 dispatch, append 실패 guard 잔류를 재현했다.
+후보는 store mutation 안 최신 조건/현재 시각 확인과 finally로 차단하면서 독립 schedule 진행을 유지했다.
+Node38개 OK(skip0); 기존 Python68은 hash 동일로 재사용했고 현재 ops CI로 승계하지 않는다.
+24h는 가상 시간, crash는 persisted running의 새 객체 복원이다. 실제24h/OS crash와 설치 효과는 미확인이다.
+초기 stub 계약·fixture clock 오류는 시험 코드 결함으로 분리해 로그 hash를 보존했다.
+e8036f7… [독립 리뷰 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088278361)의
+Low1은 종료 저장 연속 실패 뒤 orphan running 정지였다. 설치본의 추가 실행과 후보의
+진행 정지를 합성 재현했고 복구 한계를 문서화했다. Info의 list 이후 삭제도 같은 tick 중단·
+다음 tick 진행을 확인했다. patch bytes는 그대로이며 stop() 비취소는 정적 확인이다.
+
+a2311a7… [독립 delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088341624)는 새 지적0이며 원문 게시·GET 일치를 확인했다. 기존 Low1의 자동 복구는 해결하지 않았고 시험·한계로 다뤘다. 최종 문서 영수증 추가 이후 시험·patch bytes는 이 리뷰 SHA와 같다. [리뷰 영수증](evidence/heartbeat-review.json).
+
+## E15 P0_RECOVERY 야간 실패 주입
+
+기준243ecdf…의 clean/local/PR Draft HEAD 일치를 확인하고 기존 Worktree·Astra Max·Director를
+유지했다. [복구 시험](FAILURE_RECOVERY.md)과 [회귀 영수증](evidence/recovery-regression.json)에
+정확한 조건·hash·실패 분류를 남겼다. Python 신규29+기존 preflight9=38, 설치 PID Node9 OK(skip0).
+영향 없는 Python59·Heartbeat Node38은 hash 일치로 재사용했으며 새 실행/CI로 합산하지 않았다.
+
+기존 preflight는 조회 중 PID identity 변경도 reachable로 합성 재현됐다. 전후 stamp 확인과
+입력 실패의 고정 미확정 판정으로 보정했다. PID 가시성은 신원 인증이 아니다. handoff 후보는
+실행 종료·원격 SHA·runtime/epoch·부작용 공백을 차단하고 원자적 발행의 old/new 기록 보존을
+새 시험 child의 즉시 종료로 확인했다. 실제 서비스·세션·설정·Kerbe는 변경하지 않았다.
+작업 결과 판정 도구는 offline advisory이며 자동 복구/권한 부여/lock/CAS/dispatch가 아니다.
+0083b5e… 독립 리뷰의 Low2(완료 exit0 혼합·remote/detached branch 수용)를 합성 재현 후
+보정했다. 완료는 exit3, 검토 가능은0, 차단/재대조는2로 구분하고 후보 입력을 local task
+형식으로 제한했다. 기존9개 시험의 실제 /proc 존재 조회도 합성 경로로 바꿔 재검증했다.
+Info의 publication 오류 의미는 반영 뒤 응답 유실 시험을 추가하고 불확정으로 유지했다.
+
+cba377e… [독립 delta 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088668023)에서 Low2 해소·새 Low 이상0, Info1(로그 구분)을 확인했다. 기존 preflight9개만 provenance header/footer로 다시 실행해9개 OK와 source 동일을 보존했다. unique Python38/Node9 판정은 그대로이며 reviewer는 테스트를 실행하지 않았다. 최종 source/tests는 이 리뷰 SHA와 동일하다. [리뷰 영수증](evidence/recovery-review.json).
+
+## E16 OPS_CI 최신 suite와 원격 CI 대조
+
+기준 `44a8fa593310d11d5d4d2de045e4f3ac54926555`의 clean/local/remote/PR Draft를 대조했다.
+PR #2의 과거 run37941584724는21개이며 `.base.sha`와 merge ref 부모는 여전히73afc54…였다.
+최신base 포함 assertion 실패는 초기 가정 오류로 보존하고 시험 성공으로 세지 않았다.
+같은 격리 clone에서 최신 ops를 local merge해 기존97개를 실측했다. Python3.14.4의 빈 suite는
+exit5로 실패했고, 두 파일 존재+합성1개만 남긴 축소 suite는 exit0이었다.
+
+manifest·실제 수집 수·skip/오류·source byte 검사를 추가했다. 고정 source ad3acae…와 workflow를
+통합한5d7d1e1…에서 실제 job 명령으로 **115개/0skip/성공**, 실행 전후 byte 동일을 확인했다.
+별도 task-owned clone에서2472-byte bundle을 import해 같은SHA·PR2 조상·workflow만 차이를 확인했다.
+Node38+9는 설치 소스/harness/patch hash를 대조해 재사용했고 hosted Python 수에 합치지 않았다.
+[CI 대조](OPS_CI.md), [사람 적용 후보](proposals/README.md), [선별 영수증](evidence/ops-ci-validation.json).
+
+remote workflow push·Actions 최신 실행·Ready/Merge/main push·보호 변경은 하지 않았다.
+로컬 실패 회귀는 후보 명령 검증의 증거이며 hosted CI 성공이나 저장소의 기술적 권한 차단 보장은 아니다.
+
+독립 고정 SHA [원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088962998)은 Critical/High/Medium0·Low1·Info2다. Low1의 누락된 후속 문서를 정확한 candidate/부모/tree/bundle과 사람 절차로 보완했다. source/tests/workflow 변경은 없다. [리뷰 영수증](evidence/ops-ci-review.json).
+
+3d68f76… [독립 delta](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089010542)에서 Low1 해소·새 Low 이상0, Info1의 bundle 읽기 경로를 명확히 했다. source/tests/manifest/workflow/patch/bundle은 그대로이며115개 실측을 재사용했다.
+
+## E17 P1_PARALLEL_ISOLATED 독립 mock 동시 작업
+
+시작646ffd9…에서 기존 Astra Max/Director/reviewer·PR1 Draft·clean을 확인했다.
+[수동 probe](evidence/parallel-mock-probe.py)는 별도 source/task/result/runtime/local Git을 가진
+Python mock writer2개만 띄웠다. 실제 Paseo/Provider 세션은 만들지 않았으며 운영 정책을 변경하지 않았다.
+[결과](PARALLEL_ISOLATED.md)와 [full ID·SHA·시간·결정·수집 원문](evidence/parallel-isolated.json)을 보존한다.
+
+초기 두 작업 완료 후, 이미 준비된 결정이 만료 검사를 건너뛰는 mock harness 반례를 발견했다.
+신규14개 중1개 실패(exit0, 기대77)를 재현·보정했고14개 OK(skip0). 보정135c10c…에서
+같은 A/B를 새 경로로 다시 실행해 두 local commit·clean·child exit0/reaped를 확인했다.
+동시 writer/lease 겹침 하한16.928993초, B 승인 대기 중 A 완료와 B HEAD 불변·결과 부재를 관찰했다.
+추가 같은 task writer는 exit75로 lease 미획득이었다. 각 launch에서 writer2개를 관찰했으며 전역 상한 자동 강제는 미검증이다.
+
+수동 mock 결정은 최초2+재시험2=4건이며 모두 full writer/request/task ID·operation hash를
+직접 대조했다. 시간은 의도적 보류를 포함하고 실제 Provider 승인 부담/직렬 대비 성능은 미측정이다.
+기존 Python115 source/tests는 OPS_CI hash와 동일해 재사용했으며 새14개와 hosted 성공으로 합산하지 않았다.
+이 수동 probe는 기존 CI manifest 밖의 독립 실험이며 CI gate를 바꾸지 않았다.
+M main 선행·정식 P1 진입은 그대로 남는다. Kerbe·서비스·설정·권한·원격 CI branch·main은 건드리지 않았다.
+
+후속 source/cwd 점검: 앞선 task의 데이터는 독립이었지만 공통 고정 harness와 기본 cwd 상속에
+의존했다. 별도 source 사본 계약 시험15개 중1개 실패를 확인하고 각 Git에 worker.py를 저장,
+child cwd도 task로 지정했다. ec7e809…에서15개 OK 뒤 세 번째 새 pair를 실행했다.
+최종 실제 PID cwd·reported source·사본 hash/inode 일치, 겹침 하한20.800057초,
+B 대기 중 A 완료, 각 local commit·clean·두 child 회수까지 확인했다.
+수동 mock 결정은 전체2+2+2=6건이며 round별 지연은 비교 성능 지표가 아니다.
+
+[초기 독립 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089315397)의 Low1은 관찰한2 writer를
+전역 상한 강제로 읽을 수 있다는 표현이었다. 같은 task flock과 이번 두 개 launch 관찰만
+검증했다고 고쳤으며 전역 상한 자동 강제는 미검증이다. 실제4 writer 반례는 실행하지 않았다.
+
+03ed878… [독립 delta](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089359221)에서 Low1 해소·새 Low 이상0을 확인했다.
+Info의 immutable 명칭은 기술적 readonly/불변 보장이 아님을 명시했다. 최종 probe bytes는
+ec7e809…의15개·최종 두 결과 실측과 이 리뷰 SHA에서 같으며 추가 반복 시험은 하지 않았다.
+[리뷰 영수증](evidence/parallel-review.json).
+
+## E18 REVIEW_INDEPENDENT 고정 SHA 독립 검토
+
+기준 `81e1547da5f7d6579471ad1f8f4c8b5fa3269c4e`를 별도 Claude reviewer가 정적 검토했다.
+[초기 원문·정정·GET 확인](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089553741).
+새 Low의 CI `_exit(0)` false-green과 Supervisor의 FIFO/receipt 자료형 반례를 합성 환경에서 재현했다.
+고정 source `1edd2ef4702031dd6fe2d59adc01e4504c5c57db`, CI 후보
+`80455437960f3db0cbec5f1f3df0392ad47def3c`에서 **125개 OK(skip0)**. 새10개는 전후 대조했고
+Node47·수동 mock15는 hash 일치로 재사용했다. 기존115개 bundle을 보존하고 새3269-byte bundle을
+별도 clone에서 복원했다. 원격 CI/실제 Schedule/서비스/권한 변경은 없다.
+
+[반례·harness 실패·읽기 한계·미확인](INDEPENDENT_REVIEW.md),
+[case ID·SHA·hash·시각·review 게시 영수증](evidence/independent-review.json),
+[최신 사람 적용 제안](proposals/README.md)을 함께 본다. 초기 reviewer는 과거 문맥을 재사용했고
+전체 source를 새로 읽거나 시험을 실행하지 않았다. 후속에는6개 script 전체를 새로 읽었고,
+최종 [773a87b… delta](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089778176)는 새 Low 이상0·Info1이다.
+Info의 Heartbeat-aware 조회 선행 조건을 문서에 명시했다. reviewer의 시험 실행은0이다.
+
+## E19 DOCS_RECONCILE 현황과 증거 대조
+
+이번 작업의 성공 기준은 네 운영 문서의 시점·SHA 역할·검사 수·참조·남은 차단을 실제 조회 및
+보존 증거와 일치시키는 것이다. 시작 `7b321124a79d1413c62dfb0ee398d784b6fb0568`에서
+local/origin/PR #1 일치·clean·open/Draft를 확인했다. 구현·시험·설치 후보를 바꾸지 않았다.
+[선별 대조 영수증](evidence/docs-reconcile.json)에 조회 시각·full SHA·hash·검사 범위와 한계를 남긴다.
+
+| 대조 | 관찰과 해석 |
+|---|---|
+| PR #1 / ops main | PR #1 기준 HEAD의 check-runs0, status contexts0. combined pending은 CI 실행 대기를 뜻하지 않음. 실제 main `bf50f2bdb44e4d71fc29b31dcb0629719a345a95`, protected=false |
+| ops PR #2 | 실제 head `f069ac35b0553f69f0a485784df0bc4f11341f1b` open/Draft. API base는 여전히73afc54…로 최신 ops branch와 다름. Actions 조회는 run37941584724 한 건, 과거21개. 최신125개 hosted 성공으로 읽지 않음 |
+| S / M | GitHub GET에서 PR #4 merge와 실제 main efd539a… 유지, PR #5 7ff930c… Draft·2 checks success·main 미반영. K12의 실제 S fetch/tree 실측은 E11 재사용. 이번에는 Kerbe checkout/branch를 읽거나 변경하지 않음. 회사 로컬 변경도 미확인 |
+| 최신 검사 재사용 | source1edd2ef…·CI 후보8045543…의 run2318a21f… 125개 OK(skip0)를 재사용. source/tests/manifest15파일 SHA256 대조. Node38+9의 설치 source5개·harness·미설치 patch와 mock15의 bytes 대조. 새 시험 실행이나 hosted 검사로 합산하지 않음 |
+| 후보 전달 | 최신3269-byte bundle SHA256 `076a4de9fe76eaa5c8b08603f36d96d31d11081f04d7e69b782f2565f9f0dcd9` 유지. 이전 task의 verify/import·전체 tree 차이 검증을 재사용, 원격 CI branch 갱신 없음 |
+| 원문·참조 | v2.4·AGENTS 입력 사본의 byte/hash 일치. 원문의 Review_History 입력은 여전히 없어 미확인. 네 문서의 상대 경로·근사 heading slug 검사와 선별 GitHub GET 확인. 브라우저 anchor 동작·모바일·모든 외부 문서 내용은 재검증하지 않음 |
+
+[별도 Claude 기준 감사 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089914829)은
+고정7b321…의 네 문서를 새로 전부 읽어 Low6·Info4를 기록했다. writer가 다음을 보정했다.
+
+- E3의 S 채택 대기, 최초 한계의 Provider 교대 미실행, E10의 과거 main/M 판정을 E11/E12와 연결했다.
+- 현재125·과거115·과거 hosted21, cleanup15·초기9·당시 전체30을 구분했다. M의184와185도 SHA 단계로 구분했다.
+- mock2 writer 관찰을 전역 상한 강제로 표현하지 않는다. repo가 모호한 PR #2와 문서 label/절 번호를 정리했다.
+- 이전 pilot Heartbeat 부재는 당시 기록으로 한정했다. 새 Heartbeat/자동화를 생성·삭제하지 않았고 기존 Director/coordinator는 유지했다.
+- 설치 source 두 경로를 실제 파일/hash로 대조했다. `dist/src/server`도 존재하며 `dist/server/server` 사본과 byte 동일하므로 중간 후보의 오기 판정을 철회했다. 보호 설정 전체·서비스 건강·credential mode를 새로 감사하지 않았다. branch의 protected 표시와 Ruleset 링크 존재 GET만으로 전체 보호 재검증을 주장하지 않는다.
+
+reviewer는 기존 Claude Opus5.5/Plan 세션을 재사용했다. 운영상 readonly이고 blind/기술적 격리는
+아니다. 고정 Git 객체만 읽었고 source/tests 실행·GitHub·native 전체 재조회는 하지 않았다.
+루트가 별도로 원격 상태·보존 hash를 확인했으며 실제 서비스·권한/보호/인증 변경은 없다.
+최종 고정 문서 후보의 후속 리뷰·게시 영수증은 위 JSON과 PR handoff에 기록한다.
+
+[남은 차단과 다음 행동](STATUS.md#남은-차단미확인과-정확한-다음-행동)은 보호/기본 권한,
+Heartbeat 운영 적용·orphan/대용량 복구, 최신 CI 채택, 회사 변경 대조 후 M 채택, 정식 병렬·모바일,
+추가 runtime 검증이다. 문서 정합성 확인을 이 항목들의 통과나 전체 미션 완료로 해석하지 않는다.
+
+고정 문서 후보9cc1610…의 검사에서는 상대 링크/근사 anchor113개와 GitHub 참조35개의 GET을 확인했다. 원문2개·source/tests15개·설치 Node source5개·patch/mock/bundle의 hash가 보존 근거와 일치했다. 수집기의 `gh api --slurp`는 설치 gh2.46.0에서 지원되지 않아 실패했고, 상태 변경 없이 한정된 GET 페이지 조회로 보정했다. 이는 운영 daemon 결함이나 권한 거부가 아니다.
+
+9cc1610…의 [독립 문서 재검토 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090018253)은 기준 Low6/Info4 해소·새 Low1/Info1을 기록했다. Low는 원래 설치 경로를 오기로 단정한 설명이었다. 루트가 두 경로의 daemon-instance/pid-lock 각각을 새로 읽어 서로 다른 inode·동일 SHA256 사본임을 확인해 판정을 철회했다. Info는 최신 회귀21개를 `test_ops_ci21`로 명시해 과거 hosted21개와 구분했다. reviewer는 STATUS 전체와 다른 세 문서의 전체 diff를 새로 읽고 미변경 내용은 기준 전체 읽기를 재사용했다. 증거 JSON은 선택 필드만 읽었으며 GitHub/테스트 재실행은 없었다.
+
+최종 문서 후보 `1de59fdef1348ca4a7635e59f806e053978e5dd2`의 [독립 delta 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090043149)은 이전 Low1/Info1 해소·새 지적0이다. 전체 고정 diff와 추가 JSON 필드를 읽고 나머지는 이전 읽기를 재사용했다. 그 뒤 변경은 이 리뷰 결론·게시 영수증뿐이며 전체 문서의 새 재검토를 뜻하지 않는다. 최종 보고 HEAD는 PR handoff에 기록하며 source/tests/proposals/원문 bytes는 그대로다.
+
+## E20 OVERNIGHT_REPORT 야간 종합 handoff
+
+기준 `a332a1b756006cca4851ccd0a52fb3d6e5e220f8`에서 clean·PR #1 Draft 일치를 확인했다.
+[종합 보고](OVERNIGHT_REPORT.md)와 [선별 영수증](evidence/overnight-report.json)에 선행7개 task의
+receipt/보고 SHA/실제 handoff GET, 시험 재사용 조건, 새 원격 상태, 비용·승인 집계 범위를 모았다.
+S/M의62개 선별 응답과 야간 mock 결정6건을 구분한다. 실제 야간 승인·사람 클릭 전수 합계는 미확인이다.
+agent inspect CostUsd는 설치 매핑상 미제공도0으로 표시하며 Codex는 비용을 전달하지 않는다.
+Claude 표시값도 이 야간 작업의 실제 청구액으로 귀속하지 않는다. source 행/hash로 의미를 확인했으며
+개인 token 장부·credential은 열람하지 않았고 서비스·권한 설정을 조작하지 않았다. 기존 시험을 새로 실행했다고 기록하지 않는다.
+
+E20 보고 후보 `d8ade7e32314ba137ada3dbedd04b31307d33019`의 [독립 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090183386)은 새 지적0이다. 이후 리뷰 게시 영수증·후속 비용/actor 스냅샷만 추가했으며 야간 총비용과 실제 승인 전수는 계속 미확인이다. 이 후속을 독립적으로 다시 리뷰하거나 제품 테스트를 실행했다고 주장하지 않는다.

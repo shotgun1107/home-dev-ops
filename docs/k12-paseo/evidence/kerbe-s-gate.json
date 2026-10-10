@@ -1,0 +1,168 @@
+{
+  "observedAt": "2026-10-09T15:36:09.759058+00:00",
+  "issue": "https://github.com/shotgun1107/kerbe/issues/3",
+  "handoff": "https://github.com/shotgun1107/kerbe/issues/3#issuecomment-6083911066",
+  "supervisor": {
+    "agent": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+    "model": "gpt-6-astra",
+    "thinking": "max",
+    "mode": "full-access",
+    "scope": "ops only; not Kerbe writer proof"
+  },
+  "candidateProfile": {
+    "provider": "claude",
+    "model": "claude-opus-5-5",
+    "thinking": "medium",
+    "mode": "acceptEdits",
+    "selection": "reuse existing successful Work C profile for this task; project-wide model defaults not found or changed",
+    "newWriterInitialReadOnlyCheck": "passed for model/mode/version/cwd/branch/HEAD/inherited hook; remaining tracked-name check before edit"
+  },
+  "historicalDeny": {
+    "nativeLog": "~/.claude/projects/-home-shotgun1107-workspace-kerbe/0972fce4-f77c-4fe4-98e4-222044eed621.jsonl",
+    "records": [
+      {
+        "timestamp": "2026-10-08T10:28:05.134Z",
+        "type": "user",
+        "version": "2.1.292",
+        "permissionMode": "acceptEdits",
+        "effort": null,
+        "toolDenialKind": null,
+        "line": 3,
+        "model": null
+      },
+      {
+        "timestamp": "2026-10-08T10:28:08.512Z",
+        "type": "assistant",
+        "version": "2.1.292",
+        "permissionMode": null,
+        "effort": "medium",
+        "toolDenialKind": null,
+        "line": 21,
+        "model": "claude-opus-5-5",
+        "probe": "single gh pr merge, nonexistent PR 999999, zero match-head SHA, historical user authorization"
+      },
+      {
+        "timestamp": "2026-10-08T10:28:08.535Z",
+        "type": "user",
+        "version": "2.1.292",
+        "permissionMode": null,
+        "effort": null,
+        "toolDenialKind": "permission-rule",
+        "line": 22,
+        "model": null,
+        "outcome": "permission layer rejected before execution; is_error=true"
+      }
+    ],
+    "matchedRuleId": "not recorded",
+    "additionalEvidence": "daemon.log line 2413, 10:28:21.250Z preceding 30s: all 32 requests accounted, no agent_permission_response; later human denial was separate settings read at 10:34:11.526Z"
+  },
+  "historicalWrite": {
+    "agent": "e10fad18-14d3-486e-941b-35c370d13cff",
+    "nativeLog": "~/.claude/projects/-home-shotgun1107--paseo-worktrees-007unhvc-juvenile-ostrich/4a9e801d-b672-41e4-b220-06d10474e769.jsonl",
+    "modeSourceLines": [
+      3,
+      58,
+      176,
+      373
+    ],
+    "actualToolCalls": {
+      "commit": 143,
+      "push": 150,
+      "draftPr": 160
+    },
+    "successLines": [
+      144,
+      151,
+      162,
+      155,
+      169
+    ],
+    "mode": "acceptEdits",
+    "currentAgentAutoIsNotHistoricalMode": true
+  },
+  "current": {
+    "claudeVersion": "2.1.292 (Claude Code)",
+    "deny": [
+      "Bash(gh pr merge *)"
+    ],
+    "settingsSha256": "49303a56a9ffbf6c5cf14e0d689c10cb60f2fa727897c39bc1137f2dafc5d7ad",
+    "settingsMtimeUtc": "2026-10-08T10:16:44.195431+00:00",
+    "prePushSha256": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+    "prePushExecutable": true,
+    "hooksPath": "unset",
+    "localMain": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+    "originMain": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+    "remoteMain": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+    "sourceStatus": "",
+    "rules": [
+      {
+        "type": "deletion",
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "shotgun1107/kerbe",
+        "ruleset_id": 24715075
+      },
+      {
+        "type": "non_fast_forward",
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "shotgun1107/kerbe",
+        "ruleset_id": 24715075
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 0,
+          "dismiss_stale_reviews_on_push": false,
+          "required_reviewers": [],
+          "require_code_owner_review": false,
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": false,
+          "require_extra_approval_for_unattributed_changes": true,
+          "allowed_merge_methods": [
+            "squash"
+          ]
+        },
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "shotgun1107/kerbe",
+        "ruleset_id": 24715075
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "strict_required_status_checks_policy": true,
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {
+              "context": "test (ubuntu-latest)"
+            },
+            {
+              "context": "test (windows-latest)"
+            }
+          ]
+        },
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "shotgun1107/kerbe",
+        "ruleset_id": 24715075
+      }
+    ]
+  },
+  "decision": "existing profile protection and write-path evidence reusable for scoped S task; no new dangerous probe; verify actual new writer and inherited hook before allowing edits",
+  "limits": [
+    "Exact gh pr merge form only, not all shell/API routes",
+    "Accept Edits is not OS isolation",
+    "No match-rule identifier in old denial; permission-layer execution-before denial supported by native events and daemon timing",
+    "Does not validate Claude Auto, Codex default remote writes, or ops Full Access merge protection"
+  ],
+  "actualWriter": {
+    "agentId": "010fafb2-a8ee-4b16-bb83-692dc75c3a8d",
+    "workspaceId": "wks_ac69cdda2677c33b",
+    "nativeSessionId": "28804af0-349f-4e75-ab76-15a1dbb074c9",
+    "nativeModeLine": 3,
+    "nativeToolModelEffortLine": 21,
+    "cwd": "~/.paseo/worktrees/007unhvc/kerbe-p1-s-dotenv",
+    "branch": "fix/ignore-local-dotenv",
+    "initialHead": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+    "initialClean": true,
+    "newGlobalOrProjectSettingChanges": false,
+    "approvalObservation": "Bash needs individual requests. Supervisor reviewed task-authorized calls; recursive Paseo JSON search excluded then denied. Not unattended or human-click proof."
+  }
+}

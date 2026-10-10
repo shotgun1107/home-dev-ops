@@ -1,0 +1,121 @@
+{
+  "observedAt": "2026-10-09T15:48:42.371041+00:00",
+  "id": 37954147794,
+  "event": "pull_request",
+  "headSha": "f0f73a87821a6b3d990142b948d13c7e2b6e067d",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/shotgun1107/kerbe/actions/runs/37954147794",
+  "jobs": [
+    {
+      "id": 113900231888,
+      "name": "test (ubuntu-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/shotgun1107/kerbe/actions/runs/37954147794/job/113900231888",
+      "startedAt": "2026-10-09T15:45:55Z",
+      "completedAt": "2026-10-09T15:46:16Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v7",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v7",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install package",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build wheel",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v7",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v7",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ],
+      "selectedLogLines": [
+        "test (ubuntu-latest)\tRun actions/checkout@v7\t2026-10-09T15:45:58.3991404Z HEAD is now at 96e852f Merge f0f73a87821a6b3d990142b948d13c7e2b6e067d into 026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+        "test (ubuntu-latest)\tInstall package\t2026-10-09T15:46:04.8000050Z Successfully built kerbe",
+        "test (ubuntu-latest)\tInstall package\t2026-10-09T15:46:04.9850674Z Successfully installed kerbe-0.1.0 tzdata-2026.5",
+        "test (ubuntu-latest)\tRun tests\t2026-10-09T15:46:10.3273369Z Ran 182 tests in 4.415s",
+        "test (ubuntu-latest)\tRun tests\t2026-10-09T15:46:10.3274541Z OK (skipped=2)",
+        "test (ubuntu-latest)\tBuild wheel\t2026-10-09T15:46:13.1004873Z Successfully built kerbe"
+      ]
+    },
+    {
+      "id": 113900232202,
+      "name": "test (windows-latest)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/shotgun1107/kerbe/actions/runs/37954147794/job/113900232202",
+      "startedAt": "2026-10-09T15:45:55Z",
+      "completedAt": "2026-10-09T15:48:01Z",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v7",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-python@v7",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install package",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Build wheel",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-python@v7",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v7",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ],
+      "selectedLogLines": [
+        "test (windows-latest)\tRun actions/checkout@v7\t2026-10-09T15:46:05.6794884Z HEAD is now at 96e852f Merge f0f73a87821a6b3d990142b948d13c7e2b6e067d into 026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+        "test (windows-latest)\tInstall package\t2026-10-09T15:46:27.8226352Z Successfully built kerbe",
+        "test (windows-latest)\tInstall package\t2026-10-09T15:46:29.2821277Z Successfully installed kerbe-0.1.0 tzdata-2026.5",
+        "test (windows-latest)\tRun tests\t2026-10-09T15:47:51.3223646Z Ran 182 tests in 79.850s",
+        "test (windows-latest)\tRun tests\t2026-10-09T15:47:51.3224578Z OK (skipped=1)",
+        "test (windows-latest)\tBuild wheel\t2026-10-09T15:47:57.5349796Z Successfully built kerbe"
+      ]
+    }
+  ]
+}

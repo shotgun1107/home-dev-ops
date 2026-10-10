@@ -1,0 +1,28 @@
+diff --git a/.github/workflows/ops-check.yml b/.github/workflows/ops-check.yml
+new file mode 100644
+--- /dev/null
++++ b/.github/workflows/ops-check.yml
+@@ -0,0 +1,23 @@
++name: ops-check
++
++on:
++  pull_request:
++
++permissions:
++  contents: read
++
++jobs:
++  regression:
++    runs-on: ubuntu-latest
++    timeout-minutes: 5
++    steps:
++      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
++        with:
++          persist-credentials: false
++      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
++        with:
++          python-version: '3.12'
++      - name: Confirm expected tests exist
++        run: test -f tests/test_pre_push.py && test -f tests/test_paseo_preflight.py
++      - name: Regression
++        run: python -B -m unittest discover -s tests -v

@@ -1,0 +1,474 @@
+{
+  "taskId": "P0_PERMISSIONS",
+  "observedAt": "2026-10-09T19:36:11.259903+00:00",
+  "baseSha": "5a17e3d5ff5d1d72b550516da2b957ba55e8357d",
+  "versions": {
+    "paseo": "0.10.3",
+    "codex": "0.160.1",
+    "claude": "2.1.292"
+  },
+  "supervisor": {
+    "id": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+    "model": "gpt-6-astra",
+    "thinking": "max",
+    "mode": "full-access",
+    "unchanged": true
+  },
+  "sources": [
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/providers/codex-app-server-agent.js",
+      "sha256": "da3a578f881d2813d850c218f6089cb493c18155e0aab19b5a3f94b4ea720c6e",
+      "lineRanges": [
+        [
+          123,
+          171
+        ],
+        [
+          334,
+          340
+        ],
+        [
+          3097,
+          3118
+        ],
+        [
+          3448,
+          3478
+        ],
+        [
+          3990,
+          4030
+        ],
+        [
+          5640,
+          5655
+        ],
+        [
+          5768,
+          5785
+        ]
+      ],
+      "observedConditions": [
+        "auto: on-request/workspace-write/user; auto-review: same sandbox with auto_review",
+        "version >=0.115 catalog/default resolver selects auto-review; explicit mode/providerOptions and actual turn context must be distinguished",
+        "allow maps to accept; deny+interrupt to cancel; other deny to decline; response is not execution success"
+      ]
+    },
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/providers/claude/agent.js",
+      "sha256": "819dcfaff5148b39a99a83259842fba06299039cb466d30858fa16c79f8d0009",
+      "lineRanges": [
+        [
+          37,
+          41
+        ],
+        [
+          1561,
+          1630
+        ],
+        [
+          2010,
+          2089
+        ],
+        [
+          2625,
+          2645
+        ],
+        [
+          3860,
+          3876
+        ]
+      ],
+      "observedConditions": [
+        "user/project/local settingSources and active permissionMode passed to SDK",
+        "pending requests can be denied by steer supersession, abort, or rejection cleanup without a human click",
+        "plan approval can change mode; allow can carry updatedInput and updatedPermissions, so not every pending item is an ordinary tool approval"
+      ]
+    },
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/dist/commands/permit/allow.js",
+      "sha256": "91e40335e58f1de0e3f4edbb0089eff43bdd4ccae726801a9ef970a6b718bfeb",
+      "lineRanges": [
+        [
+          34,
+          109
+        ]
+      ],
+      "observedConditions": [
+        "missing request ID or --all resolves every pending item; prefix selects first match",
+        "printed allowed means response forwarded, not command success; CLI alone does not authenticate human actor"
+      ]
+    },
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/dist/commands/permit/deny.js",
+      "sha256": "5c2477a6b051c576ac06a88fb7921dd1248e2661c277e9d9a1d081e7c1b9e67b",
+      "lineRanges": [
+        [
+          4,
+          87
+        ]
+      ],
+      "observedConditions": [
+        "deny without request ID rejects unless --all; prefix selects first match"
+      ]
+    },
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/agent-manager.js",
+      "sha256": "09e1a170a75fc6b1f4eca29779feb7ada0c6d607bd33588f545e619174d7fa65",
+      "lineRanges": [
+        [
+          2019,
+          2048
+        ]
+      ],
+      "observedConditions": [
+        "per-request in-flight guard, forward response, refresh/persist state; execution outcome separate"
+      ]
+    },
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/permission-response.js",
+      "sha256": "1e69b358267f549a6cd8a531ba1c69af6d4cf9727f0e4c37448445baf4ce7c15",
+      "lineRanges": [
+        [
+          1,
+          14
+        ]
+      ],
+      "observedConditions": [
+        "permission response may require follow-up turn"
+      ]
+    },
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/session.js",
+      "sha256": "c2f86382599d05db9311a858b3883fca00e8c3c63658c91cd04521a85a0c9981",
+      "lineRanges": [
+        [
+          1160,
+          1177
+        ],
+        [
+          1862,
+          1866
+        ]
+      ],
+      "observedConditions": [
+        "agent_permission_response dispatch does not identify human vs Supervisor",
+        "separate active-voice speak-only auto-allow path exists; not shell approval"
+      ]
+    },
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/voice-permission-policy.js",
+      "sha256": "4bb20d06a9828cad372d181e2979eccaa7951176e7959dabb193165ef578d479",
+      "lineRanges": [
+        [
+          1,
+          13
+        ]
+      ],
+      "observedConditions": [
+        "voice exception limited to tool-kind speak names"
+      ]
+    }
+  ],
+  "nativeObservations": [
+    {
+      "path": "~/.codex/sessions/2026/10/08/rollout-2026-10-08T19-38-26-01a11b17-c9d2-72f0-91f0-451e14eaa13a.jsonl",
+      "rows": [
+        {
+          "line": 8,
+          "timestamp": "2026-10-08T10:38:28.169Z",
+          "type": "turn_context",
+          "rowSha256": "7fd97be32e6d9f78f2887d2c4c08ac29deec712faf22f302d6c778ede2c84a86",
+          "context": {
+            "approval_policy": "on-request",
+            "approvals_reviewer": "user",
+            "sandbox_policy": {
+              "type": "workspace-write",
+              "network_access": false,
+              "exclude_tmpdir_env_var": false,
+              "exclude_slash_tmp": false
+            },
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          },
+          "eligibleRoute": "user-channel-actor-unconfirmed"
+        },
+        {
+          "line": 24,
+          "timestamp": "2026-10-08T10:38:39.940Z",
+          "type": "response_item",
+          "rowSha256": "03d60ec2d5a239c7ea66c4cdc3a38fddda225e5d1af9250967547091ac983dd6"
+        },
+        {
+          "line": 26,
+          "timestamp": "2026-10-08T10:38:39.994Z",
+          "type": "response_item",
+          "rowSha256": "0efcb2a829f33efcda99054e2fe0d4512eec6425a14d6ca55d47a092a8703228"
+        }
+      ]
+    },
+    {
+      "path": "~/.codex/sessions/2026/10/10/rollout-2026-10-10T02-41-21-01a121c1-56ff-7c81-86b7-e50ff617dce8.jsonl",
+      "rows": [
+        {
+          "line": 8,
+          "timestamp": "2026-10-09T17:41:23.670Z",
+          "type": "turn_context",
+          "rowSha256": "4973f44bfeb246bebea6fcf1e2843d83142795420ccc1eaa61794eb76afff59c",
+          "context": {
+            "approval_policy": "on-request",
+            "approvals_reviewer": "user",
+            "sandbox_policy": {
+              "type": "workspace-write",
+              "network_access": false,
+              "exclude_tmpdir_env_var": false,
+              "exclude_slash_tmp": false
+            },
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          },
+          "eligibleRoute": "user-channel-actor-unconfirmed"
+        },
+        {
+          "line": 71,
+          "timestamp": "2026-10-09T17:44:30.662Z",
+          "type": "turn_context",
+          "rowSha256": "daa9c7c49a2863f599ead3029bb57ca4f0a5b9dc2b088d151d146e475765495b",
+          "context": {
+            "approval_policy": "on-request",
+            "approvals_reviewer": "user",
+            "sandbox_policy": {
+              "type": "workspace-write",
+              "network_access": false,
+              "exclude_tmpdir_env_var": false,
+              "exclude_slash_tmp": false
+            },
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          },
+          "eligibleRoute": "user-channel-actor-unconfirmed"
+        },
+        {
+          "line": 325,
+          "timestamp": "2026-10-09T18:03:19.397Z",
+          "type": "turn_context",
+          "rowSha256": "88ab9415da54a9b84a8f190743e846fe2178ce76e225e8a95860b9bedac053a1",
+          "context": {
+            "approval_policy": "on-request",
+            "approvals_reviewer": "user",
+            "sandbox_policy": {
+              "type": "workspace-write",
+              "network_access": false,
+              "exclude_tmpdir_env_var": false,
+              "exclude_slash_tmp": false
+            },
+            "model": "gpt-6.1-sol",
+            "effort": "medium"
+          },
+          "eligibleRoute": "user-channel-actor-unconfirmed"
+        }
+      ]
+    },
+    {
+      "path": "~/.claude/projects/-home-shotgun1107-paseo-ab-tests-20261008-221045-claude/06718c6f-59ff-4e14-ade6-11357d0b8026.jsonl",
+      "rows": [
+        {
+          "line": 38,
+          "timestamp": "2026-10-08T15:49:19.789Z",
+          "type": "user",
+          "rowSha256": "7fc59077dcc27223a80f6c9c58876064e236037ab2c1f9df3048b6e8716bc905",
+          "permissionMode": "auto",
+          "version": "2.1.292"
+        },
+        {
+          "line": 46,
+          "timestamp": "2026-10-08T15:49:24.862Z",
+          "type": "assistant",
+          "rowSha256": "af83950aa8a2317e149d1f1df3369697ab279d586f7bc8f3abfc2e060c246886",
+          "version": "2.1.292"
+        },
+        {
+          "line": 49,
+          "timestamp": "2026-10-08T15:49:31.210Z",
+          "type": "user",
+          "rowSha256": "a67c3520309d313b905e68e139596b9cc05a80e1478f2822998c126eea182bcb",
+          "toolDenialKind": "permission-rule",
+          "version": "2.1.292",
+          "matchedRuleId": "not recorded in selected native evidence",
+          "serverClassifierContextPresent": true
+        },
+        {
+          "line": 52,
+          "timestamp": "2026-10-08T15:49:42.313Z",
+          "type": "assistant",
+          "rowSha256": "d75312d8bcacb4360e577be66e35531d8d3f9ff76dcb36c76f0e16af4a3b1928",
+          "version": "2.1.292"
+        }
+      ]
+    },
+    {
+      "path": "~/.claude/projects/-home-shotgun1107-workspace-kerbe/0972fce4-f77c-4fe4-98e4-222044eed621.jsonl",
+      "rows": [
+        {
+          "line": 3,
+          "timestamp": "2026-10-08T10:28:05.134Z",
+          "type": "user",
+          "rowSha256": "c04cc8a37c620e27031f178e193ffe9cbe3d75fc7a5ecb4e9679e704445c2fb1",
+          "permissionMode": "acceptEdits",
+          "version": "2.1.292"
+        },
+        {
+          "line": 21,
+          "timestamp": "2026-10-08T10:28:08.512Z",
+          "type": "assistant",
+          "rowSha256": "a98af9b63a5e12189106167a3d334444cf33dc081f7f283b902ff3e0225100d2",
+          "version": "2.1.292"
+        },
+        {
+          "line": 22,
+          "timestamp": "2026-10-08T10:28:08.535Z",
+          "type": "user",
+          "rowSha256": "ac6ec23ff7c7a0b1560829429b5b8933e3f71949e20eb495d4130ea9719dd95e",
+          "toolDenialKind": "permission-rule",
+          "version": "2.1.292",
+          "matchedRuleId": "not recorded in selected native evidence"
+        }
+      ]
+    },
+    {
+      "path": "~/.claude/projects/-home-shotgun1107--paseo-worktrees-007unhvc-kerbe-p1-m-remote-errors/4200b7d5-0ad7-4872-9bc2-25ab7fc79541.jsonl",
+      "rows": [
+        {
+          "line": 103,
+          "timestamp": "2026-10-09T17:33:09.423Z",
+          "type": "user",
+          "rowSha256": "6d3af92663869dea0110c989ba7daf72eb3291129110898ee877fdf198504c9c",
+          "toolDenialKind": "user-rejected",
+          "version": "2.1.292",
+          "matchedRuleId": "not recorded in selected native evidence"
+        },
+        {
+          "line": 104,
+          "timestamp": "2026-10-09T17:33:09.426Z",
+          "type": "user",
+          "rowSha256": "4d249bda663033776d1cf83d32d8125214f1440c2226af9723ae42639d45df22",
+          "version": "2.1.292"
+        },
+        {
+          "line": 106,
+          "timestamp": "2026-10-09T17:33:09.435Z",
+          "type": "user",
+          "rowSha256": "a4f1254680efe761188bbcf087ef3519f55a063c7ebbd48238cb7a101c4fcf08",
+          "permissionMode": "acceptEdits",
+          "version": "2.1.292"
+        }
+      ]
+    },
+    {
+      "path": "~/.codex/sessions/2026/10/09/rollout-2026-10-09T21-42-15-01a120af-820b-76e0-9f02-1e3fb9ed575b.jsonl",
+      "rows": [
+        {
+          "line": 1219,
+          "timestamp": "2026-10-09T15:38:19.497Z",
+          "type": "response_item",
+          "rowSha256": "db380fd42c09587d0d83263cb862ee1de6851e7cecf2136ba6246919e50400ce"
+        },
+        {
+          "line": 1222,
+          "timestamp": "2026-10-09T15:38:20.115Z",
+          "type": "response_item",
+          "rowSha256": "9aa56236eb20ff2a505ff2d61159e4282fc9423c199de398f71d6b752d409dce"
+        }
+      ]
+    }
+  ],
+  "selectedLedgerReports": {
+    "kerbe-s-permits.json": {
+      "sha256": "972d7a71e6eddbb489807b9961c4e9e61fcbd2361c4e47ac31b475060f650019",
+      "report": {
+        "schemaVersion": 1,
+        "counts": {
+          "allowed": 9,
+          "denied": 1,
+          "inputAdjustments": 3,
+          "responseActor:supervisor": 10,
+          "responses": 10
+        },
+        "byAgent": {
+          "010fafb2-a8ee-4b16-bb83-692dc75c3a8d": {
+            "allowed": 9,
+            "denied": 1,
+            "inputAdjustments": 3,
+            "responseActor:supervisor": 10,
+            "responses": 10
+          }
+        },
+        "limits": [
+          "selected evidence only; absent observations are unconfirmed",
+          "responses are not executions; adjustments are a subset of allows",
+          "actor citations require independent verification",
+          "provider denial label does not identify the matching rule or classifier"
+        ]
+      }
+    },
+    "kerbe-m-permissions.json": {
+      "sha256": "3bc38962a38862ecf02107be07f61a7d3e6c72d3d4e9885290c29b995d444566",
+      "report": {
+        "schemaVersion": 1,
+        "counts": {
+          "allowed": 50,
+          "denied": 2,
+          "inputAdjustments": 3,
+          "responseActor:supervisor": 52,
+          "responses": 52
+        },
+        "byAgent": {
+          "6f07d351-77ef-40a2-bf62-95b647c25726": {
+            "allowed": 16,
+            "denied": 2,
+            "inputAdjustments": 3,
+            "responseActor:supervisor": 18,
+            "responses": 18
+          },
+          "dc583f6a-fe16-4025-b277-0103a6b94a75": {
+            "allowed": 34,
+            "responseActor:supervisor": 34,
+            "responses": 34
+          }
+        },
+        "limits": [
+          "selected evidence only; absent observations are unconfirmed",
+          "responses are not executions; adjustments are a subset of allows",
+          "actor citations require independent verification",
+          "provider denial label does not identify the matching rule or classifier"
+        ]
+      }
+    }
+  },
+  "accountingCorrection": {
+    "ledger": "kerbe-s-permits.json",
+    "requestId": "permission-a76046a1-7d93-4847-8227-44da399e82ea",
+    "beforeStructuredAdjustments": 2,
+    "afterStructuredAdjustments": 3,
+    "responseCountsUnchanged": true,
+    "proof": "existing action/actualInput plus Supervisor native rows1219 request --input and1222 allowed acknowledgement; no new approval"
+  },
+  "officialReference": {
+    "url": "https://learn.chatgpt.com/docs/sandboxing/auto-review",
+    "role": "interpretation only; not local execution proof"
+  },
+  "unconfirmed": [
+    "live Codex auto-review decision (selected native contexts have reviewer=user)",
+    "Claude matching deny-rule ID vs classifier internals; permission-rule is a layer label",
+    "Full Access technical merge block; all alternate command paths",
+    "default resolver result for a newly created session; no new session created",
+    "human identity or unattended success from shared permission transport"
+  ],
+  "constraints": {
+    "newRiskyProbes": 0,
+    "kerbeEdits": 0,
+    "settingsChanges": 0,
+    "serviceOperations": 0,
+    "directCredentialStoreInspection": 0
+  }
+}

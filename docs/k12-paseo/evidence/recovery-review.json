@@ -1,0 +1,92 @@
+{
+  "taskId": "P0_RECOVERY",
+  "reviewedSha": "0083b5e3cc08e4bac0f2380872e86543be802aec",
+  "reviewer": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+  "provider": "claude",
+  "mode": "plan (operational read-only)",
+  "findings": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 2,
+    "info": 2
+  },
+  "originalTextSha256": "5a92aa40962751f96b5f9bf6ab271f264c5cdb012413ad5b33f3b2eaf181aab0",
+  "native": {
+    "nativePath": "/home/shotgun1107/.claude/projects/-home-shotgun1107--paseo-worktrees-20iw348x-docs-k12-paseo-autopilot/6d620830-1287-4da7-81ed-3a563f55847a.jsonl",
+    "line": 525,
+    "timestamp": "2026-10-09T20:19:54.863Z"
+  },
+  "commentUrl": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088607750",
+  "postedBodyGetVerified": true,
+  "writerFollowup": {
+    "low1": "already-completed now exit3, reviewable0, blocked/reconcile2; CLI cases cover distinction",
+    "low2": "strict supported short local task branch form; reject main/master suffix and detached/remote/full refs",
+    "info3": "retain conservative uncertain code; injected replace-applied-then-error confirms actual destination must be inspected",
+    "info4": "existing9 now use synthetic proc_root; all other test limitations preserved",
+    "deltaReview": "complete; prior Low2 resolved, Info2 addressed, no new Low+, new Info1 provenance addressed by stamped9-case rerun"
+  },
+  "scope": "Static fixed Git objects and installed sources; tests/native/PR posts not independently checked",
+  "delta": {
+    "reviewedSha": "cba377ef9b88c44576d1bc3788a8624f3444eaa6",
+    "baseSha": "0083b5e3cc08e4bac0f2380872e86543be802aec",
+    "resolved": {
+      "low": 2,
+      "info": 2
+    },
+    "newFindings": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "info": 1
+    },
+    "originalTextSha256": "0bcf3ff3373dbc1b8af5b736c88a9e19301fff0820818be9ba34853a3f1d13cf",
+    "native": {
+      "nativePath": "/home/shotgun1107/.claude/projects/-home-shotgun1107--paseo-worktrees-20iw348x-docs-k12-paseo-autopilot/6d620830-1287-4da7-81ed-3a563f55847a.jsonl",
+      "line": 548,
+      "timestamp": "2026-10-09T20:24:28.728Z"
+    },
+    "commentUrl": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088668023",
+    "postedBodyGetVerified": true,
+    "reviewerStatus": "idle",
+    "pendingPermissions": 0,
+    "sourceTestBytesUnchangedAfterReview": true,
+    "writerInfoFollowup": {
+      "reason": "indistinguishable preflight logs before/after test edit",
+      "provenanceRun": {
+        "taskId": "P0_RECOVERY",
+        "runId": "c6f056ac-8b76-48ef-aa62-5ab7208bda6a",
+        "startedAt": "2026-10-09T20:25:19.609880+00:00",
+        "reviewedSha": "cba377ef9b88c44576d1bc3788a8624f3444eaa6",
+        "fileSha256": {
+          "scripts/paseo_preflight.py": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+          "tests/test_paseo_preflight.py": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5"
+        },
+        "command": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_paseo_preflight.py",
+          "-v"
+        ],
+        "endedAt": "2026-10-09T20:25:19.674227+00:00",
+        "exit": 0,
+        "elapsedSeconds": 0.064345,
+        "sourceUnchangedAfterRun": true
+      },
+      "logSha256": "d9d7e075a7dfe424db3d354af6fbfbb251b415351a348ec617dd552ca8c7d372",
+      "caseCountNotIncreased": true
+    },
+    "limits": [
+      "Static review only; tests, native records, log provenance and PR posts are Writer evidence",
+      "candidate branch input rule is not Git/server/permission enforcement",
+      "no live session/daemon/GitHub-loss/power-loss/multiwriter/cross-platform verification"
+    ]
+  }
+}

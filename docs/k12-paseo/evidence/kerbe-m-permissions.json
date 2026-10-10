@@ -1,0 +1,410 @@
+{
+  "scope": "user-authorized M task, individual full IDs, no updatedPermissions or mode/rule changes",
+  "requests": [
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-4d917f2d-1e8b-40f9-9c0e-9129f998629c",
+      "action": "read-only git/hook/project-settings presence",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:25:41.546997+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-f0aff44a-25af-48b7-a1ad-17602db81d21",
+      "action": "read-only absence of task venv, git status, versions, ignore check",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:31:57.187746+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-4a7d6ba6-3c3e-4989-864b-b544eb58d976",
+      "action": "create verified-absent WT .venv with system Python, no cache/download Python, seed pip and task-only folders",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:32:22.860720+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-f67dab3d-5c16-4c0f-a1c3-6d5df53817d6",
+      "action": "task venv editable install no cache, unset PYTHONPATH, task TMPDIR, assert prefix/import and versions",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:32:43.432392+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-d85a0469-11fa-4b41-a870-76b0a3fbbafd",
+      "action": "baseline once, with task TMPDIR and synthetic unit/integration fixtures only",
+      "inputAdjustment": "removed duplicated full-suite invocation; one verbose execution captures skips and preserves test exit status",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:33:08.830294+00:00",
+      "inputAdjusted": true
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-4d3aeb2a-efce-4687-8cf1-feb6d0332b1d",
+      "action": "single baseline retry justified by Supervisor send interruption; /proc matching worktree only Claude remains",
+      "inputAdjustment": "write baseline-retry.log instead of overwriting aborted baseline.log; preserve tmp5hh6g14i",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:33:52.992430+00:00",
+      "inputAdjusted": true
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-27f8a9d0-9d05-4e3d-8807-235b0e07d97b",
+      "action": "read task baseline logs and tmp names to investigate failures",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:34:14.655338+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-26e4086b-a3d9-421a-9d7e-f3bd03cc6db2",
+      "action": "read-only failure detail from task baseline log",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:34:40.767067+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-39df2bf1-5e80-4d1f-9eef-934675648712",
+      "action": "old repository-internal TMPDIR rejected before execution; scoped outside-repo task temp directory and two failed fixture retests authorized",
+      "result": "denied with corrected runtime instructions, no mode/permission config change",
+      "observedAt": "2026-10-09T17:35:42.590221+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-7afe2209-4c8e-4ac8-89e6-01d10b3d3219",
+      "action": "create one task-owned outside-repository temp directory, stat/non-repository check, save local path pointer",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:36:10.187694+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-94cfe101-1630-45f4-b240-e666fe5f738b",
+      "action": "two environment failure retests and RED selected modules under new task-owned non-repository TMPDIR",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:36:34.611117+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-5c19896f-bc48-4b92-a1e2-dc080f0eb940",
+      "action": "pre-stage evidence correction: methods vs subtest error count; no premature writer transfer or delivery completion",
+      "result": "denied with factual corrections",
+      "observedAt": "2026-10-09T17:37:46.124011+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-5baa3042-1cc7-4e01-b11a-a8010a2c1af1",
+      "action": "explicit stage only 2 regression test files and corrected canonical task; full staged diff review",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:38:16.574866+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-64dec4c0-7054-4f6a-839d-16ea52fbe93c",
+      "action": "commit reviewed staged 3-file RED checkpoint with Agent trailer; ordinary task branch push and remote SHA readback",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:38:35.755335+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-91cd4aca-5920-4403-be0e-241df1268f52",
+      "action": "write scoped Draft PR body temp file",
+      "inputAdjustment": "correct ambiguous relative task link to fixed checkpoint absolute GitHub URL",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:39:02.925951+00:00",
+      "inputAdjusted": true
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-343ce982-9ed4-4edf-b14b-0ec6a442ba99",
+      "action": "create Draft PR only from task branch to main, then verify actual Draft/state/head",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:39:27.097407+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-4ba05de4-c5ad-4953-b988-2bce37d4cec7",
+      "action": "read-only compare actual PR canonical task link to body file after Supervisor input adjustment",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:39:51.539215+00:00"
+    },
+    {
+      "agentId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+      "requestId": "permission-2f4b7f9e-5e09-44d0-b955-a891130ef4d8",
+      "action": "final read-only local/remote/PR Draft checkpoint and task runtime listing",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:40:14.045001+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-b9cde5aa-b4d5-4f01-91b9-de41b324fd1c",
+      "action": "Codex default sandbox network failure -> individual on-request gh pr view 5 read-only; no persistent grant",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:42:19.820107+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-42fdaa6b-86a3-474a-a374-5e7c18b564ff",
+      "action": "Codex individual read-only git ls-remote task branch following sandbox DNS failure",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:42:41.403782+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-4931bcf7-b5f7-48f8-a7a4-ca45f4438cd8",
+      "action": "Codex no-op ordinary push HEAD to exact existing task branch; sandbox DNS failure, individual approval only",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:44:56.915379+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-e7326718-8a49-466e-b18f-0a0e615fc3b4",
+      "action": "Codex posts narrow pre-implementation restore provenance comment to existing Draft PR5; no duplicate canonical handoff",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:45:22.953847+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-1fb0f4a5-d083-4179-acd0-a07d6e4e5b55",
+      "action": "GET exact newly posted provenance comment6086175610 to verify write",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:45:47.033588+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-1d7d8e6d-0803-4b5e-b889-4f932d0335a3",
+      "action": "scoped task branch fetch and matching checkpoint readback before RED, no main/source change",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:46:41.152285+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-9928ce7e-971f-4701-af1d-e06892e5c142",
+      "action": "same no-cache isolated wheel build with network dependency access after DNS failure; task venv/TMPDIR/output only; preserve failure log",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:47:30.605239+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-366632fb-5c5f-485a-86a7-2f9419d70a4b",
+      "action": "read existing Draft PR5 body/head before canonical handoff promotion",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:48:04.130675+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-d5e14301-a06d-4ee8-8180-2fb0012941c9",
+      "action": "stage exactly reviewed source and canonical task after common Git index.lock sandbox denial; no settings changes",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:49:12.472063+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-dd63f6f9-1863-437c-85d9-db463391e9d1",
+      "action": "commit reviewed source fix plus task validation record with Agent: codex trailer",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:49:39.218723+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-06706e37-ee1f-442b-97b3-6f5757591b2a",
+      "action": "normal push fixed candidate to task branch only, no force/main/merge",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:50:12.164435+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-676de950-9fda-4e34-ba1c-d9d184fad98c",
+      "action": "read actual remote task branch SHA after implementation push",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:50:42.818819+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-ba1aaeea-8d37-44a3-ad6f-a01111ee8322",
+      "action": "GET PR5 Draft/head after implementation push",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:51:06.678627+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-1627616a-c68d-431b-8ef8-df198204eac6",
+      "action": "REST PATCH only reviewed PR5 body handoff, preserves Draft/state, promotes current task for later deletion",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:52:46.039902+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-ea96a08c-19a6-4170-a186-c700e040ffb2",
+      "action": "GET and compare exact promoted PR body before deleting task file",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:53:10.672701+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-f24522dc-cb1c-43f1-82ee-7042dc6746fe",
+      "action": "remove/stage only new M canonical task after PR body persisted+GET equality; Git history preserves prior content; not Archive/data cleanup",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:53:42.046884+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-a373e1c7-2acc-4bd1-840d-6f497efd7b03",
+      "action": "commit only verified deletion of promoted new task; source/test unchanged",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:54:14.675672+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-2c5e8386-0c3a-4ea1-bbe1-36fa99d8a068",
+      "action": "normal push final task-removal candidate eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f to existing task branch",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:54:45.832204+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-ba00d378-383d-441d-bb1c-4ff99a271dd0",
+      "action": "read back actual remote task branch final candidate SHA",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:55:23.246794+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-dcf00288-dca3-4f0c-9724-a9061f23ef40",
+      "action": "read PR5 final head/Draft and required Ubuntu/Windows checks to task runtime receipt",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:55:48.121430+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-5a45ee2b-09ff-43bf-8d43-6a74bcdf6f4a",
+      "action": "bounded CI follow-up read after observed Windows in progress; no test rerun",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:56:55.276513+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-43d003b0-39a4-4762-991d-aff1e6832dba",
+      "action": "final PR5 handoff body-only PATCH with exact final H, successful CI, pending independent review, explicit permission counts",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:58:31.793188+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-e3729e0a-29b1-482c-87f4-6598952857ee",
+      "action": "final PR5 saved handoff GET equality plus actual final H/Draft validation",
+      "result": "allowed",
+      "observedAt": "2026-10-09T17:58:58.286212+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-7cb97f1f-1f56-4cb2-a5dd-325116deb49f",
+      "phase": "review-followup",
+      "action": "restore current canonical PR5 handoff/head/Draft before synthetic P2 reproduction",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:04:10.098007+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-58707ae4-ab5a-4a3d-a595-f28efaef7a17",
+      "phase": "review-followup",
+      "action": "GET exact independent review comment6086484807, no other API reads",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:04:57.660692+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-f83bb223-fc60-4643-851b-a335d76cd962",
+      "phase": "review-followup",
+      "action": "read actual task branch SHA before P2 edits to compare fixed review revision",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:05:35.234512+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-dbaf3492-122d-47a2-905c-fed4b1e5f73e",
+      "phase": "review-followup",
+      "action": "P2 wheel under dedicated wheels/p2-review-fix preserving prior artifact; known network restriction handled by individual request",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:06:31.920879+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-2d83195a-bcff-403d-8af5-f0e6828fbc56",
+      "phase": "review-followup",
+      "action": "stage only reviewed P2 wrapper and regression test file",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:07:11.653387+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-8badf4b4-835d-45b7-8808-5dda0d7377ed",
+      "phase": "review-followup",
+      "action": "commit reviewed 2-file P2 exception-chain fix and privacy regression; Agent: codex",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:08:10.555902+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-a82a1868-a567-4a4c-80e7-9a68c0652b06",
+      "phase": "review-followup",
+      "action": "normal task branch push of P2 candidate 7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:08:41.288976+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-f7709972-b846-4fea-8dfc-d92e2f1eb89f",
+      "phase": "review-followup",
+      "action": "read remote task branch SHA after P2 candidate push",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:09:29.608597+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-0025f7a4-7574-4089-8bc0-685b4ed526ad",
+      "phase": "review-followup",
+      "action": "read new P2 candidate Draft/head and current CI, do not inherit old H checks",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:10:14.895967+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-162ea4be-9d44-48ec-ac12-6241a2f7607b",
+      "phase": "review-followup",
+      "action": "body-only PATCH PR5 canonical handoff with P2 proof/fix/new H/new CI and delta review pending",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:12:21.563126+00:00"
+    },
+    {
+      "agentId": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+      "requestId": "permission-exec-b77bc35e-bccb-4ca0-8556-85d8cbc81ec2",
+      "phase": "review-followup",
+      "action": "GET final P2 canonical PR handoff and assert body/head/Draft equality before idle",
+      "result": "allowed",
+      "observedAt": "2026-10-09T18:13:33.856377+00:00"
+    }
+  ],
+  "interruption": {
+    "at": "2026-10-09T17:33:09.423Z",
+    "actor": "Supervisor sent clarifying message while command active",
+    "nativeRows": [
+      103,
+      104,
+      106
+    ],
+    "result": "baseline interrupted after first test began; native user-rejected is transport label, not human denial",
+    "recovery": "verified no matching test process; preserve baseline.log and leftover fixture; one retry under new log name"
+  },
+  "counts": {
+    "6f07d351-77ef-40a2-bf62-95b647c25726": {
+      "allowed": 16,
+      "denied": 2
+    },
+    "dc583f6a-fe16-4025-b277-0103a6b94a75": {
+      "allowed": 34,
+      "denied": 0,
+      "initialAndImplementation": 23,
+      "reviewFollowup": 11
+    }
+  },
+  "inputAdjustments": 3
+}

@@ -1,0 +1,31 @@
+{
+  "id": "f854c66d",
+  "name": "K12 Paseo Pilot",
+  "cadence": {
+    "type": "cron",
+    "expression": "*/20 * * * *",
+    "timezone": "Asia/Seoul"
+  },
+  "target": {
+    "type": "agent",
+    "agentId": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd"
+  },
+  "status": "active",
+  "createdAt": "2026-10-09T13:08:05.164Z",
+  "expiresAt": "2026-10-10T13:08:05.160Z",
+  "maxRuns": 72,
+  "lastRunAt": "2026-10-09T13:20:00.667Z",
+  "nextRunAt": "2026-10-09T13:40:00.000Z",
+  "runs": [
+    {
+      "id": "212702d2-049b-46ca-8ca1-2e207bff516c",
+      "scheduledFor": "2026-10-09T13:20:00.000Z",
+      "startedAt": "2026-10-09T13:20:00.661Z",
+      "endedAt": "2026-10-09T13:20:00.667Z",
+      "status": "failed",
+      "agentId": null,
+      "output": null,
+      "error": "Agent c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd already has an active run"
+    }
+  ]
+}

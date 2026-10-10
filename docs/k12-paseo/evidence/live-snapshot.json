@@ -1,0 +1,221 @@
+{
+  "observedAt": "2026-10-09T13:16:02.443736+00:00",
+  "versions": {
+    "paseo": "0.10.3",
+    "codex": "codex-cli 0.160.1",
+    "claude": "2.1.292 (Claude Code)",
+    "gh": "gh version 2.46.0 (2025-12-13 Ubuntu 2.46.0-4)\nhttps://github.com/cli/cli/releases/tag/v2.46.0"
+  },
+  "paseo": {
+    "pid": 2316,
+    "startedAt": "2026-10-07T08:00:19.024Z",
+    "listen": "127.0.0.1:6767",
+    "localDaemon": "running",
+    "daemonVersion": "0.10.3",
+    "workerPid": 2365,
+    "connectedDaemon": "reachable"
+  },
+  "kerbeRuleset": {
+    "exit": 0,
+    "data": {
+      "id": 24715075,
+      "name": "main-protection",
+      "target": "branch",
+      "source_type": "Repository",
+      "source": "shotgun1107/kerbe",
+      "enforcement": "active",
+      "conditions": {
+        "ref_name": {
+          "exclude": [],
+          "include": [
+            "refs/heads/main"
+          ]
+        }
+      },
+      "rules": [
+        {
+          "type": "deletion"
+        },
+        {
+          "type": "non_fast_forward"
+        },
+        {
+          "type": "pull_request",
+          "parameters": {
+            "required_approving_review_count": 0,
+            "dismiss_stale_reviews_on_push": false,
+            "required_reviewers": [],
+            "require_code_owner_review": false,
+            "require_last_push_approval": false,
+            "required_review_thread_resolution": false,
+            "require_extra_approval_for_unattributed_changes": true,
+            "allowed_merge_methods": [
+              "squash"
+            ]
+          }
+        },
+        {
+          "type": "required_status_checks",
+          "parameters": {
+            "strict_required_status_checks_policy": true,
+            "do_not_enforce_on_create": false,
+            "required_status_checks": [
+              {
+                "context": "test (ubuntu-latest)"
+              },
+              {
+                "context": "test (windows-latest)"
+              }
+            ]
+          }
+        }
+      ],
+      "node_id": "RRS_lACqUmVwb3NpdG9yec5QOFs9zgF5H0M",
+      "created_at": "2026-10-08T18:58:49.496+09:00",
+      "updated_at": "2026-10-08T18:58:49.571+09:00",
+      "bypass_actors": [],
+      "current_user_can_bypass": "never",
+      "_links": {
+        "self": {
+          "href": "https://api.github.com/repos/shotgun1107/kerbe/rulesets/24715075"
+        },
+        "html": {
+          "href": "https://github.com/shotgun1107/kerbe/rules/24715075"
+        }
+      }
+    }
+  },
+  "kerbeEffectiveRules": {
+    "exit": 0,
+    "data": [
+      {
+        "type": "deletion",
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "shotgun1107/kerbe",
+        "ruleset_id": 24715075
+      },
+      {
+        "type": "non_fast_forward",
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "shotgun1107/kerbe",
+        "ruleset_id": 24715075
+      },
+      {
+        "type": "pull_request",
+        "parameters": {
+          "required_approving_review_count": 0,
+          "dismiss_stale_reviews_on_push": false,
+          "required_reviewers": [],
+          "require_code_owner_review": false,
+          "require_last_push_approval": false,
+          "required_review_thread_resolution": false,
+          "require_extra_approval_for_unattributed_changes": true,
+          "allowed_merge_methods": [
+            "squash"
+          ]
+        },
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "shotgun1107/kerbe",
+        "ruleset_id": 24715075
+      },
+      {
+        "type": "required_status_checks",
+        "parameters": {
+          "strict_required_status_checks_policy": true,
+          "do_not_enforce_on_create": false,
+          "required_status_checks": [
+            {
+              "context": "test (ubuntu-latest)"
+            },
+            {
+              "context": "test (windows-latest)"
+            }
+          ]
+        },
+        "ruleset_source_type": "Repository",
+        "ruleset_source": "shotgun1107/kerbe",
+        "ruleset_id": 24715075
+      }
+    ]
+  },
+  "opsRulesets": {
+    "exit": 1,
+    "data": {
+      "message": "Upgrade to GitHub Pro or make this repository public to enable this feature.",
+      "documentation_url": "https://docs.github.com/rest/repos/rules#get-all-repository-rulesets",
+      "status": "403"
+    }
+  },
+  "opsProtection": {
+    "exit": 1,
+    "data": {
+      "message": "Upgrade to GitHub Pro or make this repository public to enable this feature.",
+      "documentation_url": "https://docs.github.com/rest/branches/branch-protection#get-branch-protection",
+      "status": "403"
+    }
+  },
+  "kerbePR": {
+    "number": 2,
+    "state": "open",
+    "draft": true,
+    "html_url": "https://github.com/shotgun1107/kerbe/pull/2",
+    "mergeable": true,
+    "head": "1a02ad66780604909d49044ddfe14c803b0332f9",
+    "base": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e"
+  },
+  "opsPR": {
+    "number": 1,
+    "state": "open",
+    "draft": true,
+    "html_url": "https://github.com/shotgun1107/home-dev-ops/pull/1",
+    "mergeable": true,
+    "head": "6779927496ec7fa727d9f01421c03c5b42986839",
+    "base": "bf50f2bdb44e4d71fc29b31dcb0629719a345a95"
+  },
+  "kerbeChecks": {
+    "exit": 0,
+    "data": [
+      {
+        "conclusion": "success",
+        "head_sha": "1a02ad66780604909d49044ddfe14c803b0332f9",
+        "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37779471349/job/113318619269",
+        "name": "test (windows-latest)",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "head_sha": "1a02ad66780604909d49044ddfe14c803b0332f9",
+        "html_url": "https://github.com/shotgun1107/kerbe/actions/runs/37779471349/job/113318618760",
+        "name": "test (ubuntu-latest)",
+        "status": "completed"
+      }
+    ]
+  },
+  "sourceHashes": {
+    "docs/k12-paseo/source/K12_AGENTS_draft.md": "f18552b6abac864afa812f475c7580d81a82574f84aeb37b7920dec8cb3d2458",
+    "docs/k12-paseo/source/K12_Paseo_v2.4.md": "5424563757f8321c8f19f6237db6a0d28c243a233f5c2eb9287aa3a9e0ede27d"
+  },
+  "guardHash": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+  "duplicateUnarchivedWorkspaces": {
+    "/home/shotgun1107/workspace/kerbe": [
+      "wks_543d272f56bcb9ba",
+      "wks_471680c765f28f3d",
+      "wks_cb24cb51082181d5",
+      "wks_c4116b89eac1909d",
+      "wks_a280ccbb4faa716f"
+    ],
+    "/home/shotgun1107/paseo-ab-tests/20261008-221045/claude": [
+      "wks_c76bed98791a09a2",
+      "wks_7b8c14f5c69d64b9"
+    ]
+  },
+  "services": {
+    "exit": 0,
+    "data": "Id=paseo.service\nActiveState=active\nSubState=running\nActiveEnterTimestamp=Wed 2026-10-07 17:00:18 KST\nMainPID=2041\n\nId=docker.service\nActiveState=active\nSubState=running\nActiveEnterTimestamp=Wed 2026-10-07 17:00:19 KST\nMainPID=2039"
+  },
+  "containers": {
+    "exit": 0,
+    "data": "fcbf764b937e\tminecraft-geyser\tUp 33 hours (healthy)\nb811043c1207\tminecraft-viaproxy\tUp 33 hours (healthy)\nb778cce1e09b\tminecraft\tUp 33 hours (healthy)\n7f2059e0177f\tminecraft-backup\tUp 33 hours (healthy)"
+  },
+  "fullAccessIsUserSelectedException": true
+}

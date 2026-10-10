@@ -1,0 +1,36 @@
+{
+  "credentialFileModes": {
+    "~/.paseo/config.json": "0o600",
+    "~/.paseo/local-credential": "0o600",
+    "~/.paseo/daemon-keypair.json": "0o600",
+    "~/.config/gh/hosts.yml": "0o600"
+  },
+  "rootfulDocker": {
+    "exit": 1,
+    "stdout": "disabled\ndisabled"
+  },
+  "rootlessSecurityOptions": {
+    "exit": 0,
+    "stdout": "[\"name=seccomp,profile=builtin\",\"name=rootless\",\"name=cgroupns\"]"
+  },
+  "groups": {
+    "exit": 0,
+    "stdout": "shotgun1107 adm cdrom sudo dip plugdev users"
+  },
+  "paseoProcessChain": {
+    "exit": 0,
+    "stdout": "PID    PPID COMMAND\n   2041    1962 node\n   2316    2041 Paseo Superviso\n   2365    2316 Paseo Daemon"
+  },
+  "batchStartedAt": "2026-10-09T13:29:25.938433+00:00",
+  "rootfulDockerActive": {
+    "observedAt": "2026-10-09T13:34:08.554782+00:00",
+    "exit": 3,
+    "stdout": "inactive\ninactive"
+  },
+  "existingGuardAudit": {
+    "observedAt": "2026-10-09T13:34:08.554917+00:00",
+    "path": "/home/shotgun1107/workspace/kerbe/.git/hooks/pre-push",
+    "sha256": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+    "note": "Post-test read-only audit; matches the candidate hash in the preserved test log, not a new test run."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "testedAt": "2026-10-09T13:14:46.318Z",
+  "url": "wss://paseo.kimimrom.com/ws",
+  "test": "direct handshake without header/cookie/hello auth",
+  "frames": [
+    {
+      "type": "hello.rejected",
+      "reason": "password_required"
+    }
+  ],
+  "closeCode": 4401,
+  "closeReason": "Password required",
+  "passed": true
+}

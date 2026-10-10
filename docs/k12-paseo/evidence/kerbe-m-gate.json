@@ -1,0 +1,278 @@
+{
+  "observedAt": "2026-10-09T17:24:22.603110+00:00",
+  "workspaceId": "wks_6ff707e7c396efdb",
+  "cwd": "/home/shotgun1107/.paseo/worktrees/007unhvc/kerbe-p1-m-remote-errors",
+  "branch": "fix/malformed-remote-errors",
+  "base": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+  "supervisor": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+  "firstWriter": {
+    "id": "6f07d351-77ef-40a2-bf62-95b647c25726",
+    "provider": "claude",
+    "model": "claude-opus-5-5",
+    "thinking": "medium",
+    "mode": "acceptEdits",
+    "actualNativeCheck": {
+      "nativeSessionId": "4200b7d5-0ad7-4872-9bc2-25ab7fc79541",
+      "nativeModeLine": 3,
+      "toolModelEffortLine": 21,
+      "mode": "acceptEdits",
+      "version": "2.1.292",
+      "model": "claude-opus-5-5",
+      "thinking": "medium"
+    },
+    "protectionEvidence": "same Claude2.1.292/version/deny hash plus previous S native Work C evidence",
+    "scope": "read-only gate then dedicated runtime, RED regressions and canonical task checkpoint/Draft; no production source edits",
+    "regression": "two added methods; 21 selected tests, errors=3 (two URL subcases and attribution fallback), raw ValueError; source unchanged",
+    "checkpoint": "ce96e381385bfc09829819309c1381c8ddf0a529",
+    "draftPr": "https://github.com/shotgun1107/kerbe/pull/5"
+  },
+  "secondWriter": {
+    "provider": "codex",
+    "model": "gpt-6.1-sol",
+    "thinking": "medium",
+    "mode": "auto",
+    "mergeDenyEvidence": "d72bf579 native on-request/workspace-write/network=false, exact gh pr merge preexecution forbidden; codex0.160.1 unchanged",
+    "actualNativeAndRemoteWriteGate": "passed: native baseline profile and task no-op push + PR comment write/GET, before source edits",
+    "id": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+    "actualNative": {
+      "sessionId": "01a121c1-56ff-7c81-86b7-e50ff617dce8",
+      "startedAt": "2026-10-09T17:41:21.285Z",
+      "turnContextLine": 8,
+      "mode": "on-request/workspace-write",
+      "networkAccess": false,
+      "cliVersion": "0.160.1",
+      "model": "gpt-6.1-sol",
+      "effort": "medium"
+    },
+    "restoration": {
+      "completedAt": "2026-10-09T17:43:17.935Z",
+      "nativeFinalLine": 63,
+      "nativeTaskCompleteLine": 66,
+      "matched": [
+        "goal/scope",
+        "local remote PR checkpoint",
+        "RED failures and setup correction",
+        "runtime path/import/owner",
+        "out-of-scope issue",
+        "Next"
+      ],
+      "taskContextQuestions": 0,
+      "limitations": "Supervisor supplied ownership/safety gate and task path; additional implementation instructions were not restated"
+    },
+    "preEditRemoteWrite": {
+      "push": "Everything up-to-date for exact existing task branch",
+      "comment": "https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086175610",
+      "readback": "Codex GET body matched",
+      "approval": "individual on-request by Supervisor; no prefix/permanent grant or mode change"
+    }
+  },
+  "guardSha256": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+  "ruleset": 24715075,
+  "newSettingsOverrides": "none",
+  "handoffTest": "Claude writes RED regression/task, commit+push+Draft, stops; Supervisor checks actual Git/session/runtime; fresh Codex receives only task path and safety gate, reconstructs and fixes without user re-explanation",
+  "success": "same worktree/workspace/runtime, previous writer idle, pushed checkpoint matches handoff, restored Next actually run, final tests/review/Draft; human main adoption still separate",
+  "status": "M sequential restoration, implementation, tests, independent review and Draft delivery passed; human Ready/merge and actual main confirmation pending",
+  "runtimeObservation": {
+    "python": "3.14.4",
+    "pip": "26.2.1",
+    "tzdata": "2026.5",
+    "installation": "new worktree venv editable install succeeded; prefix/import assertion passed",
+    "uvWarning": "hardlink failed, successful copy fallback; no global mode changed",
+    "baseline": {
+      "revision": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "count": 182,
+      "failures": 2,
+      "skipped": 2,
+      "log": "worktree .venv/k12-m-runtime/logs/baseline-retry.log",
+      "reason": "TMPDIR placed under repository; plain-directory Git probe inherits parent repository",
+      "failedTests": [
+        "tests.integration.test_cli.CliIntegrationTests.test_init_collect_and_doctor_user_flow",
+        "tests.unit.test_git_probe.GitProbeTests.test_missing_path_and_plain_directory_are_not_repositories"
+      ]
+    },
+    "firstAttempt": "Supervisor send during execution interrupted first baseline; native tool denial label is user-rejected, actual actor Supervisor; log and leftover synthetic fixture preserved",
+    "correction": {
+      "tmpRoot": "/tmp/kerbe-m-6f07d351-CYllHj",
+      "mode": "0700",
+      "owner": "shotgun1107:shotgun1107",
+      "gitRevParseExit": 128,
+      "retest": "2 tests OK in 0.028s; env-recheck.log",
+      "state": "passed scoped fixture retest; full suite deferred to fixed candidate"
+    }
+  },
+  "transferBefore": {
+    "observedAt": "2026-10-09T17:40:38.554939+00:00",
+    "firstWriterIdleAt": "2026-10-09T17:40:27.180Z",
+    "firstWriterId": "6f07d351-77ef-40a2-bf62-95b647c25726",
+    "pending": [],
+    "checkpoint": "ce96e381385bfc09829819309c1381c8ddf0a529",
+    "pr": 5,
+    "draft": true,
+    "clean": true,
+    "processesWithWorktreeCwd": [
+      {
+        "pid": 789620,
+        "comm": "claude",
+        "cwd": "/home/shotgun1107/.paseo/worktrees/007unhvc/kerbe-p1-m-remote-errors"
+      }
+    ],
+    "childAgents": [],
+    "agentSchedules": [],
+    "runtime": {
+      "ownerWorkspace": "wks_6ff707e7c396efdb",
+      "venvPath": "/home/shotgun1107/.paseo/worktrees/007unhvc/kerbe-p1-m-remote-errors/.venv",
+      "venvInode": 24017060,
+      "venvUid": 1000,
+      "tmpRoot": "/tmp/kerbe-m-6f07d351-CYllHj",
+      "tmpMode": "0o700",
+      "tmpEntries": 0,
+      "taskSha256": "72ba6c70fc5b29f5414c64b2526c38b64e2c2833b865872a34cd4d19d02ca2fd"
+    },
+    "firstWriterProcessDescendants": []
+  },
+  "initialRuntimePlan": "worktree-owned .venv, isolated temporary files under .venv; no service/port/real account or user DB; previous writer no pending child commands before transfer",
+  "transferAfter": {
+    "observedAt": "2026-10-09T18:00:56.884883+00:00",
+    "writerStates": [
+      {
+        "Id": "6f07d351-77ef-40a2-bf62-95b647c25726",
+        "Status": "idle",
+        "UpdatedAt": "2026-10-09T17:48:28.050Z",
+        "Mode": "acceptEdits",
+        "PendingPermissions": [],
+        "Cwd": "/home/shotgun1107/.paseo/worktrees/007unhvc/kerbe-p1-m-remote-errors"
+      },
+      {
+        "Id": "dc583f6a-fe16-4025-b277-0103a6b94a75",
+        "Status": "idle",
+        "UpdatedAt": "2026-10-09T17:59:08.018Z",
+        "Mode": "auto",
+        "PendingPermissions": [],
+        "Cwd": "/home/shotgun1107/.paseo/worktrees/007unhvc/kerbe-p1-m-remote-errors"
+      }
+    ],
+    "worktreeRuntimeProcesses": [
+      {
+        "pid": 789620,
+        "ppid": 2365,
+        "comm": "claude",
+        "cwd": "/home/shotgun1107/.paseo/worktrees/007unhvc/kerbe-p1-m-remote-errors"
+      }
+    ],
+    "otherDescendants": [],
+    "schedulesForMissionAgents": [],
+    "runtimeSameVenvInode": true,
+    "runtimeSameTmpRoot": true,
+    "retainedFixtureExists": true,
+    "clean": true,
+    "head": "eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f",
+    "taskFileAbsent": true,
+    "firstWriterNativeNoNewUserOrAssistantAfterTransfer": true,
+    "firstWriterLateNativeEvents": [
+      {
+        "line": 251,
+        "time": "2026-10-09T17:40:14.970Z",
+        "type": "user",
+        "contentTypes": [
+          "tool_result"
+        ]
+      },
+      {
+        "line": 252,
+        "time": "2026-10-09T17:40:14.974Z",
+        "type": "attachment",
+        "contentTypes": []
+      },
+      {
+        "line": 253,
+        "time": "2026-10-09T17:40:27.158Z",
+        "type": "attachment",
+        "contentTypes": []
+      },
+      {
+        "line": 254,
+        "time": "2026-10-09T17:40:27.158Z",
+        "type": "assistant",
+        "contentTypes": [
+          "text"
+        ]
+      }
+    ],
+    "updatedAtCaution": "Paseo UpdatedAt changed while writer remained idle; it is not used as an execution-start/end proof. Native message/tool events checked separately."
+  },
+  "endProtectionHashes": {
+    "prePush": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+    "codexMergeRule": "abf02f152ff1d7d63ec909a09c360169528ada5f9b3af70dee35c396d198625b",
+    "claudeSettings": "49303a56a9ffbf6c5cf14e0d689c10cb60f2fa727897c39bc1137f2dafc5d7ad"
+  },
+  "finalAfterReviewFollowup": {
+    "observedAt": "2026-10-09T18:15:47.222149+00:00",
+    "workspace": {
+      "workspaceId": "wks_6ff707e7c396efdb",
+      "cwd": "/home/shotgun1107/.paseo/worktrees/007unhvc/kerbe-p1-m-remote-errors"
+    },
+    "writerStatus": "idle",
+    "pending": [],
+    "lastTurnComplete": {
+      "line": 461,
+      "timestamp": "2026-10-09T18:13:42.058Z"
+    },
+    "allCodexTurnContexts": [
+      {
+        "line": 8,
+        "timestamp": "2026-10-09T17:41:23.670Z",
+        "model": "gpt-6.1-sol",
+        "effort": "medium",
+        "approval": "on-request",
+        "sandbox": {
+          "type": "workspace-write",
+          "network_access": false,
+          "exclude_tmpdir_env_var": false,
+          "exclude_slash_tmp": false
+        }
+      },
+      {
+        "line": 71,
+        "timestamp": "2026-10-09T17:44:30.662Z",
+        "model": "gpt-6.1-sol",
+        "effort": "medium",
+        "approval": "on-request",
+        "sandbox": {
+          "type": "workspace-write",
+          "network_access": false,
+          "exclude_tmpdir_env_var": false,
+          "exclude_slash_tmp": false
+        }
+      },
+      {
+        "line": 325,
+        "timestamp": "2026-10-09T18:03:19.397Z",
+        "model": "gpt-6.1-sol",
+        "effort": "medium",
+        "approval": "on-request",
+        "sandbox": {
+          "type": "workspace-write",
+          "network_access": false,
+          "exclude_tmpdir_env_var": false,
+          "exclude_slash_tmp": false
+        }
+      }
+    ],
+    "headLocalRemotePr": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+    "draft": true,
+    "merged": false,
+    "clean": true,
+    "currentHandoff": "https://github.com/shotgun1107/kerbe/pull/5",
+    "status": "independent delta review passed (previous P2 resolved, new P0/P1/P2 0); human adoption pending",
+    "reviewUrl": "https://github.com/shotgun1107/kerbe/pull/5#issuecomment-6086696411",
+    "reviewRecordedAt": "2026-10-09T18:19:55.924195+00:00"
+  },
+  "unchangedOriginalCheckout": {
+    "branch": "main",
+    "head": "026a8a0e4cd6a0a7782f90f0848e641b33759a3e",
+    "clean": true,
+    "fetchedOriginMain": "efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+    "note": "source checkout intentionally preserved; S main confirmation uses fetched Git object/tree and GitHub main"
+  },
+  "updatedAt": "2026-10-09T18:19:55.924195+00:00"
+}

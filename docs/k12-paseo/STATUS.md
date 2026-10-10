@@ -50,7 +50,7 @@
 | P0-R1 | Python setup·import 격리 | 확인 범위 통과 | Kerbe PR #2 운영자 실측 182 tests OK, skipped 2·wheel. E4에서 기존 .venv/source 경로 재확인, clean 유지. [E4](EVIDENCE.md#e4-runtime) |
 | P0-R2 | 새 Worktree setup·runtime 분리 | M의 Python fixture 범위 통과 | 신규 .venv 설치·import assert, 외부 task TMPDIR 0700/owner/비저장소, 같은 runtime 교대 재사용. 내부 TMPDIR 실패 2개→보정 후 2개 OK, 최종 수정 후 Ran185 OK(skip2)·wheel. 실제 계정/장부/DB/volume 격리와 자동 setup은 미검증. [E12](EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원) |
 | P0-V1 | 고정 SHA 리뷰·대리 게시 복구 | 통과 | S의 Codex 리뷰와 M 7ff930c…의 독립 Claude delta 리뷰·원문 대리 게시·GET 일치. M의 P2 1건 재현·수정 후 새 P0/P1/P2 0건. 직접 게시 권한과 기술적 readonly는 미확인. [E12](EVIDENCE.md#e12-m-같은-worktree의-claude--codex-복원) |
-| P0-C1 | 이 ops PR의 필요한 CI | 최신 suite/hosted 대조·Draft 전달 / main 채택 대기 | 과거21개와 최신125 hosted를 분리, 신규8개 포함133으로 통합·검증. 실제 checkout/부모/완료 영수증/hash와 final HEAD는 PR handoff. main 필수 검사는 미설정. [전달 절차](proposals/README.md) |
+| P0-C1 | 이 ops PR의 필요한 CI | 최신 suite/hosted 대조·Draft 전달 / main 채택 대기 | 과거21개와 초기125 hosted를 분리, 신규8개 포함133으로 통합·검증. 실제 checkout/부모/완료 영수증/hash와 final HEAD는 PR handoff. main 필수 검사는 미설정. [전달 절차](proposals/README.md) |
 | P0-V2 | PR 본문 갱신 | 개선 후 통과 | gh 2.46.0 projectCards 오류→동일 PR REST PATCH→GET 일치. 인증/권한 변경 없음 |
 | P0-S1 | 기존 서비스 보호 | 기존 관찰 재사용·미조작 | 관찰 당시 rootless Docker, system docker/socket disabled·inactive, Minecraft 4개 healthy·Paseo active. 이번 M에서 재시작/삭제/초기화·설정 조작 없음. 과거 관찰로 현재 전체 데이터 무결성을 보장하지 않음 |
 | P0-S2 | Direct 무인증 요청 거부 | 통과 | Public WSS에 인증정보 없이 hello→password_required / 4401. [실측](evidence/direct-no-auth.json) |
@@ -74,7 +74,7 @@ M도 같은 전용 Worktree에서 Claude→Codex 순차 교대, 구현·검증·
 
 ## 개선과 남은 결정
 
-- **적용·검증:** 읽기 전용 연결 진단, ops env/runtime ignore, REST PR 본문 복구, 실제 idle 1회 수명·삭제. cleanup은 초기9개(당시 전체 Python30개), 최신15개(전체125개 안에 포함)이며 최신 보강 시험은 fake CLI/합성 자료다. S `.gitignore` 3줄 개선은 사람의 main 채택 및 K12 대조까지 확인했다. M의 오류 계약·traceback 보정은 Draft 후보로 검증했고, 외부 task TMPDIR과 실제 실행 종료에 따른 교대 절차를 실측했다.
+- **적용·검증:** 읽기 전용 연결 진단, ops env/runtime ignore, REST PR 본문 복구, 실제 idle 1회 수명·삭제. cleanup은 초기9개(당시 전체 Python30개), 최신15개(현재 전체133개 안에 포함; 당시125)이며 최신 보강 시험은 fake CLI/합성 자료다. S `.gitignore` 3줄 개선은 사람의 main 채택 및 K12 대조까지 확인했다. M의 오류 계약·traceback 보정은 Draft 후보로 검증했고, 외부 task TMPDIR과 실제 실행 종료에 따른 교대 절차를 실측했다.
 - **검증된 설치 후보:** scripts/k12-pre-push. 기존 Kerbe hook과 byte 동일. ops 설치·Git 공통 설정 변경은 사람이 해야 한다.
 - **정책 검토:** ops 보호 기능 확보 또는 private 유지 시 보호 공백 수용 여부, 이번 S/M 밖의 writer 경로, Kerbe bootstrap 채택, ops CI PR #2의 사람이 수행할 통합 순서와 새 후보 검증. S는 이미 사람이 채택했다. 명령별 Supervisor 승인을 프로젝트 전체 영구 허용으로 확대하지 않는다.
 - **아직 주장하지 않는 것:** 전체 P0/P1 완료, Full Access에서 merge 기술적 차단 보장, 모바일 판단 성공, runtime 전체 백업·격리, 자동 복구/정리 보장.
@@ -85,7 +85,7 @@ M도 같은 전용 Worktree에서 Claude→Codex 순차 교대, 구현·검증·
 
 | 항목 | 아직 입증하지 못한 것 | 필요한 다음 행동 |
 |---|---|---|
-| ops 기본 권한·보호 | 과거 보호 API403·hook 미설치·Full Access merge 차단 미검증. 이번 branch GET도 protected=false | 사람이 [보호 선택지](REVISION.md#ops-보호-공백의-선택지--사람-결정)와 공통 hook 영향·기본 writer 경로를 결정. 실제 위험 push/merge로 시험하지 않음 |
+| ops 기본 권한·보호 | 과거 보호 API403·hook 미설치·Full Access merge 차단 미검증. ONE-SHOT의 새 main branch GET도 protected=false | 사람이 [보호 선택지](REVISION.md#ops-보호-공백의-선택지--사람-결정)와 공통 hook 영향·기본 writer 경로를 결정. 실제 위험 push/merge로 시험하지 않음 |
 | 승인 결정 주체 | Auto-review 실제 결정·Claude 특정 deny rule/classifier | 현재 모드의 무해한 요청에서 full IDs·native 결과·결정 주체를 대조하는 별도 범위 필요. 기존 응답62건을 사람 클릭/실행 성공으로 바꾸지 않음 |
 | Heartbeat 운영 적용·복구 | 미설치 패치, orphan running 자동 진행 정지, 실24h/OS crash/exactly-once 미검증 | 사람이 배포·복구 위험을 검토. native/하위 실행·부작용 대조 없이 runOnce/daemon 재시작/record 편집 금지 |
 | 대용량 cleanup | 정상64KiB 초과 record의 안전한 선별 조회·실제 삭제 미검증 | 원본 보존. 검증된 Heartbeat-aware 조회가 없으면 차단. full IDs/소유권/실제 종료를 확보한 승인된 같은 agent 후속 턴에서만 [정상 삭제 검토](RECOVERY.md#2-heartbeat) |

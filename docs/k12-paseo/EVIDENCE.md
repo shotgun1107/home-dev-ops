@@ -681,3 +681,8 @@ CostUsd0은 미제공 fallback일 수 있으며 전체 청구 비용·야간 실
 [65b2573 CI delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/2#issuecomment-6094699772)도 새 P0/P1/P2가 없었다.
 실제 읽은/재사용한 범위와 hosted 미관찰은 원문에 있으며 Supervisor가 별도 실측했다.
 마지막 문서 교차 검토·최종 PR HEAD/Draft/clean/CI 결과는 PR의 **단 하나의 종합 handoff**에 기록한다.
+
+E21 문서 교차 리뷰는a988466…에서 새 P0/P1/P2 없음·Info1(CI21의 모호한 표기)이었다.
+Supervisor가 별도로 unchanged STATUS 하단의 옛8045543 hosted 대기와 OPS_CI 최신125 표기를 찾아
+현재133 성공/사람 채택 대기로 정정했다. fresh diff 밖의 이전 본문 재사용이 현재성까지 보장하지 않는
+한계를 기록하며, 원문 리뷰는 덮어쓰지 않는다. 후속 delta와 최종 HEAD는 PR handoff에서 확인한다.

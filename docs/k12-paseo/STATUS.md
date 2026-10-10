@@ -8,7 +8,7 @@
 | 대상 | 검증 결과와 범위 |
 |---|---|
 | 현재 시험 source | `d8099f00188ffd35c9cec87b83d370c41c536a17`. production scripts는 `1edd2ef4702031dd6fe2d59adc01e4504c5c57db`와 동일. 신규 Git 통합8개·Node 반례2개 및 manifest 변경 |
-| Python | **133 executed / skip0 / failure0 / error0**, 같은 runId 완료·filesUnchanged. guard12+Git 통합8+preflight9+cleanup15+permission39+recovery29+CI21. [선별 영수증](evidence/one-shot.json) |
+| Python | **133 executed / skip0 / failure0 / error0**, 같은 runId 완료·filesUnchanged. guard12+Git 통합8+preflight9+cleanup15+permission39+recovery29+test_ops_ci21. [선별 영수증](evidence/one-shot.json) |
 | CI | 시작 PR #2 `0bef44431f52ae1c24aec77b2c655e80ba03ed72`의 hosted125를 실제 log/merge checkout/tree/hash로 재확인.133개 통합은 기존 CI branch를 갱신해 검증, 정확한 최종 run은 handoff. Ready/main 채택·필수 검사 설정은 별도 |
 | K12 별도 시험 | Heartbeat **Node40** 새 실행(19조건×2+manual/orphan1×2), PID **Node9**·Python mock **15**는 hash 기반 재사용. hosted Python에 합산하지 않음 |
 | ops 보호 | Rulesets/classic403 재확인, 공통 pre-push 없음, hooksPath unset. Full Access 차단 미검증. 새8개는 폐기용 Git 호출/체인/우회 시험이며 설치 효과나 서버 보호 통과가 아님 |
@@ -89,9 +89,9 @@ M도 같은 전용 Worktree에서 Claude→Codex 순차 교대, 구현·검증·
 | 승인 결정 주체 | Auto-review 실제 결정·Claude 특정 deny rule/classifier | 현재 모드의 무해한 요청에서 full IDs·native 결과·결정 주체를 대조하는 별도 범위 필요. 기존 응답62건을 사람 클릭/실행 성공으로 바꾸지 않음 |
 | Heartbeat 운영 적용·복구 | 미설치 패치, orphan running 자동 진행 정지, 실24h/OS crash/exactly-once 미검증 | 사람이 배포·복구 위험을 검토. native/하위 실행·부작용 대조 없이 runOnce/daemon 재시작/record 편집 금지 |
 | 대용량 cleanup | 정상64KiB 초과 record의 안전한 선별 조회·실제 삭제 미검증 | 원본 보존. 검증된 Heartbeat-aware 조회가 없으면 차단. full IDs/소유권/실제 종료를 확보한 승인된 같은 agent 후속 턴에서만 [정상 삭제 검토](RECOVERY.md#2-heartbeat) |
-| 최신 ops CI | 후보8045543…의 hosted 실행·main 필수 검사 채택 없음 | 사람이 [bundle과 일반 CI branch 적용 절차](proposals/README.md)를 검토. 정확한 full SHA는 위 표. 새 hosted125개 확인과 Ready/main 채택은 별도 결정 |
+| 최신 ops CI | 후보65b2573…의 hosted133 성공·Draft 전달 완료. main 필수 검사 채택은 없음 | 사람이 [현재 통합 순서](proposals/README.md)를 검토. 옛 bundle 적용/125 hosted는 더 이상 대기가 아님. 최종 문서 통합 후 full HEAD/CI를 대조하고 Ready/PR 통합/main 채택을 결정 |
 | M 채택·정식 병렬 | PR #5 Draft·main 미반영, 회사 로컬 변경 미동기화 | 사람이 로컬/원격 차이를 먼저 대조. 후보 변경 시 재검증 후 채택 판단. main 확인 전 정식 병렬 진입 금지; mock15는 대체 증거 아님 |
 | 모바일 | 실제 휴대폰에서 판단한 기록 없음 | 사람이 후보 SHA·Acceptance·증거·위험·승인 동작을 모바일에서 읽고 판단 결과를 기록 |
 | runtime·정리 | 실제 계정/장부/DB/volume·자동 setup·백업/복원 전체 미검증 | 필요한 후속 작업의 자원 경계부터 설계하고 폐기 가능한 fixture에서 검증. 기존 영속 자료·서비스·중복 workspace는 보존; 자동 Archive 금지 |
 
-DOCS_RECONCILE 완료는 문서·증거 정합성 확인 범위다. 위 항목을 통과시키거나 새 운영 설정을 적용한 것이 아니다.
+ONE-SHOT은 안전한 통합 검증·개정 후보 준비 범위다. 남은 운영 적용·사람 판단을 통과시키거나 전체 P0/P1을 완료한 것이 아니다.

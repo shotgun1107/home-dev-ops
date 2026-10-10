@@ -3,9 +3,9 @@
 2026-10-09~10 KST 수집. 원문/세션 전문·인증값은 저장하지 않는다. 판정은 실행 범위에 한정한다.
 [최초 상태 JSON](evidence/live-snapshot.json), [당시21개 회귀 결과](evidence/regression.txt), [기존 hook 직접 시험](evidence/existing-guard.txt). 일괄 수집 시작 시각·Python/Git 버전·시험한 파일 hash를 출력에 보존했다.
 
-E1~E18은 시점별 기록이다. 각 절의 현재/이번·설치 버전·설정·서비스 건강·검사 수는 **그 관찰 당시**를
-뜻하며 이후에도 유지됐다는 보장이 아니다. S main은 E11, M 교대/전달은 E12, 최신125개는 E18로
-갱신됐다. [E19](#e19-docs_reconcile-현황과-증거-대조)의 새 원격 조회와 [현재 판정](STATUS.md)을 함께 본다.
+E1–E20은 각 시점의 기록이다. 최신 통합 검증은 [E21](#e21-one-shot-통합-검증)을 따른다.
+과거 hosted21·local115/125·Node38과 이번 Python133/Node40은 범위·source가 다르다.
+[현재 판정](STATUS.md)·[사람 채택 자료](ADOPTION.md)를 함께 본다.
 
 ## E1 Heartbeat
 
@@ -598,3 +598,86 @@ Claude 표시값도 이 야간 작업의 실제 청구액으로 귀속하지 않
 개인 token 장부·credential은 열람하지 않았고 서비스·권한 설정을 조작하지 않았다. 기존 시험을 새로 실행했다고 기록하지 않는다.
 
 E20 보고 후보 `d8ade7e32314ba137ada3dbedd04b31307d33019`의 [독립 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6090183386)은 새 지적0이다. 이후 리뷰 게시 영수증·후속 비용/actor 스냅샷만 추가했으며 야간 총비용과 실제 승인 전수는 계속 미확인이다. 이 후속을 독립적으로 다시 리뷰하거나 제품 테스트를 실행했다고 주장하지 않는다.
+
+## E21 ONE-SHOT 통합 검증
+
+[사용자 승인](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094528847) 전문을 읽고
+기존 agent c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd / Astra Max / 기존 ops Worktree에서 수행했다.
+시작 local/origin/PR #1은 `7ae69a92e3e6f8462ec1a6446fe31bb48294bd63`, clean·Draft였다.
+PR #2는 `0bef44431f52ae1c24aec77b2c655e80ba03ed72`, base7ae69…·Draft였다.
+시작 agent 목록에서 root만 running, 기존 Director/reviewer는 idle·pending0이었다.
+새 Supervisor/Director/Heartbeat/controller는 만들지 않았다. Director는 상시 구조에서 제외하고 기록·세션은 유지한다.
+이 미션의 새 자동 재개 보장은 없다. Kerbe checkout/branch/PR #2/#5는 갱신하거나 조작하지 않았다.
+
+선별 영수증 [one-shot.json](evidence/one-shot.json)에 source hashes·실제 완료 결과·보호 API 응답·리뷰를 보존한다.
+원문 v2.4와 AGENTS 입력/보존본 hash는 각각54245637…/f18552b6…로 동일하며 Review History는 두 위치 모두 없다.
+자료가 없는 내용을 만들지 않았다. 권한/서비스/패키지/공통 hook/인증·영속 데이터 변경은 없다.
+
+### A. 최신 CI와 실제 실행
+
+초기 [hosted38029622244](https://github.com/shotgun1107/home-dev-ops/actions/runs/38029622244)의125개를
+직접 로그에서 확인했다. checkout `0dcfeff84cc91ae821192b5f0e4858ef179d382e`, 부모7ae69…/0bef444…,
+tree `737932364bef3967481a5cfc8683dc2b8bd806c2`, head tree 동일이었다.
+runId90f99bc8-e91e-4540-8664-5f0cb1cb8e39·133과 다른125개·skip0·finish/filesUnchanged/passed를 확인했다.
+초기15개 source/test 파일의 hash는 당시 snapshot과 같았다. 현재16개 목록에는 신규 Git 통합 시험이 추가됐다.
+
+새 source `d8099f00188ffd35c9cec87b83d370c41c536a17`는 production scripts를 변경하지 않고
+Git 실제 dispatch8개·manifest와 Heartbeat 반례2개를 추가했다. Python3.14.4의 로컬133개가
+runId48083624-2857-4e44-a504-fccc46c05de1로 skip0/failure0/error0/filesUnchanged/passed였다.
+실행 당시 checkout은7ae69…+미커밋 시험 bytes였으며, 커밋된 source와 파일별 hash가 일치함을 확인했다.
+
+기존 task-owned clone clean/UID/lock/branch/ancestry를 확인하고 원격 CI branch를 정상 갱신했다.
+CI `65b2573ac39199a22e65d02f27d3dbd4cd196032`는0bef444…와d8099f0…의 정상 merge를 포함한다.
+workflow 변경은 낡은125 step 이름을 manifest 기준 표현으로 바꾼1줄이며 최소권한·pin·trigger·timeout은 유지했다.
+[hosted38031284245](https://github.com/shotgun1107/home-dev-ops/actions/runs/38031284245)의 실제 checkout
+`bb132130040c82665d8a7ca1bcd29bd2df24fd39`, 부모d8099f0…/65b2573…와 head tree 일치를 확인했다.
+Python **133 executed/skip0/failure0/error0**, runId8adf3446-4c58-4129-ab10-de51c9be10e0의 정상 finish,
+filesUnchanged/passed와 로컬 동일 hashes를 확인했다. Node/mock를 hosted에 합산하지 않았다.
+최종 문서 통합 이후의 추가 CI run/전체 PR HEAD는 PR 최종 handoff에서 대조한다.
+
+### B. 실제 Git 보호 범위
+
+보호 API 두 개는 다시403(기능 업그레이드/공개 전환 안내)이었다. 활성 common hook 없음,
+hooksPath unset, non-sample hook0, tracked `.gitattributes`0, git-lfs3.7.1 binary 존재를 기록했다.
+Full Access에서 실제 위험 push/merge는 수행하지 않았으며 기술적 차단 미검증은 유지한다.
+
+기존12개는 실제 Git object graph와 guard stdin 로직 시험이었다. 새8개는 폐기용 SHA-1 repo/bare destination에서
+Git이 hook을 직접 호출하도록 했다. templates/global/system Git 설정을 배제하고 file protocol만 허용했다.
+새 topic/FF 전달, linked worktree 공통 hook의 삭제 차단, 명시 hooksPath, stdin/argv replay와 후속 exit42의
+원격 반영 차단을 확인했다. `--no-verify`·빈 hooksPath·execute bit 없음에서는 fixture hook을 건너뛰고
+mock-topic 삭제가 가능했다. 실제 ops/네트워크/main/force push·공통 hook 설치는 없었다.
+합성 downstream은 실제 LFS 검증이 아니다. [비용·범위·설치/확인/원복 선택](ADOPTION.md#b-git-보호-선택과-정확한-적용-순서).
+
+### C–D. 추가 반례와 남은 복구 한계
+
+설치 service/store/cron, patch, 기존 PID 소스와 권한 routing 소스8개 hash를 기존 실측과 대조했다.
+[고정 패치 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094627155)는 새 P0/P1/P2가 없었고
+manual orphan 조합을 Info로 제시했다. 이를 실제 임시 객체/store·write 실패 주입으로 재현했다.
+첫 tick과 manual runOnce의 terminal write4회 실패 → running2개 → 새 객체 recovery1회 후 failed/running →
+후속 tick에서 설치본 runner누적3회, 후보2회(정지)였다. 남은 running은1개이며 자동 복구 해결이 아니다.
+패치 bytes는 바꾸지 않았다. 기존38+새2=**Node40 OK/skip0**, 설치 파일 hash 전후 동일이었다.
+실제 daemon 재시작·OS crash·패키지 설치·schedule/DB 편집은 하지 않았다.
+
+production Python scripts는 기존 검토 source1edd2ef…와 동일하며 새 전체133개가 해당 결함 보정도 다시 검사했다.
+PID Node9·mock15는 source/hash가 같아 재실행하지 않았다. Python133/Node40/9/mock15는 서로 다른 범위다.
+70KB cleanup record의 안전한 자동 삭제·비원자 read→delete·전역 lease·모든 자손 종료·실제 Auto-review
+주체/특정 Claude deny·야간 승인/청구 전수는 해결됐다고 하지 않는다. 안전한 실패/보존 경로와 사람 결정을 유지한다.
+
+### E–F. 문서와 사람 선행 조건
+
+REVISION의 제안은 실측 운영 절차/격리 통과 미배포/사람 결정/미검증으로 분류했다.
+옛21/115/125/Node38·미통합 bundle은 당시 기록으로 보존하고 현재133/Node40과 구분한다.
+[ADOPTION](ADOPTION.md)은 Git 보호·CI 채택 순서·Heartbeat 백업/중단/보존/원복·모바일 카드의 검토 자료다.
+설치·권한/보호 변경·Ready/merge를 수행한 기록이 아니다.
+
+Kerbe S main 실측은 E11을 재사용했다. M 후보7ff930c…의 main 반영은 회사 PC 미동기화 대조와
+사람 채택이 선행이다. 정식 Provider 병렬·모바일은 미실행이고 mock15를 그 통과로 바꾸지 않는다.
+선별 응답62(allow59/deny3, 조정6 부분집합)·mock수동6은 사람 클릭이나 이번 신규 승인 합계가 아니다.
+CostUsd0은 미제공 fallback일 수 있으며 전체 청구 비용·야간 실제 승인 전수는 미확인이다.
+
+독립 reviewer는 기존 Claude Opus5.5 세션을 재사용했고 운영상 readonly였다. Plan의 기술적 격리를 주장하지 않는다.
+[CI 최초 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/2#issuecomment-6094626944),
+[추가 시험 d8099f0 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094678310)는 새 P0/P1/P2가 없었다.
+[65b2573 CI delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/2#issuecomment-6094699772)도 새 P0/P1/P2가 없었다.
+실제 읽은/재사용한 범위와 hosted 미관찰은 원문에 있으며 Supervisor가 별도 실측했다.
+마지막 문서 교차 검토·최종 PR HEAD/Draft/clean/CI 결과는 PR의 **단 하나의 종합 handoff**에 기록한다.

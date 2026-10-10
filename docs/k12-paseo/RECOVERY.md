@@ -65,6 +65,10 @@ decision·정본 task/PR의 Next·현재 소유권을 확인한다. detached/rem
 
 ## 2. Heartbeat
 
+ONE-SHOT의 manual/orphan 반례는 running2개 중 recovery1회가 첫 기록만 처리함을 확인했다.
+반복 재시작·runOnce·record 편집으로 해결을 시도하지 않는다. 패치 적용/백업/중단 시간/원복은
+[별도 사람 실행 계획](ADOPTION.md#c-heartbeat-패치의-사람-실행-계획)이며 아직 수행하지 않았다.
+
 P0_HEARTBEAT [격리 검증](HEARTBEAT.md)에 따라 expiry와 실제 실행 종료를 구분한다.
 failed도maxRuns를 소모하고 permission 대기 실패는 underlying agent의 종료가 아니다.
 crash 복원 후에는 PR/HEAD·task 영수증·실제 실행을 대조한다. failed 표시는 부작용 롤백 증거가 아니다.
@@ -170,6 +174,10 @@ base 수신 중 workflow 충돌 시 pre-merge HEAD/base/충돌 경로 기록 후
 
 ## 4. guard 설치 전 위험 검토 — 사람 작업
 
+ONE-SHOT에서 공통 dir/hooksPath/no-hook을 다시 확인하고 로컬 Git 통합8개를 추가했다.
+기존 로직12개와 달리 Git의 실제 hook 호출을 검증했으나 설치·실제 LFS 왕복은 아니다.
+[정확한 보존·설치 후 확인·실패 중단·원복 순서](ADOPTION.md#b-git-보호-선택과-정확한-적용-순서)를 따른다.
+
 현재 ops에는 활성 hook이 없다. 후보 `scripts/k12-pre-push`는 Kerbe의 검증된 SHA-1 branch guard와 동일하다.
 설치 권고와 실행 승인은 다르며 이 PR은 설치를 자동 수행하지 않는다.
 
@@ -222,13 +230,13 @@ OPS_CI에서 merge ref 자체도 과거73afc54…를 가리킨 사실을 확인�
 manifest 개수/파일/버전이 맞지 않으면 검사를 생략하거나 숫자를 성공시키기 위해 낮추지 않는다.
 의도된 suite 변경인지 검토하고 source+manifest를 같은 후보로 고친 뒤 다시 실행한다.
 Node K12 시험을 hosted Python 검사에 합산하지 않는다. bundle prerequisite 또는 원격 HEAD가
-변했다면 새 base에서 다시 대조하고 새 후보·새 CI 결과를 남긴다. 이 작업은 기존 CI PR2를
-원격 갱신하지 않았으므로 서버 측 rollback은 없다. 새 task-owned fixture들은 보존했다.
+변했다면 새 base에서 다시 대조하고 새 후보·새 CI 결과를 남긴다. 이 문단의 과거 OPS_CI 작업은 원격을 갱신하지 않았다. 이후 ONE-SHOT은 승인된 기존 CI branch에
+최신 suite를 통합하며, 최종 원격 SHA/CI는 PR handoff로 구분한다. 옛 bundle을 다시 push하지 않는다.
 
 REVIEW_INDEPENDENT 이후 기본 CI 명령은 child exit0뿐 아니라 parent의 완료 영수증 확인까지
 성공해야 한다. `completion-unconfirmed` 또는 `child-unavailable-or-timeout`은 통과가 아니다.
 내부 child 옵션으로 parent를 생략하지 않는다. child110초/외부120초이며 악의적 코드 격리나
-모든 자손 종료 증명은 아니다. 최신125개 후보·과거115개 후보를 [전달 절차](proposals/README.md)에서 구분한다.
+모든 자손 종료 증명은 아니다. ONE-SHOT의 현재133개·이전125개/115개 후보는 [전달 절차](proposals/README.md)에서 구분한다.
 
 ## 7. 독립 mock 작업의 대기·종료
 

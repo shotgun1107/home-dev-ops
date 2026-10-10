@@ -1,0 +1,1056 @@
+{
+  "mission": "ONE-SHOT-20261010",
+  "observedAt": "2026-10-10T06:25:56.982093+00:00",
+  "authorization": {
+    "id": 6094528847,
+    "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094528847",
+    "createdAt": "2026-10-10T06:11:28Z",
+    "updatedAt": "2026-10-10T06:11:28Z",
+    "bodySha256": "46061cbb480b175993056b1a1bd0c192d55df7b1fc4ecc21b2283da4fa112c6e",
+    "bodyReadInFull": true
+  },
+  "baselineOpsSha": "7ae69a92e3e6f8462ec1a6446fe31bb48294bd63",
+  "initialCiVerified": {
+    "checkedAt": "2026-10-10T06:20:59.579552+00:00",
+    "runUrl": "https://github.com/shotgun1107/home-dev-ops/actions/runs/38029622244",
+    "runId": 38029622244,
+    "jobId": 114147626055,
+    "head": "0bef44431f52ae1c24aec77b2c655e80ba03ed72",
+    "base": "7ae69a92e3e6f8462ec1a6446fe31bb48294bd63",
+    "checkoutSha": "0dcfeff84cc91ae821192b5f0e4858ef179d382e",
+    "checkoutParents": [
+      "7ae69a92e3e6f8462ec1a6446fe31bb48294bd63",
+      "0bef44431f52ae1c24aec77b2c655e80ba03ed72"
+    ],
+    "checkoutTree": "737932364bef3967481a5cfc8683dc2b8bd806c2",
+    "sameHeadTree": true,
+    "localFilesMatch": {
+      "scripts/k12-pre-push": true,
+      "scripts/paseo_heartbeat_cleanup.py": true,
+      "scripts/paseo_permission_audit.py": true,
+      "scripts/paseo_preflight.py": true,
+      "scripts/paseo_recovery_audit.py": true,
+      "scripts/run_ops_ci.py": true,
+      "tests/ci-manifest.json": true,
+      "tests/test_heartbeat_cleanup.py": true,
+      "tests/test_heartbeat_lifecycle.mjs": true,
+      "tests/test_ops_ci.py": true,
+      "tests/test_paseo_preflight.py": true,
+      "tests/test_permission_audit.py": true,
+      "tests/test_pre_push.py": true,
+      "tests/test_recovery.py": true,
+      "tests/test_recovery_pid.mjs": true
+    },
+    "logsSha256": "5eef3c10d97b29e8d49e6fe4a08758295a4e762fcadcbb4d62b056ae8b71fa42",
+    "start": {
+      "checkoutSha": "0dcfeff84cc91ae821192b5f0e4858ef179d382e",
+      "expected": 125,
+      "filesSha256": {
+        "scripts/k12-pre-push": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+        "scripts/paseo_heartbeat_cleanup.py": "162684a9c42bc6c99902c9a806b1ca668e24e4c1f6b3966e57ba190d8f2fc05c",
+        "scripts/paseo_permission_audit.py": "f760a2b1c1897802fc765a60b35605171b98607219ebebb5c0091ded6f0dd576",
+        "scripts/paseo_preflight.py": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+        "scripts/paseo_recovery_audit.py": "e422ae84c290f683bb99e45a0fc0fb0d8fa4a871fed89b2ce2c132b7ff29028f",
+        "scripts/run_ops_ci.py": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+        "tests/ci-manifest.json": "db189894b88cfc1ba356b18b49297d4416b2b140943e5416156dc1efbe6bd4f6",
+        "tests/test_heartbeat_cleanup.py": "3b5e75feeaf38a6dda47a8c461fd899a31b64bf13a9dc3e311c2cde2292977ac",
+        "tests/test_heartbeat_lifecycle.mjs": "8fa8ec7c399b74a9a18bab2ce3b132d7c2a466127ce1fa7525e6ce3887e55622",
+        "tests/test_ops_ci.py": "51de76430cef371abe9d5d905f907bacbc3959bce8c896ef55068b4c1784b1e6",
+        "tests/test_paseo_preflight.py": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5",
+        "tests/test_permission_audit.py": "b163594df908ba3c16806410aa9d1ca4e1fc4bf5f2d2aa66a88e4ceadd88c973",
+        "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9",
+        "tests/test_recovery.py": "32bc303377efb1ac4633969c8ef541804aae9bdc3e921ca9bbdf17f229fd321a",
+        "tests/test_recovery_pid.mjs": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03"
+      },
+      "k12OnlyNotRun": [
+        "test_heartbeat_lifecycle.mjs",
+        "test_recovery_pid.mjs"
+      ],
+      "phase": "start",
+      "python": "3.14.4",
+      "runId": "90f99bc8-e91e-4540-8664-5f0cb1cb8e39",
+      "runnerSha256": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+      "startedAt": "2026-10-10T06:03:55.694888+00:00"
+    },
+    "finish": {
+      "endedAt": "2026-10-10T06:04:05.648475+00:00",
+      "errors": 0,
+      "expected": 125,
+      "expectedFailures": 0,
+      "failures": 0,
+      "filesUnchanged": true,
+      "passed": true,
+      "phase": "finish",
+      "runId": "90f99bc8-e91e-4540-8664-5f0cb1cb8e39",
+      "skipped": 0,
+      "testsRun": 125,
+      "unexpectedSuccesses": 0
+    }
+  },
+  "gitBoundary": {
+    "commonGitDir": "/home/shotgun1107/workspace/home-dev-ops/.git",
+    "hooksPathConfigured": false,
+    "hooksPathSetting": "",
+    "prePushExists": false,
+    "prePushSymlink": false,
+    "nonSampleHooks": [],
+    "attributesFiles": [],
+    "lfsVersionExit": 0,
+    "lfsVersion": "git-lfs/3.7.1 (GitHub; linux amd64; go 1.25.0)",
+    "guardSha256": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc"
+  },
+  "rulesets": {
+    "endpoint": "rulesets",
+    "exitCode": 1,
+    "message": "Upgrade to GitHub Pro or make this repository public to enable this feature.",
+    "status": "403",
+    "ruleCount": null
+  },
+  "branchProtection": {
+    "endpoint": "branches/main/protection",
+    "exitCode": 1,
+    "message": "Upgrade to GitHub Pro or make this repository public to enable this feature.",
+    "status": "403",
+    "ruleCount": null
+  },
+  "localPython133": [
+    {
+      "checkoutSha": "7ae69a92e3e6f8462ec1a6446fe31bb48294bd63",
+      "expected": 133,
+      "filesSha256": {
+        "scripts/k12-pre-push": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+        "scripts/paseo_heartbeat_cleanup.py": "162684a9c42bc6c99902c9a806b1ca668e24e4c1f6b3966e57ba190d8f2fc05c",
+        "scripts/paseo_permission_audit.py": "f760a2b1c1897802fc765a60b35605171b98607219ebebb5c0091ded6f0dd576",
+        "scripts/paseo_preflight.py": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+        "scripts/paseo_recovery_audit.py": "e422ae84c290f683bb99e45a0fc0fb0d8fa4a871fed89b2ce2c132b7ff29028f",
+        "scripts/run_ops_ci.py": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+        "tests/ci-manifest.json": "1cb11925e35b954c69caacf0cc4896ff4b6e40801acca7d6b6bec5a398b1d367",
+        "tests/test_git_guard_integration.py": "cb908b129e2885eab088315a5181c495e903a95f2a1474a13346845e3a68bae3",
+        "tests/test_heartbeat_cleanup.py": "3b5e75feeaf38a6dda47a8c461fd899a31b64bf13a9dc3e311c2cde2292977ac",
+        "tests/test_heartbeat_lifecycle.mjs": "42a5a304da8b152ea46f0105536c7f88343fadb0910a7df537d34b000602db76",
+        "tests/test_ops_ci.py": "51de76430cef371abe9d5d905f907bacbc3959bce8c896ef55068b4c1784b1e6",
+        "tests/test_paseo_preflight.py": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5",
+        "tests/test_permission_audit.py": "b163594df908ba3c16806410aa9d1ca4e1fc4bf5f2d2aa66a88e4ceadd88c973",
+        "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9",
+        "tests/test_recovery.py": "32bc303377efb1ac4633969c8ef541804aae9bdc3e921ca9bbdf17f229fd321a",
+        "tests/test_recovery_pid.mjs": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03"
+      },
+      "k12OnlyNotRun": [
+        "test_heartbeat_lifecycle.mjs",
+        "test_recovery_pid.mjs"
+      ],
+      "phase": "start",
+      "python": "3.14.4",
+      "runId": "48083624-2857-4e44-a504-fccc46c05de1",
+      "runnerSha256": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+      "startedAt": "2026-10-10T06:25:21.399531+00:00"
+    },
+    {
+      "endedAt": "2026-10-10T06:25:25.998275+00:00",
+      "errors": 0,
+      "expected": 133,
+      "expectedFailures": 0,
+      "failures": 0,
+      "filesUnchanged": true,
+      "passed": true,
+      "phase": "finish",
+      "runId": "48083624-2857-4e44-a504-fccc46c05de1",
+      "skipped": 0,
+      "testsRun": 133,
+      "unexpectedSuccesses": 0
+    }
+  ],
+  "localPythonCondition": "Working tree at baseline HEAD plus new 8 Git fixture tests, manifest entry and Node test delta. Hashes, not baseline HEAD alone, identify executed bytes. Production scripts unchanged.",
+  "heartbeat40": {
+    "node": "v22.22.1",
+    "sources": [
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/service.js",
+        "sha256": "325066fba80c259ed0f5385042f15045820791fe048e622151259ed036dcd3c6"
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/store.js",
+        "sha256": "11ff1f4ecb10a1e632741e8420b505340e5b74ddf343912a0408734531ddf58d"
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/cron.js",
+        "sha256": "7e4de9dc39a982751637523b4f4aaf89c2c32c07469312b222deab8b1b98c97e"
+      }
+    ],
+    "patchSha256": "12ee2e3efb6e778a5c2642b23d1406888950afa00b5c101a1a80529055178ce0",
+    "candidateSourceSha256": "c110a136ce1f696221a3cece897c6c4a142de31e9c5b7262203973f635795315",
+    "daemonConnected": false,
+    "providersStarted": false,
+    "realSchedulesChanged": false,
+    "fixtureRemoved": true,
+    "real24hObservation": false,
+    "actualProcessCrash": false,
+    "observations": [
+      {
+        "variant": "installed",
+        "scenario": "24h-cron-72-terminal-runs",
+        "terminalRuns": 72,
+        "distinctScheduledSlots": 72,
+        "virtualHours": 24,
+        "real24hObservation": false
+      },
+      {
+        "variant": "installed",
+        "scenario": "aligned-24h-expiry-excludes-boundary-slot",
+        "terminalRuns": 71,
+        "reason": "expiry checked before equal-time dispatch"
+      },
+      {
+        "variant": "installed",
+        "scenario": "expiry-at-first-tick-no-dispatch",
+        "runnerCalls": 0
+      },
+      {
+        "variant": "installed",
+        "scenario": "expiry-does-not-cancel-running-job",
+        "afterExpiryWhileHeld": "active",
+        "afterRelease": "completed",
+        "hardStop": false
+      },
+      {
+        "variant": "installed",
+        "scenario": "active-agent-rejection-consumes-maxRuns",
+        "failedRuns": 2,
+        "providerStarts": 0,
+        "status": "completed"
+      },
+      {
+        "variant": "installed",
+        "scenario": "permission-wait-fails-schedule-not-agent-cleanup",
+        "stubStarts": 1,
+        "scheduleStatus": "completed",
+        "stubPermissionStillPending": true
+      },
+      {
+        "variant": "installed",
+        "scenario": "crash-recovery-skips-missed-slots-and-is-idempotent",
+        "recoveredRun": "failed",
+        "missedSlotsReplayed": 0,
+        "idempotentRecovery": true,
+        "actualProcessCrash": false
+      },
+      {
+        "variant": "installed",
+        "scenario": "crash-after-side-effect-is-not-exactly-once",
+        "syntheticEffects": 2,
+        "statuses": [
+          "failed",
+          "succeeded"
+        ],
+        "exactlyOnce": false
+      },
+      {
+        "variant": "installed",
+        "scenario": "overlapping-ticks-while-run-held",
+        "overlappingTicks": 9,
+        "runnerCalls": 1
+      },
+      {
+        "variant": "installed",
+        "scenario": "stale-tick-snapshot-after-completion",
+        "runnerCalls": 2,
+        "maxRuns": 1,
+        "uniqueSlots": 1,
+        "defectReproduced": true
+      },
+      {
+        "variant": "installed",
+        "scenario": "stale-snapshot-after-pause",
+        "runnerCallsAfterPause": 1,
+        "defectReproduced": true
+      },
+      {
+        "variant": "installed",
+        "scenario": "append-storage-failure-releases-memory-guard",
+        "guardLeaked": true,
+        "runnerCallsAfterStorageRecovered": 0
+      },
+      {
+        "variant": "installed",
+        "scenario": "finish-storage-failure-leaves-orphan-running-record",
+        "terminalWritesFailed": 2,
+        "memoryGuardCleared": true,
+        "callsAfterStorageRecoveryAndThreeTicks": 4,
+        "orphanStatus": "running",
+        "scheduleStatus": "active",
+        "candidateStalls": false,
+        "syntheticRecoveryAllowsNextRun": true,
+        "actualProcessCrash": false
+      },
+      {
+        "variant": "installed",
+        "scenario": "deleted-snapshot-aborts-tick-but-next-tick-progresses",
+        "firstTickAborted": true,
+        "nextTickRunnerCalls": [
+          "B"
+        ],
+        "deletedScheduleGuardLeaked": true
+      },
+      {
+        "variant": "installed",
+        "scenario": "manual-orphan-plus-one-recovery-leaves-another-running-run",
+        "terminalWritesFailed": 4,
+        "statusesAfterOneRecovery": [
+          "failed",
+          "running"
+        ],
+        "runnerCallsAfterNextTick": 3,
+        "remainingOrphans": 1,
+        "candidateStalls": false,
+        "manualRecoveryRecommended": false,
+        "actualProcessCrash": false
+      },
+      {
+        "variant": "installed",
+        "scenario": "expiry-elapses-between-list-and-claim",
+        "runnerCallsAfterExpiry": 1,
+        "freshClaimClockChecked": false
+      },
+      {
+        "variant": "installed",
+        "scenario": "independent-schedule-progress-without-global-tick-lock",
+        "bWhileAHeld": 1,
+        "finalRunnerCalls": {
+          "A": 1,
+          "B": 2
+        },
+        "crossScheduleProgressPreserved": true
+      },
+      {
+        "variant": "installed",
+        "scenario": "manual-runOnce-is-not-an-expiry-or-cap-enforcer",
+        "manualRunsAfterExpiry": 2,
+        "maxRuns": 1,
+        "manualSemanticsUnchanged": true
+      },
+      {
+        "variant": "installed",
+        "scenario": "paused-expired-record-remains-paused",
+        "statusAfterExpiry": "paused",
+        "runnerCalls": 0
+      },
+      {
+        "variant": "installed",
+        "scenario": "missing-target-completes-without-starting-provider",
+        "status": "completed",
+        "providerStarts": 0
+      },
+      {
+        "variant": "candidate",
+        "scenario": "24h-cron-72-terminal-runs",
+        "terminalRuns": 72,
+        "distinctScheduledSlots": 72,
+        "virtualHours": 24,
+        "real24hObservation": false
+      },
+      {
+        "variant": "candidate",
+        "scenario": "aligned-24h-expiry-excludes-boundary-slot",
+        "terminalRuns": 71,
+        "reason": "expiry checked before equal-time dispatch"
+      },
+      {
+        "variant": "candidate",
+        "scenario": "expiry-at-first-tick-no-dispatch",
+        "runnerCalls": 0
+      },
+      {
+        "variant": "candidate",
+        "scenario": "expiry-does-not-cancel-running-job",
+        "afterExpiryWhileHeld": "active",
+        "afterRelease": "completed",
+        "hardStop": false
+      },
+      {
+        "variant": "candidate",
+        "scenario": "active-agent-rejection-consumes-maxRuns",
+        "failedRuns": 2,
+        "providerStarts": 0,
+        "status": "completed"
+      },
+      {
+        "variant": "candidate",
+        "scenario": "permission-wait-fails-schedule-not-agent-cleanup",
+        "stubStarts": 1,
+        "scheduleStatus": "completed",
+        "stubPermissionStillPending": true
+      },
+      {
+        "variant": "candidate",
+        "scenario": "crash-recovery-skips-missed-slots-and-is-idempotent",
+        "recoveredRun": "failed",
+        "missedSlotsReplayed": 0,
+        "idempotentRecovery": true,
+        "actualProcessCrash": false
+      },
+      {
+        "variant": "candidate",
+        "scenario": "crash-after-side-effect-is-not-exactly-once",
+        "syntheticEffects": 2,
+        "statuses": [
+          "failed",
+          "succeeded"
+        ],
+        "exactlyOnce": false
+      },
+      {
+        "variant": "candidate",
+        "scenario": "overlapping-ticks-while-run-held",
+        "overlappingTicks": 9,
+        "runnerCalls": 1
+      },
+      {
+        "variant": "candidate",
+        "scenario": "stale-tick-snapshot-after-completion",
+        "runnerCalls": 1,
+        "maxRuns": 1,
+        "uniqueSlots": 1,
+        "defectReproduced": false
+      },
+      {
+        "variant": "candidate",
+        "scenario": "stale-snapshot-after-pause",
+        "runnerCallsAfterPause": 0,
+        "defectReproduced": false
+      },
+      {
+        "variant": "candidate",
+        "scenario": "append-storage-failure-releases-memory-guard",
+        "guardLeaked": false,
+        "runnerCallsAfterStorageRecovered": 1
+      },
+      {
+        "variant": "candidate",
+        "scenario": "finish-storage-failure-leaves-orphan-running-record",
+        "terminalWritesFailed": 2,
+        "memoryGuardCleared": true,
+        "callsAfterStorageRecoveryAndThreeTicks": 1,
+        "orphanStatus": "running",
+        "scheduleStatus": "active",
+        "candidateStalls": true,
+        "syntheticRecoveryAllowsNextRun": true,
+        "actualProcessCrash": false
+      },
+      {
+        "variant": "candidate",
+        "scenario": "deleted-snapshot-aborts-tick-but-next-tick-progresses",
+        "firstTickAborted": true,
+        "nextTickRunnerCalls": [
+          "B"
+        ],
+        "deletedScheduleGuardLeaked": false
+      },
+      {
+        "variant": "candidate",
+        "scenario": "manual-orphan-plus-one-recovery-leaves-another-running-run",
+        "terminalWritesFailed": 4,
+        "statusesAfterOneRecovery": [
+          "failed",
+          "running"
+        ],
+        "runnerCallsAfterNextTick": 2,
+        "remainingOrphans": 1,
+        "candidateStalls": true,
+        "manualRecoveryRecommended": false,
+        "actualProcessCrash": false
+      },
+      {
+        "variant": "candidate",
+        "scenario": "expiry-elapses-between-list-and-claim",
+        "runnerCallsAfterExpiry": 0,
+        "freshClaimClockChecked": true
+      },
+      {
+        "variant": "candidate",
+        "scenario": "independent-schedule-progress-without-global-tick-lock",
+        "bWhileAHeld": 1,
+        "finalRunnerCalls": {
+          "A": 1,
+          "B": 1
+        },
+        "crossScheduleProgressPreserved": true
+      },
+      {
+        "variant": "candidate",
+        "scenario": "manual-runOnce-is-not-an-expiry-or-cap-enforcer",
+        "manualRunsAfterExpiry": 2,
+        "maxRuns": 1,
+        "manualSemanticsUnchanged": true
+      },
+      {
+        "variant": "candidate",
+        "scenario": "paused-expired-record-remains-paused",
+        "statusAfterExpiry": "paused",
+        "runnerCalls": 0
+      },
+      {
+        "variant": "candidate",
+        "scenario": "missing-target-completes-without-starting-provider",
+        "status": "completed",
+        "providerStarts": 0
+      }
+    ],
+    "tests": 40,
+    "passed": 40,
+    "failed": 0,
+    "skipped": 0,
+    "rerun": true,
+    "logSha256": "d9163d542fb08329a3237163b1f001a14ea294ba3bc3501ab0c77001afc0d4d5",
+    "testSha256": "42a5a304da8b152ea46f0105536c7f88343fadb0910a7df537d34b000602db76"
+  },
+  "reusedInstalledSources": {
+    "checkedAt": "2026-10-10T06:22:08.405191+00:00",
+    "checks": [
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/service.js",
+        "sha256": "325066fba80c259ed0f5385042f15045820791fe048e622151259ed036dcd3c6",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/store.js",
+        "sha256": "11ff1f4ecb10a1e632741e8420b505340e5b74ddf343912a0408734531ddf58d",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/cron.js",
+        "sha256": "7e4de9dc39a982751637523b4f4aaf89c2c32c07469312b222deab8b1b98c97e",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/pid-lock.js",
+        "sha256": "7ad798710140a3a831974637cacc0eff40f0403fbd583e307a2b68dc8947c02b",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/daemon-instance.js",
+        "sha256": "029dea3bd91af1295dddb1427f152648657ad43efa1bd097894db901d0832cb9",
+        "matches": true
+      },
+      {
+        "path": "tests/test_heartbeat_lifecycle.mjs",
+        "sha256": "8fa8ec7c399b74a9a18bab2ce3b132d7c2a466127ce1fa7525e6ce3887e55622",
+        "matches": true
+      },
+      {
+        "path": "docs/k12-paseo/proposals/paseo-heartbeat-schedule.patch",
+        "sha256": "12ee2e3efb6e778a5c2642b23d1406888950afa00b5c101a1a80529055178ce0",
+        "matches": true
+      }
+    ],
+    "node38Reused": true,
+    "node9Reused": true,
+    "rerun": false
+  },
+  "permissionSourceReuse": {
+    "checkedAt": "2026-10-10T06:23:54.701616+00:00",
+    "installedPermissionSource": [
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/providers/codex-app-server-agent.js",
+        "sha256": "da3a578f881d2813d850c218f6089cb493c18155e0aab19b5a3f94b4ea720c6e",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/providers/claude/agent.js",
+        "sha256": "819dcfaff5148b39a99a83259842fba06299039cb466d30858fa16c79f8d0009",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/dist/commands/permit/allow.js",
+        "sha256": "91e40335e58f1de0e3f4edbb0089eff43bdd4ccae726801a9ef970a6b718bfeb",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/dist/commands/permit/deny.js",
+        "sha256": "5c2477a6b051c576ac06a88fb7921dd1248e2661c277e9d9a1d081e7c1b9e67b",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/agent-manager.js",
+        "sha256": "09e1a170a75fc6b1f4eca29779feb7ada0c6d607bd33588f545e619174d7fa65",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/permission-response.js",
+        "sha256": "1e69b358267f549a6cd8a531ba1c69af6d4cf9727f0e4c37448445baf4ce7c15",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/session.js",
+        "sha256": "c2f86382599d05db9311a858b3883fca00e8c3c63658c91cd04521a85a0c9981",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/voice-permission-policy.js",
+        "sha256": "4bb20d06a9828cad372d181e2979eccaa7951176e7959dabb193165ef578d479",
+        "matches": true
+      }
+    ],
+    "unchangedProductionScripts": true,
+    "missingReviewHistory": [
+      "/home/shotgun1107/paseo-p0-input/K12_Paseo_Review_History.md",
+      "docs/k12-paseo/source/K12_Paseo_Review_History.md"
+    ]
+  },
+  "reviews": [
+    {
+      "sha": "0bef44431f52ae1c24aec77b2c655e80ba03ed72",
+      "base": "7ae69a92e3e6f8462ec1a6446fe31bb48294bd63",
+      "reviewerId": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+      "nativeBaselineLines": 913,
+      "startedAt": "2026-10-10T06:19:43.580622+00:00",
+      "nativeFinalLine": 930,
+      "finishedAt": "2026-10-10T06:20:39.403Z",
+      "textSha256": "6d4da5f556736a0bfa91ab57b4122bc1f5662ff196c9d56837a434c1a80547bd",
+      "url": "https://github.com/shotgun1107/home-dev-ops/pull/2#issuecomment-6094626944",
+      "commentId": 6094626944,
+      "postedBodySha256": "05370ed3571ce1fd2ad58ed084ebdfdadd3780310a2921c1ba94a331fc13e7f0",
+      "postGetVerified": true,
+      "policyReadOnly": true,
+      "technicalReadOnly": false
+    },
+    {
+      "sha": "7ae69a92e3e6f8462ec1a6446fe31bb48294bd63",
+      "reviewerId": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+      "nativeBaselineLines": 930,
+      "startedAt": "2026-10-10T06:22:08.410472+00:00",
+      "nativeFinalLine": 957,
+      "finishedAt": "2026-10-10T06:23:24.452Z",
+      "textSha256": "3b77f5ce8c23c4c186bfa0efb68f71fe9c5790b6709eff324737865e20be3696",
+      "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094627155",
+      "commentId": 6094627155,
+      "postedBodySha256": "60d9228f3a9e9b33c47b7b5ee6c92fce075c1d2b9df5b0db05d20d96d394b36f",
+      "postGetVerified": true,
+      "policyReadOnly": true,
+      "technicalReadOnly": false
+    },
+    {
+      "sha": "d8099f00188ffd35c9cec87b83d370c41c536a17",
+      "base": "7ae69a92e3e6f8462ec1a6446fe31bb48294bd63",
+      "reviewerId": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+      "nativeBaselineLines": 959,
+      "startedAt": "2026-10-10T06:26:28.368286+00:00",
+      "nativeFinalLine": 988,
+      "finishedAt": "2026-10-10T06:27:47.689Z",
+      "textSha256": "08548ecb07c517753a097c40edabf401162102ccda5deb6f6ae2cb0162c67402",
+      "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094678310",
+      "commentId": 6094678310,
+      "postedBodySha256": "15a20ebcf35d849bb72f8014b7ca8b928a36b09c7a3960957076126c5b50f531",
+      "postGetVerified": true,
+      "policyReadOnly": true,
+      "technicalReadOnly": false
+    },
+    {
+      "sha": "65b2573ac39199a22e65d02f27d3dbd4cd196032",
+      "base": "0bef44431f52ae1c24aec77b2c655e80ba03ed72",
+      "repository": "/tmp/k12-review-ci-cprod51n/repo",
+      "reviewerId": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+      "nativeBaselineLines": 990,
+      "startedAt": "2026-10-10T06:32:13.458622+00:00",
+      "nativeFinalLine": 1004,
+      "finishedAt": "2026-10-10T06:32:40.817Z",
+      "textSha256": "445bf314f7b0b39d85cdea093bfd0267dca5e165d164e8c7486fc0d0b74a0c84",
+      "url": "https://github.com/shotgun1107/home-dev-ops/pull/2#issuecomment-6094699772",
+      "commentId": 6094699772,
+      "postedBodySha256": "2046a663dd28df624515a2d82c82863600c749228135818c3ddb4fb0aa8dca9d",
+      "postGetVerified": true,
+      "policyReadOnly": true,
+      "technicalReadOnly": false
+    },
+    {
+      "sha": "a988466acaa0622fcd61829217ff38829e55ccca",
+      "base": "d8099f00188ffd35c9cec87b83d370c41c536a17",
+      "reviewerId": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+      "nativeBaselineLines": 1004,
+      "startedAt": "2026-10-10T06:38:59.063018+00:00",
+      "nativeFinalLine": 1051,
+      "finishedAt": "2026-10-10T06:40:26.140Z",
+      "textSha256": "0931caf1d5ff4492a0db9aaf642276c70f8e1b7a93a534d1b803938b5e2b0669",
+      "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094750438",
+      "commentId": 6094750438,
+      "postedBodySha256": "ef6952d7576dcb68f7604b7d3f8c638e5b37d38a20b447f18008ee6e61a3b66b",
+      "postGetVerified": true,
+      "policyReadOnly": true,
+      "technicalReadOnly": false
+    },
+    {
+      "sha": "09748a38320237b99a65f0ab389af6167e7a3ba6",
+      "base": "a988466acaa0622fcd61829217ff38829e55ccca",
+      "reviewerId": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+      "nativeBaselineLines": 1051,
+      "startedAt": "2026-10-10T06:42:46.414714+00:00",
+      "nativeFinalLine": 1075,
+      "finishedAt": "2026-10-10T06:43:27.322Z",
+      "textSha256": "ddadaad808e3ed82e19f0a72cdfd01cc85f5c3b7330e6e46bd2228fd3f2a1d14",
+      "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094770572",
+      "commentId": 6094770572,
+      "postedBodySha256": "4b85d8a6ed464c23717ad1aecad4c8b6cfe6452079538745af0d0440f05aa55a",
+      "postGetVerified": true,
+      "policyReadOnly": true,
+      "technicalReadOnly": false
+    },
+    {
+      "sha": "9f33cf0f0b525741cff643cb0d29d549dc20c932",
+      "base": "09748a38320237b99a65f0ab389af6167e7a3ba6",
+      "reviewerId": "b8e68af1-5dee-40fe-ba4b-0465eb656ebf",
+      "nativeBaselineLines": 1075,
+      "startedAt": "2026-10-10T06:44:52.414356+00:00",
+      "nativeFinalLine": 1087,
+      "finishedAt": "2026-10-10T06:45:08.458Z",
+      "textSha256": "05cdcfc16bd7d6d9df59d4a31cfe2b1a3a3d22a916acde8e0b0210d1643f817b",
+      "url": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094804540",
+      "commentId": 6094804540,
+      "postedBodySha256": "a38fe0b5f622dee8e582b53da1ace217419479358cd8cdc02b30eff5a19512a3",
+      "postGetVerified": true,
+      "policyReadOnly": true,
+      "technicalReadOnly": false
+    }
+  ],
+  "limits": [
+    "All hook writes, topic pushes/deletions and bypass probes were only in disposable file-protocol Git fixtures. No main/force/network push in tests.",
+    "Synthetic downstream hook replay is not an actual LFS server round trip or a production dispatcher.",
+    "No operational hooks, configuration, permissions, rulesets, services, schedules or Kerbe changes.",
+    "Node40 rerun due to new manual/orphan counterexample. Installed PID Node9 and mock15 reuse prior byte-matched evidence.",
+    "Auto-review real actor, full night permission census and total billing remain unverified.",
+    "No permanent Director architecture; existing historical records/session preserved."
+  ],
+  "testSourceSha": "d8099f00188ffd35c9cec87b83d370c41c536a17",
+  "ci133Verified": {
+    "checkedAt": "2026-10-10T06:34:06.855117+00:00",
+    "runUrl": "https://github.com/shotgun1107/home-dev-ops/actions/runs/38031284245",
+    "runId": 38031284245,
+    "jobId": 114152580981,
+    "head": "65b2573ac39199a22e65d02f27d3dbd4cd196032",
+    "base": "d8099f00188ffd35c9cec87b83d370c41c536a17",
+    "status": "completed",
+    "conclusion": "success",
+    "checkoutSha": "bb132130040c82665d8a7ca1bcd29bd2df24fd39",
+    "checkoutParents": [
+      "d8099f00188ffd35c9cec87b83d370c41c536a17",
+      "65b2573ac39199a22e65d02f27d3dbd4cd196032"
+    ],
+    "checkoutTree": "8d6c8d30fbdbf8fad4ec80c19ea17d83e05ff1cf",
+    "sameHeadTree": true,
+    "localFilesMatch": {
+      "scripts/k12-pre-push": true,
+      "scripts/paseo_heartbeat_cleanup.py": true,
+      "scripts/paseo_permission_audit.py": true,
+      "scripts/paseo_preflight.py": true,
+      "scripts/paseo_recovery_audit.py": true,
+      "scripts/run_ops_ci.py": true,
+      "tests/ci-manifest.json": true,
+      "tests/test_git_guard_integration.py": true,
+      "tests/test_heartbeat_cleanup.py": true,
+      "tests/test_heartbeat_lifecycle.mjs": true,
+      "tests/test_ops_ci.py": true,
+      "tests/test_paseo_preflight.py": true,
+      "tests/test_permission_audit.py": true,
+      "tests/test_pre_push.py": true,
+      "tests/test_recovery.py": true,
+      "tests/test_recovery_pid.mjs": true
+    },
+    "logsSha256": "69965954d7acf373fbde68b84708167ac40673ec82ef5aab5ea8bcbb9f9b4178",
+    "start": {
+      "checkoutSha": "bb132130040c82665d8a7ca1bcd29bd2df24fd39",
+      "expected": 133,
+      "filesSha256": {
+        "scripts/k12-pre-push": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+        "scripts/paseo_heartbeat_cleanup.py": "162684a9c42bc6c99902c9a806b1ca668e24e4c1f6b3966e57ba190d8f2fc05c",
+        "scripts/paseo_permission_audit.py": "f760a2b1c1897802fc765a60b35605171b98607219ebebb5c0091ded6f0dd576",
+        "scripts/paseo_preflight.py": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+        "scripts/paseo_recovery_audit.py": "e422ae84c290f683bb99e45a0fc0fb0d8fa4a871fed89b2ce2c132b7ff29028f",
+        "scripts/run_ops_ci.py": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+        "tests/ci-manifest.json": "1cb11925e35b954c69caacf0cc4896ff4b6e40801acca7d6b6bec5a398b1d367",
+        "tests/test_git_guard_integration.py": "cb908b129e2885eab088315a5181c495e903a95f2a1474a13346845e3a68bae3",
+        "tests/test_heartbeat_cleanup.py": "3b5e75feeaf38a6dda47a8c461fd899a31b64bf13a9dc3e311c2cde2292977ac",
+        "tests/test_heartbeat_lifecycle.mjs": "42a5a304da8b152ea46f0105536c7f88343fadb0910a7df537d34b000602db76",
+        "tests/test_ops_ci.py": "51de76430cef371abe9d5d905f907bacbc3959bce8c896ef55068b4c1784b1e6",
+        "tests/test_paseo_preflight.py": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5",
+        "tests/test_permission_audit.py": "b163594df908ba3c16806410aa9d1ca4e1fc4bf5f2d2aa66a88e4ceadd88c973",
+        "tests/test_pre_push.py": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9",
+        "tests/test_recovery.py": "32bc303377efb1ac4633969c8ef541804aae9bdc3e921ca9bbdf17f229fd321a",
+        "tests/test_recovery_pid.mjs": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03"
+      },
+      "k12OnlyNotRun": [
+        "test_heartbeat_lifecycle.mjs",
+        "test_recovery_pid.mjs"
+      ],
+      "phase": "start",
+      "python": "3.14.4",
+      "runId": "8adf3446-4c58-4129-ab10-de51c9be10e0",
+      "runnerSha256": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+      "startedAt": "2026-10-10T06:32:45.318815+00:00"
+    },
+    "finish": {
+      "endedAt": "2026-10-10T06:32:53.794626+00:00",
+      "errors": 0,
+      "expected": 133,
+      "expectedFailures": 0,
+      "failures": 0,
+      "filesUnchanged": true,
+      "passed": true,
+      "phase": "finish",
+      "runId": "8adf3446-4c58-4129-ab10-de51c9be10e0",
+      "skipped": 0,
+      "testsRun": 133,
+      "unexpectedSuccesses": 0
+    }
+  },
+  "pinsAndCheckContexts": {
+    "actionPins": [
+      {
+        "repository": "actions/checkout",
+        "tag": "v7",
+        "tagCommit": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "workflowPin": "3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "matchesAtRead": true
+      },
+      {
+        "repository": "actions/setup-python",
+        "tag": "v6",
+        "tagCommit": "ece7cb06caefa5fff74198d8649806c4678c61a1",
+        "workflowPin": "ece7cb06caefa5fff74198d8649806c4678c61a1",
+        "matchesAtRead": true
+      }
+    ],
+    "checks": [],
+    "checksQuerySha": "bb132130040c82665d8a7ca1bcd29bd2df24fd39",
+    "headChecks": [
+      {
+        "id": 114152580981,
+        "name": "regression",
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "65b2573ac39199a22e65d02f27d3dbd4cd196032",
+        "html_url": "https://github.com/shotgun1107/home-dev-ops/actions/runs/38031284245/job/114152580981"
+      }
+    ],
+    "observedJobTokenPermissions": [
+      "Contents: read",
+      "Metadata: read"
+    ]
+  },
+  "localGitVersion": "git version 2.53.0",
+  "documentVerification": {
+    "observedAt": "2026-10-10T06:48:19.280732+00:00",
+    "scope": [
+      "STATUS.md",
+      "EVIDENCE.md",
+      "RECOVERY.md",
+      "REVISION.md",
+      "OVERNIGHT_REPORT.md",
+      "HEARTBEAT.md",
+      "ADOPTION.md",
+      "proposals/README.md",
+      "OPS_CI.md",
+      "INDEPENDENT_REVIEW.md"
+    ],
+    "relativeLinks": {
+      "count": 167,
+      "allPass": true,
+      "limit": "Mechanical Markdown links and approximate GitHub heading slugs only; no browser/mobile rendering proof. Source v2.4 content not altered.",
+      "failures": []
+    },
+    "canonical": [
+      {
+        "name": "K12_Paseo_v2.4.md",
+        "inputSha256": "5424563757f8321c8f19f6237db6a0d28c243a233f5c2eb9287aa3a9e0ede27d",
+        "copySha256": "5424563757f8321c8f19f6237db6a0d28c243a233f5c2eb9287aa3a9e0ede27d",
+        "equal": true
+      },
+      {
+        "name": "K12_AGENTS_draft.md",
+        "inputSha256": "f18552b6abac864afa812f475c7580d81a82574f84aeb37b7920dec8cb3d2458",
+        "copySha256": "f18552b6abac864afa812f475c7580d81a82574f84aeb37b7920dec8cb3d2458",
+        "equal": true
+      }
+    ],
+    "missingOriginalReference": {
+      "name": "K12_Paseo_Review_History.md",
+      "existsInInput": false,
+      "existsInPreservedSourceDirectory": false,
+      "status": "unverified; no substitute fabricated"
+    },
+    "testFiles": {
+      "scripts/k12-pre-push": {
+        "sha256": "d9488d892f3da43cbd2cabf7fb7a9e98639d70e62d34518243bbdb04ac8dafdc",
+        "matches": true
+      },
+      "scripts/paseo_heartbeat_cleanup.py": {
+        "sha256": "162684a9c42bc6c99902c9a806b1ca668e24e4c1f6b3966e57ba190d8f2fc05c",
+        "matches": true
+      },
+      "scripts/paseo_permission_audit.py": {
+        "sha256": "f760a2b1c1897802fc765a60b35605171b98607219ebebb5c0091ded6f0dd576",
+        "matches": true
+      },
+      "scripts/paseo_preflight.py": {
+        "sha256": "a801207dd5fd8065fb1d1c281b78aaf879216b1c8ee977da238d23523454e554",
+        "matches": true
+      },
+      "scripts/paseo_recovery_audit.py": {
+        "sha256": "e422ae84c290f683bb99e45a0fc0fb0d8fa4a871fed89b2ce2c132b7ff29028f",
+        "matches": true
+      },
+      "scripts/run_ops_ci.py": {
+        "sha256": "df72f30963e24f1cd9da5339048d7e7bb3357cdcf44865ea1be1857e3b5ea262",
+        "matches": true
+      },
+      "tests/ci-manifest.json": {
+        "sha256": "1cb11925e35b954c69caacf0cc4896ff4b6e40801acca7d6b6bec5a398b1d367",
+        "matches": true
+      },
+      "tests/test_git_guard_integration.py": {
+        "sha256": "cb908b129e2885eab088315a5181c495e903a95f2a1474a13346845e3a68bae3",
+        "matches": true
+      },
+      "tests/test_heartbeat_cleanup.py": {
+        "sha256": "3b5e75feeaf38a6dda47a8c461fd899a31b64bf13a9dc3e311c2cde2292977ac",
+        "matches": true
+      },
+      "tests/test_heartbeat_lifecycle.mjs": {
+        "sha256": "42a5a304da8b152ea46f0105536c7f88343fadb0910a7df537d34b000602db76",
+        "matches": true
+      },
+      "tests/test_ops_ci.py": {
+        "sha256": "51de76430cef371abe9d5d905f907bacbc3959bce8c896ef55068b4c1784b1e6",
+        "matches": true
+      },
+      "tests/test_paseo_preflight.py": {
+        "sha256": "b4553532133e297fe11b26b6d7e44e9e63a676cfbda33b3df39e949287786ab5",
+        "matches": true
+      },
+      "tests/test_permission_audit.py": {
+        "sha256": "b163594df908ba3c16806410aa9d1ca4e1fc4bf5f2d2aa66a88e4ceadd88c973",
+        "matches": true
+      },
+      "tests/test_pre_push.py": {
+        "sha256": "0d17cf5ef8fb51551218be58919c94f9c5e102f233452470e602b0c56d37ceb9",
+        "matches": true
+      },
+      "tests/test_recovery.py": {
+        "sha256": "32bc303377efb1ac4633969c8ef541804aae9bdc3e921ca9bbdf17f229fd321a",
+        "matches": true
+      },
+      "tests/test_recovery_pid.mjs": {
+        "sha256": "edf745f9f6f3ead830d15977aad64ebe572abd8109f00e8ce45b66268d334b03",
+        "matches": true
+      }
+    },
+    "manifestTotal": 133,
+    "installedFiles": [
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/service.js",
+        "sha256": "325066fba80c259ed0f5385042f15045820791fe048e622151259ed036dcd3c6",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/store.js",
+        "sha256": "11ff1f4ecb10a1e632741e8420b505340e5b74ddf343912a0408734531ddf58d",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/cron.js",
+        "sha256": "7e4de9dc39a982751637523b4f4aaf89c2c32c07469312b222deab8b1b98c97e",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/service.js",
+        "sha256": "325066fba80c259ed0f5385042f15045820791fe048e622151259ed036dcd3c6",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/store.js",
+        "sha256": "11ff1f4ecb10a1e632741e8420b505340e5b74ddf343912a0408734531ddf58d",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/cron.js",
+        "sha256": "7e4de9dc39a982751637523b4f4aaf89c2c32c07469312b222deab8b1b98c97e",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/pid-lock.js",
+        "sha256": "7ad798710140a3a831974637cacc0eff40f0403fbd583e307a2b68dc8947c02b",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/daemon-instance.js",
+        "sha256": "029dea3bd91af1295dddb1427f152648657ad43efa1bd097894db901d0832cb9",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/providers/codex-app-server-agent.js",
+        "sha256": "da3a578f881d2813d850c218f6089cb493c18155e0aab19b5a3f94b4ea720c6e",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/providers/claude/agent.js",
+        "sha256": "819dcfaff5148b39a99a83259842fba06299039cb466d30858fa16c79f8d0009",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/dist/commands/permit/allow.js",
+        "sha256": "91e40335e58f1de0e3f4edbb0089eff43bdd4ccae726801a9ef970a6b718bfeb",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/dist/commands/permit/deny.js",
+        "sha256": "5c2477a6b051c576ac06a88fb7921dd1248e2661c277e9d9a1d081e7c1b9e67b",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/agent-manager.js",
+        "sha256": "09e1a170a75fc6b1f4eca29779feb7ada0c6d607bd33588f545e619174d7fa65",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/agent/permission-response.js",
+        "sha256": "1e69b358267f549a6cd8a531ba1c69af6d4cf9727f0e4c37448445baf4ce7c15",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/session.js",
+        "sha256": "c2f86382599d05db9311a858b3883fca00e8c3c63658c91cd04521a85a0c9981",
+        "matches": true
+      },
+      {
+        "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/voice-permission-policy.js",
+        "sha256": "4bb20d06a9828cad372d181e2979eccaa7951176e7959dabb193165ef578d479",
+        "matches": true
+      }
+    ],
+    "patch": {
+      "sha256": "12ee2e3efb6e778a5c2642b23d1406888950afa00b5c101a1a80529055178ce0",
+      "matches": true
+    },
+    "mock15": {
+      "rerun": false,
+      "matches": true
+    },
+    "parsedEvidenceFiles": 37,
+    "productionScriptsUnchanged": true,
+    "allPass": true
+  },
+  "documentCorrections": {
+    "reviewInfo": "STATUS CI21 relabelled test_ops_ci21; this is one module, not old hosted21.",
+    "supervisorFound": "Unchanged STATUS bottom row and OPS_CI top still described obsolete bundle/125 hosted pending; corrected to current133 verified and human adoption pending.",
+    "reviewLimit": "Reviewer freshly read changed diffs and reused earlier bodies; original review and omissions preserved.",
+    "independentP2": "09748a3 full STATUS read found two residual current labels: cleanup in125 and latest125 hosted. Corrected to current133 (then125) and initial125 hosted; no source/gate change."
+  },
+  "mainBranch": {
+    "checkedAt": "2026-10-10T06:44:17.864529+00:00",
+    "name": "main",
+    "sha": "bf50f2bdb44e4d71fc29b31dcb0629719a345a95",
+    "protected": false
+  },
+  "postReviewScope": {
+    "reviewedDocumentSha": "9f33cf0f0b525741cff643cb0d29d549dc20c932",
+    "changesAfterReview": "Only this curated JSON appends the closure review, current document verification and this scope statement. No source/tests/policy text changes.",
+    "finalRemoteHeadsAndCi": "Recorded in the single final PR #1 handoff after final normal CI branch integration; not guessed into a self-referential commit."
+  }
+}

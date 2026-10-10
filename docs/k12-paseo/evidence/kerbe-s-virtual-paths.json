@@ -1,0 +1,278 @@
+{
+  "nativeSession": "28804af0-349f-4e75-ab76-15a1dbb074c9",
+  "method": [
+    "git",
+    "check-ignore",
+    "--no-index",
+    "-q",
+    "<virtual-path>"
+  ],
+  "interpretation": "exit 0 ignored, 1 not ignored, all other codes error; no actual dotenv files",
+  "gitignoreSha256": "35e04efbf0bb8cf61d928dabc7d03a34487957733dd061e647f2ff9b5ed3f6f4",
+  "testCode": "\nimport subprocess, sys\ncases = {\n # dotenv: ignore expected\n \".env\":1, \".env.local\":1, \".env.production\":1, \".env.development.local\":1, \".env.test\":1,\n \"nested/.env\":1, \"nested/.env.local\":1, \"a/b/.env.production\":1, \"nested/.env.test\":1,\n \".env.example.local\":1, \"nested/.env.example.local\":1, \".env.sample.local\":1,\n # public examples: tracked expected\n \".env.example\":0, \".env.sample\":0, \"nested/.env.example\":0, \"a/b/.env.sample\":0,\n # unrelated names must stay tracked\n \"env.example\":0, \"src/environment.py\":0, \".envrc\":0, \"README.md\":0, \"kerbe/__init__.py\":0,\n # existing general ignore regression\n \"__pycache__/x.pyc\":1, \"pkg/mod.pyc\":1, \"x.egg-info/PKG-INFO\":1, \".venv/bin/python\":1,\n \"build/lib/x\":1, \"dist/x.whl\":1, \".coverage\":1, \"htmlcov/index.html\":1, \".pytest_cache/v\":1,\n \".mypy_cache/x\":1, \".ruff_cache/x\":1, \"data.sqlite\":1, \"data.sqlite-shm\":1, \"data.sqlite-wal\":1,\n \"data.sqlite.lock\":1, \".codex-usage/x\":1, \"ledger/x\":1, \"reports/x\":1, \".tmp-release-smoke/x\":1,\n \"sub/ledger/x\":0, \"sub/reports/x\":0,\n}\nfail = 0\nfor path, want_ignored in cases.items():\n    rc = subprocess.run([\"git\",\"check-ignore\",\"--no-index\",\"-q\",path]).returncode\n    if rc not in (0,1):\n        print(f\"ERROR rc={rc} {path}\"); fail += 1; continue\n    got = rc == 0\n    ok = got == bool(want_ignored)\n    fail += not ok\n    print(f\"{'PASS' if ok else 'FAIL'} rc={rc} {'ignored' if got else 'not-ignored':11} {path}\")\nprint(f\"total={len(cases)} fail={fail}\")\nsys.exit(1 if fail else 0)\n",
+  "sourceAuthorship": "Claude writer; Supervisor changed only shell quotation to a quoted heredoc before permitting execution",
+  "results": [
+    {
+      "line": 71,
+      "timestamp": "2026-10-09T15:42:14.879Z",
+      "cases": [
+        {
+          "path": ".env",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".env.local",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".env.production",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".env.development.local",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".env.test",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "nested/.env",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "nested/.env.local",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "a/b/.env.production",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "nested/.env.test",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".env.example.local",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "nested/.env.example.local",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".env.sample.local",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".env.example",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        },
+        {
+          "path": ".env.sample",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        },
+        {
+          "path": "nested/.env.example",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        },
+        {
+          "path": "a/b/.env.sample",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        },
+        {
+          "path": "env.example",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        },
+        {
+          "path": "src/environment.py",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        },
+        {
+          "path": ".envrc",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        },
+        {
+          "path": "README.md",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        },
+        {
+          "path": "kerbe/__init__.py",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        },
+        {
+          "path": "__pycache__/x.pyc",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "pkg/mod.pyc",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "x.egg-info/PKG-INFO",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".venv/bin/python",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "build/lib/x",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "dist/x.whl",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".coverage",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "htmlcov/index.html",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".pytest_cache/v",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".mypy_cache/x",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".ruff_cache/x",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "data.sqlite",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "data.sqlite-shm",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "data.sqlite-wal",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "data.sqlite.lock",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".codex-usage/x",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "ledger/x",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "reports/x",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": ".tmp-release-smoke/x",
+          "exitCode": 0,
+          "ignored": true,
+          "pass": true
+        },
+        {
+          "path": "sub/ledger/x",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        },
+        {
+          "path": "sub/reports/x",
+          "exitCode": 1,
+          "ignored": false,
+          "pass": true
+        }
+      ],
+      "total": 42,
+      "failures": 0,
+      "isError": false
+    }
+  ],
+  "productTests": "not run locally: gitignore-only scope, no runtime setup needed"
+}

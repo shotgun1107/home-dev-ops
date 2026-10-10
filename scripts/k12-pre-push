@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ZERO="0000000000000000000000000000000000000000"
+
+while read -r local_ref local_oid remote_ref remote_oid; do
+    case "$remote_ref" in
+        refs/heads/*) ;;
+        *) continue ;;
+    esac
+
+    # main은 K12에서 직접 push하지 않는다.
+    if [[ "$remote_ref" == "refs/heads/main" ]]; then
+        echo "BLOCKED: direct push to main is disabled on K12." >&2
+        exit 1
+    fi
+
+    # 원격 branch 삭제 금지.
+    if [[ "$local_oid" == "$ZERO" ]]; then
+        echo "BLOCKED: remote branch deletion is disabled on K12: $remote_ref" >&2
+        exit 1
+    fi
+
+    # 새 branch 생성은 허용.
+    if [[ "$remote_oid" == "$ZERO" ]]; then
+        continue
+    fi
+
+    # fast-forward임을 입증할 수 없는 push는 거부.
+    if ! git cat-file -e "${remote_oid}^{commit}" 2>/dev/null; then
+        echo "BLOCKED: cannot verify fast-forward for $remote_ref; fetch first." >&2
+        exit 1
+    fi
+
+    if ! git merge-base --is-ancestor "$remote_oid" "$local_oid"; then
+        echo "BLOCKED: non-fast-forward update is disabled on K12: $remote_ref" >&2
+        exit 1
+    fi
+done

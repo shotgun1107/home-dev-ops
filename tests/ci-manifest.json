@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "python_version": "3.14.4",
+  "python": {
+    "test_git_guard_integration.py": 8,
+    "test_pre_push.py": 12,
+    "test_paseo_preflight.py": 9,
+    "test_heartbeat_cleanup.py": 15,
+    "test_permission_audit.py": 39,
+    "test_recovery.py": 29,
+    "test_ops_ci.py": 21
+  },
+  "k12_only": [
+    "test_heartbeat_lifecycle.mjs",
+    "test_recovery_pid.mjs"
+  ]
+}

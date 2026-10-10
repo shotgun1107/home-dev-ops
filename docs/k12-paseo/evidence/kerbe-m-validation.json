@@ -1,0 +1,274 @@
+{
+  "observedAt": "2026-10-09T17:48:49.770692+00:00",
+  "logs": {
+    "baseline.log": {
+      "sha256": "4d1098c50c7dcd8ef416b755d20be3213aed947928736934508166e8ba71df7a",
+      "bytes": 177,
+      "summary": []
+    },
+    "baseline-retry.log": {
+      "sha256": "3af92008edc4f433f8b0868907ef98d3375371434c1220d4f5c3a812845e641e",
+      "bytes": 31676,
+      "summary": [
+        "Ran 182 tests in 6.987s",
+        "FAILED (failures=2, skipped=2)"
+      ]
+    },
+    "env-recheck.log": {
+      "sha256": "55d96bb50cd4a34ccfc540914fed39a0069bebad9c34f1e55277ffc001f471ef",
+      "bytes": 399,
+      "summary": [
+        "Ran 2 tests in 0.028s",
+        "OK"
+      ]
+    },
+    "red.log": {
+      "sha256": "c8265d9929bfc35610f7d3327fa9f892a82b5a3b8dbb202ea0922beec60b967e",
+      "bytes": 9740,
+      "summary": [
+        "Ran 21 tests in 0.003s",
+        "FAILED (errors=3)"
+      ]
+    },
+    "codex-red.log": {
+      "sha256": "c8265d9929bfc35610f7d3327fa9f892a82b5a3b8dbb202ea0922beec60b967e",
+      "bytes": 9740,
+      "summary": [
+        "Ran 21 tests in 0.003s",
+        "FAILED (errors=3)"
+      ]
+    },
+    "codex-green.log": {
+      "sha256": "e659d6252d51433b79967344b9f4b7fdefc2239370aaff4be1d5465800b6022c",
+      "bytes": 3655,
+      "summary": [
+        "Ran 21 tests in 0.002s",
+        "OK"
+      ]
+    },
+    "codex-full.log": {
+      "sha256": "38fe78cd0c8002a99c10229a1ef0698d5a8f8a77a44fc1d4669bdd36d3e6130d",
+      "bytes": 296,
+      "summary": [
+        "Ran 184 tests in 3.223s",
+        "OK (skipped=2)"
+      ]
+    },
+    "codex-wheel.log": {
+      "sha256": "44c7baba26147b4e69154a3754b43d4212d72cdde627fb4bcbd1f51c4b880a38",
+      "bytes": 2357,
+      "summary": [
+        "ERROR: Failed to build 'file:///home/shotgun1107/.paseo/worktrees/007unhvc/kerbe-p1-m-remote-errors' when installing build dependencies"
+      ]
+    },
+    "codex-wheel-network.log": {
+      "sha256": "2274362169c66caf90e19a1dbd4bc5e2cdb755d517c8b3b63468cf37f56bbb78",
+      "bytes": 840,
+      "summary": [
+        "Successfully built kerbe"
+      ]
+    }
+  },
+  "nativeEvidence": [
+    {
+      "line": 105,
+      "timestamp": "2026-10-09T17:45:56.207Z",
+      "tool": "exec",
+      "artifactHints": [
+        "codex-red.log"
+      ]
+    },
+    {
+      "line": 120,
+      "timestamp": "2026-10-09T17:46:51.592Z",
+      "tool": "exec",
+      "artifactHints": [
+        "codex-green.log",
+        "apply_patch"
+      ]
+    },
+    {
+      "line": 132,
+      "timestamp": "2026-10-09T17:46:57.396Z",
+      "tool": "exec",
+      "artifactHints": [
+        "codex-full.log"
+      ]
+    },
+    {
+      "line": 137,
+      "timestamp": "2026-10-09T17:47:01.516Z",
+      "tool": "exec",
+      "artifactHints": [
+        "codex-full.log"
+      ]
+    },
+    {
+      "line": 154,
+      "timestamp": "2026-10-09T17:47:17.580Z",
+      "tool": "exec",
+      "artifactHints": [
+        "codex-wheel-network.log"
+      ]
+    },
+    {
+      "line": 163,
+      "timestamp": "2026-10-09T17:47:42.424Z",
+      "tool": "exec",
+      "artifactHints": [
+        "codex-wheel-network.log"
+      ]
+    },
+    {
+      "line": 171,
+      "timestamp": "2026-10-09T17:48:40.767Z",
+      "tool": "exec",
+      "artifactHints": [
+        "codex-red.log",
+        "codex-green.log",
+        "codex-full.log",
+        "codex-wheel-network.log"
+      ]
+    }
+  ],
+  "redCi": {
+    "runId": 37967823137,
+    "candidate": "ce96e381385bfc09829819309c1381c8ddf0a529",
+    "selectedFailureEvidence": [
+      "test (windows-latest)\tRun tests\t2026-10-09T17:40:53.2575342Z ERROR: test_malformed_ipv6_url_remotes_are_rejected (tests.unit.test_git_remote.NormalizeRemoteTests.test_malformed_ipv6_url_remotes_are_rejected) (remote='ssh://[2001:db8::1/repo.git')",
+      "test (windows-latest)\tRun tests\t2026-10-09T17:40:53.2592351Z ValueError: Invalid IPv6 URL",
+      "test (windows-latest)\tRun tests\t2026-10-09T17:40:53.2594039Z ERROR: test_malformed_ipv6_url_remotes_are_rejected (tests.unit.test_git_remote.NormalizeRemoteTests.test_malformed_ipv6_url_remotes_are_rejected) (remote='https://[not-an-ip]/repo.git')",
+      "test (windows-latest)\tRun tests\t2026-10-09T17:40:53.2613196Z ERROR: test_malformed_session_remote_falls_back_to_cwd_git_probe (tests.unit.test_project_attribution_engine.ProjectAttributionEngineTests.test_malformed_session_remote_falls_back_to_cwd_git_probe)",
+      "test (windows-latest)\tRun tests\t2026-10-09T17:40:53.2616021Z   File \"D:\\a\\kerbe\\kerbe\\tests\\unit\\test_project_attribution_engine.py\", line 276, in test_malformed_session_remote_falls_back_to_cwd_git_probe",
+      "test (windows-latest)\tRun tests\t2026-10-09T17:40:53.2635044Z ValueError: Invalid IPv6 URL",
+      "test (windows-latest)\tRun tests\t2026-10-09T17:40:53.2636137Z Ran 184 tests in 57.703s",
+      "test (windows-latest)\tRun tests\t2026-10-09T17:40:53.2636570Z FAILED (errors=3, skipped=1)",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T17:39:47.1885508Z ERROR: test_malformed_ipv6_url_remotes_are_rejected (tests.unit.test_git_remote.NormalizeRemoteTests.test_malformed_ipv6_url_remotes_are_rejected) (remote='ssh://[2001:db8::1/repo.git')",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T17:39:47.1904228Z ValueError: Invalid IPv6 URL",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T17:39:47.1905378Z ERROR: test_malformed_ipv6_url_remotes_are_rejected (tests.unit.test_git_remote.NormalizeRemoteTests.test_malformed_ipv6_url_remotes_are_rejected) (remote='https://[not-an-ip]/repo.git')",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T17:39:47.1917820Z ERROR: test_malformed_session_remote_falls_back_to_cwd_git_probe (tests.unit.test_project_attribution_engine.ProjectAttributionEngineTests.test_malformed_session_remote_falls_back_to_cwd_git_probe)",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T17:39:47.1919970Z   File \"/home/runner/work/kerbe/kerbe/tests/unit/test_project_attribution_engine.py\", line 276, in test_malformed_session_remote_falls_back_to_cwd_git_probe",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T17:39:47.1931200Z ValueError: Invalid IPv6 URL",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T17:39:47.1931892Z Ran 184 tests in 4.757s",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T17:39:47.1932141Z FAILED (errors=3, skipped=2)"
+    ]
+  },
+  "implementationCommit": "3366227053651fd6af1b9c6007b9d245c32fed57",
+  "reviewFollowup": {
+    "logs": {
+      "codex-p2-full.log": {
+        "sha256": "57b966a4c2ce45f011dd5bf6324ec5dcea48f4992170db7765767891cfc30fe9",
+        "summary": [
+          "Ran 185 tests in 3.227s",
+          "OK (skipped=2)"
+        ]
+      },
+      "codex-p2-green.log": {
+        "sha256": "44bb38d9d2ed832b52d0a40b1a8c710b96f62985ec8eb79304b0411ad2efeed8",
+        "summary": [
+          "Ran 22 tests in 0.002s",
+          "OK"
+        ]
+      },
+      "codex-p2-red.log": {
+        "sha256": "2640156295fe2bdef46ffb16b9033c4c8701a8eadc774eac300d03597795045f",
+        "summary": [
+          "Ran 22 tests in 0.002s",
+          "FAILED (failures=1)"
+        ]
+      },
+      "codex-p2-wheel.log": {
+        "sha256": "215b2a6efe3f892629a156ee1c8bcf8800f21133775ff3dd9477f528106cec7f",
+        "summary": [
+          "Successfully built kerbe"
+        ]
+      },
+      "syntheticProof": {
+        "reviewedBase": "eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f",
+        "usesRealCredential": false,
+        "redMarkerDisclosureAssertFailed": true,
+        "scope": "default formatted traceback of rejected synthetic NFKC netloc; programmatic __context__ access and unrelated callers not claimed safe"
+      }
+    },
+    "sourceTestHash": {
+      "src/codex_usage/domain/git_remote.py": "1590c111278bd6d0bc0d926a177f19b9e9306283f2fe3bbda7bc50f509fb0766",
+      "tests/unit/test_git_remote.py": "fb9c3156b2eed54bd3b2403a32c41879b4446d90abcb83497a156a3259b4afb8",
+      "tests/unit/test_project_attribution_engine.py": "bcd0002d641a0c02c1f86b1777868e596c3ad2fc7ac69608f68fd01ccf1096ae"
+    },
+    "change": "new urlsplit exception wrapper suppresses chain display with from None; added behavioral formatted traceback regression; existing port handling/cwd adapter unchanged",
+    "wheelSha256": "488dde40cdb4e941f8208c819e12360a2363fce3df9ee9a7b6b4291987e602c5",
+    "testedCommit": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+    "testedBytesMatchCommit": true
+  },
+  "firstCandidate": "eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f",
+  "firstCi": {
+    "runId": 37969609440,
+    "headSha": "eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f",
+    "status": "completed",
+    "conclusion": "success",
+    "url": "https://github.com/shotgun1107/kerbe/actions/runs/37969609440",
+    "selectedLogEvidence": [
+      "test (ubuntu-latest)\tRun actions/checkout@v7\t2026-10-09T17:54:58.1696297Z HEAD is now at ef1b54b Merge eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f into efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "test (ubuntu-latest)\tRun actions/checkout@v7\t2026-10-09T17:54:58.1739891Z [command]/usr/bin/git log -1 --format=%H",
+      "test (ubuntu-latest)\tRun actions/setup-python@v7\t2026-10-09T17:54:58.2152672Z   python-version: 3.12",
+      "test (ubuntu-latest)\tInstall package\t2026-10-09T17:55:02.4384314Z Successfully built kerbe",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T17:55:07.6905190Z Ran 184 tests in 4.448s",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T17:55:07.6905639Z OK (skipped=2)",
+      "test (ubuntu-latest)\tBuild wheel\t2026-10-09T17:55:09.4816837Z Successfully built kerbe",
+      "test (windows-latest)\tRun actions/checkout@v7\t2026-10-09T17:55:01.6946033Z HEAD is now at ef1b54b Merge eb249707db7004e5e2f3dd1f4d43d3b7dc1fc79f into efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "test (windows-latest)\tRun actions/setup-python@v7\t2026-10-09T17:55:01.8326545Z   python-version: 3.12",
+      "test (windows-latest)\tInstall package\t2026-10-09T17:55:12.8473636Z Successfully built kerbe",
+      "test (windows-latest)\tRun tests\t2026-10-09T17:56:09.7786587Z Ran 184 tests in 54.317s",
+      "test (windows-latest)\tRun tests\t2026-10-09T17:56:09.7787045Z OK (skipped=1)",
+      "test (windows-latest)\tBuild wheel\t2026-10-09T17:56:14.6283447Z Successfully built kerbe"
+    ],
+    "checkoutSha": [
+      "ef1b54b5760fae686b7cafc4fd67811f50b04e44"
+    ],
+    "checkoutEvidence": [
+      "test (ubuntu-latest)\tRun actions/checkout@v7\t2026-10-09T17:54:58.1739891Z [command]/usr/bin/git log -1 --format=%H",
+      "test (ubuntu-latest)\tRun actions/checkout@v7\t2026-10-09T17:54:58.1768760Z ef1b54b5760fae686b7cafc4fd67811f50b04e44",
+      "test (ubuntu-latest)\tRun actions/setup-python@v7\t2026-10-09T17:54:58.3395900Z Successfully set up CPython (3.12.15)",
+      "test (windows-latest)\tRun actions/setup-python@v7\t2026-10-09T17:55:02.0118013Z Successfully set up CPython (3.12.10)"
+    ],
+    "interpretation": "CI tested PR synthetic merge, not actual main adoption. Candidate unchanged, required checks success."
+  },
+  "firstCandidateProductBytes": "source/tests/pyproject/schemas/scripts unchanged from implementation commit; selected source/test hashes match actual tested bytes",
+  "firstNetDiff": "3 files, 50 insertions, 1 deletion; no settings/workflow changes; new task promoted to PR then removed",
+  "firstSourceTestHash": {
+    "src/codex_usage/domain/git_remote.py": "e13c30b047425414f14b0f278dc02e64f614c6d55a0c19473324b47dae1cc33b",
+    "tests/unit/test_git_remote.py": "cfd23f9d76eaf2bec4d7595067e7d0b0a26d23db4b84981bee0f961b7cd16f41",
+    "tests/unit/test_project_attribution_engine.py": "bcd0002d641a0c02c1f86b1777868e596c3ad2fc7ac69608f68fd01ccf1096ae"
+  },
+  "firstWheelSha256": "55fcf55fbb3c5a5590ec1b670eb065c566877d94c98055aa336cfe468f088bbb",
+  "firstTestInterpretation": {
+    "selected": "21 methods OK after same 3 error RED replay",
+    "full": "184 total, 182 passed, 2 skipped on Linux",
+    "wheel": "network-restricted first attempt failed; identical scoped command after individual approval succeeded",
+    "testReuse": "final handoff deletion requires source/test byte comparison; final head CI still required"
+  },
+  "finalCandidate": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+  "finalCi": {
+    "runId": 37971237098,
+    "headSha": "7ff930cefd308c37702aff7c7efd48fc4c9e4c9b",
+    "conclusion": "success",
+    "url": "https://github.com/shotgun1107/kerbe/actions/runs/37971237098",
+    "selectedLogEvidence": [
+      "test (ubuntu-latest)\tRun actions/checkout@v7\t2026-10-09T18:08:54.3985803Z HEAD is now at 07e4442 Merge 7ff930cefd308c37702aff7c7efd48fc4c9e4c9b into efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "test (ubuntu-latest)\tRun actions/checkout@v7\t2026-10-09T18:08:54.4026881Z [command]/usr/bin/git log -1 --format=%H",
+      "test (ubuntu-latest)\tRun actions/checkout@v7\t2026-10-09T18:08:54.4056932Z 07e44426c1eca768cbe7574c1dc128465565ed4d",
+      "test (ubuntu-latest)\tRun actions/setup-python@v7\t2026-10-09T18:08:54.5770671Z Successfully set up CPython (3.12.15)",
+      "test (ubuntu-latest)\tInstall package\t2026-10-09T18:08:58.3915890Z Successfully built kerbe",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T18:09:03.6622955Z Ran 185 tests in 4.540s",
+      "test (ubuntu-latest)\tRun tests\t2026-10-09T18:09:03.6623373Z OK (skipped=2)",
+      "test (ubuntu-latest)\tBuild wheel\t2026-10-09T18:09:05.4399778Z Successfully built kerbe",
+      "test (windows-latest)\tRun actions/checkout@v7\t2026-10-09T18:08:56.4990075Z HEAD is now at 07e4442 Merge 7ff930cefd308c37702aff7c7efd48fc4c9e4c9b into efd539a6ab5cd05a2c7f33cf3b8db13c021458be",
+      "test (windows-latest)\tRun actions/setup-python@v7\t2026-10-09T18:08:56.7043546Z Successfully set up CPython (3.12.10)",
+      "test (windows-latest)\tInstall package\t2026-10-09T18:09:05.8758764Z Successfully built kerbe",
+      "test (windows-latest)\tRun tests\t2026-10-09T18:09:43.0986785Z Ran 185 tests in 35.256s",
+      "test (windows-latest)\tRun tests\t2026-10-09T18:09:43.0986976Z OK (skipped=1)",
+      "test (windows-latest)\tBuild wheel\t2026-10-09T18:09:47.1178652Z Successfully built kerbe"
+    ],
+    "interpretation": "PR synthetic merge tests, not actual main adoption"
+  }
+}

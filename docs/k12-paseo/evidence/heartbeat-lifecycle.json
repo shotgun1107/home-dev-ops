@@ -1,0 +1,381 @@
+{
+  "node": "v22.22.1",
+  "sources": [
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/service.js",
+      "sha256": "325066fba80c259ed0f5385042f15045820791fe048e622151259ed036dcd3c6"
+    },
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/store.js",
+      "sha256": "11ff1f4ecb10a1e632741e8420b505340e5b74ddf343912a0408734531ddf58d"
+    },
+    {
+      "path": "/usr/local/lib/node_modules/@getpaseo/cli/node_modules/@getpaseo/server/dist/server/server/schedule/cron.js",
+      "sha256": "7e4de9dc39a982751637523b4f4aaf89c2c32c07469312b222deab8b1b98c97e"
+    }
+  ],
+  "patchSha256": "12ee2e3efb6e778a5c2642b23d1406888950afa00b5c101a1a80529055178ce0",
+  "candidateSourceSha256": "c110a136ce1f696221a3cece897c6c4a142de31e9c5b7262203973f635795315",
+  "daemonConnected": false,
+  "providersStarted": false,
+  "realSchedulesChanged": false,
+  "fixtureRemoved": true,
+  "real24hObservation": false,
+  "actualProcessCrash": false,
+  "observations": [
+    {
+      "variant": "installed",
+      "scenario": "24h-cron-72-terminal-runs",
+      "terminalRuns": 72,
+      "distinctScheduledSlots": 72,
+      "virtualHours": 24,
+      "real24hObservation": false
+    },
+    {
+      "variant": "installed",
+      "scenario": "aligned-24h-expiry-excludes-boundary-slot",
+      "terminalRuns": 71,
+      "reason": "expiry checked before equal-time dispatch"
+    },
+    {
+      "variant": "installed",
+      "scenario": "expiry-at-first-tick-no-dispatch",
+      "runnerCalls": 0
+    },
+    {
+      "variant": "installed",
+      "scenario": "expiry-does-not-cancel-running-job",
+      "afterExpiryWhileHeld": "active",
+      "afterRelease": "completed",
+      "hardStop": false
+    },
+    {
+      "variant": "installed",
+      "scenario": "active-agent-rejection-consumes-maxRuns",
+      "failedRuns": 2,
+      "providerStarts": 0,
+      "status": "completed"
+    },
+    {
+      "variant": "installed",
+      "scenario": "permission-wait-fails-schedule-not-agent-cleanup",
+      "stubStarts": 1,
+      "scheduleStatus": "completed",
+      "stubPermissionStillPending": true
+    },
+    {
+      "variant": "installed",
+      "scenario": "crash-recovery-skips-missed-slots-and-is-idempotent",
+      "recoveredRun": "failed",
+      "missedSlotsReplayed": 0,
+      "idempotentRecovery": true,
+      "actualProcessCrash": false
+    },
+    {
+      "variant": "installed",
+      "scenario": "crash-after-side-effect-is-not-exactly-once",
+      "syntheticEffects": 2,
+      "statuses": [
+        "failed",
+        "succeeded"
+      ],
+      "exactlyOnce": false
+    },
+    {
+      "variant": "installed",
+      "scenario": "overlapping-ticks-while-run-held",
+      "overlappingTicks": 9,
+      "runnerCalls": 1
+    },
+    {
+      "variant": "installed",
+      "scenario": "stale-tick-snapshot-after-completion",
+      "runnerCalls": 2,
+      "maxRuns": 1,
+      "uniqueSlots": 1,
+      "defectReproduced": true
+    },
+    {
+      "variant": "installed",
+      "scenario": "stale-snapshot-after-pause",
+      "runnerCallsAfterPause": 1,
+      "defectReproduced": true
+    },
+    {
+      "variant": "installed",
+      "scenario": "append-storage-failure-releases-memory-guard",
+      "guardLeaked": true,
+      "runnerCallsAfterStorageRecovered": 0
+    },
+    {
+      "variant": "installed",
+      "scenario": "finish-storage-failure-leaves-orphan-running-record",
+      "terminalWritesFailed": 2,
+      "memoryGuardCleared": true,
+      "callsAfterStorageRecoveryAndThreeTicks": 4,
+      "orphanStatus": "running",
+      "scheduleStatus": "active",
+      "candidateStalls": false,
+      "syntheticRecoveryAllowsNextRun": true,
+      "actualProcessCrash": false
+    },
+    {
+      "variant": "installed",
+      "scenario": "deleted-snapshot-aborts-tick-but-next-tick-progresses",
+      "firstTickAborted": true,
+      "nextTickRunnerCalls": [
+        "B"
+      ],
+      "deletedScheduleGuardLeaked": true
+    },
+    {
+      "variant": "installed",
+      "scenario": "expiry-elapses-between-list-and-claim",
+      "runnerCallsAfterExpiry": 1,
+      "freshClaimClockChecked": false
+    },
+    {
+      "variant": "installed",
+      "scenario": "independent-schedule-progress-without-global-tick-lock",
+      "bWhileAHeld": 1,
+      "finalRunnerCalls": {
+        "A": 1,
+        "B": 2
+      },
+      "crossScheduleProgressPreserved": true
+    },
+    {
+      "variant": "installed",
+      "scenario": "manual-runOnce-is-not-an-expiry-or-cap-enforcer",
+      "manualRunsAfterExpiry": 2,
+      "maxRuns": 1,
+      "manualSemanticsUnchanged": true
+    },
+    {
+      "variant": "installed",
+      "scenario": "paused-expired-record-remains-paused",
+      "statusAfterExpiry": "paused",
+      "runnerCalls": 0
+    },
+    {
+      "variant": "installed",
+      "scenario": "missing-target-completes-without-starting-provider",
+      "status": "completed",
+      "providerStarts": 0
+    },
+    {
+      "variant": "candidate",
+      "scenario": "24h-cron-72-terminal-runs",
+      "terminalRuns": 72,
+      "distinctScheduledSlots": 72,
+      "virtualHours": 24,
+      "real24hObservation": false
+    },
+    {
+      "variant": "candidate",
+      "scenario": "aligned-24h-expiry-excludes-boundary-slot",
+      "terminalRuns": 71,
+      "reason": "expiry checked before equal-time dispatch"
+    },
+    {
+      "variant": "candidate",
+      "scenario": "expiry-at-first-tick-no-dispatch",
+      "runnerCalls": 0
+    },
+    {
+      "variant": "candidate",
+      "scenario": "expiry-does-not-cancel-running-job",
+      "afterExpiryWhileHeld": "active",
+      "afterRelease": "completed",
+      "hardStop": false
+    },
+    {
+      "variant": "candidate",
+      "scenario": "active-agent-rejection-consumes-maxRuns",
+      "failedRuns": 2,
+      "providerStarts": 0,
+      "status": "completed"
+    },
+    {
+      "variant": "candidate",
+      "scenario": "permission-wait-fails-schedule-not-agent-cleanup",
+      "stubStarts": 1,
+      "scheduleStatus": "completed",
+      "stubPermissionStillPending": true
+    },
+    {
+      "variant": "candidate",
+      "scenario": "crash-recovery-skips-missed-slots-and-is-idempotent",
+      "recoveredRun": "failed",
+      "missedSlotsReplayed": 0,
+      "idempotentRecovery": true,
+      "actualProcessCrash": false
+    },
+    {
+      "variant": "candidate",
+      "scenario": "crash-after-side-effect-is-not-exactly-once",
+      "syntheticEffects": 2,
+      "statuses": [
+        "failed",
+        "succeeded"
+      ],
+      "exactlyOnce": false
+    },
+    {
+      "variant": "candidate",
+      "scenario": "overlapping-ticks-while-run-held",
+      "overlappingTicks": 9,
+      "runnerCalls": 1
+    },
+    {
+      "variant": "candidate",
+      "scenario": "stale-tick-snapshot-after-completion",
+      "runnerCalls": 1,
+      "maxRuns": 1,
+      "uniqueSlots": 1,
+      "defectReproduced": false
+    },
+    {
+      "variant": "candidate",
+      "scenario": "stale-snapshot-after-pause",
+      "runnerCallsAfterPause": 0,
+      "defectReproduced": false
+    },
+    {
+      "variant": "candidate",
+      "scenario": "append-storage-failure-releases-memory-guard",
+      "guardLeaked": false,
+      "runnerCallsAfterStorageRecovered": 1
+    },
+    {
+      "variant": "candidate",
+      "scenario": "finish-storage-failure-leaves-orphan-running-record",
+      "terminalWritesFailed": 2,
+      "memoryGuardCleared": true,
+      "callsAfterStorageRecoveryAndThreeTicks": 1,
+      "orphanStatus": "running",
+      "scheduleStatus": "active",
+      "candidateStalls": true,
+      "syntheticRecoveryAllowsNextRun": true,
+      "actualProcessCrash": false
+    },
+    {
+      "variant": "candidate",
+      "scenario": "deleted-snapshot-aborts-tick-but-next-tick-progresses",
+      "firstTickAborted": true,
+      "nextTickRunnerCalls": [
+        "B"
+      ],
+      "deletedScheduleGuardLeaked": false
+    },
+    {
+      "variant": "candidate",
+      "scenario": "expiry-elapses-between-list-and-claim",
+      "runnerCallsAfterExpiry": 0,
+      "freshClaimClockChecked": true
+    },
+    {
+      "variant": "candidate",
+      "scenario": "independent-schedule-progress-without-global-tick-lock",
+      "bWhileAHeld": 1,
+      "finalRunnerCalls": {
+        "A": 1,
+        "B": 1
+      },
+      "crossScheduleProgressPreserved": true
+    },
+    {
+      "variant": "candidate",
+      "scenario": "manual-runOnce-is-not-an-expiry-or-cap-enforcer",
+      "manualRunsAfterExpiry": 2,
+      "maxRuns": 1,
+      "manualSemanticsUnchanged": true
+    },
+    {
+      "variant": "candidate",
+      "scenario": "paused-expired-record-remains-paused",
+      "statusAfterExpiry": "paused",
+      "runnerCalls": 0
+    },
+    {
+      "variant": "candidate",
+      "scenario": "missing-target-completes-without-starting-provider",
+      "status": "completed",
+      "providerStarts": 0
+    }
+  ],
+  "taskId": "P0_HEARTBEAT",
+  "observedAt": "2026-10-09T20:00:27.118730+00:00",
+  "baseSha": "a29f66e0a676afb0e621f5942a696152e87b181f",
+  "command": "node --test --test-concurrency=1 tests/test_heartbeat_lifecycle.mjs",
+  "tests": 38,
+  "passed": 38,
+  "failed": 0,
+  "skipped": 0,
+  "durationMs": 836.258868,
+  "testSha256": "8fa8ec7c399b74a9a18bab2ce3b132d7c2a466127ce1fa7525e6ce3887e55622",
+  "logSha256": "6b1be647965dcd14979272d264a00258b67c1e0eb42b0ded95c1a8dfbc60806d",
+  "installedPatchApplied": false,
+  "harnessCorrections": [
+    {
+      "attempt": "initial32",
+      "scenarioFailures": 6,
+      "aggregateHookFailures": 1,
+      "cause": "test runner omitted required nullable output and fake manager lacked tryRunOutOfBand; not production defects",
+      "corrected32Passed": true,
+      "failedLogSha256": "643fb1f535ac0b46a444add444458d7aaaf74ceac1709f0169846bd4b85e395f"
+    },
+    {
+      "attempt": "expiry-boundary-added",
+      "scenarioFailures": 2,
+      "aggregateHookFailures": 1,
+      "cause": "crash fixture called append before advancing injected clock to due time; corrected to represent an actually due claim",
+      "failedLogSha256": "9e66eaed2665fdaa4f2b22c6ba5ffff80a9e1a8455025f9e36b387e5ddc36a1c"
+    }
+  ],
+  "reusedPythonRegression": {
+    "evidence": "permission-regression.json",
+    "sha256": "c4c1db0ae4ef9f80210cccdefb626849884f0514be25e5bf3897e671f1785bde",
+    "previousHead": "a29f66e0a676afb0e621f5942a696152e87b181f",
+    "tests": 68,
+    "skipped": 0,
+    "allRecordedSourceAndTestHashesUnchanged": true,
+    "rerun": false,
+    "pythonDiscoverDoesNotRunNodeSuite": true
+  },
+  "reusedLiveEvidence": [
+    {
+      "file": "heartbeat-tick.json",
+      "sha256": "eee557c2d12e87b61b3a151b26c23fe6eeb58edacc98249094f6da4cdde1bd00"
+    },
+    {
+      "file": "heartbeat-idle-completion.json",
+      "sha256": "67a43d2200f1e3a469d233ba87d018bb1e791a6a4436fb64ca9eff7131de8e4e"
+    },
+    {
+      "file": "heartbeat-cleanup-race.json",
+      "sha256": "649238a51e92edd61c9bf8e581b3e40bc9b2868b9fca5b0ff2ae277dc8b1c887"
+    }
+  ],
+  "limits": [
+    "virtual clock, stub provider/agent and synthetic store; no real24h soak or process/daemon crash",
+    "single ScheduleService/Store instance claim serialization, not multiprocess locking",
+    "manual runOnce cap/expiry bypass behavior preserved; never recommended as automated recovery",
+    "schedule failed/completed does not prove underlying agent quiescence or side-effect rollback",
+    "candidate not installed; upstream/install/service decisions require human review",
+    "candidate fails closed on persisted orphan running after both terminal writes fail; no automatic reconciliation or restart implemented",
+    "missing schedule between list/claim aborts current tick; next tick can progress; inherited behavior",
+    "start()/interval are not exercised; stop() non-cancellation is a source-only observation",
+    "startedAt is the captured tick time, not a proven actual provider start timestamp"
+  ],
+  "reviewCounterexamples": {
+    "reviewedSha": "e8036f7e7c96d4aa88afa793b39eaac36ce41fec",
+    "reviewUrl": "https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088278361",
+    "addedScenarios": [
+      "finish-storage-failure-leaves-orphan-running-record",
+      "deleted-snapshot-aborts-tick-but-next-tick-progresses"
+    ],
+    "patchUnchanged": true,
+    "previous34LogSha256": "432bb377594540996b356e35724a7f61138054654d613b8deb350878c98cfceb"
+  }
+}

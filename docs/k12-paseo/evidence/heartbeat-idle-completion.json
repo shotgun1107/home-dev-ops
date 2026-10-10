@@ -1,0 +1,35 @@
+{
+  "id": "427d614c",
+  "agentId": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+  "scheduleStatusBeforeDelete": "completed",
+  "maxRuns": 1,
+  "expiresAt": "2026-10-09T15:00:37.676Z",
+  "runOutcome": "succeeded-one-run",
+  "idleResumeVerifiedByReceipt": false,
+  "runs": [
+    {
+      "id": "f398d566-5e92-447c-9020-f5edd6c3024d",
+      "scheduledFor": "2026-10-09T14:48:00.000Z",
+      "startedAt": "2026-10-09T14:48:00.662Z",
+      "endedAt": "2026-10-09T14:52:41.857Z",
+      "status": "succeeded",
+      "agentId": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd"
+    }
+  ],
+  "deleted": true,
+  "observedAt": "2026-10-09T14:52:42.715659+00:00",
+  "beforeFireIdleObservation": {
+    "observedAt": "2026-10-09T14:46:53.938748+00:00",
+    "id": "c9bb4cb7-d656-4fb6-a6a5-e8fbcd3745cd",
+    "status": "idle",
+    "nativeSessionId": "01a120af-820b-76e0-9f02-1e3fb9ed575b",
+    "workspaceId": "wks_91760bd37449c714",
+    "model": "gpt-6-astra",
+    "thinking": "max",
+    "agentUpdatedAt": "2026-10-09T14:46:53.542Z",
+    "heartbeatId": "427d614c",
+    "nextRunAt": "2026-10-09T14:48:00.000Z",
+    "runCount": 0,
+    "observerPid": 718949
+  }
+}

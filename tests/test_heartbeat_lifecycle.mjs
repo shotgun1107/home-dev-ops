@@ -291,6 +291,41 @@ for (const [variant, Service] of [['installed', Installed], ['candidate', Candid
     return { firstTickAborted: true, nextTickRunnerCalls: calls, deletedScheduleGuardLeaked: leaked };
   });
 
+  check('manual-orphan-plus-one-recovery-leaves-another-running-run', async () => {
+    let calls = 0, failedWrites = 0;
+    const runner = async () => { calls++; return { agentId: fixtureAgent, output: null }; };
+    const f = await fixture(Service, { runner });
+    const s = await f.create({ maxRuns: null }); f.setTime(s.nextRunAt);
+    const write = f.service.store.write.bind(f.service.store);
+    f.service.store.write = async schedule => {
+      if (schedule.runs.some(r => r.status !== 'running')) {
+        failedWrites++; throw new Error('synthetic terminal storage failure');
+      }
+      return write(schedule);
+    };
+    await assert.rejects(f.service.tick(), /synthetic terminal storage failure/);
+    // Counterexample only: the operational policy forbids manual recovery.
+    // Actual runOnce on the synthetic object bypasses the persisted orphan.
+    await assert.rejects(f.service.runOnce(s.id), /synthetic terminal storage failure/);
+    assert.equal(calls, 2); assert.equal(failedWrites, 4);
+    assert.equal(f.service.runningScheduleIds.has(s.id), false);
+    assert.deepEqual((await f.service.inspect(s.id)).runs.map(r => r.status), ['running', 'running']);
+    f.service.store.write = write;
+    let clock = new Date('2026-10-09T15:05:00Z');
+    // New instance only. No daemon restart, record edits or actual crash.
+    const restored = new Service({ paseoHome: f.home, logger, now: () => clock, runner });
+    await restored.recoverInterruptedRuns();
+    const recovered = await restored.inspect(s.id);
+    assert.deepEqual(recovered.runs.map(r => r.status), ['failed', 'running']);
+    clock = new Date(recovered.nextRunAt); await restored.tick();
+    const end = await restored.inspect(s.id);
+    assert.equal(calls, variant === 'installed' ? 3 : 2);
+    assert.equal(end.runs.filter(r => r.status === 'running').length, 1);
+    return { terminalWritesFailed: failedWrites, statusesAfterOneRecovery: recovered.runs.map(r => r.status),
+      runnerCallsAfterNextTick: calls, remainingOrphans: 1, candidateStalls: variant === 'candidate',
+      manualRecoveryRecommended: false, actualProcessCrash: false };
+  });
+
   check('expiry-elapses-between-list-and-claim', async () => {
     let calls = 0;
     const f = await fixture(Service, { runner: async () => { calls++; return { agentId: fixtureAgent, output: null }; } });
@@ -339,7 +374,7 @@ for (const [variant, Service] of [['installed', Installed], ['candidate', Candid
 
 after(async () => {
   assert.equal(hash(await readFile(sourcePath, 'utf8')), hash(source), 'Installed source must remain unchanged');
-  assert.equal(observations.length, 38, 'All bounded cases must finish');
+  assert.equal(observations.length, 40, 'All bounded cases must finish');
   const sources = [];
   for (const name of ['service.js', 'store.js', 'cron.js']) {
     const path = join(base, 'schedule', name);

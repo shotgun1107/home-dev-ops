@@ -1,5 +1,9 @@
 # REVIEW_INDEPENDENT — 고정 SHA 독립 리뷰와 반례 보정
 
+**보존된 야간 리뷰 기록.** 현재 source/tests d8099f0…·CI65b2573…의 추가 시험/리뷰/hosted133과
+문서 통합 검토는 [E21](EVIDENCE.md#e21-one-shot-통합-검증)·[현재 제안](proposals/README.md)을 따른다.
+아래125개·bundle·hosted 보류 등은 각 리뷰 당시의 관찰이다.
+
 2026-10-10 KST. 기존 Astra Max Supervisor와 ops Worktree·Draft PR #1을 유지했다.
 기준 HEAD는 `81e1547da5f7d6579471ad1f8f4c8b5fa3269c4e`다. 실제 서비스·Schedule·Kerbe·
 보호/권한/인증 설정을 변경하지 않았다. 리뷰어는 별도 Claude agent이며 수정·시험 실행 금지다.

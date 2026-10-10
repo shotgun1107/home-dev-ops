@@ -1,5 +1,15 @@
 # P0_HEARTBEAT — 수명·동시 tick·장애 격리 검증
 
+**ONE-SHOT 추가 검증:** 기존 패치 bytes·설치 source를 유지한 상태에서 신규 manual/orphan 조합을
+추가하여 현재 시험은20조건×2=**Node40개 OK / skip0**다. [E21](EVIDENCE.md#e21-one-shot-통합-검증)과
+[현재 영수증](evidence/one-shot.json)을 먼저 본다. 아래 Node38은 이전 고정 source의 기록이다.
+실행 중이던 객체가 없는 합성 orphan에 `runOnce`를 호출하고 terminal write를 두 번 모두 실패시키면
+running이2개 남는다. 새 객체의 recovery1회 뒤 상태는 failed/running이며 다음 슬롯에 설치본은 다시
+실행하지만 후보는 남은 running 때문에 정지한다. **자동 복구 해결이 아니며 반복 재시작/runOnce를 권하지 않는다.**
+새 시험의 source는 `d8099f00188ffd35c9cec87b83d370c41c536a17`, patch는 미설치다.
+[독립 패치 검토](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094627155)의 Info 반례를
+실측한 것이며, 실제 서비스/OS crash는 조작하지 않았다. [사람 적용·보존·원복 계획](ADOPTION.md#c-heartbeat-패치의-사람-실행-계획).
+
 2026-10-10 KST, 기준 ops SHA `a29f66e0a676afb0e621f5942a696152e87b181f`.
 Paseo 0.10.3, Node v22.22.1의 설치 ScheduleService/Store/Cron을 사용했다.
 실제 daemon·schedule·Provider·설정은 조작하지 않았다. 새 `/tmp/k12-heartbeat-night-*`

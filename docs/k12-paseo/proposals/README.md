@@ -1,119 +1,57 @@
-# CI 적용 제안 — 독립 리뷰 후 최신 후보
+# CI 적용 제안 — ONE-SHOT 최신 검증 후보
 
-2026-10-10 KST. [REVIEW_INDEPENDENT](../INDEPENDENT_REVIEW.md)의 보정 후 후보가 최신이다.
-기존 workflow bytes는 유지하고 suite의 조기 exit0·파일 입력 검사를 보강했다.
-**원격 적용은 사람 결정 대기다.** 이 문서는 AI Ready/Merge/main push 또는 설정 변경 승인이 아니다.
+2026-10-10 KST. 기존 [CI PR #2](https://github.com/shotgun1107/home-dev-ops/pull/2)를 유지해
+최신 ops source와 통합했다. **task branch 전달·hosted 검증까지 수행했고 Ready/PR merge/main 채택은 사람 결정이다.**
+최종 보고 문서 통합 뒤의 정확한 PR #1/#2 HEAD와 run은 [PR #1 최종 handoff](https://github.com/shotgun1107/home-dev-ops/pull/1)를 따른다.
 
-| 최신 전달 대상 | 정확한 값 |
+| 검토·실측한 고정 후보 | 값 |
 |---|---|
-| ops source | `1edd2ef4702031dd6fe2d59adc01e4504c5c57db` |
-| CI 통합 후보 | `80455437960f3db0cbec5f1f3df0392ad47def3c` |
-| 유지된 PR #2 head | `f069ac35b0553f69f0a485784df0bc4f11341f1b` |
-| [새 bundle](ops-ci-reviewed-candidate.bundle) | 3269 bytes, SHA256 `076a4de9fe76eaa5c8b08603f36d96d31d11081f04d7e69b782f2565f9f0dcd9` |
-| bundle ref | `refs/heads/ci/ops-ci-independent-review` |
-| 실제 local 검사 | `timeout 120s python -I -B scripts/run_ops_ci.py`, Python3.14.4, **125개 OK / skip0** |
-| 미실행 | 최신 GitHub-hosted run·Ready·merge·main 필수 검사 채택 |
+| ops source/tests | `d8099f00188ffd35c9cec87b83d370c41c536a17` |
+| CI workflow 고정 리뷰 후보 | `65b2573ac39199a22e65d02f27d3dbd4cd196032` |
+| 이전 CI head / 정상 ancestry | `0bef44431f52ae1c24aec77b2c655e80ba03ed72` → merge `23f662c309f42416031fce5cfd2a0836cc368e6d` → 위 후보. force/rewrite 없음 |
+| 실제 hosted | [38031284245](https://github.com/shotgun1107/home-dev-ops/actions/runs/38031284245), Python3.14.4 **133 executed / skip0 / failure0 / error0**, 동일 runId finish·filesUnchanged·passed |
+| 실행 checkout | `bb132130040c82665d8a7ca1bcd29bd2df24fd39`, 부모 d8099f0… + 65b2573…, CI 후보와 tree 동일 |
+| 처음 대조한125 hosted | [38029622244](https://github.com/shotgun1107/home-dev-ops/actions/runs/38029622244), head0bef444… / checkout0dcfeff… / 125개. 이번133과 분리 |
+| 별도 K12 시험 | Heartbeat40 새 실행, 설치 PID9·mock15 hash 재사용. hosted133에 합산하지 않음 |
+| evidence | [선별 실행·source hash·리뷰](../evidence/one-shot.json), [추가 시험 원문 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6094678310) |
 
-새 후보의 source 대비 전체 tree 차이는 `.github/workflows/ops-check.yml` 하나다.
-workflow는 과거5d7d1e1…와 동일하다. PR #2 f069ac3…가 조상이며 별도 clone에서 새 bundle
-verify/import·같은 full SHA 복원을 확인했다. prerequisite는 f069ac3…,73afc54…,ad3acae…,
-44a8fa5…,0c91fd9…,1edd2ef…의 full object이며 [영수증](../evidence/independent-review.json)에 모두 있다.
-이는 PR #1/#2 이력을 가져온 clone을 위한 bundle이며 단독 완전 백업이 아니다.
+source 대비 전체 차이는 workflow 한 파일이다. 원래 checkout/setup pin·pull_request·contents:read·
+persist-credentials:false·ubuntu24.04·Python3.14.4·job5분/명령120초/child110초는 유지했다.
+workflow 수정은 step의 고정125 표시를 `manifest-verified suite`로 바꾼 한 줄이다.
+실행 수는 문구가 아니라 manifest/실제 discover/종료 receipt가 강제한다.
+[고정65b2573 workflow delta 리뷰](https://github.com/shotgun1107/home-dev-ops/pull/2#issuecomment-6094699772)는 새 P0/P1/P2가 없었다.
+계정·토큰·보호·공통 hook은 바꾸지 않았으며 새 CI Worktree/PR도 만들지 않았다.
+기존 task-owned clone의 clean/소유권/ancestry를 확인하고 같은 CI branch를 사용했다.
+별도 과거 delivery-check clone의 dirty 상태는 그대로 보존했다.
 
 ## 최신 후보의 사람 적용 절차
 
-1. 보호 공백/guard·workflow 적용 경로를 사람이 결정한다. 별도 검토 clone에서 PR #1과
-   `ci/k12-ops-check`를 fetch한다. PR #2의 실제 remote head가 위 f069ac3…인지 확인한다.
-   움직였으면 새 base에서 다시 검토하고 force/reset으로 맞추지 않는다.
-2. **PR #1 최신 handoff에 적힌 최종 보고 HEAD를 그 clone의 새 local branch에 checkout**한다.
-   그 commit에 최신 bundle이 있어야 한다. source commit checkout에는 이전 bundle만 있거나 없을 수 있으며 fetch만으로 working tree 파일은 갱신되지 않는다.
-   위 SHA256을 대조하고 `git bundle verify docs/k12-paseo/proposals/ops-ci-reviewed-candidate.bundle`을 실행한다.
-3. 아직 없는 local ref로 가져온다:
-   `git fetch docs/k12-paseo/proposals/ops-ci-reviewed-candidate.bundle refs/heads/ci/ops-ci-independent-review:refs/heads/review/ops-ci-8045543`.
-   같은 ref가 이미 있으면 SHA를 먼저 비교한다. `git rev-parse review/ops-ci-8045543`의 full SHA와
-   `git merge-base --is-ancestor f069ac35b0553f69f0a485784df0bc4f11341f1b review/ops-ci-8045543`의 exit0을 확인한다.
-4. 고정 SHA의 source/manifest/workflow와 독립 리뷰를 확인한다. 사람이 채택한 경우에만 정상 task push:
-   `git push origin 80455437960f3db0cbec5f1f3df0392ad47def3c:refs/heads/ci/k12-ops-check`.
-   거부되면 실제 ref/오류를 재대조한다. force·권한 확대는 하지 않고 PR #2 Draft를 유지한다.
-5. 새 hosted run에서 실제 base ref·merge 부모·checkout SHA·source/test hash와
-   **125 executed / skip0 / failure0 / 동일 runId finish / pass**를 확인한다. 테스트 source/manifest가
-   달라졌으면 이 숫자를 강제하지 말고 새 변경을 리뷰한다. 후속 PR #1 보고 diff가 문서뿐인지도 확인한다.
-   과거21개 hosted·115개 local·이번125개 local을 새 hosted 성공으로 대체하지 않는다.
-6. 필요한 검사 후 PR 통합 순서·Ready/main 채택은 사람이 별도로 결정한다.
+1. [Git 보호 선택](../ADOPTION.md#b-git-보호-선택과-정확한-적용-순서)과 사용할 기본 writer 경계를 결정한다.
+   현재403/no-hook/Full Access 미검증을 해결·상시 수용으로 간주하지 않는다. CI 채택은 보호 설정 적용과 별개다.
+2. PR #1/#2 최신 full HEAD·Draft·base·check를 GET으로 다시 읽고 최종 handoff와 대조한다.
+   old bundle을 현재 head에 push하지 않는다. base/head가 바뀌면 source/manifest/workflow 차이부터 검토한다.
+3. 권장 검토 순서는 **사람이 PR #2를 PR #1의 docs branch로 통합 → PR #1의 main 대비 CI 확인 → 사람이 PR #1 main 채택**이다.
+   사람의 Ready/merge 전 최신 GitHub checkout/부모·suite/skip·완료 영수증을 확인한다. main 직접 push는 사용하지 않는다.
+4. PR #2 통합 후 PR #1이 실제 main merge checkout에서 같은133개/skip0·정상 finish를 통과했는지 확인한다.
+   PR #2의 성공만으로 main 통합 성공을 주장하지 않는다. source가 바뀌면 숫자를 억지로 유지하지 않고 새 리뷰·시험을 한다.
+5. 실제 main에서 workflow/검사 이름이 확인되고 서버 보호 기능을 사용할 수 있을 때만 사람이 required check를 설정한다.
+   check context 이름·strict/bypass를 다시 확인한다. 존재하지 않는 검사나 과거21개 green을 필수검사로 채택하지 않는다.
+6. push/API/CI 실패면 local commit과 실제 원격 SHA·오류를 보존하고 원인을 확인한다. force/reset/권한 확대/직접 main 반영은 하지 않는다.
+   이미 통합한 변경의 원복은 영향 검토한 새 task PR로 사람이 결정한다. 자동 보호 완화나 배포 rollback은 포함하지 않는다.
 
-직전125개 후보a143652…의2874-byte bundle은 보고 commit
-`c0d2cd0d7d1f38bc8746cacd6baed9fbc8435a2e`에 보존했다. 최신 후보는 대용량 record의
-오류 구분·보존 subcase를 추가한 뒤 같은125개를 다시 통과했다. 자동 대용량 삭제를 지원한 변경은 아니다.
+후속 보고 commit은 문서·증거뿐인지 diff로 확인한 뒤 기존 CI branch에 정상 merge하고 최종 hosted run을 다시 확인한다.
+최종 HEAD와 이미 리뷰한 workflow/source SHA가 다르면 동일 bytes와 문서 delta를 함께 적는다.
+리뷰는 Claude Plan의 운영상 읽기 전용이며 기술적 sandbox가 아니다. 실제 읽은/재사용한 범위는 원문에 있다.
 
-최종 source/전달 후보의 [고정 SHA 독립 delta](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6089778176)는 새 Low 이상0이다.
-이 결과는 정적 리뷰이며 최신 hosted run이나 운영 보호 통과가 아니다.
+## 과거 bundle과 patch 보존
 
-## 과거 OPS_CI 기록 — 115개 후보 보존
+아래는 과거 전달 후보이며 **현재 적용 대상으로 push하지 않는다**. 파일·Git 이력은 보존했다.
 
-아래5d7d1e1… bundle과 당시 절차는 재현/역사 확인용이다. 현재 최신 적용 후보로 선택하지 않는다.
-
-2026-10-10 KST. [OPS_CI 실제 대조·시험](../OPS_CI.md)을 먼저 읽는다.
-[PR #2](https://github.com/shotgun1107/home-dev-ops/pull/2)는 여전히 open/Draft,
-`f069ac35b0553f69f0a485784df0bc4f11341f1b`이며 실제 hosted CI는 과거 **21개** 성공뿐이다.
-이전 30개는 당시의 로컬 기록이다. 이번 시작 suite는 Python **97개**, 개선 후 **115개**이며
-K12 설치본에 의존하는 Node **47개**는 별도 증거 재사용이다.
-
-원본 [home-dev-ops-ci.patch](home-dev-ops-ci.patch)는 기준
-`2873a57a804c96225b774bc1c9f86dae87628db3`의 최초 제안으로 보존한다.
-당시 두 파일 존재 검사로 충분하다는 설명은 폐기한다. 두 파일이 존재해도 실행 시험이 하나로
-축소되면 성공할 수 있음을 재현했다. Python 3.14.4의 0개 실행 자체는 exit 5로 실패했다.
-
-## 전달 후보
-
-- ops source/manifest/tests: `ad3acae8d0f420c9deab7567d3d100881dbc68b0`.
-- 통합 후보: `5d7d1e1177c5a1991582bee7113d239dda01fe83`.
-  격리 clone의 local merge이며 GitHub PR merge가 아니다. 기존 PR #2 f069ac3…가 조상이다.
-  source SHA와의 전체 tree 차이는 `.github/workflows/ops-check.yml` 하나다.
-- [갱신 patch](home-dev-ops-ci-refresh.patch): 기존 PR #2 workflow blob `0846430…` 기준.
-  patch만 적용해도 source/manifest가 따라오는 것은 아니다. 최신 source 통합이 선행 조건이다.
-  빈 context 행의 한 칸은 unified diff 형식이므로 trailing whitespace 정리로 제거하지 않는다.
-  실제 candidate에서 `git apply --check --reverse` 성공을 확인했다.
-- [정확한 commit bundle](ops-ci-candidate.bundle): SHA-256
-  `0066ff185ffb808ab472ea928065b8b27600810ce278ed461694afaff4f62ce6`, 2472 bytes.
-  head ref는 `refs/heads/ci/ops-ci-isolated`; candidate full SHA를 보존한다.
-  prerequisite는 f069ac3…, 73afc54…, ad3acae…, 44a8fa5…의 full object다.
-  기존 PR #1/#2 branch를 fetch하면 이력을 얻을 수 있다.
-- 별도 task-owned clone에서 bundle verify/import 후 동일 candidate SHA,
-  PR #2의 ancestor 관계, source/tests byte 일치를 확인했다. 원격 workflow push는 하지 않았다.
-- 실제 workflow의 명령을 local Python 3.14.4에서 **115개 OK, skip 0**으로 확인했다.
-  K12 임시 `bin/python`은 `/usr/bin/python3`의 task-owned symlink이며 전역 설치/설정 변경이 아니다.
-  YAML parse·pin/permission 검사를 했지만 actionlint와 GitHub-hosted 실행은 미실행이다.
-
-## 사람이 선택한 뒤 적용할 순서
-
-보호/guard 미확인과 v2.4 workflow 사람 경로 때문에 이번에는 제안으로 전달한다.
-위험 수용·보호 확보 여부, CI 통합 순서, Ready/main 채택은 서로 별도의 사람 결정이다.
-아래는 **기존 CI task branch를 갱신하는 선택지**이며 main push/merge 또는 Ready 전환 명령이 아니다.
-
-1. PR #1 최신 handoff의 source/tests와 위 고정 후보·독립 리뷰를 대조한다. 별도 검토용 clone에서
-   현재 PR #1과 `ci/k12-ops-check`를 fetch한다. 원격 PR #2 head가 아직 위 f069ac3…인지 확인한다.
-   달라졌다면 중단하고 새 이력을 재대조한다. force/reset으로 맞추지 않는다.
-2. 아래 repo-relative bundle 경로는 파일을 포함한 PR #1 보고 commit
-   `3d68f76e456f03f423533b02642117705770a1b6` 또는 그 후속을 **별도 검토 clone의 새 local branch에서 checkout한 상태** 기준이다.
-   fetch만으로 working tree 파일이 생기지는 않는다. 기존 운영 Worktree를 전환하지 않는다.
-   그 checkout의 bundle SHA-256과 prerequisite를 검증한다. 비어 있는 새 local review ref로 import한다.
-   `git bundle verify docs/k12-paseo/proposals/ops-ci-candidate.bundle`
-   이후 `git fetch docs/k12-paseo/proposals/ops-ci-candidate.bundle refs/heads/ci/ops-ci-isolated:refs/heads/review/ops-ci-5d7d1e1`.
-   같은 local ref가 이미 있으면 재사용을 추정하지 말고 그 SHA부터 대조한다.
-3. `git rev-parse review/ops-ci-5d7d1e1`이 위 full candidate와 일치하는지,
-   `git merge-base --is-ancestor f069ac35b0553f69f0a485784df0bc4f11341f1b review/ops-ci-5d7d1e1`이 0인지 확인한다.
-   `git show review/ops-ci-5d7d1e1:.github/workflows/ops-check.yml`과 helper/manifest를 검토한다.
-4. 사람이 위 경로를 채택한 뒤 **일반 task branch push**만 수행한다:
-   `git push origin 5d7d1e1177c5a1991582bee7113d239dda01fe83:refs/heads/ci/k12-ops-check`.
-   거부/원격 이동은 새 검토 조건이다. 인증 확대·force로 우회하지 않는다. PR #2 Draft를 유지한다.
-5. 새 `pull_request` run의 head, 실제 base ref, merge 부모와 checkout SHA, manifest/hash,
-   115 executed / 0 skipped / pass를 확인한다. 과거 run이나 candidate 로컬 성공으로 대신하지 않는다.
-   최종 PR #1 보고 commit은 candidate 이후일 수 있으므로 GitHub 합성 merge SHA가 candidate와
-   다를 수 있다. 그 차이가 문서/증거뿐인지 확인한다. base 변경 후에도 새 run이 필요하다.
-6. 필요한 검사가 통과한 뒤 PR #2→ops task 통합 또는 PR #1 채택 후 CI base 변경 중 하나를
-   사람이 선택한다. agent는 어느 PR도 Ready/merge하지 않고 main 필수 검사도 설정하지 않는다.
-
-`pull_request` merge ref 동작과 권한 근거는 [OPS_CI](../OPS_CI.md#원격-적용-판단)에 링크했다.
-main에는 현재 workflow/필수 CI가 없으며 이 제안 자체로 P0-C1이 완전히 통과한 것은 아니다.
-
-독립 고정 SHA [리뷰 원문](https://github.com/shotgun1107/home-dev-ops/pull/1#issuecomment-6088962998)과 [보완 내역](../OPS_CI.md#독립-리뷰와-남은-결정)을 함께 검토한다.
+- `80455437960f3db0cbec5f1f3df0392ad47def3c`: [125개 bundle](ops-ci-reviewed-candidate.bundle),
+  SHA256 `076a4de9fe76eaa5c8b08603f36d96d31d11081f04d7e69b782f2565f9f0dcd9`.
+- `5d7d1e1177c5a1991582bee7113d239dda01fe83`: [115개 bundle](ops-ci-candidate.bundle),
+  SHA256 `0066ff185ffb808ab472ea928065b8b27600810ce278ed461694afaff4f62ce6`.
+- [최초 patch](home-dev-ops-ci.patch), [과거 refresh patch](home-dev-ops-ci-refresh.patch)는 당시 기준의 제안이다.
+  patch만으로 최신 source/manifest가 따라오지 않는다.
+- [이전 전달 문서와 prerequisite](https://github.com/shotgun1107/home-dev-ops/blob/7ae69a92e3e6f8462ec1a6446fe31bb48294bd63/docs/k12-paseo/proposals/README.md)·
+  [OPS_CI 역사](../OPS_CI.md)·[독립 보강](../INDEPENDENT_REVIEW.md)은 당시 실측을 확인하는 자료다.

@@ -1,5 +1,10 @@
 # K12 야간 운영 검증 handoff — 2026-10-10 KST
 
+**보존된 야간 시점 보고.** 이후 사용자 승인 ONE-SHOT에서 CI/보호/추가 반례를 갱신했다.
+현재 상태는 [E21](EVIDENCE.md#e21-one-shot-통합-검증)·[채택 판단](ADOPTION.md)·PR #1 최종 handoff를 따른다.
+아래 원격 SHA/125개/hosted 보류/다음 행동은 야간 종료 당시의 기록이며 현재 대기 목록이 아니다.
+Director는 과거 임시 보조였으며 상시 운영 구조에서 제외한다. 기존 기록·세션은 보존한다.
+
 **허용된 격리 감사·개선·문서 전달은 진행했지만 전체 P0/P1은 미완료다.** 운영 설정을 배포하거나
 미실행 항목을 통과시킨 보고가 아니다. 기존 Astra Max Supervisor·Director·ops Worktree를 유지했다.
 집계 기준 HEAD는 `a332a1b756006cca4851ccd0a52fb3d6e5e220f8`이며 최종 보고 HEAD와 actor 상태는

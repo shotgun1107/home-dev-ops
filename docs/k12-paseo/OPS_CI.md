@@ -1,8 +1,10 @@
 # OPS_CI — 최신 suite와 CI Draft의 대조
 
-후속 [REVIEW_INDEPENDENT](INDEPENDENT_REVIEW.md)에서 CI 조기 exit0를 보정했다.
-최신 source는1edd2ef…, 통합 후보8045543…의 **125개 OK**이며 새 bundle을 제공한다.
-아래115개·5d7d1e1…·원격21개는 OPS_CI 당시의 고정 기록으로 보존한다.
+**역사적 OPS_CI task 기록.** ONE-SHOT의 현재 source는d8099f0…, CI 검토 후보65b2573…이며
+[hosted133 실행](https://github.com/shotgun1107/home-dev-ops/actions/runs/38031284245)을 확인했다.
+최신 전달/사람 통합 순서는 [현재 제안](proposals/README.md)·[E21](EVIDENCE.md#e21-one-shot-통합-검증)을 따른다.
+아래115개·5d7d1e1…·원격21개와 후속 독립 보강125개/8045543… bundle은 당시 고정 기록이다.
+현재 적용 후보나 hosted 대기 상태로 읽지 않는다.
 
 2026-10-10 KST. 범위는 home-dev-ops의 합성 시험과 CI 제안이다.
 기존 PR #1 Worktree의 Supervisor만 쓴다. Kerbe, 운영 서비스, 권한·인증·보호 설정은 변경하지 않는다.
